@@ -1,0 +1,4 @@
+Normalization by divide with exponential 0.5 and mu 60:
+model size: 4.54 ± 0.17
+Final acc: 97.17 ± 0.11
+ Best acc: 97.24 ± 0.11
