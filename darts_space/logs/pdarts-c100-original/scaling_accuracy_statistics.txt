@@ -1,0 +1,3 @@
+P-DARTS on CIFAR-100:
+model size: 4.63 ± 0.08
+Final acc: 83.46 ± 0.24
