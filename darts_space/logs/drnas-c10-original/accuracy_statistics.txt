@@ -1,0 +1,2 @@
+DrNAS test acc: 96.95 ± 0.08
+Prestored DrNAS test acc: 97.25 ± 0.10

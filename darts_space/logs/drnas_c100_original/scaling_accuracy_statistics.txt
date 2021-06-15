@@ -1,0 +1,3 @@
+DrNAS on CIFAR-100:
+model size: 4.62 ± 0.03
+Final acc: 83.31 ± 0.19
