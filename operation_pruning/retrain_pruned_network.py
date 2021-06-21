@@ -291,20 +291,6 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-#     path_to_model = "darts-pruning/darts-pruning-lr_0.001_edec_0_rho_0.9_rdec_0_mu_0.0001_time_20210202-145002/full_weights"
-#     path_to_model = "darts-pruning/darts-pruning-lr_0.001_edec_0_rho_0.9_rdec_0_mu_0.0002_time_20210208-163708/full_weights"
-#     path_to_model = "darts-pruning/darts-pruning-lr_0.001_edec_0_rho_0.9_rdec_0_mu_0.0003_time_20210208-163755/full_weights"
-#     path_to_model = "darts-pruning/darts-pruning-lr_0.001_edec_0_rho_0.9_rdec_0_mu_0.0004_time_20210208-163827/full_weights"
-#     path_to_model = "darts-pruning/darts-pruning-lr_0.001_edec_0_rho_0.9_rdec_0_mu_0.0005_time_20210202-145112/full_weights"
-#     path_to_model = "darts-pruning/darts-pruning-lr_0.001_edec_0_rho_0.9_rdec_0_mu_0.001_time_20210129-211739/full_weights"
-#     path_to_model = "darts-pruning/darts-pruning-lr_0.001_edec_0_rho_0.9_rdec_0_mu_0.002_time_20210202-145342/full_weights"
-#     path_to_model = "darts-pruning/darts-pruning-lr_0.001_edec_0_rho_0.9_rdec_0_mu_0.003_time_20210202-162857/full_weights"
-#     path_to_model = "darts-pruning/darts-pruning-lr_0.001_edec_0_rho_0.9_rdec_0_mu_0.004_time_20210202-162931/full_weights"    
-#     path_to_model = "darts-pruning/darts-pruning-lr_0.001_edec_0_rho_0.9_rdec_0_mu_0.005_time_20210106-134801/full_weights"
-#     path_to_model = "darts-pruning/darts-pruning-lr_0.001_edec_0_rho_0.9_rdec_0_mu_0.006_time_20210203-215833/full_weights"
-#     path_to_model = "darts-pruning/darts-pruning-lr_0.001_edec_0_rho_0.9_rdec_0_mu_0.007_time_20210203-220138/full_weights"
-#     path_to_model = "darts-pruning/darts-pruning-lr_0.001_edec_0_rho_0.9_rdec_0_mu_0.008_time_20210203-220212/full_weights"
     path_to_model = "darts-pruning/darts-pruning-lr_0.001_edec_0_rho_0.9_rdec_0_mu_0.009_time_20210203-220243/full_weights"
-#     path_to_model = "darts-pruning/darts-pruning-lr_0.001_edec_0_rho_0.9_rdec_0_mu_0.01_time_20210203-220309/full_weights"
 
     main(args, path_to_model) 
