@@ -1,0 +1,793 @@
+2021-06-24 20:42 CARME Slurm ID: 29190
+2021-06-24 20:42 gpu device = 0
+2021-06-24 20:42 args = Namespace(arch='cell_mu_130_epoch_50_RUN3', auxiliary=True, auxiliary_weight=0.4, batch_size=80, cells=14, cells_search=8, cutout=True, cutout_length=16, data='../data', drop_path_prob=0.3, epochs=600, gpu=0, grad_clip=5, init_channels=36, init_channels_search=16, learning_rate=0.025, learning_rate_min=0, model_to_resume=None, momentum=0.9, pruning_threshold=1e-05, report_freq=0, save='scaling-cell-space-darts/scaling-cell-space-darts-arch_cell_mu_130_epoch_50_RUN3_cells_14_20210624-204221', scale_type='cell', seed=6111, weight_decay=0.0003)
+2021-06-24 20:42 Model to discretize is in: search-for-cell-50-space-darts/search-for-cell-50-space-darts-mu_130.0_div_0.5_time_20210617-064228/model_final
+
+2021-06-24 20:42 alpha_network:
+ [(False, array([[0, 0, 0, 1, 1, 0, 0],
+       [0, 0, 0, 1, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0]])), (False, array([[0, 0, 0, 1, 1, 0, 0],
+       [0, 0, 0, 1, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0]])), (False, array([[0, 0, 0, 1, 1, 0, 0],
+       [0, 0, 0, 1, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0]])), (False, array([[0, 0, 0, 1, 1, 0, 0],
+       [0, 0, 0, 1, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0]])), (True, array([[0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0]])), (False, array([[0, 0, 0, 1, 1, 0, 0],
+       [0, 0, 0, 1, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0]])), (False, array([[0, 0, 0, 1, 1, 0, 0],
+       [0, 0, 0, 1, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0]])), (False, array([[0, 0, 0, 1, 1, 0, 0],
+       [0, 0, 0, 1, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0]])), (False, array([[0, 0, 0, 1, 1, 0, 0],
+       [0, 0, 0, 1, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0]])), (True, array([[0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0]])), (False, array([[0, 0, 0, 1, 1, 0, 0],
+       [0, 0, 0, 1, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0]])), (False, array([[0, 0, 0, 1, 1, 0, 0],
+       [0, 0, 0, 1, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0]])), (False, array([[0, 0, 0, 1, 1, 0, 0],
+       [0, 0, 0, 1, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0]])), (False, array([[0, 0, 0, 1, 1, 0, 0],
+       [0, 0, 0, 1, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 1, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0],
+       [0, 0, 0, 0, 0, 0, 0]]))]
+2021-06-24 20:42 genotype_network:
+ [[('sep_conv_3x3', 0), ('sep_conv_5x5', 0), ('sep_conv_3x3', 1), ('sep_conv_5x5', 1), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2)], [('sep_conv_3x3', 0), ('sep_conv_5x5', 0), ('sep_conv_3x3', 1), ('sep_conv_5x5', 1), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2)], [('sep_conv_3x3', 0), ('sep_conv_5x5', 0), ('sep_conv_3x3', 1), ('sep_conv_5x5', 1), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2)], [('sep_conv_3x3', 0), ('sep_conv_5x5', 0), ('sep_conv_3x3', 1), ('sep_conv_5x5', 1), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2)], [('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1)], [('sep_conv_3x3', 0), ('sep_conv_5x5', 0), ('sep_conv_3x3', 1), ('sep_conv_5x5', 1), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2)], [('sep_conv_3x3', 0), ('sep_conv_5x5', 0), ('sep_conv_3x3', 1), ('sep_conv_5x5', 1), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2)], [('sep_conv_3x3', 0), ('sep_conv_5x5', 0), ('sep_conv_3x3', 1), ('sep_conv_5x5', 1), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2)], [('sep_conv_3x3', 0), ('sep_conv_5x5', 0), ('sep_conv_3x3', 1), ('sep_conv_5x5', 1), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2)], [('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1)], [('sep_conv_3x3', 0), ('sep_conv_5x5', 0), ('sep_conv_3x3', 1), ('sep_conv_5x5', 1), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2)], [('sep_conv_3x3', 0), ('sep_conv_5x5', 0), ('sep_conv_3x3', 1), ('sep_conv_5x5', 1), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2)], [('sep_conv_3x3', 0), ('sep_conv_5x5', 0), ('sep_conv_3x3', 1), ('sep_conv_5x5', 1), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2)], [('sep_conv_3x3', 0), ('sep_conv_5x5', 0), ('sep_conv_3x3', 1), ('sep_conv_5x5', 1), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 2)]]
+2021-06-24 20:42 param size = 4.556566M
+2021-06-24 20:47 (JOBID 29190) epoch 1 lr 2.500000e-02: train_top1 29.112000, valid_top1 44.759998 (best_top1 44.759998)
+2021-06-24 20:51 (JOBID 29190) epoch 2 lr 2.499966e-02: train_top1 47.449997, valid_top1 53.739998 (best_top1 53.739998)
+2021-06-24 20:56 (JOBID 29190) epoch 3 lr 2.499880e-02: train_top1 57.407997, valid_top1 65.169998 (best_top1 65.169998)
+2021-06-24 21:01 (JOBID 29190) epoch 4 lr 2.499760e-02: train_top1 64.056000, valid_top1 68.909996 (best_top1 68.909996)
+2021-06-24 21:05 (JOBID 29190) epoch 5 lr 2.499606e-02: train_top1 69.038002, valid_top1 71.479996 (best_top1 71.479996)
+2021-06-24 21:10 (JOBID 29190) epoch 6 lr 2.499417e-02: train_top1 72.208000, valid_top1 76.330002 (best_top1 76.330002)
+2021-06-24 21:14 (JOBID 29190) epoch 7 lr 2.499195e-02: train_top1 74.598000, valid_top1 78.900002 (best_top1 78.900002)
+2021-06-24 21:19 (JOBID 29190) epoch 8 lr 2.498938e-02: train_top1 76.157997, valid_top1 80.269997 (best_top1 80.269997)
+2021-06-24 21:24 (JOBID 29190) epoch 9 lr 2.498647e-02: train_top1 77.279999, valid_top1 83.049995 (best_top1 83.049995)
+2021-06-24 21:28 (JOBID 29190) epoch 10 lr 2.498321e-02: train_top1 78.363998, valid_top1 81.220001 (best_top1 83.049995)
+2021-06-24 21:33 (JOBID 29190) epoch 11 lr 2.497962e-02: train_top1 79.103996, valid_top1 79.720001 (best_top1 83.049995)
+2021-06-24 21:37 (JOBID 29190) epoch 12 lr 2.497568e-02: train_top1 79.930000, valid_top1 85.070000 (best_top1 85.070000)
+2021-06-24 21:42 (JOBID 29190) epoch 13 lr 2.497140e-02: train_top1 80.650002, valid_top1 79.459999 (best_top1 85.070000)
+2021-06-24 21:46 (JOBID 29190) epoch 14 lr 2.496677e-02: train_top1 81.273994, valid_top1 82.860001 (best_top1 85.070000)
+2021-06-24 21:51 (JOBID 29190) epoch 15 lr 2.496181e-02: train_top1 81.622002, valid_top1 84.820000 (best_top1 85.070000)
+2021-06-24 21:56 (JOBID 29190) epoch 16 lr 2.495650e-02: train_top1 82.153999, valid_top1 84.269997 (best_top1 85.070000)
+2021-06-24 22:00 (JOBID 29190) epoch 17 lr 2.495086e-02: train_top1 82.449997, valid_top1 84.659996 (best_top1 85.070000)
+2021-06-24 22:05 (JOBID 29190) epoch 18 lr 2.494487e-02: train_top1 82.717995, valid_top1 85.299995 (best_top1 85.299995)
+2021-06-24 22:09 (JOBID 29190) epoch 19 lr 2.493854e-02: train_top1 82.825996, valid_top1 85.930000 (best_top1 85.930000)
+2021-06-24 22:14 (JOBID 29190) epoch 20 lr 2.493187e-02: train_top1 83.136002, valid_top1 85.889999 (best_top1 85.930000)
+2021-06-24 22:19 (JOBID 29190) epoch 21 lr 2.492485e-02: train_top1 83.624001, valid_top1 86.110001 (best_top1 86.110001)
+2021-06-24 22:23 (JOBID 29190) epoch 22 lr 2.491750e-02: train_top1 83.706001, valid_top1 85.650002 (best_top1 86.110001)
+2021-06-24 22:28 (JOBID 29190) epoch 23 lr 2.490981e-02: train_top1 83.874001, valid_top1 85.150002 (best_top1 86.110001)
+2021-06-24 22:32 (JOBID 29190) epoch 24 lr 2.490178e-02: train_top1 83.823997, valid_top1 87.089996 (best_top1 87.089996)
+2021-06-24 22:37 (JOBID 29190) epoch 25 lr 2.489340e-02: train_top1 83.956001, valid_top1 84.489998 (best_top1 87.089996)
+2021-06-24 22:42 (JOBID 29190) epoch 26 lr 2.488469e-02: train_top1 84.124001, valid_top1 86.579994 (best_top1 87.089996)
+2021-06-24 22:46 (JOBID 29190) epoch 27 lr 2.487564e-02: train_top1 84.428001, valid_top1 86.369995 (best_top1 87.089996)
+2021-06-24 22:51 (JOBID 29190) epoch 28 lr 2.486625e-02: train_top1 84.495995, valid_top1 87.489998 (best_top1 87.489998)
+2021-06-24 22:55 (JOBID 29190) epoch 29 lr 2.485652e-02: train_top1 84.271996, valid_top1 86.900002 (best_top1 87.489998)
+2021-06-24 23:00 (JOBID 29190) epoch 30 lr 2.484645e-02: train_top1 85.057999, valid_top1 87.909996 (best_top1 87.909996)
+2021-06-24 23:05 (JOBID 29190) epoch 31 lr 2.483604e-02: train_top1 84.972000, valid_top1 88.809998 (best_top1 88.809998)
+2021-06-24 23:09 (JOBID 29190) epoch 32 lr 2.482529e-02: train_top1 85.040001, valid_top1 86.989998 (best_top1 88.809998)
+2021-06-24 23:14 (JOBID 29190) epoch 33 lr 2.481421e-02: train_top1 84.998001, valid_top1 87.269997 (best_top1 88.809998)
+2021-06-24 23:18 (JOBID 29190) epoch 34 lr 2.480279e-02: train_top1 84.991997, valid_top1 88.750000 (best_top1 88.809998)
+2021-06-24 23:23 (JOBID 29190) epoch 35 lr 2.479103e-02: train_top1 85.229996, valid_top1 85.400002 (best_top1 88.809998)
+2021-06-24 23:28 (JOBID 29190) epoch 36 lr 2.477893e-02: train_top1 84.931999, valid_top1 86.699997 (best_top1 88.809998)
+2021-06-24 23:32 (JOBID 29190) epoch 37 lr 2.476650e-02: train_top1 85.292000, valid_top1 88.150002 (best_top1 88.809998)
+2021-06-24 23:37 (JOBID 29190) epoch 38 lr 2.475373e-02: train_top1 85.421997, valid_top1 83.459999 (best_top1 88.809998)
+2021-06-24 23:41 (JOBID 29190) epoch 39 lr 2.474063e-02: train_top1 85.397995, valid_top1 86.299995 (best_top1 88.809998)
+2021-06-24 23:46 (JOBID 29190) epoch 40 lr 2.472719e-02: train_top1 85.279999, valid_top1 87.559998 (best_top1 88.809998)
+2021-06-24 23:51 (JOBID 29190) epoch 41 lr 2.471341e-02: train_top1 85.514000, valid_top1 88.099998 (best_top1 88.809998)
+2021-06-24 23:55 (JOBID 29190) epoch 42 lr 2.469930e-02: train_top1 85.557999, valid_top1 87.279999 (best_top1 88.809998)
+2021-06-25 00:00 (JOBID 29190) epoch 43 lr 2.468486e-02: train_top1 85.589996, valid_top1 84.329994 (best_top1 88.809998)
+2021-06-25 00:04 (JOBID 29190) epoch 44 lr 2.467008e-02: train_top1 85.751999, valid_top1 87.009995 (best_top1 88.809998)
+2021-06-25 00:09 (JOBID 29190) epoch 45 lr 2.465497e-02: train_top1 85.827995, valid_top1 86.639999 (best_top1 88.809998)
+2021-06-25 00:13 (JOBID 29190) epoch 46 lr 2.463952e-02: train_top1 85.813995, valid_top1 86.459999 (best_top1 88.809998)
+2021-06-25 00:18 (JOBID 29190) epoch 47 lr 2.462374e-02: train_top1 85.701996, valid_top1 89.040001 (best_top1 89.040001)
+2021-06-25 00:23 (JOBID 29190) epoch 48 lr 2.460763e-02: train_top1 85.835999, valid_top1 88.549995 (best_top1 89.040001)
+2021-06-25 00:27 (JOBID 29190) epoch 49 lr 2.459119e-02: train_top1 85.776001, valid_top1 83.430000 (best_top1 89.040001)
+2021-06-25 00:32 (JOBID 29190) epoch 50 lr 2.457442e-02: train_top1 85.953995, valid_top1 88.669998 (best_top1 89.040001)
+2021-06-25 00:36 (JOBID 29190) epoch 51 lr 2.455731e-02: train_top1 86.173996, valid_top1 88.519997 (best_top1 89.040001)
+2021-06-25 00:41 (JOBID 29190) epoch 52 lr 2.453987e-02: train_top1 85.811996, valid_top1 87.869995 (best_top1 89.040001)
+2021-06-25 00:46 (JOBID 29190) epoch 53 lr 2.452211e-02: train_top1 86.231995, valid_top1 88.979996 (best_top1 89.040001)
+2021-06-25 00:50 (JOBID 29190) epoch 54 lr 2.450401e-02: train_top1 86.139999, valid_top1 87.129997 (best_top1 89.040001)
+2021-06-25 00:55 (JOBID 29190) epoch 55 lr 2.448559e-02: train_top1 86.451996, valid_top1 89.879997 (best_top1 89.879997)
+2021-06-25 00:59 (JOBID 29190) epoch 56 lr 2.446684e-02: train_top1 86.309998, valid_top1 87.589996 (best_top1 89.879997)
+2021-06-25 01:04 (JOBID 29190) epoch 57 lr 2.444776e-02: train_top1 86.131996, valid_top1 87.470001 (best_top1 89.879997)
+2021-06-25 01:09 (JOBID 29190) epoch 58 lr 2.442835e-02: train_top1 86.619995, valid_top1 87.709999 (best_top1 89.879997)
+2021-06-25 01:13 (JOBID 29190) epoch 59 lr 2.440861e-02: train_top1 86.591995, valid_top1 89.479996 (best_top1 89.879997)
+2021-06-25 01:18 (JOBID 29190) epoch 60 lr 2.438855e-02: train_top1 86.484001, valid_top1 88.009995 (best_top1 89.879997)
+2021-06-25 01:22 (JOBID 29190) epoch 61 lr 2.436816e-02: train_top1 86.498001, valid_top1 88.779999 (best_top1 89.879997)
+2021-06-25 01:27 (JOBID 29190) epoch 62 lr 2.434745e-02: train_top1 86.571999, valid_top1 88.879997 (best_top1 89.879997)
+2021-06-25 01:32 (JOBID 29190) epoch 63 lr 2.432641e-02: train_top1 86.416000, valid_top1 89.150002 (best_top1 89.879997)
+2021-06-25 01:36 (JOBID 29190) epoch 64 lr 2.430505e-02: train_top1 86.428001, valid_top1 88.769997 (best_top1 89.879997)
+2021-06-25 01:41 (JOBID 29190) epoch 65 lr 2.428336e-02: train_top1 86.765999, valid_top1 89.159996 (best_top1 89.879997)
+2021-06-25 01:45 (JOBID 29190) epoch 66 lr 2.426135e-02: train_top1 86.645996, valid_top1 89.889999 (best_top1 89.889999)
+2021-06-25 01:50 (JOBID 29190) epoch 67 lr 2.423902e-02: train_top1 86.675995, valid_top1 88.339996 (best_top1 89.889999)
+2021-06-25 01:54 (JOBID 29190) epoch 68 lr 2.421637e-02: train_top1 86.911995, valid_top1 89.879997 (best_top1 89.889999)
+2021-06-25 01:59 (JOBID 29190) epoch 69 lr 2.419339e-02: train_top1 86.930000, valid_top1 90.309998 (best_top1 90.309998)
+2021-06-25 02:04 (JOBID 29190) epoch 70 lr 2.417010e-02: train_top1 87.077995, valid_top1 90.290001 (best_top1 90.309998)
+2021-06-25 02:08 (JOBID 29190) epoch 71 lr 2.414648e-02: train_top1 87.021996, valid_top1 87.939995 (best_top1 90.309998)
+2021-06-25 02:13 (JOBID 29190) epoch 72 lr 2.412255e-02: train_top1 87.167999, valid_top1 88.409996 (best_top1 90.309998)
+2021-06-25 02:17 (JOBID 29190) epoch 73 lr 2.409830e-02: train_top1 87.152000, valid_top1 88.070000 (best_top1 90.309998)
+2021-06-25 02:22 (JOBID 29190) epoch 74 lr 2.407372e-02: train_top1 87.201996, valid_top1 89.110001 (best_top1 90.309998)
+2021-06-25 02:27 (JOBID 29190) epoch 75 lr 2.404884e-02: train_top1 87.014000, valid_top1 91.279999 (best_top1 91.279999)
+2021-06-25 02:31 (JOBID 29190) epoch 76 lr 2.402363e-02: train_top1 87.192001, valid_top1 89.439995 (best_top1 91.279999)
+2021-06-25 02:36 (JOBID 29190) epoch 77 lr 2.399811e-02: train_top1 86.986000, valid_top1 88.479996 (best_top1 91.279999)
+2021-06-25 02:40 (JOBID 29190) epoch 78 lr 2.397228e-02: train_top1 87.178001, valid_top1 86.299995 (best_top1 91.279999)
+2021-06-25 02:45 (JOBID 29190) epoch 79 lr 2.394612e-02: train_top1 87.115997, valid_top1 91.169998 (best_top1 91.279999)
+2021-06-25 02:50 (JOBID 29190) epoch 80 lr 2.391966e-02: train_top1 87.147995, valid_top1 89.650002 (best_top1 91.279999)
+2021-06-25 02:54 (JOBID 29190) epoch 81 lr 2.389288e-02: train_top1 87.178001, valid_top1 90.470001 (best_top1 91.279999)
+2021-06-25 02:59 (JOBID 29190) epoch 82 lr 2.386579e-02: train_top1 87.391998, valid_top1 87.829994 (best_top1 91.279999)
+2021-06-25 03:03 (JOBID 29190) epoch 83 lr 2.383839e-02: train_top1 87.229996, valid_top1 87.599998 (best_top1 91.279999)
+2021-06-25 03:08 (JOBID 29190) epoch 84 lr 2.381068e-02: train_top1 87.363998, valid_top1 89.549995 (best_top1 91.279999)
+2021-06-25 03:13 (JOBID 29190) epoch 85 lr 2.378266e-02: train_top1 87.133995, valid_top1 89.519997 (best_top1 91.279999)
+2021-06-25 03:17 (JOBID 29190) epoch 86 lr 2.375433e-02: train_top1 87.307999, valid_top1 89.540001 (best_top1 91.279999)
+2021-06-25 03:22 (JOBID 29190) epoch 87 lr 2.372569e-02: train_top1 87.397995, valid_top1 89.930000 (best_top1 91.279999)
+2021-06-25 03:26 (JOBID 29190) epoch 88 lr 2.369674e-02: train_top1 87.473999, valid_top1 91.309998 (best_top1 91.309998)
+2021-06-25 03:31 (JOBID 29190) epoch 89 lr 2.366748e-02: train_top1 87.573997, valid_top1 90.669998 (best_top1 91.309998)
+2021-06-25 03:36 (JOBID 29190) epoch 90 lr 2.363792e-02: train_top1 87.403999, valid_top1 87.639999 (best_top1 91.309998)
+2021-06-25 03:40 (JOBID 29190) epoch 91 lr 2.360806e-02: train_top1 87.357994, valid_top1 90.139999 (best_top1 91.309998)
+2021-06-25 03:45 (JOBID 29190) epoch 92 lr 2.357789e-02: train_top1 87.431999, valid_top1 88.199997 (best_top1 91.309998)
+2021-06-25 03:49 (JOBID 29190) epoch 93 lr 2.354741e-02: train_top1 87.615997, valid_top1 88.309998 (best_top1 91.309998)
+2021-06-25 03:54 (JOBID 29190) epoch 94 lr 2.351664e-02: train_top1 87.669998, valid_top1 91.439995 (best_top1 91.439995)
+2021-06-25 03:58 (JOBID 29190) epoch 95 lr 2.348556e-02: train_top1 87.593994, valid_top1 90.349998 (best_top1 91.439995)
+2021-06-25 04:03 (JOBID 29190) epoch 96 lr 2.345418e-02: train_top1 87.551994, valid_top1 89.320000 (best_top1 91.439995)
+2021-06-25 04:08 (JOBID 29190) epoch 97 lr 2.342250e-02: train_top1 87.737999, valid_top1 90.909996 (best_top1 91.439995)
+2021-06-25 04:12 (JOBID 29190) epoch 98 lr 2.339051e-02: train_top1 87.507996, valid_top1 90.680000 (best_top1 91.439995)
+2021-06-25 04:17 (JOBID 29190) epoch 99 lr 2.335824e-02: train_top1 87.409996, valid_top1 89.239998 (best_top1 91.439995)
+2021-06-25 04:21 (JOBID 29190) epoch 100 lr 2.332566e-02: train_top1 87.862000, valid_top1 89.959999 (best_top1 91.439995)
+2021-06-25 04:26 (JOBID 29190) epoch 101 lr 2.329279e-02: train_top1 87.495995, valid_top1 90.899994 (best_top1 91.439995)
+2021-06-25 04:31 (JOBID 29190) epoch 102 lr 2.325962e-02: train_top1 87.879997, valid_top1 90.829994 (best_top1 91.439995)
+2021-06-25 04:35 (JOBID 29190) epoch 103 lr 2.322615e-02: train_top1 87.853996, valid_top1 90.159996 (best_top1 91.439995)
+2021-06-25 04:40 (JOBID 29190) epoch 104 lr 2.319240e-02: train_top1 87.603996, valid_top1 88.259995 (best_top1 91.439995)
+2021-06-25 04:44 (JOBID 29190) epoch 105 lr 2.315834e-02: train_top1 87.818001, valid_top1 89.229996 (best_top1 91.439995)
+2021-06-25 04:49 (JOBID 29190) epoch 106 lr 2.312400e-02: train_top1 87.835999, valid_top1 89.229996 (best_top1 91.439995)
+2021-06-25 04:54 (JOBID 29190) epoch 107 lr 2.308937e-02: train_top1 87.871994, valid_top1 89.989998 (best_top1 91.439995)
+2021-06-25 04:58 (JOBID 29190) epoch 108 lr 2.305444e-02: train_top1 87.680000, valid_top1 91.829994 (best_top1 91.829994)
+2021-06-25 05:03 (JOBID 29190) epoch 109 lr 2.301923e-02: train_top1 87.991997, valid_top1 91.189995 (best_top1 91.829994)
+2021-06-25 05:07 (JOBID 29190) epoch 110 lr 2.298372e-02: train_top1 87.991997, valid_top1 90.029999 (best_top1 91.829994)
+2021-06-25 05:12 (JOBID 29190) epoch 111 lr 2.294793e-02: train_top1 87.703995, valid_top1 91.040001 (best_top1 91.829994)
+2021-06-25 05:17 (JOBID 29190) epoch 112 lr 2.291186e-02: train_top1 88.068001, valid_top1 88.239998 (best_top1 91.829994)
+2021-06-25 05:21 (JOBID 29190) epoch 113 lr 2.287550e-02: train_top1 87.975998, valid_top1 89.889999 (best_top1 91.829994)
+2021-06-25 05:26 (JOBID 29190) epoch 114 lr 2.283885e-02: train_top1 87.709999, valid_top1 90.519997 (best_top1 91.829994)
+2021-06-25 05:30 (JOBID 29190) epoch 115 lr 2.280192e-02: train_top1 88.001999, valid_top1 91.250000 (best_top1 91.829994)
+2021-06-25 05:35 (JOBID 29190) epoch 116 lr 2.276471e-02: train_top1 87.965996, valid_top1 91.299995 (best_top1 91.829994)
+2021-06-25 05:40 (JOBID 29190) epoch 117 lr 2.272721e-02: train_top1 87.933998, valid_top1 90.199997 (best_top1 91.829994)
+2021-06-25 05:44 (JOBID 29190) epoch 118 lr 2.268944e-02: train_top1 88.113998, valid_top1 91.419998 (best_top1 91.829994)
+2021-06-25 05:49 (JOBID 29190) epoch 119 lr 2.265139e-02: train_top1 87.937996, valid_top1 89.150002 (best_top1 91.829994)
+2021-06-25 05:53 (JOBID 29190) epoch 120 lr 2.261305e-02: train_top1 88.192001, valid_top1 89.070000 (best_top1 91.829994)
+2021-06-25 05:58 (JOBID 29190) epoch 121 lr 2.257445e-02: train_top1 88.061996, valid_top1 91.479996 (best_top1 91.829994)
+2021-06-25 06:03 (JOBID 29190) epoch 122 lr 2.253556e-02: train_top1 88.105995, valid_top1 90.959999 (best_top1 91.829994)
+2021-06-25 06:07 (JOBID 29190) epoch 123 lr 2.249640e-02: train_top1 87.973999, valid_top1 89.889999 (best_top1 91.829994)
+2021-06-25 06:12 (JOBID 29190) epoch 124 lr 2.245697e-02: train_top1 88.262001, valid_top1 92.589996 (best_top1 92.589996)
+2021-06-25 06:16 (JOBID 29190) epoch 125 lr 2.241726e-02: train_top1 88.054001, valid_top1 91.139999 (best_top1 92.589996)
+2021-06-25 06:21 (JOBID 29190) epoch 126 lr 2.237728e-02: train_top1 88.133995, valid_top1 89.989998 (best_top1 92.589996)
+2021-06-25 06:26 (JOBID 29190) epoch 127 lr 2.233703e-02: train_top1 88.192001, valid_top1 91.860001 (best_top1 92.589996)
+2021-06-25 06:30 (JOBID 29190) epoch 128 lr 2.229651e-02: train_top1 88.222000, valid_top1 91.119995 (best_top1 92.589996)
+2021-06-25 06:35 (JOBID 29190) epoch 129 lr 2.225572e-02: train_top1 88.079994, valid_top1 90.119995 (best_top1 92.589996)
+2021-06-25 06:39 (JOBID 29190) epoch 130 lr 2.221467e-02: train_top1 88.475998, valid_top1 91.619995 (best_top1 92.589996)
+2021-06-25 06:44 (JOBID 29190) epoch 131 lr 2.217334e-02: train_top1 88.318001, valid_top1 90.739998 (best_top1 92.589996)
+2021-06-25 06:49 (JOBID 29190) epoch 132 lr 2.213176e-02: train_top1 88.315994, valid_top1 90.309998 (best_top1 92.589996)
+2021-06-25 06:53 (JOBID 29190) epoch 133 lr 2.208991e-02: train_top1 88.091995, valid_top1 90.909996 (best_top1 92.589996)
+2021-06-25 06:58 (JOBID 29190) epoch 134 lr 2.204779e-02: train_top1 88.197998, valid_top1 91.829994 (best_top1 92.589996)
+2021-06-25 07:02 (JOBID 29190) epoch 135 lr 2.200542e-02: train_top1 88.206001, valid_top1 92.399994 (best_top1 92.589996)
+2021-06-25 07:07 (JOBID 29190) epoch 136 lr 2.196278e-02: train_top1 88.105995, valid_top1 90.759995 (best_top1 92.589996)
+2021-06-25 07:12 (JOBID 29190) epoch 137 lr 2.191988e-02: train_top1 88.365997, valid_top1 90.829994 (best_top1 92.589996)
+2021-06-25 07:16 (JOBID 29190) epoch 138 lr 2.187673e-02: train_top1 88.250000, valid_top1 90.500000 (best_top1 92.589996)
+2021-06-25 07:21 (JOBID 29190) epoch 139 lr 2.183332e-02: train_top1 88.136002, valid_top1 92.689995 (best_top1 92.689995)
+2021-06-25 07:25 (JOBID 29190) epoch 140 lr 2.178965e-02: train_top1 88.329994, valid_top1 91.259995 (best_top1 92.689995)
+2021-06-25 07:30 (JOBID 29190) epoch 141 lr 2.174573e-02: train_top1 88.437996, valid_top1 89.879997 (best_top1 92.689995)
+2021-06-25 07:35 (JOBID 29190) epoch 142 lr 2.170156e-02: train_top1 88.281998, valid_top1 92.250000 (best_top1 92.689995)
+2021-06-25 07:39 (JOBID 29190) epoch 143 lr 2.165713e-02: train_top1 88.416000, valid_top1 90.379997 (best_top1 92.689995)
+2021-06-25 07:44 (JOBID 29190) epoch 144 lr 2.161245e-02: train_top1 88.264000, valid_top1 90.320000 (best_top1 92.689995)
+2021-06-25 07:48 (JOBID 29190) epoch 145 lr 2.156752e-02: train_top1 88.363998, valid_top1 91.290001 (best_top1 92.689995)
+2021-06-25 07:53 (JOBID 29190) epoch 146 lr 2.152234e-02: train_top1 88.307999, valid_top1 91.759995 (best_top1 92.689995)
+2021-06-25 07:57 (JOBID 29190) epoch 147 lr 2.147692e-02: train_top1 88.500000, valid_top1 92.759995 (best_top1 92.759995)
+2021-06-25 08:02 (JOBID 29190) epoch 148 lr 2.143125e-02: train_top1 88.332001, valid_top1 90.939995 (best_top1 92.759995)
+2021-06-25 08:07 (JOBID 29190) epoch 149 lr 2.138534e-02: train_top1 88.442001, valid_top1 89.129997 (best_top1 92.759995)
+2021-06-25 08:11 (JOBID 29190) epoch 150 lr 2.133918e-02: train_top1 88.540001, valid_top1 91.199997 (best_top1 92.759995)
+2021-06-25 08:16 (JOBID 29190) epoch 151 lr 2.129278e-02: train_top1 88.451996, valid_top1 90.479996 (best_top1 92.759995)
+2021-06-25 08:21 (JOBID 29190) epoch 152 lr 2.124613e-02: train_top1 88.329994, valid_top1 92.129997 (best_top1 92.759995)
+2021-06-25 08:25 (JOBID 29190) epoch 153 lr 2.119925e-02: train_top1 88.421997, valid_top1 90.849998 (best_top1 92.759995)
+2021-06-25 08:30 (JOBID 29190) epoch 154 lr 2.115213e-02: train_top1 88.405998, valid_top1 92.299995 (best_top1 92.759995)
+2021-06-25 08:34 (JOBID 29190) epoch 155 lr 2.110477e-02: train_top1 88.807999, valid_top1 91.269997 (best_top1 92.759995)
+2021-06-25 08:39 (JOBID 29190) epoch 156 lr 2.105718e-02: train_top1 88.355995, valid_top1 90.809998 (best_top1 92.759995)
+2021-06-25 08:44 (JOBID 29190) epoch 157 lr 2.100935e-02: train_top1 88.619995, valid_top1 92.529999 (best_top1 92.759995)
+2021-06-25 08:48 (JOBID 29190) epoch 158 lr 2.096129e-02: train_top1 88.223999, valid_top1 91.899994 (best_top1 92.759995)
+2021-06-25 08:53 (JOBID 29190) epoch 159 lr 2.091300e-02: train_top1 88.579994, valid_top1 92.809998 (best_top1 92.809998)
+2021-06-25 08:57 (JOBID 29190) epoch 160 lr 2.086447e-02: train_top1 88.652000, valid_top1 91.540001 (best_top1 92.809998)
+2021-06-25 09:02 (JOBID 29190) epoch 161 lr 2.081572e-02: train_top1 88.785995, valid_top1 86.589996 (best_top1 92.809998)
+2021-06-25 09:07 (JOBID 29190) epoch 162 lr 2.076674e-02: train_top1 88.391998, valid_top1 92.439995 (best_top1 92.809998)
+2021-06-25 09:11 (JOBID 29190) epoch 163 lr 2.071753e-02: train_top1 88.489998, valid_top1 90.089996 (best_top1 92.809998)
+2021-06-25 09:16 (JOBID 29190) epoch 164 lr 2.066810e-02: train_top1 88.773994, valid_top1 92.659996 (best_top1 92.809998)
+2021-06-25 09:20 (JOBID 29190) epoch 165 lr 2.061844e-02: train_top1 88.554001, valid_top1 92.729996 (best_top1 92.809998)
+2021-06-25 09:25 (JOBID 29190) epoch 166 lr 2.056856e-02: train_top1 88.607994, valid_top1 92.610001 (best_top1 92.809998)
+2021-06-25 09:30 (JOBID 29190) epoch 167 lr 2.051846e-02: train_top1 88.551994, valid_top1 89.269997 (best_top1 92.809998)
+2021-06-25 09:34 (JOBID 29190) epoch 168 lr 2.046814e-02: train_top1 88.751999, valid_top1 90.959999 (best_top1 92.809998)
+2021-06-25 09:39 (JOBID 29190) epoch 169 lr 2.041760e-02: train_top1 88.657997, valid_top1 92.389999 (best_top1 92.809998)
+2021-06-25 09:43 (JOBID 29190) epoch 170 lr 2.036685e-02: train_top1 88.753998, valid_top1 91.220001 (best_top1 92.809998)
+2021-06-25 09:48 (JOBID 29190) epoch 171 lr 2.031588e-02: train_top1 88.545998, valid_top1 90.029999 (best_top1 92.809998)
+2021-06-25 09:53 (JOBID 29190) epoch 172 lr 2.026469e-02: train_top1 88.951996, valid_top1 89.619995 (best_top1 92.809998)
+2021-06-25 09:57 (JOBID 29190) epoch 173 lr 2.021329e-02: train_top1 88.813995, valid_top1 92.489998 (best_top1 92.809998)
+2021-06-25 10:02 (JOBID 29190) epoch 174 lr 2.016168e-02: train_top1 88.624001, valid_top1 91.149994 (best_top1 92.809998)
+2021-06-25 10:06 (JOBID 29190) epoch 175 lr 2.010986e-02: train_top1 88.727997, valid_top1 93.089996 (best_top1 93.089996)
+2021-06-25 10:11 (JOBID 29190) epoch 176 lr 2.005783e-02: train_top1 88.615997, valid_top1 92.419998 (best_top1 93.089996)
+2021-06-25 10:16 (JOBID 29190) epoch 177 lr 2.000559e-02: train_top1 88.722000, valid_top1 93.250000 (best_top1 93.250000)
+2021-06-25 10:20 (JOBID 29190) epoch 178 lr 1.995315e-02: train_top1 88.839996, valid_top1 89.379997 (best_top1 93.250000)
+2021-06-25 10:25 (JOBID 29190) epoch 179 lr 1.990051e-02: train_top1 88.743996, valid_top1 92.379997 (best_top1 93.250000)
+2021-06-25 10:29 (JOBID 29190) epoch 180 lr 1.984766e-02: train_top1 88.790001, valid_top1 91.399994 (best_top1 93.250000)
+2021-06-25 10:34 (JOBID 29190) epoch 181 lr 1.979461e-02: train_top1 88.645996, valid_top1 91.809998 (best_top1 93.250000)
+2021-06-25 10:39 (JOBID 29190) epoch 182 lr 1.974136e-02: train_top1 88.779999, valid_top1 93.239998 (best_top1 93.250000)
+2021-06-25 10:43 (JOBID 29190) epoch 183 lr 1.968791e-02: train_top1 88.715996, valid_top1 92.809998 (best_top1 93.250000)
+2021-06-25 10:48 (JOBID 29190) epoch 184 lr 1.963426e-02: train_top1 88.981995, valid_top1 91.949997 (best_top1 93.250000)
+2021-06-25 10:52 (JOBID 29190) epoch 185 lr 1.958042e-02: train_top1 88.973999, valid_top1 91.389999 (best_top1 93.250000)
+2021-06-25 10:57 (JOBID 29190) epoch 186 lr 1.952638e-02: train_top1 88.867996, valid_top1 92.070000 (best_top1 93.250000)
+2021-06-25 11:02 (JOBID 29190) epoch 187 lr 1.947216e-02: train_top1 89.087997, valid_top1 92.669998 (best_top1 93.250000)
+2021-06-25 11:06 (JOBID 29190) epoch 188 lr 1.941774e-02: train_top1 88.851997, valid_top1 92.360001 (best_top1 93.250000)
+2021-06-25 11:11 (JOBID 29190) epoch 189 lr 1.936313e-02: train_top1 88.879997, valid_top1 91.879997 (best_top1 93.250000)
+2021-06-25 11:15 (JOBID 29190) epoch 190 lr 1.930833e-02: train_top1 89.129997, valid_top1 91.110001 (best_top1 93.250000)
+2021-06-25 11:20 (JOBID 29190) epoch 191 lr 1.925335e-02: train_top1 88.928001, valid_top1 92.309998 (best_top1 93.250000)
+2021-06-25 11:25 (JOBID 29190) epoch 192 lr 1.919818e-02: train_top1 89.017998, valid_top1 91.959999 (best_top1 93.250000)
+2021-06-25 11:29 (JOBID 29190) epoch 193 lr 1.914282e-02: train_top1 88.967995, valid_top1 93.040001 (best_top1 93.250000)
+2021-06-25 11:34 (JOBID 29190) epoch 194 lr 1.908729e-02: train_top1 89.007996, valid_top1 92.759995 (best_top1 93.250000)
+2021-06-25 11:38 (JOBID 29190) epoch 195 lr 1.903157e-02: train_top1 89.031998, valid_top1 91.930000 (best_top1 93.250000)
+2021-06-25 11:43 (JOBID 29190) epoch 196 lr 1.897568e-02: train_top1 89.169998, valid_top1 92.649994 (best_top1 93.250000)
+2021-06-25 11:48 (JOBID 29190) epoch 197 lr 1.891961e-02: train_top1 89.000000, valid_top1 92.779999 (best_top1 93.250000)
+2021-06-25 11:52 (JOBID 29190) epoch 198 lr 1.886336e-02: train_top1 88.827995, valid_top1 92.279999 (best_top1 93.250000)
+2021-06-25 11:57 (JOBID 29190) epoch 199 lr 1.880694e-02: train_top1 89.229996, valid_top1 92.449997 (best_top1 93.250000)
+2021-06-25 12:01 (JOBID 29190) epoch 200 lr 1.875034e-02: train_top1 88.905998, valid_top1 92.040001 (best_top1 93.250000)
+2021-06-25 12:06 (JOBID 29190) epoch 201 lr 1.869358e-02: train_top1 89.141998, valid_top1 92.449997 (best_top1 93.250000)
+2021-06-25 12:11 (JOBID 29190) epoch 202 lr 1.863664e-02: train_top1 89.068001, valid_top1 90.939995 (best_top1 93.250000)
+2021-06-25 12:15 (JOBID 29190) epoch 203 lr 1.857953e-02: train_top1 88.986000, valid_top1 92.820000 (best_top1 93.250000)
+2021-06-25 12:20 (JOBID 29190) epoch 204 lr 1.852226e-02: train_top1 89.007996, valid_top1 91.669998 (best_top1 93.250000)
+2021-06-25 12:24 (JOBID 29190) epoch 205 lr 1.846483e-02: train_top1 89.063995, valid_top1 92.699997 (best_top1 93.250000)
+2021-06-25 12:29 (JOBID 29190) epoch 206 lr 1.840723e-02: train_top1 89.003998, valid_top1 92.290001 (best_top1 93.250000)
+2021-06-25 12:34 (JOBID 29190) epoch 207 lr 1.834946e-02: train_top1 89.099998, valid_top1 93.180000 (best_top1 93.250000)
+2021-06-25 12:38 (JOBID 29190) epoch 208 lr 1.829154e-02: train_top1 89.225998, valid_top1 93.139999 (best_top1 93.250000)
+2021-06-25 12:43 (JOBID 29190) epoch 209 lr 1.823346e-02: train_top1 89.255997, valid_top1 92.939995 (best_top1 93.250000)
+2021-06-25 12:47 (JOBID 29190) epoch 210 lr 1.817522e-02: train_top1 88.995995, valid_top1 92.779999 (best_top1 93.250000)
+2021-06-25 12:52 (JOBID 29190) epoch 211 lr 1.811683e-02: train_top1 89.395996, valid_top1 92.979996 (best_top1 93.250000)
+2021-06-25 12:57 (JOBID 29190) epoch 212 lr 1.805828e-02: train_top1 89.385994, valid_top1 93.570000 (best_top1 93.570000)
+2021-06-25 13:01 (JOBID 29190) epoch 213 lr 1.799958e-02: train_top1 89.183998, valid_top1 93.279999 (best_top1 93.570000)
+2021-06-25 13:06 (JOBID 29190) epoch 214 lr 1.794073e-02: train_top1 89.365997, valid_top1 92.829994 (best_top1 93.570000)
+2021-06-25 13:10 (JOBID 29190) epoch 215 lr 1.788173e-02: train_top1 89.237999, valid_top1 92.699997 (best_top1 93.570000)
+2021-06-25 13:15 (JOBID 29190) epoch 216 lr 1.782258e-02: train_top1 89.192001, valid_top1 92.680000 (best_top1 93.570000)
+2021-06-25 13:20 (JOBID 29190) epoch 217 lr 1.776329e-02: train_top1 89.375999, valid_top1 93.089996 (best_top1 93.570000)
+2021-06-25 13:24 (JOBID 29190) epoch 218 lr 1.770385e-02: train_top1 89.257996, valid_top1 92.070000 (best_top1 93.570000)
+2021-06-25 13:29 (JOBID 29190) epoch 219 lr 1.764427e-02: train_top1 89.437996, valid_top1 93.449997 (best_top1 93.570000)
+2021-06-25 13:33 (JOBID 29190) epoch 220 lr 1.758455e-02: train_top1 89.320000, valid_top1 90.629997 (best_top1 93.570000)
+2021-06-25 13:38 (JOBID 29190) epoch 221 lr 1.752469e-02: train_top1 89.290001, valid_top1 93.189995 (best_top1 93.570000)
+2021-06-25 13:43 (JOBID 29190) epoch 222 lr 1.746469e-02: train_top1 89.389999, valid_top1 92.470001 (best_top1 93.570000)
+2021-06-25 13:47 (JOBID 29190) epoch 223 lr 1.740456e-02: train_top1 89.304001, valid_top1 92.019997 (best_top1 93.570000)
+2021-06-25 13:52 (JOBID 29190) epoch 224 lr 1.734429e-02: train_top1 89.463997, valid_top1 93.149994 (best_top1 93.570000)
+2021-06-25 13:56 (JOBID 29190) epoch 225 lr 1.728388e-02: train_top1 89.279999, valid_top1 92.879997 (best_top1 93.570000)
+2021-06-25 14:01 (JOBID 29190) epoch 226 lr 1.722335e-02: train_top1 89.388000, valid_top1 92.930000 (best_top1 93.570000)
+2021-06-25 14:06 (JOBID 29190) epoch 227 lr 1.716269e-02: train_top1 89.353996, valid_top1 93.669998 (best_top1 93.669998)
+2021-06-25 14:10 (JOBID 29190) epoch 228 lr 1.710190e-02: train_top1 89.458000, valid_top1 92.879997 (best_top1 93.669998)
+2021-06-25 14:15 (JOBID 29190) epoch 229 lr 1.704098e-02: train_top1 89.603996, valid_top1 93.369995 (best_top1 93.669998)
+2021-06-25 14:19 (JOBID 29190) epoch 230 lr 1.697994e-02: train_top1 89.491997, valid_top1 91.919998 (best_top1 93.669998)
+2021-06-25 14:24 (JOBID 29190) epoch 231 lr 1.691878e-02: train_top1 89.563995, valid_top1 92.089996 (best_top1 93.669998)
+2021-06-25 14:29 (JOBID 29190) epoch 232 lr 1.685749e-02: train_top1 89.593994, valid_top1 92.829994 (best_top1 93.669998)
+2021-06-25 14:33 (JOBID 29190) epoch 233 lr 1.679609e-02: train_top1 89.411995, valid_top1 93.849998 (best_top1 93.849998)
+2021-06-25 14:38 (JOBID 29190) epoch 234 lr 1.673457e-02: train_top1 89.529999, valid_top1 93.199997 (best_top1 93.849998)
+2021-06-25 14:42 (JOBID 29190) epoch 235 lr 1.667293e-02: train_top1 89.748001, valid_top1 93.519997 (best_top1 93.849998)
+2021-06-25 14:47 (JOBID 29190) epoch 236 lr 1.661117e-02: train_top1 89.335999, valid_top1 92.680000 (best_top1 93.849998)
+2021-06-25 14:52 (JOBID 29190) epoch 237 lr 1.654931e-02: train_top1 89.537994, valid_top1 93.909996 (best_top1 93.909996)
+2021-06-25 14:56 (JOBID 29190) epoch 238 lr 1.648733e-02: train_top1 89.584000, valid_top1 93.049995 (best_top1 93.909996)
+2021-06-25 15:01 (JOBID 29190) epoch 239 lr 1.642525e-02: train_top1 89.526001, valid_top1 93.139999 (best_top1 93.909996)
+2021-06-25 15:05 (JOBID 29190) epoch 240 lr 1.636305e-02: train_top1 89.706001, valid_top1 93.500000 (best_top1 93.909996)
+2021-06-25 15:10 (JOBID 29190) epoch 241 lr 1.630075e-02: train_top1 89.533997, valid_top1 93.549995 (best_top1 93.909996)
+2021-06-25 15:15 (JOBID 29190) epoch 242 lr 1.623835e-02: train_top1 89.727997, valid_top1 93.470001 (best_top1 93.909996)
+2021-06-25 15:19 (JOBID 29190) epoch 243 lr 1.617585e-02: train_top1 89.697998, valid_top1 92.559998 (best_top1 93.909996)
+2021-06-25 15:24 (JOBID 29190) epoch 244 lr 1.611324e-02: train_top1 89.610001, valid_top1 92.089996 (best_top1 93.909996)
+2021-06-25 15:28 (JOBID 29190) epoch 245 lr 1.605053e-02: train_top1 89.647995, valid_top1 92.889999 (best_top1 93.909996)
+2021-06-25 15:33 (JOBID 29190) epoch 246 lr 1.598773e-02: train_top1 89.783997, valid_top1 92.559998 (best_top1 93.909996)
+2021-06-25 15:38 (JOBID 29190) epoch 247 lr 1.592483e-02: train_top1 89.627998, valid_top1 93.879997 (best_top1 93.909996)
+2021-06-25 15:42 (JOBID 29190) epoch 248 lr 1.586184e-02: train_top1 89.885994, valid_top1 93.779999 (best_top1 93.909996)
+2021-06-25 15:47 (JOBID 29190) epoch 249 lr 1.579875e-02: train_top1 89.486000, valid_top1 93.849998 (best_top1 93.909996)
+2021-06-25 15:51 (JOBID 29190) epoch 250 lr 1.573558e-02: train_top1 89.652000, valid_top1 92.930000 (best_top1 93.909996)
+2021-06-25 15:56 (JOBID 29190) epoch 251 lr 1.567232e-02: train_top1 89.986000, valid_top1 93.279999 (best_top1 93.909996)
+2021-06-25 16:01 (JOBID 29190) epoch 252 lr 1.560896e-02: train_top1 89.935997, valid_top1 93.709999 (best_top1 93.909996)
+2021-06-25 16:05 (JOBID 29190) epoch 253 lr 1.554553e-02: train_top1 89.745995, valid_top1 93.299995 (best_top1 93.909996)
+2021-06-25 16:10 (JOBID 29190) epoch 254 lr 1.548201e-02: train_top1 89.958000, valid_top1 93.239998 (best_top1 93.909996)
+2021-06-25 16:14 (JOBID 29190) epoch 255 lr 1.541841e-02: train_top1 90.049995, valid_top1 92.729996 (best_top1 93.909996)
+2021-06-25 16:19 (JOBID 29190) epoch 256 lr 1.535473e-02: train_top1 90.119995, valid_top1 92.879997 (best_top1 93.909996)
+2021-06-25 16:24 (JOBID 29190) epoch 257 lr 1.529097e-02: train_top1 89.792000, valid_top1 92.750000 (best_top1 93.909996)
+2021-06-25 16:28 (JOBID 29190) epoch 258 lr 1.522713e-02: train_top1 90.119995, valid_top1 93.549995 (best_top1 93.909996)
+2021-06-25 16:33 (JOBID 29190) epoch 259 lr 1.516322e-02: train_top1 89.987999, valid_top1 93.459999 (best_top1 93.909996)
+2021-06-25 16:37 (JOBID 29190) epoch 260 lr 1.509924e-02: train_top1 89.944000, valid_top1 93.820000 (best_top1 93.909996)
+2021-06-25 16:42 (JOBID 29190) epoch 261 lr 1.503518e-02: train_top1 89.783997, valid_top1 93.290001 (best_top1 93.909996)
+2021-06-25 16:47 (JOBID 29190) epoch 262 lr 1.497106e-02: train_top1 90.075996, valid_top1 93.110001 (best_top1 93.909996)
+2021-06-25 16:51 (JOBID 29190) epoch 263 lr 1.490687e-02: train_top1 89.846001, valid_top1 93.049995 (best_top1 93.909996)
+2021-06-25 16:56 (JOBID 29190) epoch 264 lr 1.484261e-02: train_top1 90.287994, valid_top1 93.209999 (best_top1 93.909996)
+2021-06-25 17:00 (JOBID 29190) epoch 265 lr 1.477829e-02: train_top1 89.905998, valid_top1 94.019997 (best_top1 94.019997)
+2021-06-25 17:05 (JOBID 29190) epoch 266 lr 1.471390e-02: train_top1 90.007996, valid_top1 93.599998 (best_top1 94.019997)
+2021-06-25 17:10 (JOBID 29190) epoch 267 lr 1.464945e-02: train_top1 90.061996, valid_top1 92.849998 (best_top1 94.019997)
+2021-06-25 17:14 (JOBID 29190) epoch 268 lr 1.458495e-02: train_top1 89.923996, valid_top1 93.169998 (best_top1 94.019997)
+2021-06-25 17:19 (JOBID 29190) epoch 269 lr 1.452039e-02: train_top1 90.153999, valid_top1 93.649994 (best_top1 94.019997)
+2021-06-25 17:23 (JOBID 29190) epoch 270 lr 1.445577e-02: train_top1 90.383995, valid_top1 93.489998 (best_top1 94.019997)
+2021-06-25 17:28 (JOBID 29190) epoch 271 lr 1.439110e-02: train_top1 90.369995, valid_top1 93.180000 (best_top1 94.019997)
+2021-06-25 17:33 (JOBID 29190) epoch 272 lr 1.432638e-02: train_top1 89.921997, valid_top1 93.299995 (best_top1 94.019997)
+2021-06-25 17:37 (JOBID 29190) epoch 273 lr 1.426161e-02: train_top1 90.117996, valid_top1 92.579994 (best_top1 94.019997)
+2021-06-25 17:42 (JOBID 29190) epoch 274 lr 1.419679e-02: train_top1 89.961998, valid_top1 93.599998 (best_top1 94.019997)
+2021-06-25 17:46 (JOBID 29190) epoch 275 lr 1.413192e-02: train_top1 90.203995, valid_top1 91.180000 (best_top1 94.019997)
+2021-06-25 17:51 (JOBID 29190) epoch 276 lr 1.406701e-02: train_top1 90.239998, valid_top1 93.689995 (best_top1 94.019997)
+2021-06-25 17:56 (JOBID 29190) epoch 277 lr 1.400205e-02: train_top1 90.220001, valid_top1 94.009995 (best_top1 94.019997)
+2021-06-25 18:00 (JOBID 29190) epoch 278 lr 1.393706e-02: train_top1 90.107994, valid_top1 93.299995 (best_top1 94.019997)
+2021-06-25 18:05 (JOBID 29190) epoch 279 lr 1.387202e-02: train_top1 90.073997, valid_top1 93.599998 (best_top1 94.019997)
+2021-06-25 18:09 (JOBID 29190) epoch 280 lr 1.380695e-02: train_top1 90.206001, valid_top1 93.379997 (best_top1 94.019997)
+2021-06-25 18:14 (JOBID 29190) epoch 281 lr 1.374184e-02: train_top1 90.304001, valid_top1 93.549995 (best_top1 94.019997)
+2021-06-25 18:19 (JOBID 29190) epoch 282 lr 1.367669e-02: train_top1 90.355995, valid_top1 93.549995 (best_top1 94.019997)
+2021-06-25 18:23 (JOBID 29190) epoch 283 lr 1.361152e-02: train_top1 90.175995, valid_top1 93.750000 (best_top1 94.019997)
+2021-06-25 18:28 (JOBID 29190) epoch 284 lr 1.354631e-02: train_top1 90.385994, valid_top1 93.839996 (best_top1 94.019997)
+2021-06-25 18:32 (JOBID 29190) epoch 285 lr 1.348108e-02: train_top1 90.391998, valid_top1 93.529999 (best_top1 94.019997)
+2021-06-25 18:37 (JOBID 29190) epoch 286 lr 1.341582e-02: train_top1 90.313995, valid_top1 93.860001 (best_top1 94.019997)
+2021-06-25 18:42 (JOBID 29190) epoch 287 lr 1.335053e-02: train_top1 90.269997, valid_top1 93.989998 (best_top1 94.019997)
+2021-06-25 18:46 (JOBID 29190) epoch 288 lr 1.328522e-02: train_top1 90.307999, valid_top1 93.829994 (best_top1 94.019997)
+2021-06-25 18:51 (JOBID 29190) epoch 289 lr 1.321989e-02: train_top1 90.357994, valid_top1 93.209999 (best_top1 94.019997)
+2021-06-25 18:55 (JOBID 29190) epoch 290 lr 1.315454e-02: train_top1 90.388000, valid_top1 94.579994 (best_top1 94.579994)
+2021-06-25 19:00 (JOBID 29190) epoch 291 lr 1.308917e-02: train_top1 90.411995, valid_top1 93.000000 (best_top1 94.579994)
+2021-06-25 19:05 (JOBID 29190) epoch 292 lr 1.302379e-02: train_top1 90.577995, valid_top1 93.599998 (best_top1 94.579994)
+2021-06-25 19:09 (JOBID 29190) epoch 293 lr 1.295839e-02: train_top1 90.491997, valid_top1 94.220001 (best_top1 94.579994)
+2021-06-25 19:14 (JOBID 29190) epoch 294 lr 1.289298e-02: train_top1 90.371994, valid_top1 94.659996 (best_top1 94.659996)
+2021-06-25 19:18 (JOBID 29190) epoch 295 lr 1.282755e-02: train_top1 90.787994, valid_top1 93.649994 (best_top1 94.659996)
+2021-06-25 19:23 (JOBID 29190) epoch 296 lr 1.276212e-02: train_top1 90.437996, valid_top1 94.029999 (best_top1 94.659996)
+2021-06-25 19:28 (JOBID 29190) epoch 297 lr 1.269668e-02: train_top1 90.667999, valid_top1 94.379997 (best_top1 94.659996)
+2021-06-25 19:32 (JOBID 29190) epoch 298 lr 1.263124e-02: train_top1 90.717995, valid_top1 94.209999 (best_top1 94.659996)
+2021-06-25 19:37 (JOBID 29190) epoch 299 lr 1.256579e-02: train_top1 90.631996, valid_top1 94.259995 (best_top1 94.659996)
+2021-06-25 19:41 (JOBID 29190) epoch 300 lr 1.250034e-02: train_top1 90.489998, valid_top1 94.149994 (best_top1 94.659996)
+2021-06-25 19:46 (JOBID 29190) epoch 301 lr 1.243489e-02: train_top1 90.673996, valid_top1 93.860001 (best_top1 94.659996)
+2021-06-25 19:51 (JOBID 29190) epoch 302 lr 1.236944e-02: train_top1 90.723999, valid_top1 94.199997 (best_top1 94.659996)
+2021-06-25 19:55 (JOBID 29190) epoch 303 lr 1.230400e-02: train_top1 90.771996, valid_top1 94.189995 (best_top1 94.659996)
+2021-06-25 20:00 (JOBID 29190) epoch 304 lr 1.223856e-02: train_top1 90.681999, valid_top1 94.229996 (best_top1 94.659996)
+2021-06-25 20:04 (JOBID 29190) epoch 305 lr 1.217313e-02: train_top1 90.631996, valid_top1 94.459999 (best_top1 94.659996)
+2021-06-25 20:09 (JOBID 29190) epoch 306 lr 1.210771e-02: train_top1 90.649994, valid_top1 94.470001 (best_top1 94.659996)
+2021-06-25 20:14 (JOBID 29190) epoch 307 lr 1.204229e-02: train_top1 90.888000, valid_top1 93.849998 (best_top1 94.659996)
+2021-06-25 20:18 (JOBID 29190) epoch 308 lr 1.197690e-02: train_top1 90.961998, valid_top1 94.169998 (best_top1 94.659996)
+2021-06-25 20:23 (JOBID 29190) epoch 309 lr 1.191151e-02: train_top1 90.647995, valid_top1 94.279999 (best_top1 94.659996)
+2021-06-25 20:27 (JOBID 29190) epoch 310 lr 1.184614e-02: train_top1 91.037994, valid_top1 94.799995 (best_top1 94.799995)
+2021-06-25 20:32 (JOBID 29190) epoch 311 lr 1.178079e-02: train_top1 90.687996, valid_top1 94.220001 (best_top1 94.799995)
+2021-06-25 20:37 (JOBID 29190) epoch 312 lr 1.171546e-02: train_top1 90.875999, valid_top1 94.500000 (best_top1 94.799995)
+2021-06-25 20:41 (JOBID 29190) epoch 313 lr 1.165015e-02: train_top1 90.771996, valid_top1 94.309998 (best_top1 94.799995)
+2021-06-25 20:46 (JOBID 29190) epoch 314 lr 1.158486e-02: train_top1 91.007996, valid_top1 94.449997 (best_top1 94.799995)
+2021-06-25 20:50 (JOBID 29190) epoch 315 lr 1.151960e-02: train_top1 90.939995, valid_top1 94.139999 (best_top1 94.799995)
+2021-06-25 20:55 (JOBID 29190) epoch 316 lr 1.145437e-02: train_top1 90.832001, valid_top1 94.309998 (best_top1 94.799995)
+2021-06-25 21:00 (JOBID 29190) epoch 317 lr 1.138916e-02: train_top1 90.956001, valid_top1 94.329994 (best_top1 94.799995)
+2021-06-25 21:04 (JOBID 29190) epoch 318 lr 1.132399e-02: train_top1 90.860001, valid_top1 94.180000 (best_top1 94.799995)
+2021-06-25 21:09 (JOBID 29190) epoch 319 lr 1.125884e-02: train_top1 91.147995, valid_top1 94.009995 (best_top1 94.799995)
+2021-06-25 21:13 (JOBID 29190) epoch 320 lr 1.119373e-02: train_top1 91.157997, valid_top1 94.379997 (best_top1 94.799995)
+2021-06-25 21:18 (JOBID 29190) epoch 321 lr 1.112866e-02: train_top1 91.043999, valid_top1 94.070000 (best_top1 94.799995)
+2021-06-25 21:23 (JOBID 29190) epoch 322 lr 1.106363e-02: train_top1 90.984001, valid_top1 94.409996 (best_top1 94.799995)
+2021-06-25 21:27 (JOBID 29190) epoch 323 lr 1.099863e-02: train_top1 91.169998, valid_top1 94.979996 (best_top1 94.979996)
+2021-06-25 21:32 (JOBID 29190) epoch 324 lr 1.093368e-02: train_top1 91.071999, valid_top1 93.329994 (best_top1 94.979996)
+2021-06-25 21:36 (JOBID 29190) epoch 325 lr 1.086876e-02: train_top1 91.155998, valid_top1 94.259995 (best_top1 94.979996)
+2021-06-25 21:41 (JOBID 29190) epoch 326 lr 1.080390e-02: train_top1 91.178001, valid_top1 95.000000 (best_top1 95.000000)
+2021-06-25 21:46 (JOBID 29190) epoch 327 lr 1.073908e-02: train_top1 91.321999, valid_top1 94.250000 (best_top1 95.000000)
+2021-06-25 21:50 (JOBID 29190) epoch 328 lr 1.067430e-02: train_top1 91.215996, valid_top1 94.379997 (best_top1 95.000000)
+2021-06-25 21:55 (JOBID 29190) epoch 329 lr 1.060958e-02: train_top1 91.295998, valid_top1 94.449997 (best_top1 95.000000)
+2021-06-25 21:59 (JOBID 29190) epoch 330 lr 1.054491e-02: train_top1 91.279999, valid_top1 94.349998 (best_top1 95.000000)
+2021-06-25 22:04 (JOBID 29190) epoch 331 lr 1.048029e-02: train_top1 91.241997, valid_top1 94.839996 (best_top1 95.000000)
+2021-06-25 22:09 (JOBID 29190) epoch 332 lr 1.041573e-02: train_top1 91.327995, valid_top1 94.129997 (best_top1 95.000000)
+2021-06-25 22:13 (JOBID 29190) epoch 333 lr 1.035123e-02: train_top1 91.346001, valid_top1 94.399994 (best_top1 95.000000)
+2021-06-25 22:18 (JOBID 29190) epoch 334 lr 1.028678e-02: train_top1 91.229996, valid_top1 94.470001 (best_top1 95.000000)
+2021-06-25 22:23 (JOBID 29190) epoch 335 lr 1.022240e-02: train_top1 91.507996, valid_top1 94.809998 (best_top1 95.000000)
+2021-06-25 22:27 (JOBID 29190) epoch 336 lr 1.015807e-02: train_top1 91.315994, valid_top1 94.449997 (best_top1 95.000000)
+2021-06-25 22:32 (JOBID 29190) epoch 337 lr 1.009382e-02: train_top1 91.362000, valid_top1 94.809998 (best_top1 95.000000)
+2021-06-25 22:36 (JOBID 29190) epoch 338 lr 1.002962e-02: train_top1 91.414001, valid_top1 94.549995 (best_top1 95.000000)
+2021-06-25 22:41 (JOBID 29190) epoch 339 lr 9.965499e-03: train_top1 91.147995, valid_top1 94.979996 (best_top1 95.000000)
+2021-06-25 22:46 (JOBID 29190) epoch 340 lr 9.901444e-03: train_top1 91.217995, valid_top1 95.049995 (best_top1 95.049995)
+2021-06-25 22:50 (JOBID 29190) epoch 341 lr 9.837461e-03: train_top1 91.194000, valid_top1 94.759995 (best_top1 95.049995)
+2021-06-25 22:55 (JOBID 29190) epoch 342 lr 9.773550e-03: train_top1 91.459999, valid_top1 94.409996 (best_top1 95.049995)
+2021-06-25 22:59 (JOBID 29190) epoch 343 lr 9.709714e-03: train_top1 91.743996, valid_top1 94.570000 (best_top1 95.049995)
+2021-06-25 23:04 (JOBID 29190) epoch 344 lr 9.645955e-03: train_top1 91.417999, valid_top1 94.419998 (best_top1 95.049995)
+2021-06-25 23:09 (JOBID 29190) epoch 345 lr 9.582273e-03: train_top1 91.661995, valid_top1 94.509995 (best_top1 95.049995)
+2021-06-25 23:13 (JOBID 29190) epoch 346 lr 9.518672e-03: train_top1 91.783997, valid_top1 94.180000 (best_top1 95.049995)
+2021-06-25 23:18 (JOBID 29190) epoch 347 lr 9.455153e-03: train_top1 91.543999, valid_top1 94.689995 (best_top1 95.049995)
+2021-06-25 23:22 (JOBID 29190) epoch 348 lr 9.391717e-03: train_top1 91.655998, valid_top1 94.229996 (best_top1 95.049995)
+2021-06-25 23:27 (JOBID 29190) epoch 349 lr 9.328366e-03: train_top1 91.554001, valid_top1 94.540001 (best_top1 95.049995)
+2021-06-25 23:32 (JOBID 29190) epoch 350 lr 9.265102e-03: train_top1 91.589996, valid_top1 93.949997 (best_top1 95.049995)
+2021-06-25 23:36 (JOBID 29190) epoch 351 lr 9.201927e-03: train_top1 91.765999, valid_top1 94.799995 (best_top1 95.049995)
+2021-06-25 23:41 (JOBID 29190) epoch 352 lr 9.138843e-03: train_top1 91.851997, valid_top1 94.829994 (best_top1 95.049995)
+2021-06-25 23:46 (JOBID 29190) epoch 353 lr 9.075850e-03: train_top1 91.713997, valid_top1 94.649994 (best_top1 95.049995)
+2021-06-25 23:50 (JOBID 29190) epoch 354 lr 9.012952e-03: train_top1 91.799995, valid_top1 94.750000 (best_top1 95.049995)
+2021-06-25 23:55 (JOBID 29190) epoch 355 lr 8.950149e-03: train_top1 91.723999, valid_top1 94.449997 (best_top1 95.049995)
+2021-06-25 23:59 (JOBID 29190) epoch 356 lr 8.887443e-03: train_top1 91.741997, valid_top1 94.699997 (best_top1 95.049995)
+2021-06-26 00:04 (JOBID 29190) epoch 357 lr 8.824836e-03: train_top1 91.991997, valid_top1 94.739998 (best_top1 95.049995)
+2021-06-26 00:09 (JOBID 29190) epoch 358 lr 8.762330e-03: train_top1 92.068001, valid_top1 94.939995 (best_top1 95.049995)
+2021-06-26 00:13 (JOBID 29190) epoch 359 lr 8.699927e-03: train_top1 91.928001, valid_top1 94.949997 (best_top1 95.049995)
+2021-06-26 00:18 (JOBID 29190) epoch 360 lr 8.637628e-03: train_top1 91.905998, valid_top1 94.709999 (best_top1 95.049995)
+2021-06-26 00:23 (JOBID 29190) epoch 361 lr 8.575435e-03: train_top1 91.895996, valid_top1 95.110001 (best_top1 95.110001)
+2021-06-26 00:27 (JOBID 29190) epoch 362 lr 8.513349e-03: train_top1 92.042000, valid_top1 94.720001 (best_top1 95.110001)
+2021-06-26 00:32 (JOBID 29190) epoch 363 lr 8.451372e-03: train_top1 91.965996, valid_top1 94.229996 (best_top1 95.110001)
+2021-06-26 00:36 (JOBID 29190) epoch 364 lr 8.389507e-03: train_top1 91.958000, valid_top1 94.759995 (best_top1 95.110001)
+2021-06-26 00:41 (JOBID 29190) epoch 365 lr 8.327754e-03: train_top1 91.995995, valid_top1 94.470001 (best_top1 95.110001)
+2021-06-26 00:46 (JOBID 29190) epoch 366 lr 8.266116e-03: train_top1 91.897995, valid_top1 95.009995 (best_top1 95.110001)
+2021-06-26 00:50 (JOBID 29190) epoch 367 lr 8.204594e-03: train_top1 92.033997, valid_top1 95.089996 (best_top1 95.110001)
+2021-06-26 00:55 (JOBID 29190) epoch 368 lr 8.143190e-03: train_top1 92.079994, valid_top1 94.799995 (best_top1 95.110001)
+2021-06-26 00:59 (JOBID 29190) epoch 369 lr 8.081905e-03: train_top1 92.217995, valid_top1 94.579994 (best_top1 95.110001)
+2021-06-26 01:04 (JOBID 29190) epoch 370 lr 8.020741e-03: train_top1 92.209999, valid_top1 94.549995 (best_top1 95.110001)
+2021-06-26 01:09 (JOBID 29190) epoch 371 lr 7.959700e-03: train_top1 92.357994, valid_top1 95.089996 (best_top1 95.110001)
+2021-06-26 01:13 (JOBID 29190) epoch 372 lr 7.898783e-03: train_top1 92.071999, valid_top1 95.159996 (best_top1 95.159996)
+2021-06-26 01:18 (JOBID 29190) epoch 373 lr 7.837993e-03: train_top1 92.381996, valid_top1 95.320000 (best_top1 95.320000)
+2021-06-26 01:23 (JOBID 29190) epoch 374 lr 7.777330e-03: train_top1 92.320000, valid_top1 94.860001 (best_top1 95.320000)
+2021-06-26 01:27 (JOBID 29190) epoch 375 lr 7.716797e-03: train_top1 92.307999, valid_top1 94.839996 (best_top1 95.320000)
+2021-06-26 01:32 (JOBID 29190) epoch 376 lr 7.656395e-03: train_top1 92.335999, valid_top1 95.269997 (best_top1 95.320000)
+2021-06-26 01:37 (JOBID 29190) epoch 377 lr 7.596126e-03: train_top1 92.397995, valid_top1 95.110001 (best_top1 95.320000)
+2021-06-26 01:41 (JOBID 29190) epoch 378 lr 7.535991e-03: train_top1 92.320000, valid_top1 95.110001 (best_top1 95.320000)
+2021-06-26 01:46 (JOBID 29190) epoch 379 lr 7.475993e-03: train_top1 92.537994, valid_top1 95.149994 (best_top1 95.320000)
+2021-06-26 01:50 (JOBID 29190) epoch 380 lr 7.416132e-03: train_top1 92.449997, valid_top1 95.169998 (best_top1 95.320000)
+2021-06-26 01:55 (JOBID 29190) epoch 381 lr 7.356410e-03: train_top1 92.459999, valid_top1 95.199997 (best_top1 95.320000)
+2021-06-26 02:00 (JOBID 29190) epoch 382 lr 7.296830e-03: train_top1 92.535995, valid_top1 95.290001 (best_top1 95.320000)
+2021-06-26 02:04 (JOBID 29190) epoch 383 lr 7.237392e-03: train_top1 92.823997, valid_top1 95.629997 (best_top1 95.629997)
+2021-06-26 02:09 (JOBID 29190) epoch 384 lr 7.178099e-03: train_top1 92.645996, valid_top1 95.209999 (best_top1 95.629997)
+2021-06-26 02:14 (JOBID 29190) epoch 385 lr 7.118951e-03: train_top1 92.495995, valid_top1 95.389999 (best_top1 95.629997)
+2021-06-26 02:18 (JOBID 29190) epoch 386 lr 7.059951e-03: train_top1 92.591995, valid_top1 95.360001 (best_top1 95.629997)
+2021-06-26 02:23 (JOBID 29190) epoch 387 lr 7.001100e-03: train_top1 92.461998, valid_top1 95.369995 (best_top1 95.629997)
+2021-06-26 02:27 (JOBID 29190) epoch 388 lr 6.942400e-03: train_top1 92.848000, valid_top1 94.759995 (best_top1 95.629997)
+2021-06-26 02:32 (JOBID 29190) epoch 389 lr 6.883852e-03: train_top1 92.678001, valid_top1 94.869995 (best_top1 95.629997)
+2021-06-26 02:37 (JOBID 29190) epoch 390 lr 6.825459e-03: train_top1 92.755997, valid_top1 95.059998 (best_top1 95.629997)
+2021-06-26 02:41 (JOBID 29190) epoch 391 lr 6.767220e-03: train_top1 92.815994, valid_top1 95.720001 (best_top1 95.720001)
+2021-06-26 02:46 (JOBID 29190) epoch 392 lr 6.709139e-03: train_top1 92.855995, valid_top1 94.970001 (best_top1 95.720001)
+2021-06-26 02:51 (JOBID 29190) epoch 393 lr 6.651217e-03: train_top1 92.907997, valid_top1 95.180000 (best_top1 95.720001)
+2021-06-26 02:55 (JOBID 29190) epoch 394 lr 6.593455e-03: train_top1 92.897995, valid_top1 95.290001 (best_top1 95.720001)
+2021-06-26 03:00 (JOBID 29190) epoch 395 lr 6.535855e-03: train_top1 93.075996, valid_top1 95.619995 (best_top1 95.720001)
+2021-06-26 03:05 (JOBID 29190) epoch 396 lr 6.478419e-03: train_top1 93.065994, valid_top1 95.470001 (best_top1 95.720001)
+2021-06-26 03:09 (JOBID 29190) epoch 397 lr 6.421147e-03: train_top1 93.040001, valid_top1 95.199997 (best_top1 95.720001)
+2021-06-26 03:14 (JOBID 29190) epoch 398 lr 6.364043e-03: train_top1 93.229996, valid_top1 95.149994 (best_top1 95.720001)
+2021-06-26 03:18 (JOBID 29190) epoch 399 lr 6.307106e-03: train_top1 93.023994, valid_top1 95.129997 (best_top1 95.720001)
+2021-06-26 03:23 (JOBID 29190) epoch 400 lr 6.250340e-03: train_top1 93.089996, valid_top1 95.519997 (best_top1 95.720001)
+2021-06-26 03:28 (JOBID 29190) epoch 401 lr 6.193744e-03: train_top1 93.180000, valid_top1 95.549995 (best_top1 95.720001)
+2021-06-26 03:32 (JOBID 29190) epoch 402 lr 6.137322e-03: train_top1 93.444000, valid_top1 95.610001 (best_top1 95.720001)
+2021-06-26 03:37 (JOBID 29190) epoch 403 lr 6.081074e-03: train_top1 92.919998, valid_top1 95.079994 (best_top1 95.720001)
+2021-06-26 03:42 (JOBID 29190) epoch 404 lr 6.025002e-03: train_top1 93.251999, valid_top1 95.619995 (best_top1 95.720001)
+2021-06-26 03:46 (JOBID 29190) epoch 405 lr 5.969107e-03: train_top1 93.089996, valid_top1 95.399994 (best_top1 95.720001)
+2021-06-26 03:51 (JOBID 29190) epoch 406 lr 5.913392e-03: train_top1 93.163994, valid_top1 95.489998 (best_top1 95.720001)
+2021-06-26 03:56 (JOBID 29190) epoch 407 lr 5.857857e-03: train_top1 93.417999, valid_top1 95.489998 (best_top1 95.720001)
+2021-06-26 04:00 (JOBID 29190) epoch 408 lr 5.802505e-03: train_top1 93.323997, valid_top1 95.759995 (best_top1 95.759995)
+2021-06-26 04:05 (JOBID 29190) epoch 409 lr 5.747335e-03: train_top1 93.397995, valid_top1 95.689995 (best_top1 95.759995)
+2021-06-26 04:10 (JOBID 29190) epoch 410 lr 5.692351e-03: train_top1 93.399994, valid_top1 95.449997 (best_top1 95.759995)
+2021-06-26 04:14 (JOBID 29190) epoch 411 lr 5.637554e-03: train_top1 93.199997, valid_top1 95.619995 (best_top1 95.759995)
+2021-06-26 04:19 (JOBID 29190) epoch 412 lr 5.582945e-03: train_top1 93.416000, valid_top1 95.599998 (best_top1 95.759995)
+2021-06-26 04:23 (JOBID 29190) epoch 413 lr 5.528526e-03: train_top1 93.355995, valid_top1 95.699997 (best_top1 95.759995)
+2021-06-26 04:28 (JOBID 29190) epoch 414 lr 5.474297e-03: train_top1 93.582001, valid_top1 95.779999 (best_top1 95.779999)
+2021-06-26 04:33 (JOBID 29190) epoch 415 lr 5.420261e-03: train_top1 93.437996, valid_top1 95.729996 (best_top1 95.779999)
+2021-06-26 04:37 (JOBID 29190) epoch 416 lr 5.366420e-03: train_top1 93.402000, valid_top1 95.309998 (best_top1 95.779999)
+2021-06-26 04:42 (JOBID 29190) epoch 417 lr 5.312774e-03: train_top1 93.695999, valid_top1 95.790001 (best_top1 95.790001)
+2021-06-26 04:47 (JOBID 29190) epoch 418 lr 5.259325e-03: train_top1 93.554001, valid_top1 96.099998 (best_top1 96.099998)
+2021-06-26 04:51 (JOBID 29190) epoch 419 lr 5.206074e-03: train_top1 93.582001, valid_top1 95.649994 (best_top1 96.099998)
+2021-06-26 04:56 (JOBID 29190) epoch 420 lr 5.153024e-03: train_top1 93.776001, valid_top1 95.860001 (best_top1 96.099998)
+2021-06-26 05:01 (JOBID 29190) epoch 421 lr 5.100174e-03: train_top1 93.837997, valid_top1 95.820000 (best_top1 96.099998)
+2021-06-26 05:05 (JOBID 29190) epoch 422 lr 5.047528e-03: train_top1 93.848000, valid_top1 95.399994 (best_top1 96.099998)
+2021-06-26 05:10 (JOBID 29190) epoch 423 lr 4.995086e-03: train_top1 93.839996, valid_top1 95.869995 (best_top1 96.099998)
+2021-06-26 05:15 (JOBID 29190) epoch 424 lr 4.942850e-03: train_top1 93.871994, valid_top1 95.799995 (best_top1 96.099998)
+2021-06-26 05:19 (JOBID 29190) epoch 425 lr 4.890821e-03: train_top1 93.899994, valid_top1 95.779999 (best_top1 96.099998)
+2021-06-26 05:24 (JOBID 29190) epoch 426 lr 4.839001e-03: train_top1 93.888000, valid_top1 96.029999 (best_top1 96.099998)
+2021-06-26 05:29 (JOBID 29190) epoch 427 lr 4.787391e-03: train_top1 93.921997, valid_top1 95.919998 (best_top1 96.099998)
+2021-06-26 05:33 (JOBID 29190) epoch 428 lr 4.735992e-03: train_top1 94.017998, valid_top1 95.959999 (best_top1 96.099998)
+2021-06-26 05:38 (JOBID 29190) epoch 429 lr 4.684806e-03: train_top1 94.085999, valid_top1 95.869995 (best_top1 96.099998)
+2021-06-26 05:42 (JOBID 29190) epoch 430 lr 4.633834e-03: train_top1 93.823997, valid_top1 95.909996 (best_top1 96.099998)
+2021-06-26 05:47 (JOBID 29190) epoch 431 lr 4.583078e-03: train_top1 94.173996, valid_top1 95.680000 (best_top1 96.099998)
+2021-06-26 05:52 (JOBID 29190) epoch 432 lr 4.532539e-03: train_top1 93.963997, valid_top1 96.000000 (best_top1 96.099998)
+2021-06-26 05:56 (JOBID 29190) epoch 433 lr 4.482219e-03: train_top1 94.189995, valid_top1 96.029999 (best_top1 96.099998)
+2021-06-26 06:01 (JOBID 29190) epoch 434 lr 4.432118e-03: train_top1 94.217995, valid_top1 96.029999 (best_top1 96.099998)
+2021-06-26 06:06 (JOBID 29190) epoch 435 lr 4.382238e-03: train_top1 93.953995, valid_top1 96.040001 (best_top1 96.099998)
+2021-06-26 06:10 (JOBID 29190) epoch 436 lr 4.332581e-03: train_top1 94.215996, valid_top1 96.129997 (best_top1 96.129997)
+2021-06-26 06:15 (JOBID 29190) epoch 437 lr 4.283148e-03: train_top1 94.458000, valid_top1 96.199997 (best_top1 96.199997)
+2021-06-26 06:20 (JOBID 29190) epoch 438 lr 4.233940e-03: train_top1 94.311996, valid_top1 96.180000 (best_top1 96.199997)
+2021-06-26 06:24 (JOBID 29190) epoch 439 lr 4.184959e-03: train_top1 94.369995, valid_top1 96.259995 (best_top1 96.259995)
+2021-06-26 06:29 (JOBID 29190) epoch 440 lr 4.136206e-03: train_top1 94.467995, valid_top1 96.119995 (best_top1 96.259995)
+2021-06-26 06:34 (JOBID 29190) epoch 441 lr 4.087682e-03: train_top1 94.473999, valid_top1 96.040001 (best_top1 96.259995)
+2021-06-26 06:38 (JOBID 29190) epoch 442 lr 4.039389e-03: train_top1 94.570000, valid_top1 96.199997 (best_top1 96.259995)
+2021-06-26 06:43 (JOBID 29190) epoch 443 lr 3.991328e-03: train_top1 94.481995, valid_top1 96.079994 (best_top1 96.259995)
+2021-06-26 06:48 (JOBID 29190) epoch 444 lr 3.943500e-03: train_top1 94.639999, valid_top1 96.180000 (best_top1 96.259995)
+2021-06-26 06:52 (JOBID 29190) epoch 445 lr 3.895906e-03: train_top1 94.605995, valid_top1 96.369995 (best_top1 96.369995)
+2021-06-26 06:57 (JOBID 29190) epoch 446 lr 3.848549e-03: train_top1 94.533997, valid_top1 96.180000 (best_top1 96.369995)
+2021-06-26 07:02 (JOBID 29190) epoch 447 lr 3.801429e-03: train_top1 94.512001, valid_top1 96.119995 (best_top1 96.369995)
+2021-06-26 07:06 (JOBID 29190) epoch 448 lr 3.754547e-03: train_top1 94.655998, valid_top1 96.079994 (best_top1 96.369995)
+2021-06-26 07:11 (JOBID 29190) epoch 449 lr 3.707905e-03: train_top1 94.689995, valid_top1 95.899994 (best_top1 96.369995)
+2021-06-26 07:16 (JOBID 29190) epoch 450 lr 3.661504e-03: train_top1 94.645996, valid_top1 96.169998 (best_top1 96.369995)
+2021-06-26 07:20 (JOBID 29190) epoch 451 lr 3.615345e-03: train_top1 94.799995, valid_top1 96.239998 (best_top1 96.369995)
+2021-06-26 07:25 (JOBID 29190) epoch 452 lr 3.569430e-03: train_top1 94.764000, valid_top1 96.169998 (best_top1 96.369995)
+2021-06-26 07:30 (JOBID 29190) epoch 453 lr 3.523760e-03: train_top1 94.891998, valid_top1 96.509995 (best_top1 96.509995)
+2021-06-26 07:34 (JOBID 29190) epoch 454 lr 3.478335e-03: train_top1 94.641998, valid_top1 96.379997 (best_top1 96.509995)
+2021-06-26 07:39 (JOBID 29190) epoch 455 lr 3.433159e-03: train_top1 94.987999, valid_top1 96.239998 (best_top1 96.509995)
+2021-06-26 07:44 (JOBID 29190) epoch 456 lr 3.388230e-03: train_top1 95.040001, valid_top1 96.320000 (best_top1 96.509995)
+2021-06-26 07:48 (JOBID 29190) epoch 457 lr 3.343552e-03: train_top1 94.893997, valid_top1 96.259995 (best_top1 96.509995)
+2021-06-26 07:53 (JOBID 29190) epoch 458 lr 3.299125e-03: train_top1 94.972000, valid_top1 96.449997 (best_top1 96.509995)
+2021-06-26 07:58 (JOBID 29190) epoch 459 lr 3.254949e-03: train_top1 95.115997, valid_top1 96.290001 (best_top1 96.509995)
+2021-06-26 08:03 (JOBID 29190) epoch 460 lr 3.211028e-03: train_top1 95.127998, valid_top1 96.399994 (best_top1 96.509995)
+2021-06-26 08:07 (JOBID 29190) epoch 461 lr 3.167361e-03: train_top1 95.138000, valid_top1 96.309998 (best_top1 96.509995)
+2021-06-26 08:12 (JOBID 29190) epoch 462 lr 3.123950e-03: train_top1 95.209999, valid_top1 96.399994 (best_top1 96.509995)
+2021-06-26 08:17 (JOBID 29190) epoch 463 lr 3.080796e-03: train_top1 95.103996, valid_top1 96.559998 (best_top1 96.559998)
+2021-06-26 08:21 (JOBID 29190) epoch 464 lr 3.037900e-03: train_top1 95.231995, valid_top1 96.479996 (best_top1 96.559998)
+2021-06-26 08:26 (JOBID 29190) epoch 465 lr 2.995263e-03: train_top1 95.295998, valid_top1 96.239998 (best_top1 96.559998)
+2021-06-26 08:31 (JOBID 29190) epoch 466 lr 2.952888e-03: train_top1 95.239998, valid_top1 96.470001 (best_top1 96.559998)
+2021-06-26 08:35 (JOBID 29190) epoch 467 lr 2.910773e-03: train_top1 95.223999, valid_top1 96.709999 (best_top1 96.709999)
+2021-06-26 08:40 (JOBID 29190) epoch 468 lr 2.868922e-03: train_top1 95.262001, valid_top1 96.229996 (best_top1 96.709999)
+2021-06-26 08:45 (JOBID 29190) epoch 469 lr 2.827335e-03: train_top1 95.610001, valid_top1 96.479996 (best_top1 96.709999)
+2021-06-26 08:49 (JOBID 29190) epoch 470 lr 2.786013e-03: train_top1 95.407997, valid_top1 96.559998 (best_top1 96.709999)
+2021-06-26 08:54 (JOBID 29190) epoch 471 lr 2.744958e-03: train_top1 95.411995, valid_top1 96.329994 (best_top1 96.709999)
+2021-06-26 08:59 (JOBID 29190) epoch 472 lr 2.704169e-03: train_top1 95.325996, valid_top1 96.360001 (best_top1 96.709999)
+2021-06-26 09:03 (JOBID 29190) epoch 473 lr 2.663650e-03: train_top1 95.547997, valid_top1 96.449997 (best_top1 96.709999)
+2021-06-26 09:08 (JOBID 29190) epoch 474 lr 2.623400e-03: train_top1 95.407997, valid_top1 96.419998 (best_top1 96.709999)
+2021-06-26 09:13 (JOBID 29190) epoch 475 lr 2.583421e-03: train_top1 95.545998, valid_top1 96.449997 (best_top1 96.709999)
+2021-06-26 09:17 (JOBID 29190) epoch 476 lr 2.543713e-03: train_top1 95.736000, valid_top1 96.209999 (best_top1 96.709999)
+2021-06-26 09:22 (JOBID 29190) epoch 477 lr 2.504279e-03: train_top1 95.565994, valid_top1 96.500000 (best_top1 96.709999)
+2021-06-26 09:27 (JOBID 29190) epoch 478 lr 2.465119e-03: train_top1 95.853996, valid_top1 96.399994 (best_top1 96.709999)
+2021-06-26 09:31 (JOBID 29190) epoch 479 lr 2.426234e-03: train_top1 95.734001, valid_top1 96.409996 (best_top1 96.709999)
+2021-06-26 09:36 (JOBID 29190) epoch 480 lr 2.387625e-03: train_top1 95.771996, valid_top1 96.739998 (best_top1 96.739998)
+2021-06-26 09:41 (JOBID 29190) epoch 481 lr 2.349293e-03: train_top1 95.645996, valid_top1 96.540001 (best_top1 96.739998)
+2021-06-26 09:45 (JOBID 29190) epoch 482 lr 2.311240e-03: train_top1 95.841995, valid_top1 96.659996 (best_top1 96.739998)
+2021-06-26 09:50 (JOBID 29190) epoch 483 lr 2.273466e-03: train_top1 96.098000, valid_top1 96.579994 (best_top1 96.739998)
+2021-06-26 09:55 (JOBID 29190) epoch 484 lr 2.235972e-03: train_top1 95.956001, valid_top1 96.430000 (best_top1 96.739998)
+2021-06-26 09:59 (JOBID 29190) epoch 485 lr 2.198760e-03: train_top1 95.998001, valid_top1 96.619995 (best_top1 96.739998)
+2021-06-26 10:04 (JOBID 29190) epoch 486 lr 2.161830e-03: train_top1 95.947998, valid_top1 96.430000 (best_top1 96.739998)
+2021-06-26 10:09 (JOBID 29190) epoch 487 lr 2.125183e-03: train_top1 96.057999, valid_top1 96.610001 (best_top1 96.739998)
+2021-06-26 10:13 (JOBID 29190) epoch 488 lr 2.088821e-03: train_top1 96.099998, valid_top1 96.610001 (best_top1 96.739998)
+2021-06-26 10:18 (JOBID 29190) epoch 489 lr 2.052745e-03: train_top1 96.138000, valid_top1 96.649994 (best_top1 96.739998)
+2021-06-26 10:23 (JOBID 29190) epoch 490 lr 2.016955e-03: train_top1 96.079994, valid_top1 96.589996 (best_top1 96.739998)
+2021-06-26 10:27 (JOBID 29190) epoch 491 lr 1.981452e-03: train_top1 96.304001, valid_top1 96.709999 (best_top1 96.739998)
+2021-06-26 10:32 (JOBID 29190) epoch 492 lr 1.946238e-03: train_top1 96.157997, valid_top1 96.639999 (best_top1 96.739998)
+2021-06-26 10:37 (JOBID 29190) epoch 493 lr 1.911313e-03: train_top1 96.283997, valid_top1 96.709999 (best_top1 96.739998)
+2021-06-26 10:41 (JOBID 29190) epoch 494 lr 1.876678e-03: train_top1 96.273994, valid_top1 96.759995 (best_top1 96.759995)
+2021-06-26 10:46 (JOBID 29190) epoch 495 lr 1.842334e-03: train_top1 96.276001, valid_top1 96.790001 (best_top1 96.790001)
+2021-06-26 10:51 (JOBID 29190) epoch 496 lr 1.808283e-03: train_top1 96.279999, valid_top1 96.529999 (best_top1 96.790001)
+2021-06-26 10:55 (JOBID 29190) epoch 497 lr 1.774525e-03: train_top1 96.403999, valid_top1 96.739998 (best_top1 96.790001)
+2021-06-26 11:00 (JOBID 29190) epoch 498 lr 1.741061e-03: train_top1 96.439995, valid_top1 96.680000 (best_top1 96.790001)
+2021-06-26 11:05 (JOBID 29190) epoch 499 lr 1.707892e-03: train_top1 96.549995, valid_top1 96.610001 (best_top1 96.790001)
+2021-06-26 11:10 (JOBID 29190) epoch 500 lr 1.675019e-03: train_top1 96.411995, valid_top1 96.759995 (best_top1 96.790001)
+2021-06-26 11:14 (JOBID 29190) epoch 501 lr 1.642442e-03: train_top1 96.545998, valid_top1 96.829994 (best_top1 96.829994)
+2021-06-26 11:19 (JOBID 29190) epoch 502 lr 1.610163e-03: train_top1 96.577995, valid_top1 96.899994 (best_top1 96.899994)
+2021-06-26 11:24 (JOBID 29190) epoch 503 lr 1.578183e-03: train_top1 96.389999, valid_top1 96.649994 (best_top1 96.899994)
+2021-06-26 11:28 (JOBID 29190) epoch 504 lr 1.546502e-03: train_top1 96.505997, valid_top1 96.709999 (best_top1 96.899994)
+2021-06-26 11:33 (JOBID 29190) epoch 505 lr 1.515122e-03: train_top1 96.641998, valid_top1 97.040001 (best_top1 97.040001)
+2021-06-26 11:38 (JOBID 29190) epoch 506 lr 1.484043e-03: train_top1 96.701996, valid_top1 96.799995 (best_top1 97.040001)
+2021-06-26 11:42 (JOBID 29190) epoch 507 lr 1.453265e-03: train_top1 96.543999, valid_top1 96.799995 (best_top1 97.040001)
+2021-06-26 11:47 (JOBID 29190) epoch 508 lr 1.422791e-03: train_top1 96.655998, valid_top1 96.919998 (best_top1 97.040001)
+2021-06-26 11:52 (JOBID 29190) epoch 509 lr 1.392620e-03: train_top1 96.625999, valid_top1 96.839996 (best_top1 97.040001)
+2021-06-26 11:56 (JOBID 29190) epoch 510 lr 1.362754e-03: train_top1 96.647995, valid_top1 96.759995 (best_top1 97.040001)
+2021-06-26 12:01 (JOBID 29190) epoch 511 lr 1.333193e-03: train_top1 96.631996, valid_top1 96.879997 (best_top1 97.040001)
+2021-06-26 12:06 (JOBID 29190) epoch 512 lr 1.303938e-03: train_top1 96.927994, valid_top1 96.829994 (best_top1 97.040001)
+2021-06-26 12:10 (JOBID 29190) epoch 513 lr 1.274990e-03: train_top1 96.965996, valid_top1 96.919998 (best_top1 97.040001)
+2021-06-26 12:15 (JOBID 29190) epoch 514 lr 1.246350e-03: train_top1 96.881996, valid_top1 96.709999 (best_top1 97.040001)
+2021-06-26 12:20 (JOBID 29190) epoch 515 lr 1.218019e-03: train_top1 96.881996, valid_top1 96.739998 (best_top1 97.040001)
+2021-06-26 12:24 (JOBID 29190) epoch 516 lr 1.189997e-03: train_top1 96.815994, valid_top1 96.829994 (best_top1 97.040001)
+2021-06-26 12:29 (JOBID 29190) epoch 517 lr 1.162285e-03: train_top1 96.967995, valid_top1 96.839996 (best_top1 97.040001)
+2021-06-26 12:34 (JOBID 29190) epoch 518 lr 1.134883e-03: train_top1 96.949997, valid_top1 96.869995 (best_top1 97.040001)
+2021-06-26 12:38 (JOBID 29190) epoch 519 lr 1.107794e-03: train_top1 96.895996, valid_top1 96.790001 (best_top1 97.040001)
+2021-06-26 12:43 (JOBID 29190) epoch 520 lr 1.081016e-03: train_top1 96.977997, valid_top1 96.909996 (best_top1 97.040001)
+2021-06-26 12:48 (JOBID 29190) epoch 521 lr 1.054552e-03: train_top1 97.085999, valid_top1 96.879997 (best_top1 97.040001)
+2021-06-26 12:52 (JOBID 29190) epoch 522 lr 1.028401e-03: train_top1 97.099998, valid_top1 96.939995 (best_top1 97.040001)
+2021-06-26 12:57 (JOBID 29190) epoch 523 lr 1.002565e-03: train_top1 97.222000, valid_top1 96.849998 (best_top1 97.040001)
+2021-06-26 13:02 (JOBID 29190) epoch 524 lr 9.770447e-04: train_top1 96.944000, valid_top1 96.909996 (best_top1 97.040001)
+2021-06-26 13:06 (JOBID 29190) epoch 525 lr 9.518398e-04: train_top1 97.187996, valid_top1 96.970001 (best_top1 97.040001)
+2021-06-26 13:11 (JOBID 29190) epoch 526 lr 9.269515e-04: train_top1 97.171997, valid_top1 96.879997 (best_top1 97.040001)
+2021-06-26 13:16 (JOBID 29190) epoch 527 lr 9.023805e-04: train_top1 97.197998, valid_top1 96.959999 (best_top1 97.040001)
+2021-06-26 13:21 (JOBID 29190) epoch 528 lr 8.781275e-04: train_top1 97.259995, valid_top1 96.809998 (best_top1 97.040001)
+2021-06-26 13:25 (JOBID 29190) epoch 529 lr 8.541931e-04: train_top1 97.147995, valid_top1 97.040001 (best_top1 97.040001)
+2021-06-26 13:30 (JOBID 29190) epoch 530 lr 8.305780e-04: train_top1 97.225998, valid_top1 96.919998 (best_top1 97.040001)
+2021-06-26 13:35 (JOBID 29190) epoch 531 lr 8.072828e-04: train_top1 97.287994, valid_top1 97.029999 (best_top1 97.040001)
+2021-06-26 13:39 (JOBID 29190) epoch 532 lr 7.843082e-04: train_top1 97.402000, valid_top1 97.000000 (best_top1 97.040001)
+2021-06-26 13:44 (JOBID 29190) epoch 533 lr 7.616547e-04: train_top1 97.383995, valid_top1 96.979996 (best_top1 97.040001)
+2021-06-26 13:49 (JOBID 29190) epoch 534 lr 7.393231e-04: train_top1 97.271996, valid_top1 97.019997 (best_top1 97.040001)
+2021-06-26 13:53 (JOBID 29190) epoch 535 lr 7.173140e-04: train_top1 97.498001, valid_top1 97.139999 (best_top1 97.139999)
+2021-06-26 13:58 (JOBID 29190) epoch 536 lr 6.956278e-04: train_top1 97.435997, valid_top1 96.959999 (best_top1 97.139999)
+2021-06-26 14:03 (JOBID 29190) epoch 537 lr 6.742653e-04: train_top1 97.433998, valid_top1 96.970001 (best_top1 97.139999)
+2021-06-26 14:07 (JOBID 29190) epoch 538 lr 6.532270e-04: train_top1 97.397995, valid_top1 97.019997 (best_top1 97.139999)
+2021-06-26 14:12 (JOBID 29190) epoch 539 lr 6.325135e-04: train_top1 97.407997, valid_top1 96.989998 (best_top1 97.139999)
+2021-06-26 14:17 (JOBID 29190) epoch 540 lr 6.121253e-04: train_top1 97.514000, valid_top1 97.059998 (best_top1 97.139999)
+2021-06-26 14:21 (JOBID 29190) epoch 541 lr 5.920631e-04: train_top1 97.507996, valid_top1 97.220001 (best_top1 97.220001)
+2021-06-26 14:26 (JOBID 29190) epoch 542 lr 5.723273e-04: train_top1 97.629997, valid_top1 97.129997 (best_top1 97.220001)
+2021-06-26 14:31 (JOBID 29190) epoch 543 lr 5.529185e-04: train_top1 97.549995, valid_top1 97.180000 (best_top1 97.220001)
+2021-06-26 14:35 (JOBID 29190) epoch 544 lr 5.338373e-04: train_top1 97.551994, valid_top1 97.199997 (best_top1 97.220001)
+2021-06-26 14:40 (JOBID 29190) epoch 545 lr 5.150841e-04: train_top1 97.631996, valid_top1 97.110001 (best_top1 97.220001)
+2021-06-26 14:45 (JOBID 29190) epoch 546 lr 4.966595e-04: train_top1 97.579994, valid_top1 97.099998 (best_top1 97.220001)
+2021-06-26 14:49 (JOBID 29190) epoch 547 lr 4.785640e-04: train_top1 97.543999, valid_top1 97.189995 (best_top1 97.220001)
+2021-06-26 14:54 (JOBID 29190) epoch 548 lr 4.607981e-04: train_top1 97.475998, valid_top1 97.220001 (best_top1 97.220001)
+2021-06-26 14:59 (JOBID 29190) epoch 549 lr 4.433622e-04: train_top1 97.681999, valid_top1 97.229996 (best_top1 97.229996)
+2021-06-26 15:03 (JOBID 29190) epoch 550 lr 4.262568e-04: train_top1 97.509995, valid_top1 97.250000 (best_top1 97.250000)
+2021-06-26 15:08 (JOBID 29190) epoch 551 lr 4.094825e-04: train_top1 97.635994, valid_top1 97.159996 (best_top1 97.250000)
+2021-06-26 15:13 (JOBID 29190) epoch 552 lr 3.930396e-04: train_top1 97.748001, valid_top1 97.269997 (best_top1 97.269997)
+2021-06-26 15:17 (JOBID 29190) epoch 553 lr 3.769287e-04: train_top1 97.729996, valid_top1 97.159996 (best_top1 97.269997)
+2021-06-26 15:22 (JOBID 29190) epoch 554 lr 3.611501e-04: train_top1 97.677994, valid_top1 97.189995 (best_top1 97.269997)
+2021-06-26 15:27 (JOBID 29190) epoch 555 lr 3.457043e-04: train_top1 97.755997, valid_top1 97.139999 (best_top1 97.269997)
+2021-06-26 15:32 (JOBID 29190) epoch 556 lr 3.305917e-04: train_top1 97.790001, valid_top1 97.269997 (best_top1 97.269997)
+2021-06-26 15:36 (JOBID 29190) epoch 557 lr 3.158127e-04: train_top1 97.666000, valid_top1 97.250000 (best_top1 97.269997)
+2021-06-26 15:41 (JOBID 29190) epoch 558 lr 3.013677e-04: train_top1 97.723999, valid_top1 97.269997 (best_top1 97.269997)
+2021-06-26 15:46 (JOBID 29190) epoch 559 lr 2.872572e-04: train_top1 97.823997, valid_top1 97.250000 (best_top1 97.269997)
+2021-06-26 15:50 (JOBID 29190) epoch 560 lr 2.734815e-04: train_top1 97.741997, valid_top1 97.169998 (best_top1 97.269997)
+2021-06-26 15:55 (JOBID 29190) epoch 561 lr 2.600410e-04: train_top1 97.771996, valid_top1 97.239998 (best_top1 97.269997)
+2021-06-26 16:00 (JOBID 29190) epoch 562 lr 2.469360e-04: train_top1 97.701996, valid_top1 97.129997 (best_top1 97.269997)
+2021-06-26 16:04 (JOBID 29190) epoch 563 lr 2.341670e-04: train_top1 97.793999, valid_top1 97.299995 (best_top1 97.299995)
+2021-06-26 16:09 (JOBID 29190) epoch 564 lr 2.217342e-04: train_top1 97.863998, valid_top1 97.149994 (best_top1 97.299995)
+2021-06-26 16:14 (JOBID 29190) epoch 565 lr 2.096380e-04: train_top1 97.888000, valid_top1 97.149994 (best_top1 97.299995)
+2021-06-26 16:18 (JOBID 29190) epoch 566 lr 1.978787e-04: train_top1 97.820000, valid_top1 97.149994 (best_top1 97.299995)
+2021-06-26 16:23 (JOBID 29190) epoch 567 lr 1.864567e-04: train_top1 97.848000, valid_top1 97.059998 (best_top1 97.299995)
+2021-06-26 16:28 (JOBID 29190) epoch 568 lr 1.753723e-04: train_top1 97.806000, valid_top1 97.139999 (best_top1 97.299995)
+2021-06-26 16:32 (JOBID 29190) epoch 569 lr 1.646257e-04: train_top1 97.879997, valid_top1 97.189995 (best_top1 97.299995)
+2021-06-26 16:37 (JOBID 29190) epoch 570 lr 1.542172e-04: train_top1 97.899994, valid_top1 97.299995 (best_top1 97.299995)
+2021-06-26 16:42 (JOBID 29190) epoch 571 lr 1.441472e-04: train_top1 97.875999, valid_top1 97.169998 (best_top1 97.299995)
+2021-06-26 16:46 (JOBID 29190) epoch 572 lr 1.344159e-04: train_top1 97.855995, valid_top1 97.229996 (best_top1 97.299995)
+2021-06-26 16:51 (JOBID 29190) epoch 573 lr 1.250236e-04: train_top1 97.832001, valid_top1 97.180000 (best_top1 97.299995)
+2021-06-26 16:56 (JOBID 29190) epoch 574 lr 1.159705e-04: train_top1 97.877998, valid_top1 97.239998 (best_top1 97.299995)
+2021-06-26 17:00 (JOBID 29190) epoch 575 lr 1.072568e-04: train_top1 97.889999, valid_top1 97.229996 (best_top1 97.299995)
+2021-06-26 17:05 (JOBID 29190) epoch 576 lr 9.888286e-05: train_top1 97.885994, valid_top1 97.279999 (best_top1 97.299995)
+2021-06-26 17:10 (JOBID 29190) epoch 577 lr 9.084881e-05: train_top1 97.881996, valid_top1 97.309998 (best_top1 97.309998)
+2021-06-26 17:14 (JOBID 29190) epoch 578 lr 8.315490e-05: train_top1 97.937996, valid_top1 97.269997 (best_top1 97.309998)
+2021-06-26 17:19 (JOBID 29190) epoch 579 lr 7.580131e-05: train_top1 97.820000, valid_top1 97.279999 (best_top1 97.309998)
+2021-06-26 17:24 (JOBID 29190) epoch 580 lr 6.878823e-05: train_top1 97.811996, valid_top1 97.299995 (best_top1 97.309998)
+2021-06-26 17:28 (JOBID 29190) epoch 581 lr 6.211585e-05: train_top1 97.843994, valid_top1 97.279999 (best_top1 97.309998)
+2021-06-26 17:33 (JOBID 29190) epoch 582 lr 5.578432e-05: train_top1 97.875999, valid_top1 97.320000 (best_top1 97.320000)
+2021-06-26 17:38 (JOBID 29190) epoch 583 lr 4.979380e-05: train_top1 97.888000, valid_top1 97.269997 (best_top1 97.320000)
+2021-06-26 17:42 (JOBID 29190) epoch 584 lr 4.414443e-05: train_top1 97.885994, valid_top1 97.269997 (best_top1 97.320000)
+2021-06-26 17:47 (JOBID 29190) epoch 585 lr 3.883632e-05: train_top1 97.975998, valid_top1 97.279999 (best_top1 97.320000)
+2021-06-26 17:52 (JOBID 29190) epoch 586 lr 3.386958e-05: train_top1 97.851997, valid_top1 97.220001 (best_top1 97.320000)
+2021-06-26 17:57 (JOBID 29190) epoch 587 lr 2.924430e-05: train_top1 97.869995, valid_top1 97.220001 (best_top1 97.320000)
+2021-06-26 18:01 (JOBID 29190) epoch 588 lr 2.496052e-05: train_top1 97.855995, valid_top1 97.239998 (best_top1 97.320000)
+2021-06-26 18:06 (JOBID 29190) epoch 589 lr 2.101829e-05: train_top1 97.871994, valid_top1 97.239998 (best_top1 97.320000)
+2021-06-26 18:11 (JOBID 29190) epoch 590 lr 1.741760e-05: train_top1 97.911995, valid_top1 97.259995 (best_top1 97.320000)
+2021-06-26 18:15 (JOBID 29190) epoch 591 lr 1.415838e-05: train_top1 97.825996, valid_top1 97.329994 (best_top1 97.329994)
+2021-06-26 18:20 (JOBID 29190) epoch 592 lr 1.124050e-05: train_top1 97.895996, valid_top1 97.290001 (best_top1 97.329994)
+2021-06-26 18:25 (JOBID 29190) epoch 593 lr 8.663743e-06: train_top1 97.769997, valid_top1 97.199997 (best_top1 97.329994)
+2021-06-26 18:29 (JOBID 29190) epoch 594 lr 6.427702e-06: train_top1 97.863998, valid_top1 97.220001 (best_top1 97.329994)
+2021-06-26 18:34 (JOBID 29190) epoch 595 lr 4.531723e-06: train_top1 97.799995, valid_top1 97.279999 (best_top1 97.329994)
+2021-06-26 18:39 (JOBID 29190) epoch 596 lr 2.974684e-06: train_top1 97.795998, valid_top1 97.259995 (best_top1 97.329994)
+2021-06-26 18:43 (JOBID 29190) epoch 597 lr 1.754568e-06: train_top1 97.909996, valid_top1 97.269997 (best_top1 97.329994)
+2021-06-26 18:48 (JOBID 29190) epoch 598 lr 8.674417e-07: train_top1 97.846001, valid_top1 97.250000 (best_top1 97.329994)
+2021-06-26 18:53 (JOBID 29190) epoch 599 lr 3.046181e-07: train_top1 97.843994, valid_top1 97.269997 (best_top1 97.329994)
+2021-06-26 18:57 (JOBID 29190) epoch 600 lr 4.283702e-08: train_top1 97.835999, valid_top1 97.299995 (best_top1 97.329994)
+2021-06-26 18:57 args = Namespace(arch='cell_mu_130_epoch_50_RUN3', auxiliary=True, auxiliary_weight=0.4, batch_size=80, cells=14, cells_search=8, cutout=True, cutout_length=16, data='../data', drop_path_prob=0.3, epochs=600, gpu=0, grad_clip=5, init_channels=36, init_channels_search=16, learning_rate=0.025, learning_rate_min=0, model_to_resume=None, momentum=0.9, pruning_threshold=1e-05, report_freq=0, save='scaling-cell-space-darts/scaling-cell-space-darts-arch_cell_mu_130_epoch_50_RUN3_cells_14_20210624-204221', scale_type='cell', seed=6111, weight_decay=0.0003)

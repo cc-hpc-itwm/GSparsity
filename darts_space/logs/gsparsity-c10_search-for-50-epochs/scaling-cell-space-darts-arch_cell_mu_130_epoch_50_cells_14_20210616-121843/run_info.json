@@ -1,0 +1,1 @@
+{"RUN_ID": "arch_cell_mu_130_epoch_50_cells_14_20210616-121843", "save": "scaling-cell-space-darts/scaling-cell-space-darts-arch_cell_mu_130_epoch_50_cells_14_20210616-121843", "batch_size": 80, "pruning_threshold": 1e-05, "cells": 14, "learning_rate": 0.025, "scale_type": "cell", "drop_path_prob": 0.3, "arch": "cell_mu_130_epoch_50", "seed": 6344}
