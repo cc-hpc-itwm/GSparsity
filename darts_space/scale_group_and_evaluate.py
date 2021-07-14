@@ -45,14 +45,11 @@ def main(args):
         if search_space is None:
             pass
         else:
-            args.save += "-{}".format(search_space)
+            args.save += "-space-{}".format(search_space)
         utils.create_exp_dir(args.save)
-        RUN_ID = "arch_{}_lr_{}_momentum_{}_wd_{}_cells_{}_{}".format(args.arch,
-                                                                      args.learning_rate,
-                                                                      args.momentum,
-                                                                      args.weight_decay,
-                                                                      args.cells,
-                                                                      time.strftime("%Y%m%d-%H%M%S"))
+        RUN_ID = "arch_{}_cells_{}_{}".format(args.arch,                                              
+                                              args.cells,
+                                              time.strftime("%Y%m%d-%H%M%S"))
         args.save = "{}/{}-{}".format(args.save, args.save, RUN_ID)
         utils.create_exp_dir(args.save, scripts_to_save=glob.glob('*.py'))
 

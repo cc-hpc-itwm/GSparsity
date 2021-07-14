@@ -224,7 +224,7 @@ class NetworkCIFAR(nn.Module):
 
 class NetworkImageNet(nn.Module):
 
-  def __init__(self, C, num_classes, cells, auxiliary, genotype_network, alpha_network, reduce_cell_indices, steps):
+  def __init__(self, C, num_classes, cells, auxiliary, genotype_network, alpha_network, reduce_cell_indices, steps, primitives):
     
     super(NetworkImageNet, self).__init__()
     self._cells = cells
@@ -261,9 +261,11 @@ class NetworkImageNet(nn.Module):
         assert alpha_cell[0] == True, "This cell is expected to be a reduce cell but it is not!"
         C_curr *= 2
         reduce = True
+        primitives_cell = primitives['primitives_reduct']
       else:
         assert alpha_cell[0] == False, "This cell is expected to be a normal cell but it is not!"
         reduce = False
+        primitives_cell = primitives['primitives_normal']
         
       concat = []
       edge_offset = 0
@@ -277,7 +279,7 @@ class NetworkImageNet(nn.Module):
                 break
         edge_offset += step_index
 
-      cell = Cell(self._steps, genotype_cell, alpha_cell[1], C_prev_prev, C_prev, C_curr, reduce, reduce_prev, concat)
+      cell = Cell(self._steps, genotype_cell, alpha_cell[1], C_prev_prev, C_prev, C_curr, reduce, reduce_prev, concat, primitives_cell)
       reduce_prev = reduce
       self.cells += [cell]
       C_prev_prev, C_prev = C_prev, cell.multiplier * C_curr

@@ -19,7 +19,7 @@ from collections import OrderedDict
 
 from torch.autograd import Variable
 
-from genotypes import PRIMITIVES
+from genotypes import spaces_dict
 import list_of_models as list_of_models
 import utils
 import utils_sparsenas
@@ -32,7 +32,7 @@ class network_params():
         self.steps = steps #the number of nodes between input nodes and the output node
         self.num_edges = sum([i+2 for i in range(steps)]) #14
         self.ops = operations
-        self.num_ops = len(operations)
+        self.num_ops = len(operations['primitives_normal'][0])
         self.reduce_cell_indices = [cells//3, (2*cells)//3]
         self.criterion = criterion
 
@@ -56,6 +56,10 @@ def main(args):
     if not torch.cuda.is_available():
         print('no gpu device available')
         sys.exit(1)
+    
+    f_search = open("{}/run_info.json".format(eval("list_of_models.%s" % args.arch)))
+    run_data_search = json.load(f_search)
+    search_space = run_data_search['search_space']
     
     if args.model_to_resume is None:
         utils.create_exp_dir(args.save)
@@ -97,6 +101,11 @@ def main(args):
         args.arch = run_data['arch']
         args.seed = run_data['seed']
 
+    if search_space is None:
+        PRIMITIVES = spaces_dict['darts']        
+    else:
+        PRIMITIVES = spaces_dict[search_space]
+        
     logger = utils.set_logger(logger_name="{}/_log_{}.txt".format(args.save, RUN_ID))
 
     IMAGENET_CLASSES = 1000
@@ -151,7 +160,9 @@ def main(args):
                     genotype_network,
                     alpha_network,
                     network_eval.reduce_cell_indices,
-                    network_eval.steps)
+                    network_eval.steps,
+                    PRIMITIVES
+                   )
     model = model.cuda()
     
     optimizer = torch.optim.SGD(model.parameters(),
