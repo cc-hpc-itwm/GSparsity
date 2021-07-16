@@ -1,7 +1,5 @@
 """
-In retrain_after_freeze.py, the operations to be pruned are still preserved in the model, but their weights are frozen to be 0.
-
-In retrain_after_reduce.py, the operations to be pruned are already removed in the model, so the resulting new model is smaller.
+The operations to be pruned will be removed in the model, so the resulting new model is smaller.
 """
 
 import os
@@ -11,6 +9,7 @@ import glob
 import numpy as np
 import torch
 import utils
+import utils_gsparsity
 import logging
 import argparse
 import torch.nn as nn
@@ -26,8 +25,6 @@ from genotypes import PRIMITIVES
 from model_eval_multipath import NetworkCIFAR as Network_alpha
 from model import NetworkCIFAR as Network
 
-from ProxSGD_for_weights import ProxSGD
-import utils_sparsenas
 
 CIFAR_CLASSES = 10
 
@@ -42,16 +39,16 @@ class network_params():
         self.reduce_cell_indices = [cells//3, (2*cells)//3]
         self.criterion = criterion
 
-def load_model(path_to_model, args):
+def load_model(args):
     genotype = eval("genotypes.%s" % args.arch)
     model = Network(args.init_channels, CIFAR_CLASSES, args.cells, args.auxiliary, genotype)
     model = model.cuda()
 
-    model.load_state_dict(torch.load(path_to_model))
+    model.load_state_dict(torch.load(args.path_to_model))
     return model
 
 
-def main(args, path_to_model, model_to_resume=None):
+def main(args):
     if not torch.cuda.is_available():
         print('no gpu device available')
         sys.exit(1)
@@ -72,6 +69,8 @@ def main(args, path_to_model, model_to_resume=None):
         run_data['pruning_threshold'] = args.pruning_threshold
         run_data['learning_rate'] = args.learning_rate
         run_data['drop_path_prob'] = args.drop_path_prob
+        run_data['path_to_model'] = args.path_to_model
+        run_data['arch'] = args.arch
         if args.seed is None:
             args.seed = random.randint(0, 10000)
         run_data['seed'] = args.seed
@@ -89,6 +88,8 @@ def main(args, path_to_model, model_to_resume=None):
         args.learning_rate = run_data['learning_rate']
         args.drop_path_prob = run_data['drop_path_prob']
         args.seed = run_data['seed']
+        args.path_to_model = run_data['path_to_model']
+        args.arch = run_data['arch']
 
     logger = utils.set_logger(logger_name="{}/_log_{}.txt".format(args.save, RUN_ID))
 
@@ -102,7 +103,7 @@ def main(args, path_to_model, model_to_resume=None):
     logger.info('gpu device = %d' % args.gpu)
     logger.info("args = %s", args)
   
-    logger.info("The baseline model is at {}\n".format(path_to_model))
+    logger.info("The baseline model is at {}\n".format(args.path_to_model))
         
     criterion = nn.CrossEntropyLoss()
     criterion = criterion.cuda()
@@ -110,14 +111,14 @@ def main(args, path_to_model, model_to_resume=None):
     network_eval = network_params(args.init_channels, args.cells, 4, PRIMITIVES, criterion)
     genotype = eval("genotypes.%s" % args.arch)
 
-    model_to_prune = load_model(path_to_model, args)
-    alpha_network, genotype_network = utils_sparsenas.discretize_model_by_operation(model_to_prune, network_eval, genotype, args.pruning_threshold, args.save)
+    args.path_to_model += "/full_weights"
+    model_to_prune = load_model(args)
+    alpha_network, genotype_network = utils_gsparsity.discretize_model_by_operation(model_to_prune, network_eval, genotype, args.pruning_threshold, args.save)
     logger.info("alpha_network:\n {}".format(alpha_network))
     logger.info("genotype_network:\n {}".format(genotype_network))
 
     model = Network_alpha(args.init_channels, CIFAR_CLASSES, args.cells, args.auxiliary, genotype_network, alpha_network, network_eval.reduce_cell_indices, network_eval.steps)
     model = model.cuda()
-
 
     logger.info("The number of trainable parameters before and after operation pruning is {}M and {}M".format(utils.count_parameters_in_MB(model_to_prune), utils.count_parameters_in_MB(model)))
   
@@ -132,7 +133,7 @@ def main(args, path_to_model, model_to_resume=None):
 
     if args.model_to_resume is not None:
         checkpoint = torch.load("{}/checkpoint.pth.tar".format(args.model_to_resume))
-        model.load_state_dict(checkpoint['full_weights'])
+        model.load_state_dict(checkpoint['latest_model'])
         optimizer.load_state_dict(checkpoint['optimizer'])
         lr_scheduler.load_state_dict(checkpoint['lr_scheduler'])
         best_acc = checkpoint['best_acc']
@@ -151,57 +152,59 @@ def main(args, path_to_model, model_to_resume=None):
     valid_queue = torch.utils.data.DataLoader(valid_data, batch_size=args.batch_size, shuffle=False, pin_memory=True, num_workers=2)
 
     if args.model_to_resume is None:
-        train_acc_trajectory = np.array([])
-        train_obj_trajectory = np.array([])
-        valid_acc_trajectory = np.array([])
-        valid_obj_trajectory = np.array([])
+        train_top1 = np.array([])
+        train_loss = np.array([])
+        valid_top1 = np.array([])
+        valid_loss = np.array([])
     else:
-        train_acc_trajectory = np.load("{}/train_accuracies.npy".format(args.model_to_resume), allow_pickle=True)
-        train_obj_trajectory = np.load("{}/train_objvals.npy".format(args.model_to_resume), allow_pickle=True)
-        valid_acc_trajectory = np.load("{}/test_accuracies.npy".format(args.model_to_resume), allow_pickle=True)
-        valid_obj_trajectory = np.load("{}/test_objvals.npy".format(args.model_to_resume), allow_pickle=True)
+        train_top1 = np.load("{}/train_top1.npy".format(args.model_to_resume), allow_pickle=True)
+        train_loss = np.load("{}/train_loss.npy".format(args.model_to_resume), allow_pickle=True)
+        valid_top1 = np.load("{}/valid_top1.npy".format(args.model_to_resume), allow_pickle=True)
+        valid_loss = np.load("{}/valid_loss.npy".format(args.model_to_resume), allow_pickle=True)
 
     for epoch in range(last_epoch+1, args.epochs+1):
+        logger.info('(JOBID %s) epoch %d begins...', os.environ['SLURM_JOBID'], epoch)
+        
         model.drop_path_prob = args.drop_path_prob * (epoch-1) / args.epochs
-        train_acc, train_obj = train(train_queue, model, criterion, optimizer, args, logger)
-        valid_acc, valid_obj = infer(valid_queue, model, criterion, args, logger)
+        train_top1_tmp, train_loss_tmp = train(train_queue, model, criterion, optimizer, args, logger)
+        valid_top1_tmp, valid_loss_tmp = infer(valid_queue, model, criterion, args, logger)
 
-        train_acc_trajectory = np.append(train_acc_trajectory, train_acc.item())
-        train_obj_trajectory = np.append(train_obj_trajectory, train_obj.item())
-        valid_acc_trajectory = np.append(valid_acc_trajectory, valid_acc.item())
-        valid_obj_trajectory = np.append(valid_obj_trajectory, valid_obj.item())
+        train_top1 = np.append(train_top1, train_top1_tmp.item())
+        train_loss = np.append(train_loss, train_loss_tmp.item())
+        valid_top1 = np.append(valid_top1, valid_top1_tmp.item())
+        valid_loss = np.append(valid_loss, valid_loss_tmp.item())
 
-        np.save(args.save+"/train_accuracies",train_acc_trajectory)
-        np.save(args.save+"/train_objvals", train_obj_trajectory)
-        np.save(args.save+"/test_accuracies",valid_acc_trajectory)
-        np.save(args.save+"/test_objvals", valid_obj_trajectory)
+        np.save(args.save+"/train_top1", train_top1)
+        np.save(args.save+"/train_loss", train_loss)
+        np.save(args.save+"/valid_top1", valid_top1)
+        np.save(args.save+"/valid_loss", valid_loss)
 
-        utils_sparsenas.acc_n_loss(train_obj_trajectory, valid_acc_trajectory, "{}/acc_n_loss_{}.png".format(args.save, RUN_ID), train_acc_trajectory, valid_obj_trajectory)
+        utils.acc_n_loss(train_loss, valid_top1, "{}/acc_n_loss_{}.png".format(args.save, RUN_ID), train_top1, valid_loss)
 
         is_best = False
-        if valid_acc >= best_acc:
-            best_acc = valid_acc
+        if valid_top1_tmp >= best_acc:
+            best_acc = valid_top1_tmp
             is_best = True
 
         logger.info('(JOBID %s) epoch %d lr %e: train_acc %f, valid_acc %f (best_acc %f)',
                      os.environ['SLURM_JOBID'],
                      epoch,
                      lr_scheduler.get_lr()[0],
-                     train_acc,
-                     valid_acc,
+                     train_top1_tmp,
+                     valid_top1_tmp,
                      best_acc)
 
         lr_scheduler.step()
 
         utils.save_checkpoint({'last_epoch': epoch,
-                               'full_weights': model.state_dict(),
+                               'latest_model': model.state_dict(),
                                'best_acc': best_acc,
                                'optimizer' : optimizer.state_dict(),
                                'lr_scheduler': lr_scheduler.state_dict()},
                               is_best,
                               args.save)
-    
-    torch.save(model.state_dict(), "{}/full_weights".format(args.save))
+        
+    torch.save(model.state_dict(), "{}/full_weights".format(args.save))        
     logger.info("args = %s", args)
 
 def train(train_queue, model, criterion, optimizer, args, logger):
@@ -272,13 +275,14 @@ if __name__ == '__main__':
     parser.add_argument('--pruning_threshold', type=float, default=1e-6, help='operation pruning threshold')
     parser.add_argument('--seed', type=int, default=None, help='random seed')
     parser.add_argument('--model_to_resume', type=str, default=None, help='path to the model to resume training')
+    parser.add_argument('--path_to_model', type=str, help='path to the model to be pruned')
     parser.add_argument('--arch', type=str, default='DARTS', help='which architecture to use')
     
     parser.add_argument('--learning_rate_min', type=float, default=0, help='min learning rate')
     parser.add_argument('--momentum', type=float, default=0.9, help='momentum')
     parser.add_argument('--weight_decay', type=float, default=3e-4, help='weight decay')
-    parser.add_argument('--save', type=str, default='darts-reduce-retraining', help='experiment name')
-    parser.add_argument('--data', type=str, default='../data', help='location of the data corpus')
+    parser.add_argument('--save', type=str, default='log-retraining', help='experiment name')
+    parser.add_argument('--data', type=str, default='/home/SSD/data', help='location of the data corpus')
     parser.add_argument('--report_freq', type=float, default=0, help='report frequency (set 0 to turn off)')
     parser.add_argument('--gpu', type=int, default=0, help='gpu device id')
     parser.add_argument('--init_channels', type=int, default=36, help='num of init channels')
@@ -291,6 +295,4 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    path_to_model = "darts-pruning/darts-pruning-lr_0.001_edec_0_rho_0.9_rdec_0_mu_0.009_time_20210203-220243/full_weights"
-
-    main(args, path_to_model) 
+    main(args)

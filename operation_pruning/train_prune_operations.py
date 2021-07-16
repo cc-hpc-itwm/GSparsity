@@ -42,6 +42,7 @@ def main(args):
         run_data['use_lr_scheduler'] = args.use_lr_scheduler
         run_data['momentum'] = args.momentum
         run_data['weight_decay'] = args.weight_decay
+        run_data['arch'] = args.arch
         if args.seed is None:
             args.seed = random.randint(0, 10000)
         run_data['seed'] = args.seed
@@ -58,6 +59,7 @@ def main(args):
         args.momentum = run_data['momentum']
         args.weight_decay = run_data['weight_decay']
         args.seed = run_data['seed']
+        args.arch = run_data['arch']
 
     logger = utils.set_logger(logger_name="{}/_log_{}.txt".format(args.save, RUN_ID))
     
@@ -85,8 +87,7 @@ def main(args):
     optimizer = ProxSGD(model.parameters(),
                         lr=args.learning_rate,
                         momentum=args.momentum,
-                        weight_decay=args.weight_decay,
-                        clip_bounds=(0,1))
+                        weight_decay=args.weight_decay)
 
     lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer,
                                                               float(args.epochs),
@@ -113,48 +114,52 @@ def main(args):
 
     utils.plot_individual_op_norm(model, args.save+"/individual_operator_norm_{}_epoch_{:03d}.png".format(RUN_ID, 0))
     if args.model_to_resume is None:
-        train_acc_trajectory = np.array([])
-        train_obj_trajectory = np.array([])
-        valid_acc_trajectory = np.array([])
-        valid_obj_trajectory = np.array([])
+        train_top1 = np.array([])
+        train_loss = np.array([])
+        valid_top1 = np.array([])
+        valid_loss = np.array([])
     else:
-        train_acc_trajectory = np.load("{}/train_accuracies.npy".format(args.model_to_resume), allow_pickle=True)
-        train_obj_trajectory = np.load("{}/train_objvals.npy".format(args.model_to_resume), allow_pickle=True)
-        valid_acc_trajectory = np.load("{}/test_accuracies.npy".format(args.model_to_resume), allow_pickle=True)
-        valid_obj_trajectory = np.load("{}/test_objvals.npy".format(args.model_to_resume), allow_pickle=True)
+        train_top1 = np.load("{}/train_top1.npy".format(args.model_to_resume), allow_pickle=True)
+        train_loss = np.load("{}/train_loss.npy".format(args.model_to_resume), allow_pickle=True)
+        valid_top1 = np.load("{}/valid_top1.npy".format(args.model_to_resume), allow_pickle=True)
+        valid_loss = np.load("{}/valid_loss.npy".format(args.model_to_resume), allow_pickle=True)
     for epoch in range(last_epoch+1, args.epochs+1):
+        logger.info('(JOBID %s) epoch %d begins...',
+                     os.environ['SLURM_JOBID'], 
+                     epoch)
+
         model.drop_path_prob = args.drop_path_prob * (epoch - 1) / args.epochs
 
-        train_acc, train_obj = train(train_queue, model, criterion, optimizer, args, logger)
-        valid_acc, valid_obj = infer(valid_queue, model, criterion, args, logger)
+        train_top1_tmp, train_loss_tmp = train(train_queue, model, criterion, optimizer, args, logger)
+        valid_top1_tmp, valid_loss_tmp = infer(valid_queue, model, criterion, args, logger)
 
         is_best = False
-        if valid_acc >= best_acc:
-            best_acc = valid_acc
+        if valid_top1_tmp >= best_acc:
+            best_acc = valid_top1_tmp
             is_best = True
 
         logger.info('(JOBID %s) epoch %d lr %e: train_acc %f, valid_acc %f (best_acc %f)', 
                      os.environ['SLURM_JOBID'], 
                      epoch, 
                      lr_scheduler.get_lr()[0], 
-                     train_acc, 
-                     valid_acc,
+                     train_top1_tmp, 
+                     valid_top1_tmp,
                      best_acc)
 
         if args.use_lr_scheduler:
             lr_scheduler.step()
 
-        train_acc_trajectory = np.append(train_acc_trajectory, train_acc.item())
-        train_obj_trajectory = np.append(train_obj_trajectory, train_obj.item())
-        valid_acc_trajectory = np.append(valid_acc_trajectory, valid_acc.item())
-        valid_obj_trajectory = np.append(valid_obj_trajectory, valid_obj.item())
+        train_top1 = np.append(train_top1, train_top1_tmp.item())
+        train_loss = np.append(train_loss, train_loss_tmp.item())
+        valid_top1 = np.append(valid_top1, valid_top1_tmp.item())
+        valid_loss = np.append(valid_loss, valid_loss_tmp.item())
 
-        np.save(args.save+"/train_accuracies",train_acc_trajectory)
-        np.save(args.save+"/train_objvals", train_obj_trajectory)
-        np.save(args.save+"/test_accuracies",valid_acc_trajectory)
-        np.save(args.save+"/test_objvals", valid_obj_trajectory)
+        np.save(args.save+"/train_top1", train_top1)
+        np.save(args.save+"/train_loss", train_loss)
+        np.save(args.save+"/valid_top1", valid_top1)
+        np.save(args.save+"/valid_loss", valid_loss)
 
-        utils.acc_n_loss(train_obj_trajectory, valid_acc_trajectory, "{}/acc_n_loss_{}.png".format(args.save, RUN_ID), train_acc_trajectory, valid_obj_trajectory)
+        utils.acc_n_loss(train_loss, valid_top1, "{}/acc_n_loss_{}.png".format(args.save, RUN_ID), train_top1, valid_loss)
 
         if args.plot_freq > 0 and epoch % args.plot_freq == 0: #Plot Group sparsity every args.plot_freq epochs
             utils.plot_individual_op_norm(model, args.save+"/individual_operator_norm_{}_epoch_{:03d}.png".format(RUN_ID, epoch))      
@@ -166,8 +171,9 @@ def main(args):
                                'lr_scheduler': lr_scheduler.state_dict()},
                               is_best,
                               args.save)
-    
-    torch.save(model.state_dict(), "{}/full_weights".format(args.save))
+        
+        torch.save(model.state_dict(), "{}/full_weights".format(args.save))
+        
     logger.info("args = %s", args)
 
 def train(train_queue, model, criterion, optimizer, args, logger):
@@ -248,7 +254,7 @@ if __name__ == '__main__':
     parser.add_argument('--cutout_length', type=int, default=16, help='cutout length')
     parser.add_argument('--drop_path_prob', type=float, default=0.2, help='drop path probability')
 
-    parser.add_argument('--data', type=str, default='../data', help='location of the data corpus')
+    parser.add_argument('--data', type=str, default='/home/SSD/data', help='location of the data corpus')
     parser.add_argument('--batch_size', type=int, default=96, help='batch size')
     parser.add_argument('--report_freq', type=int, default=0, help='report frequency (set 0 to turn off)')
     parser.add_argument('--plot_freq', type=int, default=1, help='report frequency (set 0 to turn off)')

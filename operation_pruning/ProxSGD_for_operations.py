@@ -4,32 +4,56 @@ import numpy as np
 
 
 class ProxSGD(Optimizer):
-    r"""Prox-SGD algorithm for purning operations.
+    """ProxSGD algorithm for operation purning.
 
-    It has been proposed in `Prox-SGD: Training Structured Neural Networks under Regularization and Constraints`_.
+    It is an instantiation of the ProxSGD algorithm proposed in `ProxSGD: Training Structured Neural Networks under Regularization and Constraints` (https://openreview.net/forum?id=HygpthEtvr)
 
     Arguments:
         params (iterable): iterable of parameters to optimize or dicts defining
             parameter groups
-        lr (float, optional): learning rate (default: 1e-3)
+        lr (float, optional): learning rate (default: 0.001)
+        momentum (float, optional): momentum (default: 0.9)
+        
         delta (float, optional): term added to the denominator to improve
             numerical stability (default: 1e-8)
-        weight_decay (float, optional): regularization constant (L1 penalty) (default: 1e-4)
-
-    .. _Adam\: A Method for Stochastic Optimization:
-        https://arxiv.org/abs/1412.6980
+        beta (float, optional): beta coefficient used for computing
+            running averages of the square of the gradient (default:  0.999)
+        For the rationale of delta and beta, refer to Adam: A Method for Stochastic Optimization (https://arxiv.org/abs/1412.6980).
+        
+        weight_decay (float, optional): regularization constant (mu) (default: None)
+        normalization: normalization weight_decay by operation size (default: none)
+        normalization_exponent: normalized weight_decay = weight_decay / (or *) operation_size^normalization_exponent
+        
     """
 
-    def __init__(self, params, lr=0.06, momentum=0.9, weight_decay=None, delta=1e-8, beta=0.999, clip_bounds=(None, None), normalization="none", normalization_exponent=0):
-        if not 0.0 <= lr:
+    def __init__(self, params, lr=0.001, momentum=0.9, weight_decay=None, delta=1e-8, beta=0.999, normalization="none", normalization_exponent=0):
+        if not 0.0 <= lr <=1:
             raise ValueError("Invalid learning rate: {}".format(lr))
+        if not 0.0 <= momentum <=1:
+            raise ValueError("Invalid momentum: {}".format(momentum))
         if not 0.0 <= delta:
             raise ValueError("Invalid delta value: {}".format(delta))
+        if not 0.0 <= beta < 1:
+            raise ValueError("Invalid beta value: {}".format(beta))
+        if weight_decay is not None:
+            if not 0.0 <= weight_decay:
+                raise ValueError("Invalid weight decay value: {}".format(weight_decay))
+        if not normalization=="none":
+            if not normalization=="mul" or normalization=="div":
+                raise ValueError("Invalid normalization value: {}".format(normalization))
+            else:
+                if not normalization_exponent >= 0:
+                    raise ValueError("Invalid normalization exponent value: {}".format(normalization_exponent))                    
             
         self.normalization = normalization
         self.normalization_exponent = normalization_exponent
-        defaults = dict(lr=lr, momentum=momentum, delta=delta,
-                        weight_decay=weight_decay, beta=beta, clip_bounds=clip_bounds)
+        
+        defaults = dict(lr=lr,
+                        momentum=momentum,
+                        delta=delta,
+                        weight_decay=weight_decay,
+                        beta=beta)
+        
         super(ProxSGD, self).__init__(params, defaults)      
 
     def __setstate__(self, state):
@@ -56,7 +80,7 @@ class ProxSGD(Optimizer):
                 grad = x.grad.data
 
                 if grad.is_sparse:
-                    raise RuntimeError('Prox-SGD does not support sparse gradients')
+                    raise RuntimeError('ProxSGD does not support sparse gradients')
 
                 state = self.state[x]
 
@@ -83,13 +107,13 @@ class ProxSGD(Optimizer):
 
                 bias_correction = 1 - beta ** (state['step'])
 
-                #tau = (torch.mean(r_t) / bias_correction).sqrt().add_(group['delta'])
                 tau = (r_t / bias_correction).sqrt().add_(group['delta'])
                 tau = torch.mean(tau)
                 b  = x - v_t / tau          
 
                 if group['weight_decay'] is not None:
-                    if self.normalization == "none": # no normalization
+                    if self.normalization == "none":
+                    # no normalization
                         a  = group['weight_decay'] / tau
                     elif self.normalization == "mul":
                     # normalize the weight decay by multiplying operation_dimension**exponent
@@ -101,11 +125,6 @@ class ProxSGD(Optimizer):
                     x_hat = torch.clamp(1 - a / torch.norm(b), min=0) * b
                 else:
                     x_hat = b
-
-#                 low, up = group['clip_bounds']
-#                 if len(x.size()) == 1 and x.size()[0] == 1:
-#                     if low is not None or up is not None:
-#                         x_hat = x_hat.clamp_(low,up)
 
                 x.data.add_(lr, x_hat - x)
 
