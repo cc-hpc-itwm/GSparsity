@@ -19,7 +19,7 @@ import models.densenet as densenet201
 import numpy as np
 import optuna
 from optuna.samplers import NSGAIISampler
-from ProxSGD_optimizer_filters import ProxSGD
+from ProxSGD_for_filters import ProxSGD
 from trainer import train, validate
 from prune_filters import prune_model
 from dataset import load_cifar100, load_mnist, load_cifar10
@@ -27,7 +27,6 @@ from utils import set_logger, get_param_vec, compute_cdf, plot_learning_curve, p
 
 
 parser = argparse.ArgumentParser(description='Propert ResNets for CIFAR10 in pytorch')
-
 parser.add_argument('-j', '--workers', default=4, type=int, metavar='N',
                     help='number of data loading workers (default: 4)')
 parser.add_argument('--dataset', dest='dataset',
@@ -92,129 +91,130 @@ parser.add_argument('--study_name', dest='study_name',
                     help='study name for hyperparameter search',
                     type=str, default='hyperparameter_search_filter_pruning_mu')
 
-
-
-
 def train_resnet(model,optimizer,lr_scheduler,run_id, result_dir,logger,original_model_acc1, pruned_model_acc1, pruned_threshold,retrain):
 
     testarr1 = []
-    test_loss_arr=[]
-    train_acc_arr=[]
-    train_loss_arr=[]
+    test_loss_arr = []
+    train_acc_arr = []
+    train_loss_arr = []
     lossarr = []
     l1_loss = []
     epochs_since_improvement = 0
     best_prec1 = 0
+    
     #training/retraining
-
-    if retrain==True:
-        num_epochs= args.retrain_epochs
-        train_dir= result_dir+'/retrain/'+str(pruned_threshold)+'/'
-        print('\nRetraining for Pruning Threshold :', pruned_threshold)
-        
+    if retrain == True:
+        num_epochs = args.retrain_epochs
+        train_dir = result_dir + '/retrain/' + str(pruned_threshold) + '/'
+        print('\nRetraining for Pruning Threshold :', pruned_threshold)        
     else:
-        num_epochs=args.epochs
-        train_dir= result_dir+'/train/'
+        num_epochs = args.epochs
+        train_dir = result_dir + '/train/'
     
     if not path.exists(path.dirname(train_dir)):   # Check if folder/Path for experiment result exists
         makedirs(path.dirname(train_dir))          # If not, then create one   
     
-    if args.training==False:
-        with open(train_dir+args.arg_filename, 'w') as f:
+    if args.training == False:
+        with open(train_dir + args.arg_filename, 'w') as f:
             json.dump(args.__dict__, f, indent=2)
         
-        logger = set_logger(logger_name=train_dir+"logging_"+run_id)
-        logger.info("run_id: "+run_id)
+        logger = set_logger(logger_name=train_dir + "logging_" + run_id)
+        logger.info("run_id: " + run_id)
   
-    current_loss, prec1, filter_compression_rate,weight_compression_rate, filter_percentage_pruned = validate(val_loader, model, criterion, logger, args)
+    current_loss, prec1, filter_compression_rate, weight_compression_rate, filter_percentage_pruned = validate(val_loader, model, criterion, logger, args)
     testarr1.append(prec1)
     test_loss_arr.append(current_loss)
+    
     for epoch in range(args.start_epoch, num_epochs):
         if epochs_since_improvement == 200 :
             break
+            
         # train for one epoch
         print('current lr {:.5e}'.format(optimizer.param_groups[0]['lr']))
-        train_acc,train_loss,loss, l1it = train(train_loader, model, criterion, optimizer, epoch, args.weight_reg, logger, args, retrain )
+        train_acc, train_loss, loss, l1it = train(train_loader, model, criterion, optimizer, epoch, args.weight_reg, logger, args, retrain)
         lossarr.append(loss)
         l1_loss.append(l1it)
         train_acc_arr.append(train_acc)
         train_loss_arr.append(train_loss)
+        
         if args.lr_scheduler:
             lr_scheduler.step()
         
         # evaluate on validation set
-        current_loss, prec1, filter_compression_rate,weight_compression_rate, filter_percentage_pruned = validate(val_loader, model, criterion, logger, args)
+        current_loss, prec1, filter_compression_rate, weight_compression_rate, filter_percentage_pruned = validate(val_loader, model, criterion, logger, args)
         testarr1.append(prec1)
         test_loss_arr.append(current_loss)
+        
         # remember best prec@1 and save checkpoint
         is_best = prec1 > best_prec1
         best_prec1 = max(prec1, best_prec1)
-
         if not is_best:
             epochs_since_improvement += 1
             print("\nEpochs since last improvement: %d\n" % (epochs_since_improvement,))
         else:
             epochs_since_improvement = 0
-
           
-        np.save(train_dir+"Resnet_cifar10_train_loss_"+run_id,train_loss_arr)
-        np.save(train_dir+"Resnet_cifar10_train_acc_"+run_id,train_acc_arr)
-        np.save(train_dir+"Resnet_cifar10_test_acc1_"+run_id,testarr1)
-        np.save(train_dir+"Resnet_cifar10_test_loss_"+run_id,test_loss_arr)
+        np.save(train_dir + "Resnet_cifar10_train_loss_" + run_id,train_loss_arr)
+        np.save(train_dir + "Resnet_cifar10_train_acc_" + run_id,train_acc_arr)
+        np.save(train_dir + "Resnet_cifar10_test_acc1_" + run_id,testarr1)
+        np.save(train_dir + "Resnet_cifar10_test_loss_" + run_id,test_loss_arr)
 
         acc_n_loss(train_loss_arr, testarr1, "{}/acc_n_loss_{}.png".format(train_dir, run_id), train_acc_arr, test_loss_arr)
-        save_checkpoint(epoch, epochs_since_improvement, args, model, optimizer, is_best, current_loss, best_prec1, train_dir, original_model_acc1, pruned_model_acc1, pruned_threshold, run_id )
-        plot_learning_curve(model,data=model, xlabel="L2 Norm Value of Filters", ylabel="CDF", filename=train_dir+"plot_cdf_"+run_id+".png", cdf_data=True)
+        save_checkpoint(epoch, epochs_since_improvement, args, model, optimizer, is_best, current_loss, best_prec1, train_dir, original_model_acc1, pruned_model_acc1, pruned_threshold, run_id)
+        plot_learning_curve(model, data=model, xlabel="L2 Norm Value of Filters", ylabel="CDF", filename=train_dir + "plot_cdf_" + run_id + ".png", cdf_data=True)
     
         
-    model_path= train_dir+'BEST_' + args.filename
+    model_path = train_dir + 'BEST_' + args.filename
     lossarr = np.hstack(lossarr)
-    np.save(train_dir+"Resnet_cifar10_loss_"+run_id,lossarr)
-    np.save(train_dir+"Resnet_cifar10_L1___"+run_id,l1_loss)
-    np.save(train_dir+"Resnet_cifar10_acc1_"+run_id,testarr1)
+    np.save(train_dir + "Resnet_cifar10_loss_" + run_id, lossarr)
+    np.save(train_dir + "Resnet_cifar10_L1___" + run_id, l1_loss)
+    np.save(train_dir + "Resnet_cifar10_acc1_" + run_id, testarr1)
     
     #plot sparsity, training loss, top-1 accuracy and top-5 accuracy
-    plot_learning_curve(model,data=model, xlabel="L2 Norm Valueof Filters", ylabel="CDF", filename=train_dir+"plot_cdf_"+run_id+".png", cdf_data=True)
-    plot_learning_curve(model,data=np.log(lossarr), xlabel="Iteration", ylabel="Training Loss", filename=train_dir+"plot_loss_"+run_id+".png")
-    plot_learning_curve(model,data=testarr1, xlabel="Epoch", ylabel="Top-1 Accuracy", filename=train_dir+"plot_acc1_"+run_id+".png", ylim=[0, 100])
+    plot_learning_curve(model, data=model, xlabel="L2 Norm Valueof Filters", ylabel="CDF", filename=train_dir + "plot_cdf_" + run_id + ".png", cdf_data=True)
+    plot_learning_curve(model, data=np.log(lossarr), xlabel="Iteration", ylabel="Training Loss", filename=train_dir + "plot_loss_" + run_id + ".png")
+    plot_learning_curve(model, data=testarr1, xlabel="Epoch", ylabel="Top-1 Accuracy", filename=train_dir + "plot_acc1_" + run_id + ".png", ylim=[0, 100])
     
     return model_path
 
-def main(trial,args):
+
+def main(trial, args):
     #Build model
-    if args.network=='densenet':
+    if args.network == 'densenet':
         model = densenet201()
-    elif args.network=='mlp':
+    elif args.network == 'mlp':
         model= MLP()
-    elif args.network=='resnet':
+    elif args.network == 'resnet':
         model=resnet.resnet56()
     model.cuda()
     cudnn.benchmark = True
     
-    lr= 0.0007701
-    momentum=0.5762
-    weight_decay=trial.suggest_float('weight_decay',0.0001,0.1 , log=True)
+    lr = 0.0007701
+    momentum = 0.5762
+    weight_decay = trial.suggest_float('weight_decay', 0.0001, 0.1 , log=True)
     
-    run_id = "lr_"+str(lr)+"_momentum_"+str(momentum)+"_weight_decay_"+str(weight_decay)
+    run_id = "lr_" + str(lr) + "_momentum_" + str(momentum) + "_weight_decay_" + str(weight_decay)
     
-    result_dir= args.save_dir+'/experiment_'+args.network+'_'+args.dataset+'_'+run_id+'/'
+    result_dir = args.save_dir + '/experiment_' + args.network + '_' + args.dataset + '_' + run_id + '/'
     
     # Check the result_dir exists or not
     if not path.exists(path.dirname(result_dir)):   # Check if folder/Path for experiment result exists
         makedirs(path.dirname(result_dir))          # If not, then create one   
-    
-    
+        
     #save arguments to json file
     if args.training:
         with open(result_dir+args.arg_filename, 'w') as f:
             json.dump(args.__dict__, f, indent=2)
         #Set logger
-        logger = set_logger(logger_name=result_dir+"logging_"+run_id)
-        logger.info("lr: "+str(lr)+", momentum: "+str(momentum)+", weight_decay: "+str(weight_decay))
+        logger = set_logger(logger_name=result_dir + "logging_" + run_id)
+        logger.info("lr: " + str(lr) + ", momentum: " + str(momentum) + ", weight_decay: " + str(weight_decay))
     
-        optimizer = ProxSGD(model.parameters(), lr=lr,  momentum=momentum, weight_decay=weight_decay,clip_bounds=(0,1))
+        optimizer = ProxSGD(model.parameters(), 
+                            lr=lr,
+                            momentum=momentum,
+                            weight_decay=weight_decay)
     
-        lr_scheduler=torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, float(args.epochs), eta_min=0.00001)
+        lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, float(args.epochs), eta_min=0.00001)
     
         # optionally resume from a checkpoint
         if args.resume:
@@ -223,49 +223,56 @@ def main(trial,args):
                 checkpoint = torch.load(args.resume)
                 args.start_epoch = checkpoint['epoch']
                 model.load_state_dict(checkpoint['state_dict'])
-                optimizer=checkpoint['optimizer']
-                print("=> loaded checkpoint '{}' (epoch {})"
-                        .format(args.resume, checkpoint['epoch']))
+                optimizer = checkpoint['optimizer']
+                print("=> loaded checkpoint '{}' (epoch {})".format(args.resume, checkpoint['epoch']))
             else:
                 print("=> no checkpoint found at '{}'".format(args.resume))
-        #Train the model using ProxSGD
-            
-        trained_model_path=train_resnet(model,optimizer,lr_scheduler,run_id, result_dir,logger, 0 , 0 , 0 , retrain=False)
+                
+        #Train the model using ProxSGD            
+        trained_model_path = train_resnet(model, optimizer, lr_scheduler, run_id, result_dir,logger, 0, 0, 0, retrain=False)
     else:
         #Use Trained model saved at trained_model_path
-        trained_model_path=args.trained_model_path#'/home/shalinis/resnet_code_final/proxsgd/save_proxsgd_cutout_noES/experiment_resnet_cifar10_300epochs_lr_0.0007701_epsilon_decay_0_momentum_0.5762_rho_decay_0_mu_0.0031156/train/BEST_checkpoint.pth.tar'
+        trained_model_path = args.trained_model_path
         logger = set_logger(logger_name=result_dir+"logging_retrain"+run_id)
 
     checkpoint = torch.load(trained_model_path)
     model.load_state_dict(checkpoint['state_dict'])
+    
     print('\nOriginal Model Evaluation: ')
-    original_model_loss, original_model_acc1, filter_compression_rate,weight_compression_rate, filter_percentage_pruned = validate(val_loader, model, criterion, logger, args)    
-    pruned_threshold=1e-8 # Prune Threshold
-    pruned_model=prune_model(model,pruned_threshold) #Return model with pruned filters with l2 norm < given Prune Threshold
+    original_model_loss, original_model_acc1, filter_compression_rate, weight_compression_rate, filter_percentage_pruned = validate(val_loader, model, criterion, logger, args)    
+    
+    pruned_threshold = 1e-8 # Prune Threshold
     print('\nPruned Model Evaluation for Threshold value: ', pruned_threshold)
-    pruned_model_loss, pruned_model_acc1, filter_compression_rate,weight_compression_rate, filter_percentage_pruned= validate(val_loader, pruned_model, criterion, logger, args) 
+    
+    pruned_model = prune_model(model,pruned_threshold) #Return model with pruned filters with l2 norm < given Prune Threshold
+    pruned_model_loss, pruned_model_acc1, filter_compression_rate, weight_compression_rate, filter_percentage_pruned = validate(val_loader, pruned_model, criterion, logger, args) 
     
     # Set optimizer for retraining
-    if args.retrain_optimizer=='adam':
+    if args.retrain_optimizer == 'adam':
         optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
-    elif args.retrain_optimizer=='sgd':
-        optimizer = torch.optim.SGD(model.parameters(), args.lr,
-                                momentum=args.momentum,
-                                weight_decay=args.weight_decay)
-    elif args.optimizer=='adamw':
-        optimizer= torch.optim.AdamW(model.parameters(), lr= 0.0001, betas=(0.5, 0.99), weight_decay=args.weight_decay)
+    elif args.retrain_optimizer == 'sgd':
+        optimizer = torch.optim.SGD(model.parameters(),
+                                    args.lr,
+                                    momentum=args.momentum,
+                                    weight_decay=args.weight_decay)
+    elif args.optimizer == 'adamw':
+        optimizer= torch.optim.AdamW(model.parameters(),
+                                     lr=0.0001,
+                                     betas=(0.5, 0.99),
+                                     weight_decay=args.weight_decay)
     
-    lr_scheduler=torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, float(args.retrain_epochs), eta_min=0.00001)
+    lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, float(args.retrain_epochs), eta_min=0.00001)
+    
     #Retrain model 
-    retrained_model_path=train_resnet(pruned_model,optimizer,lr_scheduler,run_id, result_dir,logger, original_model_acc1, pruned_model_acc1, pruned_threshold ,retrain=True )
+    retrained_model_path = train_resnet(pruned_model, optimizer, lr_scheduler, run_id, result_dir,logger, original_model_acc1, pruned_model_acc1, pruned_threshold, retrain=True)
     
     checkpoint = torch.load(retrained_model_path)
     model.load_state_dict(checkpoint['state_dict'])
     
     print('\nRetrained Model Evaluation for Threshold value: ', pruned_threshold)
-    retrained_model_loss, retrained_model_acc1,filter_compression_rate,weight_compression_rate, filter_percentage_pruned = validate(val_loader, model, criterion, logger, args) 
+    retrained_model_loss, retrained_model_acc1, filter_compression_rate, weight_compression_rate, filter_percentage_pruned = validate(val_loader, model, criterion, logger, args)
 
-    result_accuracies_for_each_run=[run_id]
+    result_accuracies_for_each_run = [run_id]
     result_accuracies_for_each_run.append(float("{:.3f}".format(weight_decay)))
     result_accuracies_for_each_run.append(float("{:.3f}".format(original_model_acc1)))
     result_accuracies_for_each_run.append(float(pruned_threshold))
@@ -273,7 +280,6 @@ def main(trial,args):
     result_accuracies_for_each_run.append(float("{:.3f}".format(filter_percentage_pruned)))
     result_accuracies_for_each_run.append(filter_compression_rate)    
     result_accuracies_for_each_run.append(weight_compression_rate)
-
         
     with open(args.save_dir+'/'+args.csv_filename, 'a') as f:
         writer = csv.writer(f)
@@ -284,18 +290,15 @@ def main(trial,args):
 
 
 if __name__ == '__main__':
-
     global args
     args = parser.parse_args()
     
-    
     #load Dataset
-
-    if args.dataset=='CIFAR10':
+    if args.dataset == 'CIFAR10':
         train_loader, val_loader = load_cifar10(args.batch_size,args.workers,args.cutout,args.cutout_length)
-    elif args.dataset=='CIFAR100':
-        train_loader, val_loader= load_cifar100()  
-    elif args.dataset=='MNIST':
+    elif args.dataset == 'CIFAR100':
+        train_loader, val_loader = load_cifar100()  
+    elif args.dataset == 'MNIST':
         train_loader, val_loader = load_mnist()
     
     # define loss function (criterion) and optimizer
@@ -305,10 +308,16 @@ if __name__ == '__main__':
     with open(args.save_dir+'/'+args.csv_filename, 'a') as f:
         writer = csv.writer(f)
         writer.writerow(['Run_id','weight_decay','Original_Accuracy','Pruned_threshold','Retrain Accuracy','filter_percentage_pruned','filter_compression_rate','weight_compression_rate'])  # Write column names to the csv file.
-        f.close()  
+        f.close()
+        
     #Create study and storage to save history of hyperparameter search using optuna library
-    storage = optuna.storages.RDBStorage(url="sqlite:///"+args.study_name+".db",engine_kwargs={'pool_pre_ping': True,'connect_args': {'timeout': 10}})
-    study = optuna.create_study(study_name=args.study_name,storage=storage,directions=["maximize", "maximize","maximize"], load_if_exists=True,sampler=NSGAIISampler())
+    storage = optuna.storages.RDBStorage(url="sqlite:///"+args.study_name+".db",
+                                         engine_kwargs={'pool_pre_ping': True,'connect_args': {'timeout': 10}})
+    study = optuna.create_study(study_name=args.study_name, 
+                                storage=storage,
+                                directions=["maximize", "maximize","maximize"],
+                                load_if_exists=True,
+                                sampler=NSGAIISampler())
     study.optimize(lambda trial: main(trial, args), n_trials=args.n_trials, gc_after_trial=True)
        
     df = study.trials_dataframe(attrs=('number', 'value', 'params', 'state'))
