@@ -36,60 +36,36 @@ def main(args):
     if not torch.cuda.is_available():
         print('no gpu device available')
         sys.exit(1)
-
-    f_search = open("{}/run_info.json".format(eval("list_of_models.%s" % args.arch)))
-    run_data_search = json.load(f_search)
-    search_space = run_data_search['search_space']
         
-    if args.model_to_resume is None:
-        if search_space is None:
-            pass
-        else:
-            args.save += "-space-{}".format(search_space)
-        utils.create_exp_dir(args.save)
-        RUN_ID = "arch_{}_cells_{}_{}".format(args.arch,                                              
+    if args.path_to_resume is None:
+        resume_training = False
+
+        run_id = "arch_{}_cells_{}_{}".format(args.arch,
                                               args.cells,
                                               time.strftime("%Y%m%d-%H%M%S"))
-        args.save = "{}/{}-{}".format(args.save, args.save, RUN_ID)
-        utils.create_exp_dir(args.save, scripts_to_save=glob.glob('*.py'))
+        args.path_to_save = "{}-{}".format(args.path_to_save, run_id)
+        args.seed = random.randint(0, 10000) if args.seed is None else args.seed
 
-        run_data = {}
-        run_data['RUN_ID'] = RUN_ID
-        run_data['save'] = args.save
-        run_data['batch_size'] = args.batch_size
-        run_data['pruning_threshold'] = args.pruning_threshold
-        run_data['cells'] = args.cells
-        run_data['learning_rate'] = args.learning_rate
-        run_data['scale_type'] = args.scale_type
-        run_data['drop_path_prob'] = args.drop_path_prob
-        run_data['arch'] = args.arch
-        if args.seed is None:
-            args.seed = random.randint(0, 10000)
-        run_data['seed'] = args.seed
+        run_info = {}
+        run_info['run_id'] = run_id
+        run_info['args'] = vars(args)
         
-        with open('{}/run_info.json'.format(args.save), 'w') as f:
-            json.dump(run_data, f)
+        utils.create_exp_dir(args.path_to_save, scripts_to_save=glob.glob('*.py'))
+        with open('{}/run_info.json'.format(args.path_to_save), 'w') as f:
+            json.dump(run_info, f)
     else:
-        f = open("{}/run_info.json".format(args.model_to_resume))
-        run_data = json.load(f)
-        RUN_ID = run_data['RUN_ID']
-        args.save = run_data['save']
-        args.batch_size = run_data['batch_size']
-        args.pruning_threshold = run_data['pruning_threshold']
-        args.cells = run_data['cells']
-        args.learning_rate = run_data['learning_rate']
-        args.scale_type = run_data['scale_type']
-        args.drop_path_prob = run_data['drop_path_prob']
-        args.arch = run_data['arch']
-        args.seed = run_data['seed']
-
-    if search_space is None:
-        PRIMITIVES = spaces_dict['darts']        
-    else:
-        PRIMITIVES = spaces_dict[search_space]
+        resume_training = True
+        f = open("{}/run_info.json".format(args.path_to_resume))
+        run_info = json.load(f)
+        run_id = run_info['run_id']
+        vars(args).update(run_info['args'])
         
+    f_search = open("{}/run_info.json".format(eval("list_of_models.%s" % args.arch)))
+    run_info_search = json.load(f_search)
+    search_space = run_info_search['args']['search_space']
+    PRIMITIVES = spaces_dict[search_space]
         
-    logger = utils.set_logger(logger_name="{}/_log_{}.txt".format(args.save, RUN_ID))
+    logger = utils.set_logger(logger_name="{}/_log_{}.txt".format(args.path_to_save, run_id))
 
     CIFAR_CLASSES = 10
 
@@ -99,6 +75,7 @@ def main(args):
     torch.manual_seed(args.seed)
     cudnn.enabled=True
     torch.cuda.manual_seed(args.seed)
+    
     logger.info('CARME Slurm ID: {}'.format(os.environ['SLURM_JOBID']))
     logger.info('gpu device = %d' % args.gpu)
     logger.info("args = %s", args)
@@ -129,7 +106,7 @@ def main(args):
     logger.info("alpha_network:\n {}".format(alpha_network))
     logger.info("genotype_network:\n {}".format(genotype_network))
 
-    utils_sparsenas.visualize_cell_in_network(network_eval, alpha_network, args.scale_type, args.save)
+    utils_sparsenas.visualize_cell_in_network(network_eval, alpha_network, args.scale_type, args.path_to_save)
 
     model = Network(args.init_channels,
                     CIFAR_CLASSES,
@@ -153,13 +130,13 @@ def main(args):
                                                               float(args.epochs),
                                                               eta_min=args.learning_rate_min)
     
-    if args.model_to_resume is not None:
-        train_top1 = np.load("{}/train_top1.npy".format(args.model_to_resume), allow_pickle=True)
-        train_loss = np.load("{}/train_loss.npy".format(args.model_to_resume), allow_pickle=True)
-        valid_top1 = np.load("{}/valid_top1.npy".format(args.model_to_resume), allow_pickle=True)
-        valid_loss = np.load("{}/valid_loss.npy".format(args.model_to_resume), allow_pickle=True)
+    if resume_training:
+        train_top1 = np.load("{}/train_top1.npy".format(args.path_to_save), allow_pickle=True)
+        train_loss = np.load("{}/train_loss.npy".format(args.path_to_save), allow_pickle=True)
+        valid_top1 = np.load("{}/valid_top1.npy".format(args.path_to_save), allow_pickle=True)
+        valid_loss = np.load("{}/valid_loss.npy".format(args.path_to_save), allow_pickle=True)
         
-        checkpoint = torch.load("{}/checkpoint.pth.tar".format(args.model_to_resume))
+        checkpoint = torch.load("{}/checkpoint.pth.tar".format(args.path_to_save))
         model.load_state_dict(checkpoint['latest_model'])
         optimizer.load_state_dict(checkpoint['optimizer'])
         lr_scheduler.load_state_dict(checkpoint['lr_scheduler'])
@@ -202,14 +179,14 @@ def main(args):
         valid_top1 = np.append(valid_top1, valid_top1_tmp.item())
         valid_loss = np.append(valid_loss, valid_loss_tmp.item())
 
-        np.save(args.save+"/train_top1", train_top1)
-        np.save(args.save+"/train_loss", train_loss)
-        np.save(args.save+"/valid_top1", valid_top1)
-        np.save(args.save+"/valid_loss", valid_loss)
+        np.save(args.path_to_save+"/train_top1", train_top1)
+        np.save(args.path_to_save+"/train_loss", train_loss)
+        np.save(args.path_to_save+"/valid_top1", valid_top1)
+        np.save(args.path_to_save+"/valid_loss", valid_loss)
 
         utils_sparsenas.acc_n_loss(train_loss,
                                    valid_top1,
-                                   "{}/acc_n_loss_{}.png".format(args.save, RUN_ID),
+                                   "{}/acc_n_loss_{}.png".format(args.path_to_save, run_id),
                                    train_top1,
                                    valid_loss)
 
@@ -218,14 +195,7 @@ def main(args):
             best_top1 = valid_top1_tmp
             is_best = True
 
-        logger.info('(JOBID %s) epoch %d lr %e: train_top1 %f, valid_top1 %f (best_top1 %f)',
-                     os.environ['SLURM_JOBID'],
-                     epoch,
-                     lr_scheduler.get_lr()[0],
-                     train_top1_tmp,
-                     valid_top1_tmp,
-                     best_top1)
-
+        current_lr = lr_scheduler.get_lr()[0]
         lr_scheduler.step()
 
         utils.save_checkpoint({'last_epoch': epoch,
@@ -234,9 +204,17 @@ def main(args):
                                'optimizer' : optimizer.state_dict(),
                                'lr_scheduler': lr_scheduler.state_dict()},
                               is_best,
-                              args.save)
+                              args.path_to_save)
+
+        logger.info('(JOBID %s) epoch %d lr %e: train_top1 %f, valid_top1 %f (best_top1 %f)',
+                     os.environ['SLURM_JOBID'],
+                     epoch,
+                     current_lr,
+                     train_top1_tmp,
+                     valid_top1_tmp,
+                     best_top1)
     
-    torch.save(model.state_dict(), "{}/model_final".format(args.save))
+    torch.save(model.state_dict(), "{}/model_final".format(args.path_to_save))
     logger.info("args = %s", args)
 
 def train(train_queue, model, criterion, optimizer, args, logger):
@@ -301,15 +279,16 @@ def infer(valid_queue, model, criterion, args, logger):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser("cifar")
     parser.add_argument('--learning_rate', type=float, default=0.025, help='init learning rate')
-    parser.add_argument('--save', type=str, default=None, help='experiment name')
+    parser.add_argument('--exp_name', type=str, default="log-scaling", help='experiment name')
     parser.add_argument('--batch_size', type=int, default=80, help='batch size')
     parser.add_argument('--pruning_threshold', type=float, default=1e-5, help='operation pruning threshold')
     parser.add_argument('--cells', type=int, default=14, help='total number of cells')
-    parser.add_argument('--scale_type', choices=["cell"], 
+    parser.add_argument('--scale_type', choices=["cell"],
                         default="cell", help='scale type: scale cell')
     parser.add_argument('--drop_path_prob', type=float, default=0.3, help='drop path probability')
     parser.add_argument('--arch', type=str, help='which arch to discretize and scale')
-    parser.add_argument('--model_to_resume', type=str, default=None, help='path to the model to resume training')
+    parser.add_argument('--path_to_resume', type=str, default=None, help='path to the model to resume training')
+    parser.add_argument('--path_to_save', type=str, default=None, help='path to the folder where the experiment will be saved')
     
     parser.add_argument('--epochs', type=int, default=600, help='num of training epochs')
     parser.add_argument('--learning_rate_min', type=float, default=0, help='min learning rate')
@@ -329,8 +308,7 @@ if __name__ == '__main__':
     parser.add_argument('--seed', type=int, default=None, help='random integer seed between 0 and 10000 if None')
     args = parser.parse_args()
 
-    if args.save is None:
-        if args.scale_type == "cell":
-            args.save = "scaling-cell"
+    if args.path_to_save is None:
+        args.path_to_save = "{}/{}".format(args.exp_name, args.exp_name)
 
     main(args)

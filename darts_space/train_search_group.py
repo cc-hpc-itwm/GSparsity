@@ -1,8 +1,4 @@
-# This file searches for a group structure that will be scaled up to form the full network for evaluation (retraining).
-# Depending on the singularity of the group, a group may consist of a cell, a stage or an operation:
-# search for a cell (the same operation in different cells is in the same group)
-# search for a stage (the same operation in different stages is in the same group. An example of the stage is normal_cell normal_cell (stage 1) reduce_cell (stage 2) normal_cell normal_cell(stage 3) reduce_cell (stage 4))
-# search for an operation, which is equivalent to pruning operations. As a result, the operations remained in each cell could be different
+# This file searches for a cell structure that will be scaled up to form the full network for evaluation (retraining).
 
 import os
 import sys
@@ -42,56 +38,33 @@ def main(args):
         print('no gpu device available')
         sys.exit(1)
 
-    if args.model_to_resume is None:
-        args.save += "-space-{}".format(args.space)
-        utils.create_exp_dir(args.save)
-        RUN_ID = "mu_{}_{}_{}_time_{}".format(args.weight_decay,
+    if args.path_to_resume is None:
+        resume_training = False
+        run_id = "mu_{}_{}_{}_time_{}".format(args.weight_decay,
                                               args.normalization,
                                               args.normalization_exponent,
                                               time.strftime("%Y%m%d-%H%M%S"))
-        args.save = "{}/{}-{}".format(args.save, args.save, RUN_ID)
-        utils.create_exp_dir(args.save, scripts_to_save=glob.glob('*.py'))
+        args.path_to_save = "{}-space-{}-{}".format(args.path_to_save, args.search_space, run_id)
+        args.seed = random.randint(0, 10000) if args.seed is None else args.seed
+
+        run_info = {}
+        run_info['run_id'] = run_id
+        run_info['args'] = vars(args)
         
-        run_data = {}
-        run_data['RUN_ID'] = RUN_ID
-        run_data['save'] = args.save
-        run_data['batch_size'] = args.batch_size
-        run_data['learning_rate'] = args.learning_rate
-        run_data['learning_rate_min'] = args.learning_rate_min
-        run_data['momentum'] = args.momentum
-        run_data['weight_decay'] = args.weight_decay
-        run_data['normalization'] = args.normalization
-        run_data['normalization_exponent'] = args.normalization_exponent
-        run_data['use_lr_scheduler'] = args.use_lr_scheduler
-        run_data['search_type'] = args.search_type
-        run_data['search_space'] = args.space
-        if args.seed is None:
-            args.seed = random.randint(0, 10000)
-        run_data['seed'] = args.seed
-
-        with open('{}/run_info.json'.format(args.save), 'w') as f:
-            json.dump(run_data, f)
+        utils.create_exp_dir(args.path_to_save, scripts_to_save=glob.glob('*.py'))
+        with open('{}/run_info.json'.format(args.path_to_save), 'w') as f:
+            json.dump(run_info, f)
     else:
-        f = open("{}/run_info.json".format(args.model_to_resume))
-        run_data = json.load(f)
+        resume_training = True
+        f = open("{}/run_info.json".format(args.path_to_resume))
+        run_info = json.load(f)
 
-        RUN_ID = run_data['RUN_ID']
-        args.save = run_data['save']
-        args.batch_size = run_data['batch_size']
-        args.learning_rate = run_data['learning_rate']
-        args.learning_rate_min = run_data['learning_rate_min']
-        args.momentum = run_data['momentum']
-        args.weight_decay = run_data['weight_decay']
-        args.normalization = run_data['normalization']
-        args.normalization_exponent = run_data['normalization_exponent']
-        args.use_lr_scheduler = run_data['use_lr_scheduler']
-        args.search_type = run_data['search_type']
-        args.space = run_data['search_space']
-        args.seed = run_data['seed']
+        run_id = run_info['run_id']
+        vars(args).update(run_info['args'])
 
-    logger = utils.set_logger(logger_name="{}/_log_{}.txt".format(args.save, RUN_ID))
+    logger = utils.set_logger(logger_name="{}/_log_{}.txt".format(args.path_to_save, run_id))
 
-    PRIMITIVES = spaces_dict[args.space]
+    PRIMITIVES = spaces_dict[args.search_space]
     CIFAR_CLASSES = 10
     
     np.random.seed(args.seed)
@@ -169,15 +142,15 @@ def main(args):
                                                   pin_memory=True,
                                                   num_workers=4)
 
-    if args.model_to_resume is not None:
-        train_top1 = np.load("{}/train_top1.npy".format(args.model_to_resume), allow_pickle=True)
-        train_loss = np.load("{}/train_loss.npy".format(args.model_to_resume), allow_pickle=True)
-        valid_top1 = np.load("{}/valid_top1.npy".format(args.model_to_resume), allow_pickle=True)
-        valid_loss = np.load("{}/valid_loss.npy".format(args.model_to_resume), allow_pickle=True)        
+    if resume_training:
+        train_top1 = np.load("{}/train_top1.npy".format(args.path_to_save), allow_pickle=True)
+        train_loss = np.load("{}/train_loss.npy".format(args.path_to_save), allow_pickle=True)
+        valid_top1 = np.load("{}/valid_top1.npy".format(args.path_to_save), allow_pickle=True)
+        valid_loss = np.load("{}/valid_loss.npy".format(args.path_to_save), allow_pickle=True)
         if args.search_type == "cell":
-            train_regl = np.load("{}/train_regl.npy".format(args.model_to_resume), allow_pickle=True)
+            train_regl = np.load("{}/train_regl.npy".format(args.path_to_save), allow_pickle=True)
         
-        checkpoint = torch.load("{}/checkpoint.pth.tar".format(args.model_to_resume))
+        checkpoint = torch.load("{}/checkpoint.pth.tar".format(args.path_to_save))
         model.load_state_dict(checkpoint['latest_model'])
         optimizer.load_state_dict(checkpoint['optimizer'])
         lr_scheduler.load_state_dict(checkpoint['lr_scheduler'])
@@ -196,13 +169,12 @@ def main(args):
         last_epoch = 0
         
         if args.plot_freq > 0:
-            utils_sparsenas.plot_individual_op_norm(model, "{}/operator_norm_individual_{}_epoch_{:03d}.png".format(args.save, RUN_ID, 0))
+            utils_sparsenas.plot_individual_op_norm(model, "{}/operator_norm_individual_{}_epoch_{:03d}.png".format(args.path_to_save, run_id, 0))
             if args.search_type == "cell":
-                utils_sparsenas.plot_op_norm_across_cells(model_params, "{}/operator_norm_cell_{}_epoch_{:03d}".format(args.save, RUN_ID, 0))
+                utils_sparsenas.plot_op_norm_across_cells(model_params, "{}/operator_norm_cell_{}_epoch_{:03d}".format(args.path_to_save, run_id, 0))
             
     
-    for epoch in range(last_epoch+1, args.epochs + 1):
-        logger.info('(JOBID %s) epoch %d begins...', os.environ['SLURM_JOBID'], epoch)
+    for epoch in range(last_epoch+1, args.epochs+1):
         train_top1_tmp, train_loss_tmp = train(train_queue, valid_queue, model, criterion, optimizer, args.learning_rate, args.report_freq, logger)
         valid_top1_tmp, valid_loss_tmp = infer(valid_queue, model, criterion, args.report_freq, logger)
 
@@ -211,35 +183,27 @@ def main(args):
         valid_top1 = np.append(valid_top1, valid_top1_tmp.item())
         valid_loss = np.append(valid_loss, valid_loss_tmp.item())
 
-        np.save(args.save+"/train_top1", train_top1)
-        np.save(args.save+"/train_loss", train_loss)
-        np.save(args.save+"/valid_top1", valid_top1)
-        np.save(args.save+"/valid_loss", valid_loss)
+        np.save(args.path_to_save+"/train_top1", train_top1)
+        np.save(args.path_to_save+"/train_loss", train_loss)
+        np.save(args.path_to_save+"/valid_top1", valid_top1)
+        np.save(args.path_to_save+"/valid_loss", valid_loss)
 
         is_best = False
         if valid_top1_tmp >= best_top1:
             best_top1 = valid_top1_tmp
             is_best = True
 
-        logger.info('(JOBID %s) epoch %d lr %.3e: train_top1 %.2f, valid_top1 %.2f (best_top1 %.2f)',
-                    os.environ['SLURM_JOBID'],
-                    epoch,
-                    lr_scheduler.get_lr()[0],
-                    train_top1_tmp,
-                    valid_top1_tmp,
-                    best_top1)
-
         if args.search_type == None:
             utils_sparsenas.acc_n_loss(train_loss,
                                        valid_top1,
-                                       "{}/acc_n_loss_{}.png".format(args.save, RUN_ID),
+                                       "{}/acc_n_loss_{}.png".format(args.path_to_save, run_id),
                                        train_top1,
                                        valid_loss
                                       )
         elif args.search_type == "cell":
             train_regl_tmp = utils_sparsenas.get_regularization_term(model_params, args)
             train_regl = np.append(train_regl, train_regl_tmp.item())
-            np.save(args.save+"/train_regl", train_regl)
+            np.save(args.path_to_save+"/train_regl", train_regl)
 
             logger.info('(JOBID %s) epoch %d obj_val %.2f: loss %.2f + regl %.2f (%.2f * %.2f)',
                         os.environ['SLURM_JOBID'],
@@ -251,12 +215,13 @@ def main(args):
                         train_regl_tmp)
             utils_sparsenas.acc_n_loss(train_loss,
                                        valid_top1,
-                                       "{}/acc_n_loss_{}.png".format(args.save, RUN_ID),
+                                       "{}/acc_n_loss_{}.png".format(args.path_to_save, run_id),
                                        train_top1,
                                        valid_loss,
                                        train_loss + args.weight_decay * train_regl
                                       )
         
+        current_lr = lr_scheduler.get_lr()[0]
         if args.use_lr_scheduler:
             lr_scheduler.step()
 
@@ -266,21 +231,29 @@ def main(args):
                                'optimizer' : optimizer.state_dict(),
                                'lr_scheduler': lr_scheduler.state_dict()},
                               is_best,
-                              args.save)
+                              args.path_to_save)
 
         if args.plot_freq > 0 and epoch % args.plot_freq == 0: #Plot group sparsity after args.plot_freq epochs
             '''comment plot_individual_op_norm to save time'''
             utils_sparsenas.plot_individual_op_norm(model,
-                                                        "{}/operator_norm_individual_{}_epoch_{:03d}.png".format(args.save, RUN_ID, epoch))
+                                                        "{}/operator_norm_individual_{}_epoch_{:03d}.png".format(args.path_to_save, run_id, epoch))
             if args.search_type == "cell":
                 utils_sparsenas.plot_op_norm_across_cells(model_params,
-                                                          "{}/operator_norm_cell_{}_epoch_{:03d}".format(args.save, RUN_ID, epoch))
+                                                          "{}/operator_norm_cell_{}_epoch_{:03d}".format(args.path_to_save, run_id, epoch))
 
-        torch.save(model.state_dict(), "{}/model_final".format(args.save))
+        torch.save(model.state_dict(), "{}/model_final".format(args.path_to_save))
+        
+        logger.info('(JOBID %s) epoch %d lr %.3e: train_top1 %.2f, valid_top1 %.2f (best_top1 %.2f)',
+                    os.environ['SLURM_JOBID'],
+                    epoch,
+                    current_lr,
+                    train_top1_tmp,
+                    valid_top1_tmp,
+                    best_top1)
         
     if args.search_type == "cell":
         utils_sparsenas.plot_individual_op_norm(model,
-                                                "{}/operator_norm_individual_{}_epoch_{:03d}.png".format(args.save, RUN_ID, epoch))
+                                                "{}/operator_norm_individual_{}_epoch_{:03d}.png".format(args.path_to_save, run_id, epoch))
     logger.info("args = %s", args)
 
 
@@ -345,31 +318,31 @@ def infer(valid_queue, model, criterion, report_freq, logger):
 
 if __name__ == '__main__':    
     parser = argparse.ArgumentParser("cifar")
-    
     parser.add_argument('--learning_rate', type=float, default=0.001, help='init learning rate')
     parser.add_argument('--learning_rate_min', type=float, default=0.0001, help='min learning rate')
     parser.add_argument('--momentum', type=float, default=0.8, help='init momentum')
-    parser.add_argument('--space', choices=["darts", "s1", "s2", "s4"], 
+    parser.add_argument('--search_space', choices=["darts", "s1", "s2", "s4"],
                         default="darts", help="spaces from RobustDARTS; default is DARTS search space")
-    parser.add_argument('--weight_decay', type=float, default=60, help='the regularization gain (mu)')
-    parser.add_argument('--search_type', choices=[None, "cell"], 
-                        default="cell", help='cell: search for a single cell structure (normal cell and reduction cell)')
-    parser.add_argument('--normalization', choices=["none", "mul", "div"], 
+    parser.add_argument('--weight_decay', type=float, default=130, help='the regularization gain (mu)')
+    parser.add_argument('--search_type', choices=[None, "cell"],
+                        default="cell", help='cell: search for a single cell structure (normal cell and reduce cell)')
+    parser.add_argument('--normalization', choices=["none", "mul", "div"],
                         default="div", help='normalize the regularization (mu) by operation dimension: none, mul or div')
-    parser.add_argument('--normalization_exponent', type=float, 
+    parser.add_argument('--normalization_exponent', type=float,
                         default=0.5, help='normalization exponent to normalize the weight decay (mu)')
     parser.add_argument('--batch_size', type=int, default=64, help='batch size')
     parser.add_argument('--use_lr_scheduler', action='store_true', default=False, help='use lr scheduler')
     parser.add_argument('--seed', type=int, default=None, help='random seed if NONE')
-    parser.add_argument('--model_to_resume', type=str, default=None, help='path to the pretrained model to prune')
     
-    parser.add_argument('--save', type=str, default=None, help='experiment name (default None)')
-    parser.add_argument('--epochs', type=int, default=100, help='num of training epochs')
+    parser.add_argument('--path_to_resume', type=str, default=None, help='path to the pretrained model to prune')
+    parser.add_argument('--path_to_save', type=str, default=None, help='path to the folder where the experiment will be saved')
+    parser.add_argument('--exp_name', type=str, default="log-search", help='experiment name (default None)')
+    parser.add_argument('--epochs', type=int, default=50, help='num of training epochs')
     parser.add_argument('--train_portion', type=float, default=1, help='portion of training data (if 1, the validation set is the test set)')
-    parser.add_argument('--grad_clip', type=float, default=0, help='gradient clipping (set 0 to turn off)')    
+    parser.add_argument('--grad_clip', type=float, default=0, help='gradient clipping (set 0 to turn off)')
     parser.add_argument('--init_channels', type=int, default=16, help='num of init channels')
     parser.add_argument('--cells', type=int, default=8, help='total number of cells')
-    parser.add_argument('--data', type=str, default='/home/SSD/data', help='location of the data corpus')
+    parser.add_argument('--data', type=str, default='../data', help='location of the data corpus')
     parser.add_argument('--report_freq', type=int, default=0, help='report frequency (set 0 to turn off)')
     parser.add_argument('--plot_freq', type=int, default=1, help='plot (operation norm) frequency (set 0 to turn off)')
     parser.add_argument('--gpu', type=int, default=0, help='gpu device id')
@@ -378,11 +351,10 @@ if __name__ == '__main__':
     
     args = parser.parse_args()
     
-    if args.save is None:
-        if args.search_type == "cell":
-            args.save = "search-for-cell"
+    if args.path_to_save is None:
+        args.path_to_save = "{}/{}".format(args.exp_name, args.exp_name)
     
     if args.normalization == "none":
         args.normalization_exponent = 0
-    
+
     main(args)

@@ -57,56 +57,35 @@ def main(args):
         print('no gpu device available')
         sys.exit(1)
     
+    if args.path_to_resume is None:
+        resume_training = False
+        
+        run_id = "arch_{}_cells_{}_{}".format(args.arch,
+                                              args.cells,
+                                              time.strftime("%Y%m%d-%H%M%S"))
+        args.path_to_save = "{}-{}".format(args.path_to_save, run_id)
+        args.seed = random.randint(0, 10000) if args.seed is None else args.seed
+
+        run_info = {}
+        run_info['run_id'] = run_id
+        run_info['args'] = vars(args)
+
+        utils.create_exp_dir(args.path_to_save, scripts_to_save=glob.glob('*.py'))
+        with open('{}/run_info.json'.format(args.path_to_save), 'w') as f:
+            json.dump(run_info, f)
+    else:
+        resume_training = True
+        f = open("{}/run_info.json".format(args.path_to_resume))
+        run_info = json.load(f)
+        run_id = run_info['run_id']
+        vars(args).update(run_info['args'])
+
     f_search = open("{}/run_info.json".format(eval("list_of_models.%s" % args.arch)))
-    run_data_search = json.load(f_search)
-    search_space = run_data_search['search_space']
-    
-    if args.model_to_resume is None:
-        utils.create_exp_dir(args.save)
-        RUN_ID = "arch_{}_lr_{}_momentum_{}_wd_{}_cells_{}_{}".format(args.arch,
-                                                                      args.learning_rate,
-                                                                      args.momentum,
-                                                                      args.weight_decay,
-                                                                      args.cells,
-                                                                      time.strftime("%Y%m%d-%H%M%S")
-                                                                     )
-        args.save = "{}/{}-{}".format(args.save, args.save, RUN_ID)
-        utils.create_exp_dir(args.save, scripts_to_save=glob.glob('*.py'))
-
-        run_data = {}
-        run_data['RUN_ID'] = RUN_ID
-        run_data['save'] = args.save
-        run_data['batch_size'] = args.batch_size
-        run_data['pruning_threshold'] = args.pruning_threshold
-        run_data['cells'] = args.cells
-        run_data['learning_rate'] = args.learning_rate
-        run_data['scale_type'] = args.scale_type
-        run_data['arch'] = args.arch
-        if args.seed is None:
-            args.seed = random.randint(0, 10000)
-        run_data['seed'] = args.seed
+    run_info_search = json.load(f_search)
+    search_space = run_info_search['args']['search_space']
+    PRIMITIVES = spaces_dict[search_space]
         
-        with open('{}/run_info.json'.format(args.save), 'w') as f:
-            json.dump(run_data, f)
-    else:
-        f = open("{}/run_info.json".format(args.model_to_resume))
-        run_data = json.load(f)
-        RUN_ID = run_data['RUN_ID']
-        args.save = run_data['save']
-        args.batch_size = run_data['batch_size']
-        args.pruning_threshold = run_data['pruning_threshold']
-        args.cells = run_data['cells']
-        args.learning_rate = run_data['learning_rate']
-        args.scale_type = run_data['scale_type']
-        args.arch = run_data['arch']
-        args.seed = run_data['seed']
-
-    if search_space is None:
-        PRIMITIVES = spaces_dict['darts']        
-    else:
-        PRIMITIVES = spaces_dict[search_space]
-        
-    logger = utils.set_logger(logger_name="{}/_log_{}.txt".format(args.save, RUN_ID))
+    logger = utils.set_logger(logger_name="{}/_log_{}.txt".format(args.path_to_save, run_id))
 
     IMAGENET_CLASSES = 1000
     
@@ -116,6 +95,7 @@ def main(args):
     torch.manual_seed(args.seed)
     cudnn.enabled=True
     torch.cuda.manual_seed(args.seed)
+
     logger.info('CARME Slurm ID: {}'.format(os.environ['SLURM_JOBID']))
     logger.info('gpu device = %d' % args.gpu)
     logger.info("args = %s", args)
@@ -151,7 +131,7 @@ def main(args):
     utils_sparsenas.visualize_cell_in_network(network_eval,
                                               alpha_network,
                                               args.scale_type,
-                                              args.save)
+                                              args.path_to_save)
 
     model = Network(args.init_channels,
                     IMAGENET_CLASSES,
@@ -173,9 +153,9 @@ def main(args):
                                                    args.decay_period,
                                                    gamma=args.gamma)
 
-    if args.model_to_resume is not None:
-        model.load_state_dict(torch.load("{}/latest_model".format(args.model_to_resume)))
-        checkpoint = torch.load("{}/checkpoint.pth.tar".format(args.model_to_resume))
+    if resume_training:
+        model.load_state_dict(torch.load("{}/latest_model".format(args.path_to_save)))
+        checkpoint = torch.load("{}/checkpoint.pth.tar".format(args.path_to_save))
         optimizer.load_state_dict(checkpoint['optimizer'])
         lr_scheduler.load_state_dict(checkpoint['lr_scheduler'])
         best_top1 = checkpoint['best_top1']
@@ -217,24 +197,23 @@ def main(args):
 
     valid_queue = torch.utils.data.DataLoader(valid_data, batch_size=args.batch_size, shuffle=False, pin_memory=True, num_workers=4)
 
-    if args.model_to_resume is None:
+    if resume_training:
+        train_top1 = np.load("{}/train_top1.npy".format(args.path_to_save), allow_pickle=True)
+        train_loss = np.load("{}/train_loss.npy".format(args.path_to_save), allow_pickle=True)
+        valid_top1 = np.load("{}/valid_top1.npy".format(args.path_to_save), allow_pickle=True)
+        valid_top5 = np.load("{}/valid_top5.npy".format(args.path_to_save), allow_pickle=True)
+        valid_loss = np.load("{}/valid_loss.npy".format(args.path_to_save), allow_pickle=True)
+    else:
         train_top1 = np.array([])
         train_loss = np.array([])
         valid_top1 = np.array([])
         valid_top5 = np.array([])
         valid_loss = np.array([])
-    else:
-        train_top1 = np.load("{}/train_top1.npy".format(args.model_to_resume), allow_pickle=True)
-        train_loss = np.load("{}/train_loss.npy".format(args.model_to_resume), allow_pickle=True)
-        valid_top1 = np.load("{}/valid_top1.npy".format(args.model_to_resume), allow_pickle=True)
-        valid_top5 = np.load("{}/valid_top5.npy".format(args.model_to_resume), allow_pickle=True)
-        valid_loss = np.load("{}/valid_loss.npy".format(args.model_to_resume), allow_pickle=True)
 
     for epoch in range(last_epoch+1, args.epochs+1):
         model.drop_path_prob = args.drop_path_prob * epoch / args.epochs
 
         train_top1_tmp, train_loss_tmp = train(train_queue, model, criterion_smooth, optimizer, logger)
-
         valid_top1_tmp, valid_top5_tmp, valid_loss_tmp = infer(valid_queue, model, criterion, logger)
 
         is_best = False
@@ -242,9 +221,9 @@ def main(args):
             best_top1 = valid_top1_tmp
             is_best = True
             if args.parallel:
-                torch.save(model.module.state_dict(), "{}/best_model".format(args.save))
+                torch.save(model.module.state_dict(), "{}/best_model".format(args.path_to_save))
             else:
-                torch.save(model.state_dict(), "{}/best_model".format(args.save))
+                torch.save(model.state_dict(), "{}/best_model".format(args.path_to_save))
         else:
             is_best = False
 
@@ -254,33 +233,25 @@ def main(args):
         valid_top5 = np.append(valid_top5, valid_top5_tmp.item())
         valid_loss = np.append(valid_loss, valid_loss_tmp.item())
 
-        np.save(args.save+"/train_top1", train_top1)
-        np.save(args.save+"/train_loss", train_loss)
-        np.save(args.save+"/valid_top1", valid_top1)
-        np.save(args.save+"/valid_top5", valid_top5)
-        np.save(args.save+"/valid_loss", valid_loss)
+        np.save(args.path_to_save+"/train_top1", train_top1)
+        np.save(args.path_to_save+"/train_loss", train_loss)
+        np.save(args.path_to_save+"/valid_top1", valid_top1)
+        np.save(args.path_to_save+"/valid_top5", valid_top5)
+        np.save(args.path_to_save+"/valid_loss", valid_loss)
 
         utils_sparsenas.acc_n_loss(train_loss,
                                    valid_top1,
-                                   "{}/acc_n_loss_{}.png".format(args.save, RUN_ID),
+                                   "{}/acc_n_loss_{}.png".format(args.path_to_save, run_id),
                                    train_top1,
                                    valid_loss)
 
         if args.parallel:
-            torch.save(model.module.state_dict(), "{}/latest_model".format(args.save))
+            torch.save(model.module.state_dict(), "{}/latest_model".format(args.path_to_save))
         else:
-            torch.save(model.state_dict(), "{}/latest_model".format(args.save))
+            torch.save(model.state_dict(), "{}/latest_model".format(args.path_to_save))
 
-        logger.info('(JOBID %s) epoch %d lr %e: train_top1 %f, valid_top1 %f (best_top1 %f), valid_top5 %f',
-                     os.environ['SLURM_JOBID'], 
-                     epoch, 
-                     lr_scheduler.get_lr()[0], 
-                     train_top1_tmp, 
-                     valid_top1_tmp,
-                     best_top1,
-                     valid_top5_tmp)
-
-        lr_scheduler.step()    
+        current_lr = lr_scheduler.get_lr()[0]
+        lr_scheduler.step()
 
         utils.save_checkpoint({'last_epoch': epoch,
                                'best_top1': best_top1,
@@ -288,7 +259,16 @@ def main(args):
                                'lr_scheduler': lr_scheduler.state_dict(),
                                'drop_path_prob': model.drop_path_prob},
                               False,
-                              args.save)
+                              args.path_to_save)
+
+        logger.info('(JOBID %s) epoch %d lr %e: train_top1 %f, valid_top1 %f (best_top1 %f), valid_top5 %f',
+                     os.environ['SLURM_JOBID'],
+                     epoch,
+                     current_lr,
+                     train_top1_tmp,
+                     valid_top1_tmp,
+                     best_top1,
+                     valid_top5_tmp)
 
     logger.info("args = %s", args)
 
@@ -360,9 +340,10 @@ if __name__ == '__main__':
     parser.add_argument('--arch', type=str, help='which architecture to choose from list_of_models.py')
     parser.add_argument('--pruning_threshold', type=float, default=1e-5, help='operation pruning threshold')
     parser.add_argument('--data', type=str, default='/home/yangy/Dataset_ImageNet/', help='location of the data corpus')
-    parser.add_argument('--model_to_resume', type=str, default=None, help='path to the model to resume training')
+    parser.add_argument('--path_to_resume', type=str, default=None, help='path to the model to resume training')
+    parser.add_argument('--path_to_save', type=str, default=None, help='path to the folder where the experiment will be saved')
     
-    parser.add_argument('--scale_type', choices=["cell"], 
+    parser.add_argument('--scale_type', choices=["cell"],
                         default="cell", help='scale type: scale cell')
     parser.add_argument('--momentum', type=float, default=0.9, help='momentum')
     parser.add_argument('--weight_decay', type=float, default=3e-5, help='weight decay')
@@ -373,7 +354,7 @@ if __name__ == '__main__':
     parser.add_argument('--auxiliary', action='store_true', default=True, help='use auxiliary tower')
     parser.add_argument('--auxiliary_weight', type=float, default=0.4, help='weight for auxiliary loss')
     parser.add_argument('--drop_path_prob', type=float, default=0, help='drop path probability')
-    parser.add_argument('--save', type=str, default=None, help='experiment name')
+    parser.add_argument('--exp_name', type=str, default="log-scaling-imagenet", help='experiment name')
     parser.add_argument('--seed', type=int, default=None, help='random seed')
     parser.add_argument('--grad_clip', type=float, default=5., help='gradient clipping')
     parser.add_argument('--label_smooth', type=float, default=0.1, help='label smoothing')
@@ -383,8 +364,7 @@ if __name__ == '__main__':
     parser.add_argument('--cells_search', type=int, default=8, help='total number of cells')
     args = parser.parse_args()
     
-    if args.save is None:
-        if args.scale_type == "cell":
-            args.save = "scaling-cell-imagenet"
+    if args.path_to_save is None:
+        args.path_to_save = "{}/{}".format(args.exp_name, args.exp_name)
             
-    main(args) 
+    main(args)
