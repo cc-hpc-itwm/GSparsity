@@ -83,7 +83,7 @@ def main(args):
 
     if resume_training:
         checkpoint = torch.load("{}/checkpoint.pth.tar".format(args.path_to_save))
-        model.load_state_dict(checkpoint['full_weights'])
+        model.load_state_dict(checkpoint['latest_model'])
         optimizer.load_state_dict(checkpoint['optimizer'])
         lr_scheduler.load_state_dict(checkpoint['lr_scheduler'])
         best_acc = checkpoint['best_acc']
@@ -143,14 +143,14 @@ def main(args):
             utils.plot_individual_op_norm(model, args.path_to_save+"/individual_operator_norm_{}_epoch_{:03d}.png".format(run_id, epoch))      
 
         utils.save_checkpoint({'last_epoch': epoch,
-                               'full_weights': model.state_dict(),
+                               'latest_model': model.state_dict(),
                                'best_acc': best_acc,
                                'optimizer' : optimizer.state_dict(),
                                'lr_scheduler': lr_scheduler.state_dict()},
                               is_best,
                               args.path_to_save)
         
-        torch.save(model.state_dict(), "{}/full_weights".format(args.path_to_save))
+        torch.save(model.state_dict(), "{}/model_final".format(args.path_to_save))
 
         logger.info('(JOBID %s) epoch %d lr %e: train_acc %f, valid_acc %f (best_acc %f)',
                      os.environ['SLURM_JOBID'],

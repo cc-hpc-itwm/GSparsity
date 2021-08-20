@@ -60,7 +60,7 @@ def main(args):
                                                           time.strftime("%Y%m%d-%H%M%S"))        
         args.path_to_save = "{}-{}".format(args.path_to_save, run_id)
         args.seed = random.randint(0, 10000) if args.seed is None else args.seed
-        args.path_to_prune += "/full_weights"
+        args.path_to_prune += "/model_final"
             
         run_info = {}
         run_info['run_id'] = run_id
@@ -179,17 +179,17 @@ def main(args):
                                'lr_scheduler': lr_scheduler.state_dict()},
                               is_best,
                               args.path_to_save)
-
+        torch.save(model.state_dict(), "{}/model_final".format(args.path_to_save))
+        
         logger.info('(JOBID %s) epoch %d lr %e: train_acc %f, valid_acc %f (best_acc %f)',
                      os.environ['SLURM_JOBID'],
                      epoch,
                      current_lr,
                      train_top1_tmp,
                      valid_top1_tmp,
-                     best_acc)
-        
-    torch.save(model.state_dict(), "{}/full_weights".format(args.path_to_save))        
+                     best_acc)        
 
+        
 def train(train_queue, model, criterion, optimizer, args, logger):
     objs = utils.AvgrageMeter()
     top1 = utils.AvgrageMeter()

@@ -165,7 +165,7 @@ def main(args):
     else:
         last_epoch = 0
         best_top1 = 0
-        model.drop_path_prob = 0
+        model.drop_path_prob = args.drop_path_prob
         
     if args.parallel:
         model = nn.DataParallel(model)
