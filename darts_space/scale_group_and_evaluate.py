@@ -40,14 +40,14 @@ def main(args):
     if args.path_to_resume is None:
         resume_training = False
 
-        run_id = "arch_{}_cells_{}_{}".format(args.arch,
-                                              args.cells,
-                                              time.strftime("%Y%m%d-%H%M%S"))
-        args.path_to_save = "{}-{}".format(args.path_to_save, run_id)
+        if args.run_id is None:
+            args.run_id = "arch_{}_cells_{}_{}".format(args.arch,
+                                                       args.cells,
+                                                       time.strftime("%Y%m%d-%H%M%S"))
+        args.path_to_save = "{}-{}".format(args.path_to_save, args.run_id)
         args.seed = random.randint(0, 10000) if args.seed is None else args.seed
 
         run_info = {}
-        run_info['run_id'] = run_id
         run_info['args'] = vars(args)
         
         utils.create_exp_dir(args.path_to_save, scripts_to_save=glob.glob('*.py'))
@@ -57,7 +57,6 @@ def main(args):
         resume_training = True
         f = open("{}/run_info.json".format(args.path_to_resume))
         run_info = json.load(f)
-        run_id = run_info['run_id']
         vars(args).update(run_info['args'])
         
     f_search = open("{}/run_info.json".format(eval("list_of_models.%s" % args.arch)))
@@ -65,7 +64,7 @@ def main(args):
     search_space = run_info_search['args']['search_space']
     PRIMITIVES = spaces_dict[search_space]
         
-    logger = utils.set_logger(logger_name="{}/_log_{}.txt".format(args.path_to_save, run_id))
+    logger = utils.set_logger(logger_name="{}/_log_{}.txt".format(args.path_to_save, args.run_id))
 
     CIFAR_CLASSES = 10
 
@@ -186,7 +185,7 @@ def main(args):
 
         utils_sparsenas.acc_n_loss(train_loss,
                                    valid_top1,
-                                   "{}/acc_n_loss_{}.png".format(args.path_to_save, run_id),
+                                   "{}/acc_n_loss_{}.png".format(args.path_to_save, args.run_id),
                                    train_top1,
                                    valid_loss)
 
@@ -280,6 +279,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser("cifar")
     parser.add_argument('--learning_rate', type=float, default=0.025, help='init learning rate')
     parser.add_argument('--exp_name', type=str, default="log-scaling", help='experiment name')
+    parser.add_argument('--run_id', type=str, default=None, help='the identifier of this specific run')
     parser.add_argument('--batch_size', type=int, default=80, help='batch size')
     parser.add_argument('--pruning_threshold', type=float, default=1e-5, help='operation pruning threshold')
     parser.add_argument('--cells', type=int, default=14, help='total number of cells')

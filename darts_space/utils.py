@@ -128,7 +128,7 @@ def set_logger(logger_name, level=logging.INFO):
     """
     logger = logging.getLogger(logger_name)
     logger.setLevel(level)
-    log_format = logging.Formatter("%(asctime)s %(message)s", '%Y-%m-%d %H:%M')
+    log_format = logging.Formatter("%(asctime)s %(message)s", '%Y-%m-%d %H:%M:%S')
 
     # Creating and adding the console handler
     console_handler = logging.StreamHandler(sys.stdout)

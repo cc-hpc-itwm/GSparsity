@@ -27,15 +27,16 @@ def main(args):
 
     if args.path_to_resume is None:
         resume_training = False
-        run_id = "lr_{}_momentum_{}_mu_{}_time_{}".format(args.learning_rate,
-                                                          args.momentum,
-                                                          args.weight_decay,
-                                                          time.strftime("%Y%m%d-%H%M%S"))
-        args.path_to_save = "{}-{}".format(args.path_to_save, run_id)
+        if args.run_id is None:
+            args.run_id = "arch_{}_lr_{}_momentum_{}_mu_{}_time_{}".format(args.arch,
+                                                                           args.learning_rate,
+                                                                           args.momentum,
+                                                                           args.mu,
+                                                                           time.strftime("%Y%m%d-%H%M%S"))
+        args.path_to_save = "{}-{}".format(args.path_to_save, args.run_id)
         args.seed = random.randint(0, 10000) if args.seed is None else args.seed
         
         run_info = {}
-        run_info['run_id'] = run_id
         run_info['args'] = vars(args)
         
         utils.create_exp_dir(args.path_to_save, scripts_to_save=glob.glob('*.py'))
@@ -46,10 +47,9 @@ def main(args):
         f = open("{}/run_info.json".format(args.path_to_resume))
         run_info = json.load(f)
         
-        run_id = run_info['run_id']
         vars(args).update(run_info['args'])
 
-    logger = utils.set_logger(logger_name="{}/_log_{}.txt".format(args.path_to_save, run_id))
+    logger = utils.set_logger(logger_name="{}/_log_{}.txt".format(args.path_to_save, args.run_id))
     
     CIFAR_CLASSES = 10
 
@@ -75,7 +75,8 @@ def main(args):
     optimizer = ProxSGD(model.parameters(),
                         lr=args.learning_rate,
                         momentum=args.momentum,
-                        weight_decay=args.weight_decay)
+                        weight_decay=args.mu)
+
 
     lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer,
                                                               float(args.epochs),
@@ -100,7 +101,6 @@ def main(args):
     train_queue = torch.utils.data.DataLoader(train_data, batch_size=args.batch_size, shuffle=True, pin_memory=True, num_workers=2)
     valid_queue = torch.utils.data.DataLoader(valid_data, batch_size=args.batch_size, shuffle=False, pin_memory=True, num_workers=2)
 
-    utils.plot_individual_op_norm(model, args.path_to_save+"/individual_operator_norm_{}_epoch_{:03d}.png".format(run_id, 0))
     if resume_training:
         train_top1 = np.load("{}/train_top1.npy".format(args.path_to_save), allow_pickle=True)
         train_loss = np.load("{}/train_loss.npy".format(args.path_to_save), allow_pickle=True)
@@ -111,21 +111,28 @@ def main(args):
         train_loss = np.array([])
         valid_top1 = np.array([])
         valid_loss = np.array([])
+        if args.plot_freq > 0:
+            utils.plot_individual_op_norm(model, args.path_to_save+"/individual_operator_norm_{}_epoch_{:03d}.png".format(args.run_id, 0))
         
     for epoch in range(last_epoch+1, args.epochs+1):
         model.drop_path_prob = args.drop_path_prob * (epoch - 1) / args.epochs
 
+        t0 = time.time()
         train_top1_tmp, train_loss_tmp = train(train_queue, model, criterion, optimizer, args, logger)
+
+        t1 = time.time()
+
         valid_top1_tmp, valid_loss_tmp = infer(valid_queue, model, criterion, args, logger)
+        t2 = time.time()
+
+        current_lr = lr_scheduler.get_lr()[0]
+        if args.use_lr_scheduler:
+            lr_scheduler.step()
 
         is_best = False
         if valid_top1_tmp >= best_acc:
             best_acc = valid_top1_tmp
             is_best = True
-
-        current_lr = lr_scheduler.get_lr()[0]
-        if args.use_lr_scheduler:
-            lr_scheduler.step()
 
         train_top1 = np.append(train_top1, train_top1_tmp.item())
         train_loss = np.append(train_loss, train_loss_tmp.item())
@@ -137,10 +144,11 @@ def main(args):
         np.save(args.path_to_save+"/valid_top1", valid_top1)
         np.save(args.path_to_save+"/valid_loss", valid_loss)
 
-        utils.acc_n_loss(train_loss, valid_top1, "{}/acc_n_loss_{}.png".format(args.path_to_save, run_id), train_top1, valid_loss)
+        utils.acc_n_loss(train_loss, valid_top1, "{}/acc_n_loss_{}.png".format(args.path_to_save, args.run_id), train_top1, valid_loss)
 
-        if args.plot_freq > 0 and epoch % args.plot_freq == 0: #Plot Group sparsity every args.plot_freq epochs
-            utils.plot_individual_op_norm(model, args.path_to_save+"/individual_operator_norm_{}_epoch_{:03d}.png".format(run_id, epoch))      
+        if args.plot_freq > 0:
+            if epoch % args.plot_freq == 0 or epoch == args.epochs: #Plot Group sparsity every args.plot_freq epochs
+                utils.plot_individual_op_norm(model, args.path_to_save+"/individual_operator_norm_{}_epoch_{:03d}.png".format(args.run_id, epoch))
 
         utils.save_checkpoint({'last_epoch': epoch,
                                'latest_model': model.state_dict(),
@@ -152,13 +160,15 @@ def main(args):
         
         torch.save(model.state_dict(), "{}/model_final".format(args.path_to_save))
 
-        logger.info('(JOBID %s) epoch %d lr %e: train_acc %f, valid_acc %f (best_acc %f)',
-                     os.environ['SLURM_JOBID'],
-                     epoch,
-                     current_lr,
-                     train_top1_tmp,
-                     valid_top1_tmp,
-                     best_acc)
+        logger.info('(JOBID %s) epoch %d lr %e: train_acc %.2f (time %.2fs), valid_acc %.2f (time %.2fs), best_acc %.2f',
+                    os.environ['SLURM_JOBID'],
+                    epoch,
+                    current_lr,
+                    train_top1_tmp,
+                    t1 - t0,
+                    valid_top1_tmp,
+                    t2 - t1,
+                    best_acc)
         
 
 def train(train_queue, model, criterion, optimizer, args, logger):
@@ -228,8 +238,9 @@ if __name__ == '__main__':
     parser.add_argument('--learning_rate_min', type=float, default=0.0001, help='minimum learning rate')
     parser.add_argument('--use_lr_scheduler', action='store_true', default=True, help='use learning rate scheduler')
     parser.add_argument('--momentum', type=float, default=0.9, help='init momentum')
-    parser.add_argument('--weight_decay', type=float, default=0.0004, help='regularization gain mu')
+    parser.add_argument('--mu', type=float, default=0.0004, help='regularization gain mu')
     parser.add_argument('--exp_name', type=str, default='log-operation-pruning', help='experiment name')
+    parser.add_argument('--run_id', type=str, default=None, help='the identifier of this specific run')
     parser.add_argument('--path_to_save', type=str, default=None, help='path to the folder where the experiment will be saved')
     parser.add_argument('--path_to_resume', type=str, default=None, help='path to the folder containing the model to resume training')
 
@@ -243,7 +254,7 @@ if __name__ == '__main__':
     parser.add_argument('--data', type=str, default='../data', help='location of the data corpus')
     parser.add_argument('--batch_size', type=int, default=96, help='batch size')
     parser.add_argument('--report_freq', type=int, default=0, help='report frequency (set 0 to turn off)')
-    parser.add_argument('--plot_freq', type=int, default=1, help='report frequency (set 0 to turn off)')
+    parser.add_argument('--plot_freq', type=int, default=1, help='plot frequency (set 0 to turn off)')
     parser.add_argument('--gpu', type=int, default=0, help='gpu device id')
     parser.add_argument('--init_channels', type=int, default=36, help='num of init channels')
     parser.add_argument('--cells', type=int, default=20, help='total number of cells')
@@ -254,6 +265,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if args.path_to_save is None:
-        args.path_to_save = "{}/{}-network_{}".format(args.exp_name, args.exp_name, args.arch)
+        args.path_to_save = "{}/{}".format(args.exp_name, args.exp_name)
     
     main(args)

@@ -3,22 +3,20 @@ import torch.nn as nn
 from torch.autograd import Variable
 
 OPS = {
-  'avg_pool_3x3' : lambda C, stride, affine: nn.Sequential(AvgPoolBN(C, stride, affine=affine), ScaleLayer(affine)),
-  'noise': lambda C, stride, affine: nn.Sequential(NoiseOp(stride, 0., 1.), ScaleLayer(affine)),
-  'none' : lambda C, stride, affine: nn.Sequential(Zero(stride), ScaleLayer(affine)),
-  'max_pool_3x3' : lambda C, stride, affine: nn.Sequential(MaxPoolBN(C, stride, affine=affine), ScaleLayer(affine)),
-  'skip_connect' : lambda C, stride, affine: nn.Sequential(Identity() if stride == 1 else FactorizedReduce(C, C, affine=affine), ScaleLayer(affine)),
-  'sep_conv_3x3' : lambda C, stride, affine: nn.Sequential(SepConv(C, C, 3, stride, 1, affine=affine)),
-  'sep_conv_5x5' : lambda C, stride, affine: nn.Sequential(SepConv(C, C, 5, stride, 2, affine=affine)),
-  'sep_conv_7x7' : lambda C, stride, affine: nn.Sequential(SepConv(C, C, 7, stride, 3, affine=affine)),
-  'dil_conv_3x3' : lambda C, stride, affine: nn.Sequential(DilConv(C, C, 3, stride, 2, 2, affine=affine)),
-  'dil_conv_5x5' : lambda C, stride, affine: nn.Sequential(DilConv(C, C, 5, stride, 4, 2, affine=affine)),
-  'conv_7x1_1x7' : lambda C, stride, affine: nn.Sequential(nn.Sequential(
+  'avg_pool_3x3' : lambda C, stride, affine: AvgPoolBN(C, stride, affine=affine),
+  'max_pool_3x3' : lambda C, stride, affine: MaxPoolBN(C, stride, affine=affine),
+  'skip_connect' : lambda C, stride, affine: IdentityBN(C, affine=affine) if stride == 1 else FactorizedReduce(C, C, affine=affine),
+  'sep_conv_3x3' : lambda C, stride, affine: SepConv(C, C, 3, stride, 1, affine=affine),
+  'sep_conv_5x5' : lambda C, stride, affine: SepConv(C, C, 5, stride, 2, affine=affine),
+  'sep_conv_7x7' : lambda C, stride, affine: SepConv(C, C, 7, stride, 3, affine=affine),
+  'dil_conv_3x3' : lambda C, stride, affine: DilConv(C, C, 3, stride, 2, 2, affine=affine),
+  'dil_conv_5x5' : lambda C, stride, affine: DilConv(C, C, 5, stride, 4, 2, affine=affine),
+  'conv_7x1_1x7' : lambda C, stride, affine: nn.Sequential(
     nn.ReLU(inplace=False),
     nn.Conv2d(C, C, (1,7), stride=(1, stride), padding=(0, 3), bias=False),
     nn.Conv2d(C, C, (7,1), stride=(stride, 1), padding=(3, 0), bias=False),
     nn.BatchNorm2d(C, affine=affine)
-    )),
+    ),
 }
 
 class ScaleLayer(nn.Module):
@@ -83,7 +81,6 @@ class Identity(nn.Module):
 class IdentityBN(nn.Module):
   def __init__(self, C, affine=True):
     super(IdentityBN, self).__init__()
-    print("affine in IdentityBN: {}".format(affine))
     self.op = nn.Sequential(nn.BatchNorm2d(C, affine=affine))
 
   def forward(self, x):
@@ -163,4 +160,3 @@ class FactorizedReduce(nn.Module):
     out = torch.cat([self.conv_1(x), self.conv_2(x[:,:,1:,1:])], dim=1)
     out = self.bn(out)
     return out
-

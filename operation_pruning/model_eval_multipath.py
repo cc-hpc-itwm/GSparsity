@@ -12,6 +12,7 @@ class MixedOp(nn.Module):
   def __init__(self, op_list):
     super(MixedOp, self).__init__()
     self._ops = nn.ModuleList()
+
     if op_list:
         self._active = True
     else:
@@ -26,7 +27,7 @@ class MixedOp(nn.Module):
 class Cell(nn.Module):
   def __init__(self, steps, genotype_cell, alpha_cell, C_prev_prev, C_prev, C, reduce, reduce_prev, concat):
     super(Cell, self).__init__()
-    print(C_prev_prev, C_prev, C)
+#     print(C_prev_prev, C_prev, C)
     self.op_list = PRIMITIVES
     self._steps = steps
     
@@ -63,8 +64,6 @@ class Cell(nn.Module):
           op_indices = np.where(alpha_edge == 1)[0] # the indices of 1s (active ops) in alpha_edge
           for op_index in op_indices.astype(int):
             op = OPS[self.op_list[op_index]](C, stride, True)
-            if "pool" in self.op_list[op_index]:
-              op = nn.Sequential(op)
             edge_active_ops.append(op)
       edge_op = MixedOp(edge_active_ops)
       self._ops.append(edge_op)

@@ -40,15 +40,15 @@ def main(args):
 
     if args.path_to_resume is None:
         resume_training = False
-        run_id = "mu_{}_{}_{}_time_{}".format(args.weight_decay,
-                                              args.normalization,
-                                              args.normalization_exponent,
-                                              time.strftime("%Y%m%d-%H%M%S"))
-        args.path_to_save = "{}-space-{}-{}".format(args.path_to_save, args.search_space, run_id)
+        if args.run_id is None:
+            args.run_id = "mu_{}_{}_{}_time_{}".format(args.mu,
+                                                       args.normalization,
+                                                       args.normalization_exponent,
+                                                       time.strftime("%Y%m%d-%H%M%S"))
+        args.path_to_save = "{}-space-{}-{}".format(args.path_to_save, args.search_space, args.run_id)
         args.seed = random.randint(0, 10000) if args.seed is None else args.seed
 
         run_info = {}
-        run_info['run_id'] = run_id
         run_info['args'] = vars(args)
         
         utils.create_exp_dir(args.path_to_save, scripts_to_save=glob.glob('*.py'))
@@ -59,10 +59,9 @@ def main(args):
         f = open("{}/run_info.json".format(args.path_to_resume))
         run_info = json.load(f)
 
-        run_id = run_info['run_id']
         vars(args).update(run_info['args'])
 
-    logger = utils.set_logger(logger_name="{}/_log_{}.txt".format(args.path_to_save, run_id))
+    logger = utils.set_logger(logger_name="{}/_log_{}.txt".format(args.path_to_save, args.run_id))
 
     PRIMITIVES = spaces_dict[args.search_space]
     CIFAR_CLASSES = 10
@@ -91,7 +90,7 @@ def main(args):
                                     args.learning_rate,
                                     momentum=args.momentum,
                                     weight_decay=3e-4)
-    else: # search_for_stage or search_for_cell
+    else:
         network_search = network_params(args.init_channels,
                                         args.cells,
                                         4,
@@ -99,10 +98,10 @@ def main(args):
         if args.search_type == "cell":
             model_params = utils_sparsenas.group_model_params_by_cell(model,
                                                                       network_search,
-                                                                      mu=args.weight_decay)
+                                                                      mu=args.mu)
         optimizer = ProxSGD(model_params,
                             lr=args.learning_rate, 
-                            weight_decay=args.weight_decay, 
+                            weight_decay=args.mu,
                             clip_bounds=(0, 1),
                             momentum=args.momentum, 
                             normalization=args.normalization,
@@ -169,9 +168,9 @@ def main(args):
         last_epoch = 0
         
         if args.plot_freq > 0:
-            utils_sparsenas.plot_individual_op_norm(model, "{}/operator_norm_individual_{}_epoch_{:03d}.png".format(args.path_to_save, run_id, 0))
+            utils_sparsenas.plot_individual_op_norm(model, "{}/operator_norm_individual_{}_epoch_{:03d}.png".format(args.path_to_save, args.run_id, 0))
             if args.search_type == "cell":
-                utils_sparsenas.plot_op_norm_across_cells(model_params, "{}/operator_norm_cell_{}_epoch_{:03d}".format(args.path_to_save, run_id, 0))
+                utils_sparsenas.plot_op_norm_across_cells(model_params, "{}/operator_norm_cell_{}_epoch_{:03d}".format(args.path_to_save, args.run_id, 0))
             
     
     for epoch in range(last_epoch+1, args.epochs+1):
@@ -196,7 +195,7 @@ def main(args):
         if args.search_type == None:
             utils_sparsenas.acc_n_loss(train_loss,
                                        valid_top1,
-                                       "{}/acc_n_loss_{}.png".format(args.path_to_save, run_id),
+                                       "{}/acc_n_loss_{}.png".format(args.path_to_save, args.run_id),
                                        train_top1,
                                        valid_loss
                                       )
@@ -208,17 +207,17 @@ def main(args):
             logger.info('(JOBID %s) epoch %d obj_val %.2f: loss %.2f + regl %.2f (%.2f * %.2f)',
                         os.environ['SLURM_JOBID'],
                         epoch,
-                        train_loss_tmp + args.weight_decay * train_regl_tmp,
+                        train_loss_tmp + args.mu * train_regl_tmp,
                         train_loss_tmp,
-                        args.weight_decay * train_regl_tmp,
-                        args.weight_decay,
+                        args.mu * train_regl_tmp,
+                        args.mu,
                         train_regl_tmp)
             utils_sparsenas.acc_n_loss(train_loss,
                                        valid_top1,
-                                       "{}/acc_n_loss_{}.png".format(args.path_to_save, run_id),
+                                       "{}/acc_n_loss_{}.png".format(args.path_to_save, args.run_id),
                                        train_top1,
                                        valid_loss,
-                                       train_loss + args.weight_decay * train_regl
+                                       train_loss + args.mu * train_regl
                                       )
         
         current_lr = lr_scheduler.get_lr()[0]
@@ -233,13 +232,14 @@ def main(args):
                               is_best,
                               args.path_to_save)
 
-        if args.plot_freq > 0 and epoch % args.plot_freq == 0: #Plot group sparsity after args.plot_freq epochs
-            '''comment plot_individual_op_norm to save time'''
-            utils_sparsenas.plot_individual_op_norm(model,
-                                                        "{}/operator_norm_individual_{}_epoch_{:03d}.png".format(args.path_to_save, run_id, epoch))
-            if args.search_type == "cell":
-                utils_sparsenas.plot_op_norm_across_cells(model_params,
-                                                          "{}/operator_norm_cell_{}_epoch_{:03d}".format(args.path_to_save, run_id, epoch))
+        if args.plot_freq > 0:
+            if epoch % args.plot_freq == 0 or epoch == args.epochs: #Plot group sparsity after args.plot_freq epochs
+                '''comment plot_individual_op_norm to save time'''
+                utils_sparsenas.plot_individual_op_norm(model,
+                                                        "{}/operator_norm_individual_{}_epoch_{:03d}.png".format(args.path_to_save, args.run_id, epoch))
+                if args.search_type == "cell":
+                    utils_sparsenas.plot_op_norm_across_cells(model_params,
+                                                              "{}/operator_norm_cell_{}_epoch_{:03d}".format(args.path_to_save, args.run_id, epoch))
 
         torch.save(model.state_dict(), "{}/model_final".format(args.path_to_save))
         
@@ -253,7 +253,7 @@ def main(args):
         
     if args.search_type == "cell":
         utils_sparsenas.plot_individual_op_norm(model,
-                                                "{}/operator_norm_individual_{}_epoch_{:03d}.png".format(args.path_to_save, run_id, epoch))
+                                                "{}/operator_norm_individual_{}_epoch_{:03d}.png".format(args.path_to_save, args.run_id, epoch))
     logger.info("args = %s", args)
 
 
@@ -323,7 +323,7 @@ if __name__ == '__main__':
     parser.add_argument('--momentum', type=float, default=0.8, help='init momentum')
     parser.add_argument('--search_space', choices=["darts", "s1", "s2", "s4"],
                         default="darts", help="spaces from RobustDARTS; default is DARTS search space")
-    parser.add_argument('--weight_decay', type=float, default=130, help='the regularization gain (mu)')
+    parser.add_argument('--mu', type=float, default=130, help='the regularization gain (mu)')
     parser.add_argument('--search_type', choices=[None, "cell"],
                         default="cell", help='cell: search for a single cell structure (normal cell and reduce cell)')
     parser.add_argument('--normalization', choices=["none", "mul", "div"],
@@ -337,6 +337,7 @@ if __name__ == '__main__':
     parser.add_argument('--path_to_resume', type=str, default=None, help='path to the pretrained model to prune')
     parser.add_argument('--path_to_save', type=str, default=None, help='path to the folder where the experiment will be saved')
     parser.add_argument('--exp_name', type=str, default="log-search", help='experiment name (default None)')
+    parser.add_argument('--run_id', type=str, default=None, help='the identifier of this specific run')
     parser.add_argument('--epochs', type=int, default=50, help='num of training epochs')
     parser.add_argument('--train_portion', type=float, default=1, help='portion of training data (if 1, the validation set is the test set)')
     parser.add_argument('--grad_clip', type=float, default=0, help='gradient clipping (set 0 to turn off)')
