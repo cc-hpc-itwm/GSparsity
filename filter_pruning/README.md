@@ -62,3 +62,5 @@ An example of `path_to_experiment` is `retrain_resnet50_pretrained_conv12_layer_
 - The original log files of GSparsity are reorganized into `logs_gsparsity_search` or `logs_gsparsity_search` for the sake of a clean repository structure.
 
 - To directly use the checkpoint of GSparsity, please move the folder containing the searching or retraining experiment to the same level as the python scripts (i.e., one level above).
+
+- Due to the file size limit of GitHub and space limit of Google Drive, only the checkpoints of mu={0.02, 0.05, 0.07, 0.1} are saved at Google Drive ([here](https://drive.google.com/drive/folders/1qvl_YcjVHd4Xus2Ck3VoccMwlf8D_bmJ?usp=sharing)). Other checkpoints will be uploaded when a practical solution is found, or per request.
