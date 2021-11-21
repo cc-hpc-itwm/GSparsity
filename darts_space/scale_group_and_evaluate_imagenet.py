@@ -22,7 +22,7 @@ from torch.autograd import Variable
 from genotypes import spaces_dict
 import list_of_models as list_of_models
 import utils
-import utils_sparsenas
+import utils_sparsenas_imagenet as utils_sparsenas
 from model_eval_multipath import NetworkImageNet as Network
 
 class network_params():
@@ -105,6 +105,8 @@ def main(args):
     criterion_smooth = CrossEntropyLabelSmooth(IMAGENET_CLASSES, args.label_smooth)
     criterion_smooth = criterion_smooth.cuda()
 
+    
+
     network_search = network_params(args.init_channels_search,
                                     args.cells_search,
                                     4,
@@ -117,21 +119,17 @@ def main(args):
                                   criterion_smooth)
 
     model_to_discretize = "{}/model_final".format(eval("list_of_models.%s" % args.arch))
+    
     if args.scale_type == "cell":
         alpha_network, genotype_network = utils_sparsenas.discretize_search_model_by_cell(model_to_discretize,
                                                                                           network_eval,
                                                                                           network_search,
                                                                                           threshold=args.pruning_threshold) #alpha for each cell
-        
     assert len(alpha_network) == args.cells, "Each cell should have its individual alpha."
     logger.info("Model to discretize is in: {}\n".format(model_to_discretize))
     logger.info("alpha_network:\n {}".format(alpha_network))
     logger.info("genotype_network:\n {}".format(genotype_network))
 
-    utils_sparsenas.visualize_cell_in_network(network_eval,
-                                              alpha_network,
-                                              args.scale_type,
-                                              args.path_to_save)
 
     model = Network(args.init_channels,
                     IMAGENET_CLASSES,
@@ -149,10 +147,8 @@ def main(args):
                                 args.learning_rate,
                                 momentum=args.momentum,
                                 weight_decay=args.weight_decay)
-    lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer,
-                                                   args.decay_period,
-                                                   gamma=args.gamma)
 
+    lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, float(args.epochs))
     if resume_training:
         model.load_state_dict(torch.load("{}/latest_model".format(args.path_to_save)))
         checkpoint = torch.load("{}/checkpoint.pth.tar".format(args.path_to_save))
@@ -165,7 +161,7 @@ def main(args):
     else:
         last_epoch = 0
         best_top1 = 0
-        model.drop_path_prob = args.drop_path_prob
+        model.drop_path_prob = 0
         
     if args.parallel:
         model = nn.DataParallel(model)
@@ -193,9 +189,9 @@ def main(args):
                                       transforms.ToTensor(),
                                       normalize]))
 
-    train_queue = torch.utils.data.DataLoader(train_data, batch_size=args.batch_size, shuffle=True, pin_memory=True, num_workers=4)
+    train_queue = torch.utils.data.DataLoader(train_data, batch_size=args.batch_size, shuffle=True, pin_memory=True, num_workers=14)
 
-    valid_queue = torch.utils.data.DataLoader(valid_data, batch_size=args.batch_size, shuffle=False, pin_memory=True, num_workers=4)
+    valid_queue = torch.utils.data.DataLoader(valid_data, batch_size=args.batch_size, shuffle=False, pin_memory=True, num_workers=14)
 
     if resume_training:
         train_top1 = np.load("{}/train_top1.npy".format(args.path_to_save), allow_pickle=True)
@@ -210,7 +206,14 @@ def main(args):
         valid_top5 = np.array([])
         valid_loss = np.array([])
 
+    lr = args.learning_rate
     for epoch in range(last_epoch+1, args.epochs+1):
+        lr_scheduler.step()
+        current_lr = lr_scheduler.get_lr()[0]
+        if epoch < 6 and args.batch_size > 128:
+            for param_group in optimizer.param_groups:
+                param_group['lr'] = lr * epoch / 5.0
+            logging.info('Warming-up Epoch: %d, LR: %e', epoch, lr * (epoch + 1) / 5.0)
         model.drop_path_prob = args.drop_path_prob * epoch / args.epochs
 
         train_top1_tmp, train_loss_tmp = train(train_queue, model, criterion_smooth, optimizer, logger)
@@ -250,8 +253,6 @@ def main(args):
         else:
             torch.save(model.state_dict(), "{}/latest_model".format(args.path_to_save))
 
-        current_lr = lr_scheduler.get_lr()[0]
-        lr_scheduler.step()
 
         utils.save_checkpoint({'last_epoch': epoch,
                                'best_top1': best_top1,
@@ -333,13 +334,13 @@ def infer(valid_queue, model, criterion, logger):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser("imagenet")
-    parser.add_argument('--cells', type=int, default=8, help='total number of cells')
-    parser.add_argument('--learning_rate', type=float, default=0.1, help='init learning rate')
-    parser.add_argument('--batch_size', type=int, default=256, help='batch size')
+    parser.add_argument('--cells', type=int, default=14, help='total number of cells')
+    parser.add_argument('--learning_rate', type=float, default=0.5, help='init learning rate')
+    parser.add_argument('--batch_size', type=int, default=512, help='batch size')
     parser.add_argument('--parallel', action='store_true', default=True, help='data parallelism')
     parser.add_argument('--arch', type=str, help='which architecture to choose from list_of_models.py')
-    parser.add_argument('--pruning_threshold', type=float, default=1e-5, help='operation pruning threshold')
-    parser.add_argument('--data', type=str, default='/home/yangy/Dataset_ImageNet/', help='location of the data corpus')
+    parser.add_argument('--pruning_threshold', type=float, default=1e-1, help='operation pruning threshold')
+    parser.add_argument('--data', type=str, default='/home/SSD/ImageNet_raw/', help='location of the data corpus')
     parser.add_argument('--path_to_resume', type=str, default=None, help='path to the model to resume training')
     parser.add_argument('--path_to_save', type=str, default=None, help='path to the folder where the experiment will be saved')
     
