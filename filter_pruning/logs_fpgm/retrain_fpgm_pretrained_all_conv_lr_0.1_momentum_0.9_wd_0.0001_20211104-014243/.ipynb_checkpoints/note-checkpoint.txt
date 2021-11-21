@@ -1,0 +1,1 @@
+This folder contains the log of retraining fpgm model after all zero filters of conv1-3 in each block and the bn that follow the zero filters are removed from the model.

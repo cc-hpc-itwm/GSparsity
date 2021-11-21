@@ -1,0 +1,190 @@
+Experiment dir : imagenet-flops_resnet50_mu_4e_minus_4_lr_0.1_momentum_0.9_wd_0.0001_20211020-162159
+2021-10-20 16:22:01 CARME Slurm ID: 31379
+2021-10-20 16:22:01 args = Namespace(arch='resnet50', baseline_model='mu_4e_minus_4', batch_size=256, data='/home/yangy/Dataset_ImageNet', dist_backend='nccl', dist_url='tcp://192.168.152.24:23456', distributed=True, epochs=90, evaluate=False, gpu=0, lr=0.1, momentum=0.9, multiprocessing_distributed=True, path_to_resume='', path_to_save='imagenet-flops_resnet50_mu_4e_minus_4_lr_0.1_momentum_0.9_wd_0.0001_20211020-162159', print_freq=1000, pruning_threshold=1e-06, rank=0, run_id='resnet50_mu_4e_minus_4_lr_0.1_momentum_0.9_wd_0.0001_20211020-162159', seed=None, start_epoch=0, weight_decay=0.0001, workers=4, world_size=1)
+Use GPU: 0 for training
+=> creating model 'resnet50'
+Warning: module Bottleneck is treated as a zero-op.
+Warning: module ResNet is treated as a zero-op.
+Warning: module DistributedDataParallel is treated as a zero-op.
+DistributedDataParallel(
+  11.214 M, 100.000% Params, 2.734 GMac, 100.000% MACs, 
+  (module): ResNet(
+    11.214 M, 100.000% Params, 2.734 GMac, 100.000% MACs, 
+    (conv1): Conv2d(0.009 M, 0.084% Params, 0.118 GMac, 4.316% MACs, 3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+    (bn1): BatchNorm2d(0.0 M, 0.001% Params, 0.002 GMac, 0.059% MACs, 64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (relu): ReLU(0.0 M, 0.000% Params, 0.001 GMac, 0.029% MACs, inplace=True)
+    (maxpool): MaxPool2d(0.0 M, 0.000% Params, 0.001 GMac, 0.029% MACs, kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+    (layer1): Sequential(
+      0.207 M, 1.845% Params, 0.652 GMac, 23.863% MACs, 
+      (0): Bottleneck(
+        0.072 M, 0.641% Params, 0.226 GMac, 8.284% MACs, 
+        (conv1): Conv2d(0.004 M, 0.037% Params, 0.013 GMac, 0.470% MACs, 64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(0.0 M, 0.001% Params, 0.0 GMac, 0.015% MACs, 64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(0.037 M, 0.329% Params, 0.116 GMac, 4.228% MACs, 64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(0.0 M, 0.001% Params, 0.0 GMac, 0.015% MACs, 64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(0.013 M, 0.119% Params, 0.042 GMac, 1.527% MACs, 64, 208, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(0.0 M, 0.004% Params, 0.001 GMac, 0.048% MACs, 208, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(0.0 M, 0.000% Params, 0.001 GMac, 0.044% MACs, )
+        (downsample): Sequential(
+          0.017 M, 0.151% Params, 0.053 GMac, 1.938% MACs, 
+          (0): Conv2d(0.016 M, 0.146% Params, 0.051 GMac, 1.879% MACs, 64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (1): BatchNorm2d(0.001 M, 0.005% Params, 0.002 GMac, 0.059% MACs, 256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): Bottleneck(
+        0.067 M, 0.594% Params, 0.21 GMac, 7.687% MACs, 
+        (conv1): Conv2d(0.016 M, 0.146% Params, 0.051 GMac, 1.879% MACs, 256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(0.0 M, 0.001% Params, 0.0 GMac, 0.015% MACs, 64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(0.035 M, 0.313% Params, 0.11 GMac, 4.030% MACs, 64, 61, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(0.0 M, 0.001% Params, 0.0 GMac, 0.014% MACs, 61, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(0.014 M, 0.128% Params, 0.045 GMac, 1.651% MACs, 61, 236, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(0.0 M, 0.004% Params, 0.001 GMac, 0.054% MACs, 236, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(0.0 M, 0.000% Params, 0.001 GMac, 0.044% MACs, )
+      )
+      (2): Bottleneck(
+        0.068 M, 0.610% Params, 0.216 GMac, 7.892% MACs, 
+        (conv1): Conv2d(0.016 M, 0.146% Params, 0.051 GMac, 1.879% MACs, 256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(0.0 M, 0.001% Params, 0.0 GMac, 0.015% MACs, 64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(0.037 M, 0.329% Params, 0.116 GMac, 4.228% MACs, 64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(0.0 M, 0.001% Params, 0.0 GMac, 0.015% MACs, 64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(0.014 M, 0.129% Params, 0.045 GMac, 1.659% MACs, 64, 226, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(0.0 M, 0.004% Params, 0.001 GMac, 0.052% MACs, 226, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(0.0 M, 0.000% Params, 0.001 GMac, 0.044% MACs, )
+      )
+    )
+    (layer2): Sequential(
+      1.161 M, 10.350% Params, 0.99 GMac, 36.219% MACs, 
+      (0): Bottleneck(
+        0.366 M, 3.264% Params, 0.366 GMac, 13.369% MACs, 
+        (conv1): Conv2d(0.033 M, 0.292% Params, 0.103 GMac, 3.758% MACs, 256, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(0.0 M, 0.002% Params, 0.001 GMac, 0.029% MACs, 128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(0.147 M, 1.315% Params, 0.116 GMac, 4.228% MACs, 128, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(0.0 M, 0.002% Params, 0.0 GMac, 0.007% MACs, 128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(0.052 M, 0.467% Params, 0.041 GMac, 1.501% MACs, 128, 409, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(0.001 M, 0.007% Params, 0.001 GMac, 0.023% MACs, 409, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(0.0 M, 0.000% Params, 0.001 GMac, 0.033% MACs, )
+        (downsample): Sequential(
+          0.132 M, 1.178% Params, 0.104 GMac, 3.788% MACs, 
+          (0): Conv2d(0.131 M, 1.169% Params, 0.103 GMac, 3.758% MACs, 256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm2d(0.001 M, 0.009% Params, 0.001 GMac, 0.029% MACs, 512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): Bottleneck(
+        0.276 M, 2.457% Params, 0.217 GMac, 7.922% MACs, 
+        (conv1): Conv2d(0.066 M, 0.584% Params, 0.051 GMac, 1.879% MACs, 512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(0.0 M, 0.002% Params, 0.0 GMac, 0.007% MACs, 128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(0.147 M, 1.315% Params, 0.116 GMac, 4.228% MACs, 128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(0.0 M, 0.002% Params, 0.0 GMac, 0.007% MACs, 128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(0.061 M, 0.544% Params, 0.048 GMac, 1.751% MACs, 128, 477, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(0.001 M, 0.009% Params, 0.001 GMac, 0.027% MACs, 477, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(0.0 M, 0.000% Params, 0.001 GMac, 0.022% MACs, )
+      )
+      (2): Bottleneck(
+        0.277 M, 2.470% Params, 0.218 GMac, 7.963% MACs, 
+        (conv1): Conv2d(0.066 M, 0.584% Params, 0.051 GMac, 1.879% MACs, 512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(0.0 M, 0.002% Params, 0.0 GMac, 0.007% MACs, 128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(0.147 M, 1.315% Params, 0.116 GMac, 4.228% MACs, 128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(0.0 M, 0.002% Params, 0.0 GMac, 0.007% MACs, 128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(0.062 M, 0.557% Params, 0.049 GMac, 1.791% MACs, 128, 488, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(0.001 M, 0.009% Params, 0.001 GMac, 0.028% MACs, 488, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(0.0 M, 0.000% Params, 0.001 GMac, 0.022% MACs, )
+      )
+      (3): Bottleneck(
+        0.242 M, 2.159% Params, 0.19 GMac, 6.965% MACs, 
+        (conv1): Conv2d(0.065 M, 0.575% Params, 0.051 GMac, 1.850% MACs, 512, 126, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(0.0 M, 0.002% Params, 0.0 GMac, 0.007% MACs, 126, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(0.125 M, 1.112% Params, 0.098 GMac, 3.577% MACs, 126, 110, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(0.0 M, 0.002% Params, 0.0 GMac, 0.006% MACs, 110, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(0.051 M, 0.459% Params, 0.04 GMac, 1.476% MACs, 110, 468, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(0.001 M, 0.008% Params, 0.001 GMac, 0.027% MACs, 468, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(0.0 M, 0.000% Params, 0.001 GMac, 0.021% MACs, )
+      )
+    )
+    (layer3): Sequential(
+      3.45 M, 30.762% Params, 0.755 GMac, 27.619% MACs, 
+      (0): Bottleneck(
+        1.44 M, 12.838% Params, 0.36 GMac, 13.167% MACs, 
+        (conv1): Conv2d(0.131 M, 1.169% Params, 0.103 GMac, 3.758% MACs, 512, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(0.001 M, 0.005% Params, 0.0 GMac, 0.015% MACs, 256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(0.569 M, 5.075% Params, 0.112 GMac, 4.080% MACs, 256, 247, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(0.0 M, 0.004% Params, 0.0 GMac, 0.004% MACs, 247, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(0.21 M, 1.877% Params, 0.041 GMac, 1.509% MACs, 247, 852, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(0.002 M, 0.015% Params, 0.0 GMac, 0.012% MACs, 852, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(0.0 M, 0.000% Params, 0.0 GMac, 0.016% MACs, )
+        (downsample): Sequential(
+          0.526 M, 4.694% Params, 0.103 GMac, 3.773% MACs, 
+          (0): Conv2d(0.524 M, 4.675% Params, 0.103 GMac, 3.758% MACs, 512, 1024, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm2d(0.002 M, 0.018% Params, 0.0 GMac, 0.015% MACs, 1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): Bottleneck(
+        1.059 M, 9.446% Params, 0.208 GMac, 7.605% MACs, 
+        (conv1): Conv2d(0.252 M, 2.246% Params, 0.049 GMac, 1.806% MACs, 1024, 246, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(0.0 M, 0.004% Params, 0.0 GMac, 0.004% MACs, 246, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(0.565 M, 5.035% Params, 0.111 GMac, 4.047% MACs, 246, 255, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(0.001 M, 0.005% Params, 0.0 GMac, 0.004% MACs, 255, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(0.24 M, 2.140% Params, 0.047 GMac, 1.720% MACs, 255, 941, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(0.002 M, 0.017% Params, 0.0 GMac, 0.013% MACs, 941, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(0.0 M, 0.000% Params, 0.0 GMac, 0.011% MACs, )
+      )
+      (2): Bottleneck(
+        0.947 M, 8.442% Params, 0.186 GMac, 6.797% MACs, 
+        (conv1): Conv2d(0.249 M, 2.219% Params, 0.049 GMac, 1.784% MACs, 1024, 243, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(0.0 M, 0.004% Params, 0.0 GMac, 0.003% MACs, 243, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(0.486 M, 4.330% Params, 0.095 GMac, 3.480% MACs, 243, 222, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(0.0 M, 0.004% Params, 0.0 GMac, 0.003% MACs, 222, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(0.21 M, 1.869% Params, 0.041 GMac, 1.502% MACs, 222, 944, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(0.002 M, 0.017% Params, 0.0 GMac, 0.014% MACs, 944, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(0.0 M, 0.000% Params, 0.0 GMac, 0.011% MACs, )
+      )
+      (3): Bottleneck(
+        0.004 M, 0.035% Params, 0.001 GMac, 0.036% MACs, 
+        (conv1): Conv2d(0.001 M, 0.009% Params, 0.0 GMac, 0.007% MACs, 1024, 1, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(0.0 M, 0.000% Params, 0.0 GMac, 0.000% MACs, 1, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(0.0 M, 0.000% Params, 0.0 GMac, 0.000% MACs, 1, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(0.0 M, 0.000% Params, 0.0 GMac, 0.000% MACs, 1, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(0.001 M, 0.009% Params, 0.0 GMac, 0.007% MACs, 1, 968, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(0.002 M, 0.017% Params, 0.0 GMac, 0.014% MACs, 968, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(0.0 M, 0.000% Params, 0.0 GMac, 0.007% MACs, )
+      )
+      (4): Bottleneck(
+        0.0 M, 0.000% Params, 0.0 GMac, 0.007% MACs, 
+        (relu): ReLU(0.0 M, 0.000% Params, 0.0 GMac, 0.007% MACs, )
+      )
+      (5): Bottleneck(
+        0.0 M, 0.000% Params, 0.0 GMac, 0.007% MACs, 
+        (relu): ReLU(0.0 M, 0.000% Params, 0.0 GMac, 0.007% MACs, )
+      )
+    )
+    (layer4): Sequential(
+      4.338 M, 38.686% Params, 0.213 GMac, 7.787% MACs, 
+      (0): Bottleneck(
+        2.101 M, 18.738% Params, 0.103 GMac, 3.769% MACs, 
+        (relu): ReLU(0.0 M, 0.000% Params, 0.0 GMac, 0.004% MACs, )
+        (downsample): Sequential(
+          2.101 M, 18.738% Params, 0.103 GMac, 3.766% MACs, 
+          (0): Conv2d(2.097 M, 18.701% Params, 0.103 GMac, 3.758% MACs, 1024, 2048, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm2d(0.004 M, 0.037% Params, 0.0 GMac, 0.007% MACs, 2048, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): Bottleneck(
+        2.237 M, 19.948% Params, 0.11 GMac, 4.014% MACs, 
+        (conv1): Conv2d(0.674 M, 6.009% Params, 0.033 GMac, 1.208% MACs, 2048, 329, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): BatchNorm2d(0.001 M, 0.006% Params, 0.0 GMac, 0.001% MACs, 329, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(1.398 M, 12.463% Params, 0.068 GMac, 2.505% MACs, 329, 472, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(0.001 M, 0.008% Params, 0.0 GMac, 0.002% MACs, 472, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(0.163 M, 1.456% Params, 0.008 GMac, 0.293% MACs, 472, 346, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): BatchNorm2d(0.001 M, 0.006% Params, 0.0 GMac, 0.001% MACs, 346, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(0.0 M, 0.000% Params, 0.0 GMac, 0.005% MACs, )
+      )
+      (2): Bottleneck(
+        0.0 M, 0.000% Params, 0.0 GMac, 0.004% MACs, 
+        (relu): ReLU(0.0 M, 0.000% Params, 0.0 GMac, 0.004% MACs, )
+      )
+    )
+    (avgpool): AdaptiveAvgPool2d(0.0 M, 0.000% Params, 0.0 GMac, 0.004% MACs, output_size=(1, 1))
+    (fc): Linear(2.049 M, 18.272% Params, 0.002 GMac, 0.075% MACs, in_features=2048, out_features=1000, bias=True)
+  )
+)
+2021-10-20 16:22:08 Computational complexity:       2.73 GMac
+2021-10-20 16:22:08 Number of parameters:           11.21 M 

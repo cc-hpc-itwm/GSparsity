@@ -1,0 +1,13 @@
+pretrained_conv12_layer_adaptive_mu_0_04 = 'conv12_lr_0.001_momentum_0.9_wd_0.04_normalization_div_pretrained_True_20211108-230238'
+
+pretrained_conv12_layer_adaptive_mu_0_05 = 'conv12_lr_0.001_momentum_0.9_wd_0.05_normalization_div_pretrained_True_20211109-005058'
+
+pretrained_conv12_layer_adaptive_mu_0_06 = 'conv12_lr_0.001_momentum_0.9_wd_0.06_normalization_div_pretrained_True_20211102-101906'
+
+pretrained_conv12_layer_adaptive_mu_0_07 = 'conv12_lr_0.001_momentum_0.9_wd_0.07_normalization_div_pretrained_True_20211102-101803'
+
+pretrained_conv12_layer_adaptive_mu_0_08 = 'conv12_lr_0.001_momentum_0.9_wd_0.08_normalization_div_pretrained_True_20211102-092449'
+
+pretrained_conv12_layer_adaptive_mu_0_09 = 'conv12_lr_0.001_momentum_0.9_wd_0.09_normalization_div_pretrained_True_20211102-092641'
+
+pretrained_conv12_layer_adaptive_mu_0_1 = 'conv12_lr_0.001_momentum_0.9_wd_0.1_normalization_div_pretrained_True_20211031-110931'

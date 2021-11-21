@@ -1,0 +1,2211 @@
+2021-11-14 18:11:11 CARME Slurm ID: 31907
+2021-11-14 18:11:11 CARME Slurm ID: 31907
+2021-11-14 18:11:11 args = Namespace(arch='resnet50', baseline_model='pretrained_conv12_layer_adaptive_mu_0_01', batch_size=256, data='/home/SSD/Dataset_ImageNet', dist_backend='nccl', dist_url='tcp://192.168.152.46:23456', distributed=True, epochs=90, evaluate=False, gpu=0, lr=0.1, momentum=0.9, multiprocessing_distributed=True, path_to_resume='', path_to_save='retrain_resnet50_pretrained_conv12_layer_adaptive_mu_0_01_20211114-181104', print_freq=1000, pruning_threshold=1e-06, rank=0, run_id='resnet50_pretrained_conv12_layer_adaptive_mu_0_01_20211114-181104', seed=None, start_epoch=0, weight_decay=0.0001, workers=4, world_size=3)
+2021-11-14 18:11:11 CARME Slurm ID: 31907
+2021-11-14 18:11:11 args = Namespace(arch='resnet50', baseline_model='pretrained_conv12_layer_adaptive_mu_0_01', batch_size=256, data='/home/SSD/Dataset_ImageNet', dist_backend='nccl', dist_url='tcp://192.168.152.46:23456', distributed=True, epochs=90, evaluate=False, gpu=2, lr=0.1, momentum=0.9, multiprocessing_distributed=True, path_to_resume='', path_to_save='retrain_resnet50_pretrained_conv12_layer_adaptive_mu_0_01_20211114-181104', print_freq=1000, pruning_threshold=1e-06, rank=0, run_id='resnet50_pretrained_conv12_layer_adaptive_mu_0_01_20211114-181104', seed=None, start_epoch=0, weight_decay=0.0001, workers=4, world_size=3)
+2021-11-14 18:11:11 args = Namespace(arch='resnet50', baseline_model='pretrained_conv12_layer_adaptive_mu_0_01', batch_size=256, data='/home/SSD/Dataset_ImageNet', dist_backend='nccl', dist_url='tcp://192.168.152.46:23456', distributed=True, epochs=90, evaluate=False, gpu=1, lr=0.1, momentum=0.9, multiprocessing_distributed=True, path_to_resume='', path_to_save='retrain_resnet50_pretrained_conv12_layer_adaptive_mu_0_01_20211114-181104', print_freq=1000, pruning_threshold=1e-06, rank=0, run_id='resnet50_pretrained_conv12_layer_adaptive_mu_0_01_20211114-181104', seed=None, start_epoch=0, weight_decay=0.0001, workers=4, world_size=3)
+2021-11-14 18:11:13 => loading baseline model 'conv12_lr_0.001_momentum_0.9_wd_0.01_normalization_div_pretrained_True_20211111-212142/small_model_conv12_1e-06.pth.tar'
+2021-11-14 18:11:13 => loading baseline model 'conv12_lr_0.001_momentum_0.9_wd_0.01_normalization_div_pretrained_True_20211111-212142/small_model_conv12_1e-06.pth.tar'
+2021-11-14 18:11:13 => loading baseline model 'conv12_lr_0.001_momentum_0.9_wd_0.01_normalization_div_pretrained_True_20211111-212142/small_model_conv12_1e-06.pth.tar'
+2021-11-14 18:11:14 => loaded baseline model 'conv12_lr_0.001_momentum_0.9_wd_0.01_normalization_div_pretrained_True_20211111-212142/small_model_conv12_1e-06.pth.tar'
+2021-11-14 18:11:14 => loaded baseline model 'conv12_lr_0.001_momentum_0.9_wd_0.01_normalization_div_pretrained_True_20211111-212142/small_model_conv12_1e-06.pth.tar'
+2021-11-14 18:11:14 => loaded baseline model 'conv12_lr_0.001_momentum_0.9_wd_0.01_normalization_div_pretrained_True_20211111-212142/small_model_conv12_1e-06.pth.tar'
+2021-11-14 18:11:24 Computational complexity:       3.22 GMac
+2021-11-14 18:11:24 Number of parameters:           22.7 M  
+2021-11-14 18:11:24 Computational complexity:       3.22 GMac
+2021-11-14 18:11:24 Number of parameters:           22.7 M  
+2021-11-14 18:11:24 Computational complexity:       3.22 GMac
+2021-11-14 18:11:24 Number of parameters:           22.7 M  
+2021-11-14 18:11:44 valid 0000, loss 6.286e-01, top1 89.41, top5 95.29
+2021-11-14 18:11:44 valid 0000, loss 6.286e-01, top1 89.41, top5 95.29
+2021-11-14 18:11:44 valid 0000, loss 6.286e-01, top1 89.41, top5 95.29
+2021-11-14 18:16:02 (JOBID 31907) epoch -1: valid_top1 73.99, valid_top5 91.50, inference time 272.57
+2021-11-14 18:16:14 (JOBID 31907) epoch -1: valid_top1 73.99, valid_top5 91.50, inference time 284.46
+2021-11-14 18:16:16 (JOBID 31907) epoch -1: valid_top1 73.99, valid_top5 91.50, inference time 286.84
+2021-11-14 18:16:37 train 0000, loss 5.698e-01, top1 87.06, top5 94.12
+2021-11-14 18:16:37 train 0000, loss 3.639e-01, top1 90.59, top5 97.65
+2021-11-14 18:16:37 train 0000, loss 6.119e-01, top1 78.82, top5 97.65
+2021-11-14 18:26:02 train 1000, loss 1.019e+00, top1 74.91, top5 90.62
+2021-11-14 18:26:02 train 1000, loss 1.028e+00, top1 74.82, top5 90.46
+2021-11-14 18:26:02 train 1000, loss 1.027e+00, top1 74.70, top5 90.50
+2021-11-14 18:35:29 train 2000, loss 1.026e+00, top1 74.78, top5 90.65
+2021-11-14 18:35:29 train 2000, loss 1.029e+00, top1 74.67, top5 90.57
+2021-11-14 18:35:29 train 2000, loss 1.036e+00, top1 74.61, top5 90.40
+2021-11-14 18:44:57 train 3000, loss 1.044e+00, top1 74.40, top5 90.41
+2021-11-14 18:44:57 train 3000, loss 1.041e+00, top1 74.42, top5 90.47
+2021-11-14 18:44:57 train 3000, loss 1.041e+00, top1 74.42, top5 90.52
+2021-11-14 18:54:20 train 4000, loss 1.053e+00, top1 74.10, top5 90.39
+2021-11-14 18:54:20 train 4000, loss 1.056e+00, top1 74.11, top5 90.28
+2021-11-14 18:54:20 train 4000, loss 1.055e+00, top1 74.16, top5 90.33
+2021-11-14 19:03:43 train 5000, loss 1.071e+00, top1 73.79, top5 90.18
+2021-11-14 19:03:43 train 5000, loss 1.071e+00, top1 73.82, top5 90.13
+2021-11-14 19:03:43 train 5000, loss 1.070e+00, top1 73.77, top5 90.24
+2021-11-14 19:04:14 valid 0000, loss 4.212e-01, top1 89.41, top5 97.65
+2021-11-14 19:04:14 valid 0000, loss 4.212e-01, top1 89.41, top5 97.65
+2021-11-14 19:04:14 valid 0000, loss 4.212e-01, top1 89.41, top5 97.65
+2021-11-14 19:08:43 (JOBID 31907) epoch 0: train time 2881.67, inference time 279.03s, valid_top1 67.30 (best_top1 67.30), valid_top5 87.54
+2021-11-14 19:08:44 (JOBID 31907) epoch 0: train time 2869.66, inference time 280.33s, valid_top1 67.30 (best_top1 67.30), valid_top5 87.54
+2021-11-14 19:08:45 (JOBID 31907) epoch 0: train time 2867.22, inference time 281.20s, valid_top1 67.30 (best_top1 67.30), valid_top5 87.54
+2021-11-14 19:08:58 train 0000, loss 8.689e-01, top1 78.82, top5 91.76
+2021-11-14 19:08:58 train 0000, loss 9.951e-01, top1 75.29, top5 92.94
+2021-11-14 19:08:58 train 0000, loss 7.765e-01, top1 76.47, top5 95.29
+2021-11-14 19:18:19 train 1000, loss 1.136e+00, top1 72.45, top5 89.51
+2021-11-14 19:18:20 train 1000, loss 1.133e+00, top1 72.59, top5 89.56
+2021-11-14 19:18:20 train 1000, loss 1.144e+00, top1 72.22, top5 89.50
+2021-11-14 19:27:44 train 2000, loss 1.164e+00, top1 71.69, top5 89.25
+2021-11-14 19:27:44 train 2000, loss 1.163e+00, top1 71.84, top5 89.22
+2021-11-14 19:27:44 train 2000, loss 1.162e+00, top1 71.79, top5 89.25
+2021-11-14 19:37:03 train 3000, loss 1.191e+00, top1 71.16, top5 88.92
+2021-11-14 19:37:03 train 3000, loss 1.189e+00, top1 71.12, top5 88.98
+2021-11-14 19:37:03 train 3000, loss 1.189e+00, top1 71.15, top5 88.92
+2021-11-14 19:46:24 train 4000, loss 1.214e+00, top1 70.63, top5 88.67
+2021-11-14 19:46:23 train 4000, loss 1.213e+00, top1 70.65, top5 88.66
+2021-11-14 19:46:24 train 4000, loss 1.213e+00, top1 70.59, top5 88.66
+2021-11-14 19:55:44 train 5000, loss 1.238e+00, top1 70.13, top5 88.36
+2021-11-14 19:55:44 train 5000, loss 1.239e+00, top1 70.10, top5 88.40
+2021-11-14 19:55:44 train 5000, loss 1.236e+00, top1 70.12, top5 88.38
+2021-11-14 19:56:09 valid 0000, loss 8.271e-01, top1 83.53, top5 92.94
+2021-11-14 19:56:09 valid 0000, loss 8.271e-01, top1 83.53, top5 92.94
+2021-11-14 19:56:09 valid 0000, loss 8.271e-01, top1 83.53, top5 92.94
+2021-11-14 20:01:02 (JOBID 31907) epoch 1: train time 2834.48, inference time 304.30s, valid_top1 62.33 (best_top1 67.30), valid_top5 84.83
+2021-11-14 20:01:02 (JOBID 31907) epoch 1: train time 2833.43, inference time 304.39s, valid_top1 62.33 (best_top1 67.30), valid_top5 84.83
+2021-11-14 20:01:03 (JOBID 31907) epoch 1: train time 2834.95, inference time 304.38s, valid_top1 62.33 (best_top1 67.30), valid_top5 84.83
+2021-11-14 20:01:17 train 0000, loss 1.167e+00, top1 76.47, top5 88.24
+2021-11-14 20:01:17 train 0000, loss 1.531e+00, top1 63.53, top5 83.53
+2021-11-14 20:01:17 train 0000, loss 1.452e+00, top1 65.88, top5 84.71
+2021-11-14 20:10:48 train 1000, loss 1.337e+00, top1 67.92, top5 87.20
+2021-11-14 20:10:48 train 1000, loss 1.353e+00, top1 67.81, top5 86.91
+2021-11-14 20:10:48 train 1000, loss 1.326e+00, top1 68.25, top5 87.51
+2021-11-14 20:20:17 train 2000, loss 1.374e+00, top1 67.31, top5 86.73
+2021-11-14 20:20:17 train 2000, loss 1.356e+00, top1 67.58, top5 87.10
+2021-11-14 20:20:17 train 2000, loss 1.364e+00, top1 67.38, top5 86.83
+2021-11-14 20:29:45 train 3000, loss 1.398e+00, top1 66.72, top5 86.45
+2021-11-14 20:29:45 train 3000, loss 1.388e+00, top1 66.90, top5 86.69
+2021-11-14 20:29:45 train 3000, loss 1.393e+00, top1 66.75, top5 86.46
+2021-11-14 20:39:19 train 4000, loss 1.421e+00, top1 66.17, top5 86.16
+2021-11-14 20:39:19 train 4000, loss 1.414e+00, top1 66.30, top5 86.33
+2021-11-14 20:39:19 train 4000, loss 1.418e+00, top1 66.22, top5 86.14
+2021-11-14 20:48:51 train 5000, loss 1.443e+00, top1 65.68, top5 85.82
+2021-11-14 20:48:51 train 5000, loss 1.443e+00, top1 65.71, top5 85.88
+2021-11-14 20:48:51 train 5000, loss 1.437e+00, top1 65.85, top5 86.01
+2021-11-14 20:49:16 valid 0000, loss 1.089e+00, top1 76.47, top5 88.24
+2021-11-14 20:49:16 valid 0000, loss 1.089e+00, top1 76.47, top5 88.24
+2021-11-14 20:49:16 valid 0000, loss 1.089e+00, top1 76.47, top5 88.24
+2021-11-14 20:53:40 (JOBID 31907) epoch 2: train time 2882.86, inference time 274.53s, valid_top1 61.50 (best_top1 67.30), valid_top5 84.49
+2021-11-14 20:53:49 (JOBID 31907) epoch 2: train time 2882.79, inference time 284.03s, valid_top1 61.50 (best_top1 67.30), valid_top5 84.49
+2021-11-14 20:53:51 (JOBID 31907) epoch 2: train time 2882.58, inference time 285.86s, valid_top1 61.50 (best_top1 67.30), valid_top5 84.49
+2021-11-14 20:54:04 train 0000, loss 1.466e+00, top1 65.88, top5 85.88
+2021-11-14 20:53:54 train 0000, loss 1.574e+00, top1 67.06, top5 80.00
+2021-11-14 20:54:06 train 0000, loss 1.207e+00, top1 70.59, top5 89.41
+2021-11-14 21:03:35 train 1000, loss 1.538e+00, top1 63.72, top5 84.68
+2021-11-14 21:03:35 train 1000, loss 1.530e+00, top1 63.65, top5 84.78
+2021-11-14 21:03:36 train 1000, loss 1.544e+00, top1 63.53, top5 84.65
+2021-11-14 21:13:01 train 2000, loss 1.564e+00, top1 63.12, top5 84.35
+2021-11-14 21:13:01 train 2000, loss 1.568e+00, top1 63.01, top5 84.28
+2021-11-14 21:13:01 train 2000, loss 1.566e+00, top1 63.07, top5 84.34
+2021-11-14 21:22:29 train 3000, loss 1.594e+00, top1 62.52, top5 83.98
+2021-11-14 21:22:29 train 3000, loss 1.593e+00, top1 62.46, top5 83.96
+2021-11-14 21:22:29 train 3000, loss 1.594e+00, top1 62.51, top5 83.85
+2021-11-14 21:32:04 train 4000, loss 1.613e+00, top1 62.10, top5 83.68
+2021-11-14 21:32:05 train 4000, loss 1.620e+00, top1 61.95, top5 83.49
+2021-11-14 21:32:05 train 4000, loss 1.619e+00, top1 62.03, top5 83.62
+2021-11-14 21:42:09 train 5000, loss 1.643e+00, top1 61.47, top5 83.17
+2021-11-14 21:42:09 train 5000, loss 1.642e+00, top1 61.56, top5 83.29
+2021-11-14 21:42:10 train 5000, loss 1.635e+00, top1 61.64, top5 83.38
+2021-11-14 21:42:34 valid 0000, loss 1.498e+00, top1 69.41, top5 85.88
+2021-11-14 21:42:34 valid 0000, loss 1.498e+00, top1 69.41, top5 85.88
+2021-11-14 21:42:34 valid 0000, loss 1.498e+00, top1 69.41, top5 85.88
+2021-11-14 21:46:55 (JOBID 31907) epoch 3: train time 2911.98, inference time 271.49s, valid_top1 59.64 (best_top1 67.30), valid_top5 83.28
+2021-11-14 21:47:05 (JOBID 31907) epoch 3: train time 2923.54, inference time 281.86s, valid_top1 59.64 (best_top1 67.30), valid_top5 83.28
+2021-11-14 21:47:06 (JOBID 31907) epoch 3: train time 2914.10, inference time 282.36s, valid_top1 59.64 (best_top1 67.30), valid_top5 83.28
+2021-11-14 21:47:19 train 0000, loss 2.256e+00, top1 50.59, top5 74.12
+2021-11-14 21:47:09 train 0000, loss 1.190e+00, top1 71.76, top5 91.76
+2021-11-14 21:47:19 train 0000, loss 1.689e+00, top1 60.00, top5 82.35
+2021-11-14 21:57:02 train 1000, loss 1.720e+00, top1 59.74, top5 82.05
+2021-11-14 21:57:02 train 1000, loss 1.735e+00, top1 59.57, top5 81.95
+2021-11-14 21:57:02 train 1000, loss 1.724e+00, top1 59.84, top5 82.06
+2021-11-14 22:06:43 train 2000, loss 1.745e+00, top1 59.30, top5 81.77
+2021-11-14 22:06:43 train 2000, loss 1.749e+00, top1 59.25, top5 81.69
+2021-11-14 22:06:43 train 2000, loss 1.748e+00, top1 59.30, top5 81.66
+2021-11-14 22:16:29 train 3000, loss 1.766e+00, top1 58.88, top5 81.50
+2021-11-14 22:16:29 train 3000, loss 1.769e+00, top1 58.88, top5 81.41
+2021-11-14 22:16:29 train 3000, loss 1.772e+00, top1 58.83, top5 81.37
+2021-11-14 22:25:58 train 4000, loss 1.790e+00, top1 58.43, top5 81.17
+2021-11-14 22:25:58 train 4000, loss 1.788e+00, top1 58.47, top5 81.13
+2021-11-14 22:25:58 train 4000, loss 1.795e+00, top1 58.40, top5 80.99
+2021-11-14 22:35:29 train 5000, loss 1.812e+00, top1 58.00, top5 80.83
+2021-11-14 22:35:29 train 5000, loss 1.813e+00, top1 58.07, top5 80.79
+2021-11-14 22:35:29 train 5000, loss 1.810e+00, top1 58.06, top5 80.79
+2021-11-14 22:35:53 valid 0000, loss 9.658e-01, top1 82.35, top5 92.94
+2021-11-14 22:35:53 valid 0000, loss 9.658e-01, top1 82.35, top5 92.94
+2021-11-14 22:35:53 valid 0000, loss 9.658e-01, top1 82.35, top5 92.94
+2021-11-14 22:40:36 (JOBID 31907) epoch 4: train time 2917.24, inference time 293.35s, valid_top1 56.98 (best_top1 67.30), valid_top5 81.52
+2021-11-14 22:40:36 (JOBID 31907) epoch 4: train time 2917.73, inference time 293.35s, valid_top1 56.98 (best_top1 67.30), valid_top5 81.52
+2021-11-14 22:40:37 (JOBID 31907) epoch 4: train time 2927.85, inference time 293.24s, valid_top1 56.98 (best_top1 67.30), valid_top5 81.52
+2021-11-14 22:40:51 train 0000, loss 2.162e+00, top1 54.12, top5 75.29
+2021-11-14 22:40:51 train 0000, loss 2.197e+00, top1 52.94, top5 72.94
+2021-11-14 22:40:51 train 0000, loss 1.824e+00, top1 62.35, top5 75.29
+2021-11-14 22:50:19 train 1000, loss 1.879e+00, top1 56.62, top5 79.77
+2021-11-14 22:50:19 train 1000, loss 1.867e+00, top1 56.81, top5 80.17
+2021-11-14 22:50:19 train 1000, loss 1.876e+00, top1 56.76, top5 79.84
+2021-11-14 22:59:47 train 2000, loss 1.890e+00, top1 56.50, top5 79.75
+2021-11-14 22:59:47 train 2000, loss 1.898e+00, top1 56.27, top5 79.57
+2021-11-14 22:59:47 train 2000, loss 1.897e+00, top1 56.27, top5 79.60
+2021-11-14 23:09:13 train 3000, loss 1.913e+00, top1 56.05, top5 79.37
+2021-11-14 23:09:13 train 3000, loss 1.912e+00, top1 56.02, top5 79.39
+2021-11-14 23:09:13 train 3000, loss 1.916e+00, top1 55.97, top5 79.32
+2021-11-14 23:18:41 train 4000, loss 1.931e+00, top1 55.65, top5 79.11
+2021-11-14 23:18:41 train 4000, loss 1.932e+00, top1 55.71, top5 79.10
+2021-11-14 23:18:41 train 4000, loss 1.930e+00, top1 55.73, top5 79.10
+2021-11-14 23:28:07 train 5000, loss 1.945e+00, top1 55.42, top5 78.88
+2021-11-14 23:28:07 train 5000, loss 1.943e+00, top1 55.44, top5 78.90
+2021-11-14 23:28:07 train 5000, loss 1.943e+00, top1 55.49, top5 78.92
+2021-11-14 23:28:32 valid 0000, loss 9.510e-01, top1 80.00, top5 89.41
+2021-11-14 23:28:32 valid 0000, loss 9.510e-01, top1 80.00, top5 89.41
+2021-11-14 23:28:32 valid 0000, loss 9.510e-01, top1 80.00, top5 89.41
+2021-11-14 23:33:00 (JOBID 31907) epoch 5: train time 2864.60, inference time 277.92s, valid_top1 54.71 (best_top1 67.30), valid_top5 79.88
+2021-11-14 23:33:00 (JOBID 31907) epoch 5: train time 2865.10, inference time 278.22s, valid_top1 54.71 (best_top1 67.30), valid_top5 79.88
+2021-11-14 23:33:02 (JOBID 31907) epoch 5: train time 2864.99, inference time 280.18s, valid_top1 54.71 (best_top1 67.30), valid_top5 79.88
+2021-11-14 23:33:14 train 0000, loss 2.733e+00, top1 43.53, top5 64.71
+2021-11-14 23:33:14 train 0000, loss 1.723e+00, top1 60.00, top5 85.88
+2021-11-14 23:33:16 train 0000, loss 2.295e+00, top1 56.47, top5 72.94
+2021-11-14 23:42:46 train 1000, loss 1.972e+00, top1 54.93, top5 78.47
+2021-11-14 23:42:46 train 1000, loss 1.974e+00, top1 55.02, top5 78.53
+2021-11-14 23:42:46 train 1000, loss 1.974e+00, top1 54.97, top5 78.35
+2021-11-14 23:52:15 train 2000, loss 1.989e+00, top1 54.58, top5 78.02
+2021-11-14 23:52:15 train 2000, loss 1.981e+00, top1 54.66, top5 78.35
+2021-11-14 23:52:15 train 2000, loss 1.993e+00, top1 54.64, top5 78.20
+2021-11-15 00:02:06 train 3000, loss 1.998e+00, top1 54.37, top5 77.93
+2021-11-15 00:02:06 train 3000, loss 2.007e+00, top1 54.33, top5 77.94
+2021-11-15 00:02:06 train 3000, loss 1.998e+00, top1 54.33, top5 78.13
+2021-11-15 00:11:44 train 4000, loss 2.015e+00, top1 54.13, top5 77.82
+2021-11-15 00:11:44 train 4000, loss 2.009e+00, top1 54.16, top5 77.96
+2021-11-15 00:11:44 train 4000, loss 2.009e+00, top1 54.18, top5 77.81
+2021-11-15 00:21:18 train 5000, loss 2.018e+00, top1 54.01, top5 77.69
+2021-11-15 00:21:18 train 5000, loss 2.025e+00, top1 53.94, top5 77.68
+2021-11-15 00:21:18 train 5000, loss 2.020e+00, top1 53.98, top5 77.80
+2021-11-15 00:21:42 valid 0000, loss 8.438e-01, top1 81.18, top5 90.59
+2021-11-15 00:21:42 valid 0000, loss 8.438e-01, top1 81.18, top5 90.59
+2021-11-15 00:21:42 valid 0000, loss 8.438e-01, top1 81.18, top5 90.59
+2021-11-15 00:25:57 (JOBID 31907) epoch 6: train time 2912.30, inference time 264.62s, valid_top1 54.37 (best_top1 67.30), valid_top5 79.50
+2021-11-15 00:26:16 (JOBID 31907) epoch 6: train time 2912.54, inference time 283.22s, valid_top1 54.37 (best_top1 67.30), valid_top5 79.50
+2021-11-15 00:26:16 (JOBID 31907) epoch 6: train time 2910.46, inference time 284.02s, valid_top1 54.37 (best_top1 67.30), valid_top5 79.50
+2021-11-15 00:26:30 train 0000, loss 2.148e+00, top1 51.76, top5 74.12
+2021-11-15 00:26:11 train 0000, loss 2.218e+00, top1 49.41, top5 70.59
+2021-11-15 00:26:30 train 0000, loss 1.885e+00, top1 45.88, top5 82.35
+2021-11-15 00:35:55 train 1000, loss 2.016e+00, top1 54.12, top5 77.77
+2021-11-15 00:35:55 train 1000, loss 2.029e+00, top1 53.94, top5 77.60
+2021-11-15 00:35:56 train 1000, loss 2.019e+00, top1 53.89, top5 77.57
+2021-11-15 00:45:22 train 2000, loss 2.040e+00, top1 53.62, top5 77.46
+2021-11-15 00:45:22 train 2000, loss 2.036e+00, top1 53.52, top5 77.42
+2021-11-15 00:45:22 train 2000, loss 2.045e+00, top1 53.60, top5 77.36
+2021-11-15 00:54:53 train 3000, loss 2.049e+00, top1 53.45, top5 77.32
+2021-11-15 00:54:53 train 3000, loss 2.049e+00, top1 53.50, top5 77.29
+2021-11-15 00:54:53 train 3000, loss 2.047e+00, top1 53.39, top5 77.25
+2021-11-15 01:04:22 train 4000, loss 2.056e+00, top1 53.27, top5 77.22
+2021-11-15 01:04:23 train 4000, loss 2.056e+00, top1 53.41, top5 77.18
+2021-11-15 01:04:23 train 4000, loss 2.054e+00, top1 53.32, top5 77.15
+2021-11-15 01:13:54 train 5000, loss 2.063e+00, top1 53.14, top5 77.14
+2021-11-15 01:13:54 train 5000, loss 2.062e+00, top1 53.20, top5 77.03
+2021-11-15 01:13:54 train 5000, loss 2.063e+00, top1 53.25, top5 77.05
+2021-11-15 01:14:18 valid 0000, loss 1.150e+00, top1 77.65, top5 88.24
+2021-11-15 01:14:18 valid 0000, loss 1.150e+00, top1 77.65, top5 88.24
+2021-11-15 01:14:18 valid 0000, loss 1.150e+00, top1 77.65, top5 88.24
+2021-11-15 01:19:15 (JOBID 31907) epoch 7: train time 2871.29, inference time 307.34s, valid_top1 54.18 (best_top1 67.30), valid_top5 79.15
+2021-11-15 01:19:15 (JOBID 31907) epoch 7: train time 2890.73, inference time 307.30s, valid_top1 54.18 (best_top1 67.30), valid_top5 79.15
+2021-11-15 01:19:15 (JOBID 31907) epoch 7: train time 2871.77, inference time 307.32s, valid_top1 54.18 (best_top1 67.30), valid_top5 79.15
+2021-11-15 01:19:29 train 0000, loss 2.499e+00, top1 45.88, top5 68.24
+2021-11-15 01:19:29 train 0000, loss 2.068e+00, top1 56.47, top5 82.35
+2021-11-15 01:19:29 train 0000, loss 2.319e+00, top1 55.29, top5 71.76
+2021-11-15 01:28:53 train 1000, loss 2.047e+00, top1 53.54, top5 77.41
+2021-11-15 01:28:53 train 1000, loss 2.048e+00, top1 53.43, top5 77.46
+2021-11-15 01:28:53 train 1000, loss 2.063e+00, top1 53.04, top5 76.99
+2021-11-15 01:38:21 train 2000, loss 2.059e+00, top1 53.21, top5 77.11
+2021-11-15 01:38:20 train 2000, loss 2.058e+00, top1 53.31, top5 77.19
+2021-11-15 01:38:21 train 2000, loss 2.076e+00, top1 52.82, top5 76.79
+2021-11-15 01:47:49 train 3000, loss 2.068e+00, top1 53.05, top5 76.94
+2021-11-15 01:47:49 train 3000, loss 2.069e+00, top1 53.05, top5 76.97
+2021-11-15 01:47:49 train 3000, loss 2.081e+00, top1 52.72, top5 76.72
+2021-11-15 01:57:20 train 4000, loss 2.076e+00, top1 52.94, top5 76.86
+2021-11-15 01:57:20 train 4000, loss 2.072e+00, top1 52.97, top5 76.91
+2021-11-15 01:57:20 train 4000, loss 2.083e+00, top1 52.71, top5 76.71
+2021-11-15 02:06:52 train 5000, loss 2.077e+00, top1 52.89, top5 76.85
+2021-11-15 02:06:52 train 5000, loss 2.085e+00, top1 52.74, top5 76.71
+2021-11-15 02:06:52 train 5000, loss 2.088e+00, top1 52.61, top5 76.62
+2021-11-15 02:07:16 valid 0000, loss 1.280e+00, top1 74.12, top5 89.41
+2021-11-15 02:07:16 valid 0000, loss 1.280e+00, top1 74.12, top5 89.41
+2021-11-15 02:07:16 valid 0000, loss 1.280e+00, top1 74.12, top5 89.41
+2021-11-15 02:11:45 (JOBID 31907) epoch 8: train time 2871.07, inference time 279.57s, valid_top1 53.31 (best_top1 67.30), valid_top5 78.43
+2021-11-15 02:11:46 (JOBID 31907) epoch 8: train time 2871.11, inference time 280.27s, valid_top1 53.31 (best_top1 67.30), valid_top5 78.43
+2021-11-15 02:11:47 (JOBID 31907) epoch 8: train time 2870.87, inference time 281.30s, valid_top1 53.31 (best_top1 67.30), valid_top5 78.43
+2021-11-15 02:12:00 train 0000, loss 2.210e+00, top1 45.88, top5 78.82
+2021-11-15 02:12:00 train 0000, loss 2.205e+00, top1 47.06, top5 71.76
+2021-11-15 02:12:01 train 0000, loss 1.659e+00, top1 65.88, top5 84.71
+2021-11-15 02:21:26 train 1000, loss 2.068e+00, top1 52.98, top5 76.95
+2021-11-15 02:21:26 train 1000, loss 2.067e+00, top1 53.09, top5 77.07
+2021-11-15 02:21:26 train 1000, loss 2.076e+00, top1 52.97, top5 76.80
+2021-11-15 02:30:55 train 2000, loss 2.080e+00, top1 52.82, top5 76.80
+2021-11-15 02:30:55 train 2000, loss 2.086e+00, top1 52.86, top5 76.72
+2021-11-15 02:30:55 train 2000, loss 2.080e+00, top1 52.82, top5 76.78
+2021-11-15 02:40:24 train 3000, loss 2.084e+00, top1 52.73, top5 76.78
+2021-11-15 02:40:24 train 3000, loss 2.091e+00, top1 52.74, top5 76.69
+2021-11-15 02:40:24 train 3000, loss 2.088e+00, top1 52.71, top5 76.61
+2021-11-15 02:49:50 train 4000, loss 2.089e+00, top1 52.67, top5 76.72
+2021-11-15 02:49:50 train 4000, loss 2.095e+00, top1 52.60, top5 76.63
+2021-11-15 02:49:50 train 4000, loss 2.093e+00, top1 52.57, top5 76.54
+2021-11-15 02:59:17 train 5000, loss 2.100e+00, top1 52.52, top5 76.58
+2021-11-15 02:59:17 train 5000, loss 2.092e+00, top1 52.61, top5 76.63
+2021-11-15 02:59:18 train 5000, loss 2.095e+00, top1 52.52, top5 76.49
+2021-11-15 02:59:42 valid 0000, loss 1.135e+00, top1 80.00, top5 90.59
+2021-11-15 02:59:42 valid 0000, loss 1.135e+00, top1 80.00, top5 90.59
+2021-11-15 02:59:42 valid 0000, loss 1.135e+00, top1 80.00, top5 90.59
+2021-11-15 03:04:10 (JOBID 31907) epoch 9: train time 2865.59, inference time 278.00s, valid_top1 50.08 (best_top1 67.30), valid_top5 76.10
+2021-11-15 03:04:12 (JOBID 31907) epoch 9: train time 2864.33, inference time 280.34s, valid_top1 50.08 (best_top1 67.30), valid_top5 76.10
+2021-11-15 03:04:14 (JOBID 31907) epoch 9: train time 2866.34, inference time 281.97s, valid_top1 50.08 (best_top1 67.30), valid_top5 76.10
+2021-11-15 03:04:27 train 0000, loss 1.949e+00, top1 51.76, top5 78.82
+2021-11-15 03:04:25 train 0000, loss 2.035e+00, top1 57.65, top5 80.00
+2021-11-15 03:04:27 train 0000, loss 1.831e+00, top1 63.53, top5 80.00
+2021-11-15 03:13:56 train 1000, loss 2.078e+00, top1 52.93, top5 76.98
+2021-11-15 03:13:56 train 1000, loss 2.079e+00, top1 52.89, top5 76.83
+2021-11-15 03:13:56 train 1000, loss 2.084e+00, top1 52.81, top5 76.63
+2021-11-15 03:23:29 train 2000, loss 2.081e+00, top1 52.81, top5 76.76
+2021-11-15 03:23:29 train 2000, loss 2.084e+00, top1 52.83, top5 76.78
+2021-11-15 03:23:29 train 2000, loss 2.092e+00, top1 52.67, top5 76.55
+2021-11-15 03:32:59 train 3000, loss 2.089e+00, top1 52.73, top5 76.62
+2021-11-15 03:32:59 train 3000, loss 2.091e+00, top1 52.71, top5 76.68
+2021-11-15 03:33:00 train 3000, loss 2.094e+00, top1 52.62, top5 76.51
+2021-11-15 03:42:29 train 4000, loss 2.095e+00, top1 52.62, top5 76.52
+2021-11-15 03:42:29 train 4000, loss 2.096e+00, top1 52.58, top5 76.62
+2021-11-15 03:42:29 train 4000, loss 2.099e+00, top1 52.50, top5 76.47
+2021-11-15 03:51:59 train 5000, loss 2.100e+00, top1 52.51, top5 76.53
+2021-11-15 03:51:59 train 5000, loss 2.098e+00, top1 52.51, top5 76.51
+2021-11-15 03:51:59 train 5000, loss 2.101e+00, top1 52.48, top5 76.45
+2021-11-15 03:52:24 valid 0000, loss 1.378e+00, top1 72.94, top5 80.00
+2021-11-15 03:52:24 valid 0000, loss 1.378e+00, top1 72.94, top5 80.00
+2021-11-15 03:52:24 valid 0000, loss 1.378e+00, top1 72.94, top5 80.00
+2021-11-15 03:56:58 (JOBID 31907) epoch 10: train time 2884.08, inference time 283.88s, valid_top1 53.70 (best_top1 67.30), valid_top5 79.05
+2021-11-15 03:56:58 (JOBID 31907) epoch 10: train time 2881.38, inference time 283.84s, valid_top1 53.70 (best_top1 67.30), valid_top5 79.05
+2021-11-15 03:56:58 (JOBID 31907) epoch 10: train time 2880.11, inference time 284.37s, valid_top1 53.70 (best_top1 67.30), valid_top5 79.05
+2021-11-15 03:57:13 train 0000, loss 1.806e+00, top1 57.65, top5 78.82
+2021-11-15 03:57:13 train 0000, loss 2.145e+00, top1 50.59, top5 74.12
+2021-11-15 03:57:13 train 0000, loss 2.035e+00, top1 50.59, top5 80.00
+2021-11-15 04:06:45 train 1000, loss 2.098e+00, top1 52.60, top5 76.60
+2021-11-15 04:06:45 train 1000, loss 2.053e+00, top1 53.30, top5 77.38
+2021-11-15 04:06:45 train 1000, loss 2.094e+00, top1 52.52, top5 76.54
+2021-11-15 04:16:21 train 2000, loss 2.102e+00, top1 52.39, top5 76.46
+2021-11-15 04:16:21 train 2000, loss 2.070e+00, top1 53.03, top5 76.95
+2021-11-15 04:16:21 train 2000, loss 2.091e+00, top1 52.66, top5 76.58
+2021-11-15 04:25:57 train 3000, loss 2.108e+00, top1 52.16, top5 76.39
+2021-11-15 04:25:57 train 3000, loss 2.079e+00, top1 52.88, top5 76.87
+2021-11-15 04:25:57 train 3000, loss 2.101e+00, top1 52.54, top5 76.44
+2021-11-15 04:35:32 train 4000, loss 2.089e+00, top1 52.74, top5 76.71
+2021-11-15 04:35:32 train 4000, loss 2.112e+00, top1 52.09, top5 76.33
+2021-11-15 04:35:32 train 4000, loss 2.103e+00, top1 52.49, top5 76.40
+2021-11-15 04:45:07 train 5000, loss 2.096e+00, top1 52.61, top5 76.58
+2021-11-15 04:45:07 train 5000, loss 2.112e+00, top1 52.08, top5 76.32
+2021-11-15 04:45:07 train 5000, loss 2.107e+00, top1 52.41, top5 76.38
+2021-11-15 04:45:32 valid 0000, loss 1.279e+00, top1 71.76, top5 84.71
+2021-11-15 04:45:32 valid 0000, loss 1.279e+00, top1 71.76, top5 84.71
+2021-11-15 04:45:32 valid 0000, loss 1.279e+00, top1 71.76, top5 84.71
+2021-11-15 04:50:17 (JOBID 31907) epoch 11: train time 2903.38, inference time 295.79s, valid_top1 54.61 (best_top1 67.30), valid_top5 80.15
+2021-11-15 04:50:17 (JOBID 31907) epoch 11: train time 2903.83, inference time 295.83s, valid_top1 54.61 (best_top1 67.30), valid_top5 80.15
+2021-11-15 04:50:18 (JOBID 31907) epoch 11: train time 2903.70, inference time 295.69s, valid_top1 54.61 (best_top1 67.30), valid_top5 80.15
+2021-11-15 04:50:32 train 0000, loss 1.835e+00, top1 52.94, top5 77.65
+2021-11-15 04:50:32 train 0000, loss 2.273e+00, top1 49.41, top5 72.94
+2021-11-15 04:50:32 train 0000, loss 2.135e+00, top1 51.76, top5 76.47
+2021-11-15 05:00:10 train 1000, loss 2.088e+00, top1 52.81, top5 76.76
+2021-11-15 05:00:10 train 1000, loss 2.097e+00, top1 52.54, top5 76.57
+2021-11-15 05:00:10 train 1000, loss 2.079e+00, top1 52.88, top5 76.89
+2021-11-15 05:09:47 train 2000, loss 2.087e+00, top1 52.69, top5 76.73
+2021-11-15 05:09:47 train 2000, loss 2.097e+00, top1 52.61, top5 76.57
+2021-11-15 05:09:47 train 2000, loss 2.098e+00, top1 52.61, top5 76.59
+2021-11-15 05:19:24 train 3000, loss 2.096e+00, top1 52.49, top5 76.56
+2021-11-15 05:19:24 train 3000, loss 2.099e+00, top1 52.52, top5 76.53
+2021-11-15 05:19:24 train 3000, loss 2.103e+00, top1 52.47, top5 76.49
+2021-11-15 05:29:01 train 4000, loss 2.103e+00, top1 52.46, top5 76.45
+2021-11-15 05:29:01 train 4000, loss 2.102e+00, top1 52.40, top5 76.44
+2021-11-15 05:29:01 train 4000, loss 2.107e+00, top1 52.36, top5 76.41
+2021-11-15 05:38:41 train 5000, loss 2.110e+00, top1 52.27, top5 76.34
+2021-11-15 05:38:41 train 5000, loss 2.109e+00, top1 52.30, top5 76.35
+2021-11-15 05:38:41 train 5000, loss 2.111e+00, top1 52.30, top5 76.38
+2021-11-15 05:39:06 valid 0000, loss 7.195e-01, top1 85.88, top5 95.29
+2021-11-15 05:39:06 valid 0000, loss 7.195e-01, top1 85.88, top5 95.29
+2021-11-15 05:39:06 valid 0000, loss 7.195e-01, top1 85.88, top5 95.29
+2021-11-15 05:43:35 (JOBID 31907) epoch 12: train time 2917.94, inference time 279.11s, valid_top1 53.47 (best_top1 67.30), valid_top5 78.91
+2021-11-15 05:43:36 (JOBID 31907) epoch 12: train time 2918.19, inference time 280.44s, valid_top1 53.47 (best_top1 67.30), valid_top5 78.91
+2021-11-15 05:43:37 (JOBID 31907) epoch 12: train time 2918.20, inference time 281.30s, valid_top1 53.47 (best_top1 67.30), valid_top5 78.91
+2021-11-15 05:43:50 train 0000, loss 2.115e+00, top1 56.47, top5 72.94
+2021-11-15 05:43:50 train 0000, loss 2.294e+00, top1 45.88, top5 70.59
+2021-11-15 05:43:50 train 0000, loss 1.963e+00, top1 55.29, top5 77.65
+2021-11-15 05:53:34 train 1000, loss 2.091e+00, top1 52.80, top5 76.64
+2021-11-15 05:53:34 train 1000, loss 2.083e+00, top1 52.63, top5 76.74
+2021-11-15 05:53:34 train 1000, loss 2.093e+00, top1 52.43, top5 76.30
+2021-11-15 06:03:04 train 2000, loss 2.096e+00, top1 52.71, top5 76.57
+2021-11-15 06:03:04 train 2000, loss 2.095e+00, top1 52.46, top5 76.43
+2021-11-15 06:03:04 train 2000, loss 2.100e+00, top1 52.34, top5 76.42
+2021-11-15 06:12:39 train 3000, loss 2.100e+00, top1 52.62, top5 76.53
+2021-11-15 06:12:39 train 3000, loss 2.109e+00, top1 52.20, top5 76.32
+2021-11-15 06:12:39 train 3000, loss 2.103e+00, top1 52.34, top5 76.38
+2021-11-15 06:22:10 train 4000, loss 2.114e+00, top1 52.15, top5 76.26
+2021-11-15 06:22:10 train 4000, loss 2.106e+00, top1 52.45, top5 76.43
+2021-11-15 06:22:10 train 4000, loss 2.111e+00, top1 52.20, top5 76.24
+2021-11-15 06:31:41 train 5000, loss 2.108e+00, top1 52.41, top5 76.39
+2021-11-15 06:31:41 train 5000, loss 2.115e+00, top1 52.16, top5 76.28
+2021-11-15 06:31:41 train 5000, loss 2.114e+00, top1 52.14, top5 76.19
+2021-11-15 06:32:06 valid 0000, loss 1.162e+00, top1 78.82, top5 87.06
+2021-11-15 06:32:06 valid 0000, loss 1.162e+00, top1 78.82, top5 87.06
+2021-11-15 06:32:06 valid 0000, loss 1.162e+00, top1 78.82, top5 87.06
+2021-11-15 06:36:40 (JOBID 31907) epoch 13: train time 2899.60, inference time 285.02s, valid_top1 52.52 (best_top1 67.30), valid_top5 78.28
+2021-11-15 06:36:41 (JOBID 31907) epoch 13: train time 2900.53, inference time 285.08s, valid_top1 52.52 (best_top1 67.30), valid_top5 78.28
+2021-11-15 06:36:42 (JOBID 31907) epoch 13: train time 2898.68, inference time 286.42s, valid_top1 52.52 (best_top1 67.30), valid_top5 78.28
+2021-11-15 06:36:56 train 0000, loss 2.133e+00, top1 52.94, top5 72.94
+2021-11-15 06:36:56 train 0000, loss 1.758e+00, top1 58.82, top5 82.35
+2021-11-15 06:36:56 train 0000, loss 2.314e+00, top1 48.24, top5 70.59
+2021-11-15 06:46:37 train 1000, loss 2.090e+00, top1 52.58, top5 76.70
+2021-11-15 06:46:37 train 1000, loss 2.088e+00, top1 52.77, top5 76.68
+2021-11-15 06:46:37 train 1000, loss 2.091e+00, top1 52.55, top5 76.73
+2021-11-15 06:56:10 train 2000, loss 2.100e+00, top1 52.39, top5 76.52
+2021-11-15 06:56:10 train 2000, loss 2.100e+00, top1 52.48, top5 76.48
+2021-11-15 06:56:10 train 2000, loss 2.094e+00, top1 52.49, top5 76.57
+2021-11-15 07:05:48 train 3000, loss 2.098e+00, top1 52.46, top5 76.53
+2021-11-15 07:05:48 train 3000, loss 2.103e+00, top1 52.35, top5 76.53
+2021-11-15 07:05:48 train 3000, loss 2.105e+00, top1 52.40, top5 76.48
+2021-11-15 07:15:23 train 4000, loss 2.108e+00, top1 52.29, top5 76.44
+2021-11-15 07:15:23 train 4000, loss 2.107e+00, top1 52.39, top5 76.42
+2021-11-15 07:15:23 train 4000, loss 2.103e+00, top1 52.42, top5 76.43
+2021-11-15 07:24:55 train 5000, loss 2.110e+00, top1 52.29, top5 76.39
+2021-11-15 07:24:55 train 5000, loss 2.105e+00, top1 52.40, top5 76.38
+2021-11-15 07:24:55 train 5000, loss 2.110e+00, top1 52.31, top5 76.38
+2021-11-15 07:25:20 valid 0000, loss 1.518e+00, top1 74.12, top5 83.53
+2021-11-15 07:25:20 valid 0000, loss 1.518e+00, top1 74.12, top5 83.53
+2021-11-15 07:25:20 valid 0000, loss 1.518e+00, top1 74.12, top5 83.53
+2021-11-15 07:29:52 (JOBID 31907) epoch 14: train time 2908.56, inference time 283.09s, valid_top1 51.48 (best_top1 67.30), valid_top5 77.26
+2021-11-15 07:29:52 (JOBID 31907) epoch 14: train time 2908.29, inference time 282.94s, valid_top1 51.48 (best_top1 67.30), valid_top5 77.26
+2021-11-15 07:29:52 (JOBID 31907) epoch 14: train time 2907.22, inference time 283.32s, valid_top1 51.48 (best_top1 67.30), valid_top5 77.26
+2021-11-15 07:30:07 train 0000, loss 1.747e+00, top1 61.18, top5 82.35
+2021-11-15 07:30:07 train 0000, loss 1.562e+00, top1 61.18, top5 82.35
+2021-11-15 07:30:07 train 0000, loss 2.319e+00, top1 51.76, top5 67.06
+2021-11-15 07:39:48 train 1000, loss 2.085e+00, top1 52.89, top5 76.73
+2021-11-15 07:39:48 train 1000, loss 2.091e+00, top1 52.61, top5 76.55
+2021-11-15 07:39:48 train 1000, loss 2.083e+00, top1 52.98, top5 76.76
+2021-11-15 07:49:27 train 2000, loss 2.106e+00, top1 52.38, top5 76.36
+2021-11-15 07:49:27 train 2000, loss 2.100e+00, top1 52.47, top5 76.51
+2021-11-15 07:49:27 train 2000, loss 2.091e+00, top1 52.81, top5 76.65
+2021-11-15 07:59:09 train 3000, loss 2.112e+00, top1 52.27, top5 76.28
+2021-11-15 07:59:09 train 3000, loss 2.107e+00, top1 52.35, top5 76.36
+2021-11-15 07:59:09 train 3000, loss 2.099e+00, top1 52.58, top5 76.51
+2021-11-15 08:08:45 train 4000, loss 2.111e+00, top1 52.29, top5 76.32
+2021-11-15 08:08:45 train 4000, loss 2.111e+00, top1 52.28, top5 76.33
+2021-11-15 08:08:45 train 4000, loss 2.108e+00, top1 52.37, top5 76.39
+2021-11-15 08:18:25 train 5000, loss 2.115e+00, top1 52.17, top5 76.25
+2021-11-15 08:18:25 train 5000, loss 2.117e+00, top1 52.15, top5 76.25
+2021-11-15 08:18:25 train 5000, loss 2.113e+00, top1 52.27, top5 76.31
+2021-11-15 08:18:50 valid 0000, loss 5.830e-01, top1 85.88, top5 92.94
+2021-11-15 08:18:50 valid 0000, loss 5.830e-01, top1 85.88, top5 92.94
+2021-11-15 08:18:50 valid 0000, loss 5.830e-01, top1 85.88, top5 92.94
+2021-11-15 08:23:23 (JOBID 31907) epoch 15: train time 2927.56, inference time 282.91s, valid_top1 53.84 (best_top1 67.30), valid_top5 79.21
+2021-11-15 08:23:23 (JOBID 31907) epoch 15: train time 2927.44, inference time 283.34s, valid_top1 53.84 (best_top1 67.30), valid_top5 79.21
+2021-11-15 08:23:23 (JOBID 31907) epoch 15: train time 2927.68, inference time 283.66s, valid_top1 53.84 (best_top1 67.30), valid_top5 79.21
+2021-11-15 08:23:38 train 0000, loss 2.101e+00, top1 58.82, top5 72.94
+2021-11-15 08:23:38 train 0000, loss 1.905e+00, top1 60.00, top5 78.82
+2021-11-15 08:23:38 train 0000, loss 2.386e+00, top1 48.24, top5 72.94
+2021-11-15 08:33:20 train 1000, loss 2.082e+00, top1 52.72, top5 76.73
+2021-11-15 08:33:21 train 1000, loss 2.088e+00, top1 52.67, top5 76.70
+2021-11-15 08:33:21 train 1000, loss 2.092e+00, top1 52.65, top5 76.57
+2021-11-15 08:43:00 train 2000, loss 2.101e+00, top1 52.41, top5 76.44
+2021-11-15 08:43:00 train 2000, loss 2.102e+00, top1 52.47, top5 76.50
+2021-11-15 08:43:01 train 2000, loss 2.095e+00, top1 52.70, top5 76.63
+2021-11-15 08:52:42 train 3000, loss 2.108e+00, top1 52.32, top5 76.37
+2021-11-15 08:52:42 train 3000, loss 2.107e+00, top1 52.30, top5 76.38
+2021-11-15 08:52:42 train 3000, loss 2.105e+00, top1 52.47, top5 76.47
+2021-11-15 09:02:19 train 4000, loss 2.115e+00, top1 52.20, top5 76.27
+2021-11-15 09:02:19 train 4000, loss 2.109e+00, top1 52.30, top5 76.35
+2021-11-15 09:02:19 train 4000, loss 2.106e+00, top1 52.41, top5 76.44
+2021-11-15 09:12:01 train 5000, loss 2.112e+00, top1 52.27, top5 76.28
+2021-11-15 09:12:02 train 5000, loss 2.107e+00, top1 52.43, top5 76.43
+2021-11-15 09:12:02 train 5000, loss 2.117e+00, top1 52.11, top5 76.26
+2021-11-15 09:12:27 valid 0000, loss 1.054e+00, top1 78.82, top5 89.41
+2021-11-15 09:12:27 valid 0000, loss 1.054e+00, top1 78.82, top5 89.41
+2021-11-15 09:12:27 valid 0000, loss 1.054e+00, top1 78.82, top5 89.41
+2021-11-15 09:17:21 (JOBID 31907) epoch 16: train time 2932.83, inference time 304.28s, valid_top1 53.67 (best_top1 67.30), valid_top5 78.99
+2021-11-15 09:17:21 (JOBID 31907) epoch 16: train time 2932.46, inference time 305.38s, valid_top1 53.67 (best_top1 67.30), valid_top5 78.99
+2021-11-15 09:17:23 (JOBID 31907) epoch 16: train time 2932.78, inference time 306.65s, valid_top1 53.67 (best_top1 67.30), valid_top5 78.99
+2021-11-15 09:17:35 train 0000, loss 2.068e+00, top1 57.65, top5 75.29
+2021-11-15 09:17:35 train 0000, loss 2.058e+00, top1 48.24, top5 75.29
+2021-11-15 09:17:37 train 0000, loss 1.571e+00, top1 61.18, top5 84.71
+2021-11-15 09:27:22 train 1000, loss 2.095e+00, top1 52.53, top5 76.63
+2021-11-15 09:27:22 train 1000, loss 2.086e+00, top1 52.66, top5 76.88
+2021-11-15 09:27:22 train 1000, loss 2.089e+00, top1 52.59, top5 76.73
+2021-11-15 09:37:10 train 2000, loss 2.106e+00, top1 52.41, top5 76.44
+2021-11-15 09:37:10 train 2000, loss 2.099e+00, top1 52.44, top5 76.55
+2021-11-15 09:37:10 train 2000, loss 2.105e+00, top1 52.38, top5 76.42
+2021-11-15 09:46:53 train 3000, loss 2.106e+00, top1 52.35, top5 76.42
+2021-11-15 09:46:53 train 3000, loss 2.105e+00, top1 52.36, top5 76.42
+2021-11-15 09:46:54 train 3000, loss 2.110e+00, top1 52.34, top5 76.32
+2021-11-15 09:56:37 train 4000, loss 2.106e+00, top1 52.37, top5 76.41
+2021-11-15 09:56:37 train 4000, loss 2.111e+00, top1 52.31, top5 76.36
+2021-11-15 09:56:37 train 4000, loss 2.114e+00, top1 52.27, top5 76.28
+2021-11-15 10:06:20 train 5000, loss 2.108e+00, top1 52.35, top5 76.41
+2021-11-15 10:06:20 train 5000, loss 2.113e+00, top1 52.29, top5 76.34
+2021-11-15 10:06:20 train 5000, loss 2.117e+00, top1 52.18, top5 76.20
+2021-11-15 10:06:45 valid 0000, loss 1.006e+00, top1 82.35, top5 88.24
+2021-11-15 10:06:45 valid 0000, loss 1.006e+00, top1 82.35, top5 88.24
+2021-11-15 10:06:45 valid 0000, loss 1.006e+00, top1 82.35, top5 88.24
+2021-11-15 10:11:25 (JOBID 31907) epoch 17: train time 2953.09, inference time 290.94s, valid_top1 51.26 (best_top1 67.30), valid_top5 76.96
+2021-11-15 10:11:27 (JOBID 31907) epoch 17: train time 2951.83, inference time 292.13s, valid_top1 51.26 (best_top1 67.30), valid_top5 76.96
+2021-11-15 10:11:27 (JOBID 31907) epoch 17: train time 2953.91, inference time 292.22s, valid_top1 51.26 (best_top1 67.30), valid_top5 76.96
+2021-11-15 10:11:41 train 0000, loss 2.457e+00, top1 43.53, top5 69.41
+2021-11-15 10:11:41 train 0000, loss 2.060e+00, top1 54.12, top5 77.65
+2021-11-15 10:11:41 train 0000, loss 1.881e+00, top1 62.35, top5 78.82
+2021-11-15 10:21:25 train 1000, loss 2.091e+00, top1 52.63, top5 76.66
+2021-11-15 10:21:25 train 1000, loss 2.100e+00, top1 52.36, top5 76.38
+2021-11-15 10:21:25 train 1000, loss 2.097e+00, top1 52.53, top5 76.52
+2021-11-15 10:31:09 train 2000, loss 2.099e+00, top1 52.39, top5 76.50
+2021-11-15 10:31:09 train 2000, loss 2.098e+00, top1 52.46, top5 76.53
+2021-11-15 10:31:09 train 2000, loss 2.099e+00, top1 52.38, top5 76.46
+2021-11-15 10:40:48 train 3000, loss 2.103e+00, top1 52.35, top5 76.41
+2021-11-15 10:40:48 train 3000, loss 2.101e+00, top1 52.41, top5 76.42
+2021-11-15 10:40:48 train 3000, loss 2.104e+00, top1 52.40, top5 76.46
+2021-11-15 10:50:22 train 4000, loss 2.110e+00, top1 52.27, top5 76.37
+2021-11-15 10:50:21 train 4000, loss 2.110e+00, top1 52.19, top5 76.34
+2021-11-15 10:50:22 train 4000, loss 2.110e+00, top1 52.26, top5 76.29
+2021-11-15 10:59:55 train 5000, loss 2.114e+00, top1 52.15, top5 76.27
+2021-11-15 10:59:55 train 5000, loss 2.110e+00, top1 52.21, top5 76.34
+2021-11-15 10:59:55 train 5000, loss 2.111e+00, top1 52.28, top5 76.30
+2021-11-15 11:00:19 valid 0000, loss 8.214e-01, top1 82.35, top5 92.94
+2021-11-15 11:00:19 valid 0000, loss 8.214e-01, top1 82.35, top5 92.94
+2021-11-15 11:00:19 valid 0000, loss 8.214e-01, top1 82.35, top5 92.94
+2021-11-15 11:04:59 (JOBID 31907) epoch 18: train time 2922.78, inference time 290.12s, valid_top1 53.78 (best_top1 67.30), valid_top5 79.09
+2021-11-15 11:04:59 (JOBID 31907) epoch 18: train time 2923.93, inference time 290.16s, valid_top1 53.78 (best_top1 67.30), valid_top5 79.09
+2021-11-15 11:05:00 (JOBID 31907) epoch 18: train time 2922.32, inference time 290.04s, valid_top1 53.78 (best_top1 67.30), valid_top5 79.09
+2021-11-15 11:05:14 train 0000, loss 1.899e+00, top1 49.41, top5 72.94
+2021-11-15 11:05:14 train 0000, loss 2.223e+00, top1 51.76, top5 76.47
+2021-11-15 11:05:14 train 0000, loss 2.223e+00, top1 45.88, top5 76.47
+2021-11-15 11:14:42 train 1000, loss 2.081e+00, top1 52.90, top5 76.67
+2021-11-15 11:14:41 train 1000, loss 2.095e+00, top1 52.38, top5 76.43
+2021-11-15 11:14:42 train 1000, loss 2.072e+00, top1 52.90, top5 77.01
+2021-11-15 11:24:12 train 2000, loss 2.099e+00, top1 52.35, top5 76.43
+2021-11-15 11:24:12 train 2000, loss 2.089e+00, top1 52.78, top5 76.73
+2021-11-15 11:24:12 train 2000, loss 2.098e+00, top1 52.53, top5 76.52
+2021-11-15 11:33:39 train 3000, loss 2.107e+00, top1 52.26, top5 76.34
+2021-11-15 11:33:39 train 3000, loss 2.105e+00, top1 52.43, top5 76.40
+2021-11-15 11:33:39 train 3000, loss 2.097e+00, top1 52.67, top5 76.61
+2021-11-15 11:43:05 train 4000, loss 2.112e+00, top1 52.23, top5 76.27
+2021-11-15 11:43:05 train 4000, loss 2.110e+00, top1 52.27, top5 76.29
+2021-11-15 11:43:05 train 4000, loss 2.104e+00, top1 52.53, top5 76.50
+2021-11-15 11:52:28 train 5000, loss 2.114e+00, top1 52.20, top5 76.28
+2021-11-15 11:52:28 train 5000, loss 2.112e+00, top1 52.27, top5 76.29
+2021-11-15 11:52:28 train 5000, loss 2.110e+00, top1 52.42, top5 76.38
+2021-11-15 11:52:53 valid 0000, loss 1.227e+00, top1 74.12, top5 88.24
+2021-11-15 11:52:53 valid 0000, loss 1.227e+00, top1 74.12, top5 88.24
+2021-11-15 11:52:53 valid 0000, loss 1.227e+00, top1 74.12, top5 88.24
+2021-11-15 11:57:21 (JOBID 31907) epoch 19: train time 2862.39, inference time 278.81s, valid_top1 54.78 (best_top1 67.30), valid_top5 79.84
+2021-11-15 11:57:22 (JOBID 31907) epoch 19: train time 2862.70, inference time 279.43s, valid_top1 54.78 (best_top1 67.30), valid_top5 79.84
+2021-11-15 11:57:22 (JOBID 31907) epoch 19: train time 2862.75, inference time 280.20s, valid_top1 54.78 (best_top1 67.30), valid_top5 79.84
+2021-11-15 11:57:35 train 0000, loss 2.289e+00, top1 47.06, top5 72.94
+2021-11-15 11:57:35 train 0000, loss 2.111e+00, top1 55.29, top5 76.47
+2021-11-15 11:57:36 train 0000, loss 1.987e+00, top1 51.76, top5 75.29
+2021-11-15 12:07:07 train 1000, loss 2.099e+00, top1 52.51, top5 76.56
+2021-11-15 12:07:07 train 1000, loss 2.100e+00, top1 52.59, top5 76.55
+2021-11-15 12:07:07 train 1000, loss 2.092e+00, top1 52.60, top5 76.60
+2021-11-15 12:16:38 train 2000, loss 2.102e+00, top1 52.45, top5 76.49
+2021-11-15 12:16:38 train 2000, loss 2.091e+00, top1 52.72, top5 76.68
+2021-11-15 12:16:38 train 2000, loss 2.107e+00, top1 52.26, top5 76.33
+2021-11-15 12:26:13 train 3000, loss 2.111e+00, top1 52.28, top5 76.35
+2021-11-15 12:26:12 train 3000, loss 2.094e+00, top1 52.66, top5 76.63
+2021-11-15 12:26:13 train 3000, loss 2.112e+00, top1 52.20, top5 76.23
+2021-11-15 12:35:43 train 4000, loss 2.113e+00, top1 52.31, top5 76.33
+2021-11-15 12:35:43 train 4000, loss 2.100e+00, top1 52.54, top5 76.53
+2021-11-15 12:35:43 train 4000, loss 2.114e+00, top1 52.16, top5 76.21
+2021-11-15 12:45:16 train 5000, loss 2.106e+00, top1 52.44, top5 76.46
+2021-11-15 12:45:16 train 5000, loss 2.116e+00, top1 52.21, top5 76.29
+2021-11-15 12:45:16 train 5000, loss 2.119e+00, top1 52.07, top5 76.16
+2021-11-15 12:45:41 valid 0000, loss 1.435e+00, top1 74.12, top5 83.53
+2021-11-15 12:45:41 valid 0000, loss 1.435e+00, top1 74.12, top5 83.53
+2021-11-15 12:45:41 valid 0000, loss 1.435e+00, top1 74.12, top5 83.53
+2021-11-15 12:50:14 (JOBID 31907) epoch 20: train time 2889.09, inference time 282.78s, valid_top1 56.42 (best_top1 67.30), valid_top5 80.91
+2021-11-15 12:50:22 (JOBID 31907) epoch 20: train time 2888.09, inference time 291.45s, valid_top1 56.42 (best_top1 67.30), valid_top5 80.91
+2021-11-15 12:50:28 (JOBID 31907) epoch 20: train time 2888.95, inference time 297.65s, valid_top1 56.42 (best_top1 67.30), valid_top5 80.91
+2021-11-15 12:50:37 train 0000, loss 1.832e+00, top1 57.65, top5 82.35
+2021-11-15 12:50:28 train 0000, loss 2.239e+00, top1 48.24, top5 77.65
+2021-11-15 12:50:42 train 0000, loss 1.798e+00, top1 60.00, top5 81.18
+2021-11-15 13:00:12 train 1000, loss 2.090e+00, top1 52.66, top5 76.56
+2021-11-15 13:00:12 train 1000, loss 2.091e+00, top1 52.73, top5 76.58
+2021-11-15 13:00:12 train 1000, loss 2.093e+00, top1 52.65, top5 76.61
+2021-11-15 13:10:35 train 2000, loss 2.095e+00, top1 52.60, top5 76.50
+2021-11-15 13:10:35 train 2000, loss 2.100e+00, top1 52.38, top5 76.46
+2021-11-15 13:10:36 train 2000, loss 2.101e+00, top1 52.46, top5 76.48
+2021-11-15 13:20:12 train 3000, loss 2.106e+00, top1 52.29, top5 76.41
+2021-11-15 13:20:12 train 3000, loss 2.107e+00, top1 52.37, top5 76.42
+2021-11-15 13:20:12 train 3000, loss 2.104e+00, top1 52.45, top5 76.43
+2021-11-15 13:29:56 train 4000, loss 2.107e+00, top1 52.44, top5 76.40
+2021-11-15 13:29:56 train 4000, loss 2.111e+00, top1 52.18, top5 76.33
+2021-11-15 13:29:56 train 4000, loss 2.112e+00, top1 52.27, top5 76.33
+2021-11-15 13:39:27 train 5000, loss 2.113e+00, top1 52.31, top5 76.31
+2021-11-15 13:39:27 train 5000, loss 2.115e+00, top1 52.15, top5 76.28
+2021-11-15 13:39:27 train 5000, loss 2.114e+00, top1 52.25, top5 76.31
+2021-11-15 13:39:51 valid 0000, loss 1.395e+00, top1 71.76, top5 88.24
+2021-11-15 13:39:51 valid 0000, loss 1.395e+00, top1 71.76, top5 88.24
+2021-11-15 13:39:51 valid 0000, loss 1.395e+00, top1 71.76, top5 88.24
+2021-11-15 13:44:28 (JOBID 31907) epoch 21: train time 2952.73, inference time 287.26s, valid_top1 55.13 (best_top1 67.30), valid_top5 80.04
+2021-11-15 13:44:29 (JOBID 31907) epoch 21: train time 2958.97, inference time 287.88s, valid_top1 55.13 (best_top1 67.30), valid_top5 80.04
+2021-11-15 13:44:30 (JOBID 31907) epoch 21: train time 2967.31, inference time 288.57s, valid_top1 55.13 (best_top1 67.30), valid_top5 80.04
+2021-11-15 13:44:43 train 0000, loss 2.075e+00, top1 52.94, top5 70.59
+2021-11-15 13:44:43 train 0000, loss 2.464e+00, top1 44.71, top5 70.59
+2021-11-15 13:44:44 train 0000, loss 1.541e+00, top1 62.35, top5 85.88
+2021-11-15 13:54:53 train 1000, loss 2.089e+00, top1 52.55, top5 76.55
+2021-11-15 13:54:53 train 1000, loss 2.090e+00, top1 52.73, top5 76.65
+2021-11-15 13:54:53 train 1000, loss 2.089e+00, top1 52.71, top5 76.56
+2021-11-15 14:04:20 train 2000, loss 2.097e+00, top1 52.62, top5 76.58
+2021-11-15 14:04:20 train 2000, loss 2.104e+00, top1 52.42, top5 76.29
+2021-11-15 14:04:21 train 2000, loss 2.103e+00, top1 52.38, top5 76.42
+2021-11-15 14:13:49 train 3000, loss 2.104e+00, top1 52.53, top5 76.52
+2021-11-15 14:13:49 train 3000, loss 2.104e+00, top1 52.38, top5 76.30
+2021-11-15 14:13:49 train 3000, loss 2.108e+00, top1 52.33, top5 76.31
+2021-11-15 14:24:01 train 4000, loss 2.107e+00, top1 52.39, top5 76.47
+2021-11-15 14:24:01 train 4000, loss 2.108e+00, top1 52.24, top5 76.27
+2021-11-15 14:24:01 train 4000, loss 2.111e+00, top1 52.27, top5 76.28
+2021-11-15 14:33:32 train 5000, loss 2.112e+00, top1 52.18, top5 76.25
+2021-11-15 14:33:32 train 5000, loss 2.112e+00, top1 52.28, top5 76.38
+2021-11-15 14:33:32 train 5000, loss 2.115e+00, top1 52.20, top5 76.22
+2021-11-15 14:33:57 valid 0000, loss 8.549e-01, top1 84.71, top5 90.59
+2021-11-15 14:33:57 valid 0000, loss 8.549e-01, top1 84.71, top5 90.59
+2021-11-15 14:33:57 valid 0000, loss 8.549e-01, top1 84.71, top5 90.59
+2021-11-15 14:38:49 (JOBID 31907) epoch 22: train time 2956.58, inference time 301.86s, valid_top1 55.34 (best_top1 67.30), valid_top5 80.66
+2021-11-15 14:38:49 (JOBID 31907) epoch 22: train time 2958.39, inference time 302.64s, valid_top1 55.34 (best_top1 67.30), valid_top5 80.66
+2021-11-15 14:38:49 (JOBID 31907) epoch 22: train time 2957.80, inference time 302.63s, valid_top1 55.34 (best_top1 67.30), valid_top5 80.66
+2021-11-15 14:39:05 train 0000, loss 2.065e+00, top1 55.29, top5 69.41
+2021-11-15 14:39:05 train 0000, loss 1.964e+00, top1 60.00, top5 78.82
+2021-11-15 14:39:05 train 0000, loss 2.156e+00, top1 43.53, top5 76.47
+2021-11-15 14:48:49 train 1000, loss 2.098e+00, top1 52.50, top5 76.50
+2021-11-15 14:48:49 train 1000, loss 2.091e+00, top1 52.62, top5 76.54
+2021-11-15 14:48:49 train 1000, loss 2.085e+00, top1 52.77, top5 76.75
+2021-11-15 14:58:24 train 2000, loss 2.089e+00, top1 52.66, top5 76.64
+2021-11-15 14:58:23 train 2000, loss 2.106e+00, top1 52.37, top5 76.44
+2021-11-15 14:58:24 train 2000, loss 2.100e+00, top1 52.47, top5 76.45
+2021-11-15 15:07:53 train 3000, loss 2.112e+00, top1 52.31, top5 76.32
+2021-11-15 15:07:53 train 3000, loss 2.096e+00, top1 52.50, top5 76.55
+2021-11-15 15:07:53 train 3000, loss 2.104e+00, top1 52.37, top5 76.38
+2021-11-15 15:17:24 train 4000, loss 2.105e+00, top1 52.38, top5 76.44
+2021-11-15 15:17:24 train 4000, loss 2.112e+00, top1 52.26, top5 76.35
+2021-11-15 15:17:24 train 4000, loss 2.109e+00, top1 52.23, top5 76.30
+2021-11-15 15:26:50 train 5000, loss 2.111e+00, top1 52.29, top5 76.36
+2021-11-15 15:26:50 train 5000, loss 2.110e+00, top1 52.32, top5 76.38
+2021-11-15 15:26:50 train 5000, loss 2.114e+00, top1 52.17, top5 76.25
+2021-11-15 15:27:15 valid 0000, loss 1.476e+00, top1 63.53, top5 88.24
+2021-11-15 15:27:15 valid 0000, loss 1.476e+00, top1 63.53, top5 88.24
+2021-11-15 15:27:15 valid 0000, loss 1.476e+00, top1 63.53, top5 88.24
+2021-11-15 15:31:47 (JOBID 31907) epoch 23: train time 2895.09, inference time 282.38s, valid_top1 54.37 (best_top1 67.30), valid_top5 79.44
+2021-11-15 15:31:47 (JOBID 31907) epoch 23: train time 2895.07, inference time 282.42s, valid_top1 54.37 (best_top1 67.30), valid_top5 79.44
+2021-11-15 15:31:47 (JOBID 31907) epoch 23: train time 2895.47, inference time 282.32s, valid_top1 54.37 (best_top1 67.30), valid_top5 79.44
+2021-11-15 15:32:01 train 0000, loss 2.453e+00, top1 47.06, top5 72.94
+2021-11-15 15:32:01 train 0000, loss 1.775e+00, top1 57.65, top5 83.53
+2021-11-15 15:32:01 train 0000, loss 2.220e+00, top1 47.06, top5 78.82
+2021-11-15 15:41:36 train 1000, loss 2.099e+00, top1 52.50, top5 76.42
+2021-11-15 15:41:36 train 1000, loss 2.082e+00, top1 52.72, top5 76.69
+2021-11-15 15:41:36 train 1000, loss 2.081e+00, top1 52.85, top5 76.71
+2021-11-15 15:51:25 train 2000, loss 2.097e+00, top1 52.43, top5 76.48
+2021-11-15 15:51:25 train 2000, loss 2.091e+00, top1 52.48, top5 76.64
+2021-11-15 15:51:25 train 2000, loss 2.100e+00, top1 52.47, top5 76.40
+2021-11-15 16:01:03 train 3000, loss 2.105e+00, top1 52.35, top5 76.38
+2021-11-15 16:01:03 train 3000, loss 2.102e+00, top1 52.32, top5 76.46
+2021-11-15 16:01:03 train 3000, loss 2.107e+00, top1 52.29, top5 76.32
+2021-11-15 16:10:41 train 4000, loss 2.111e+00, top1 52.28, top5 76.30
+2021-11-15 16:10:41 train 4000, loss 2.109e+00, top1 52.27, top5 76.38
+2021-11-15 16:10:41 train 4000, loss 2.114e+00, top1 52.24, top5 76.23
+2021-11-15 16:20:06 train 5000, loss 2.116e+00, top1 52.22, top5 76.19
+2021-11-15 16:20:06 train 5000, loss 2.111e+00, top1 52.25, top5 76.35
+2021-11-15 16:20:06 train 5000, loss 2.115e+00, top1 52.23, top5 76.27
+2021-11-15 16:20:30 valid 0000, loss 1.075e+00, top1 75.29, top5 87.06
+2021-11-15 16:20:30 valid 0000, loss 1.075e+00, top1 75.29, top5 87.06
+2021-11-15 16:20:30 valid 0000, loss 1.075e+00, top1 75.29, top5 87.06
+2021-11-15 16:25:05 (JOBID 31907) epoch 24: train time 2912.84, inference time 285.08s, valid_top1 54.77 (best_top1 67.30), valid_top5 80.07
+2021-11-15 16:25:05 (JOBID 31907) epoch 24: train time 2912.53, inference time 284.85s, valid_top1 54.77 (best_top1 67.30), valid_top5 80.07
+2021-11-15 16:25:05 (JOBID 31907) epoch 24: train time 2912.87, inference time 285.31s, valid_top1 54.77 (best_top1 67.30), valid_top5 80.07
+2021-11-15 16:25:19 train 0000, loss 2.023e+00, top1 54.12, top5 82.35
+2021-11-15 16:25:19 train 0000, loss 2.000e+00, top1 60.00, top5 74.12
+2021-11-15 16:25:19 train 0000, loss 2.043e+00, top1 50.59, top5 76.47
+2021-11-15 16:34:51 train 1000, loss 2.095e+00, top1 52.72, top5 76.59
+2021-11-15 16:34:51 train 1000, loss 2.089e+00, top1 52.69, top5 76.79
+2021-11-15 16:34:51 train 1000, loss 2.103e+00, top1 52.44, top5 76.48
+2021-11-15 16:44:19 train 2000, loss 2.107e+00, top1 52.44, top5 76.45
+2021-11-15 16:44:19 train 2000, loss 2.102e+00, top1 52.54, top5 76.42
+2021-11-15 16:44:19 train 2000, loss 2.095e+00, top1 52.62, top5 76.61
+2021-11-15 16:53:46 train 3000, loss 2.104e+00, top1 52.44, top5 76.38
+2021-11-15 16:53:46 train 3000, loss 2.099e+00, top1 52.51, top5 76.50
+2021-11-15 16:53:46 train 3000, loss 2.106e+00, top1 52.41, top5 76.49
+2021-11-15 17:03:14 train 4000, loss 2.110e+00, top1 52.36, top5 76.29
+2021-11-15 17:03:14 train 4000, loss 2.105e+00, top1 52.36, top5 76.45
+2021-11-15 17:03:14 train 4000, loss 2.113e+00, top1 52.30, top5 76.32
+2021-11-15 17:12:42 train 5000, loss 2.111e+00, top1 52.29, top5 76.30
+2021-11-15 17:12:42 train 5000, loss 2.114e+00, top1 52.25, top5 76.30
+2021-11-15 17:12:42 train 5000, loss 2.109e+00, top1 52.30, top5 76.38
+2021-11-15 17:13:06 valid 0000, loss 1.521e+00, top1 77.65, top5 81.18
+2021-11-15 17:13:06 valid 0000, loss 1.521e+00, top1 77.65, top5 81.18
+2021-11-15 17:13:06 valid 0000, loss 1.521e+00, top1 77.65, top5 81.18
+2021-11-15 17:17:45 (JOBID 31907) epoch 25: train time 2870.97, inference time 288.99s, valid_top1 52.95 (best_top1 67.30), valid_top5 78.13
+2021-11-15 17:17:45 (JOBID 31907) epoch 25: train time 2871.23, inference time 289.47s, valid_top1 52.95 (best_top1 67.30), valid_top5 78.13
+2021-11-15 17:17:47 (JOBID 31907) epoch 25: train time 2871.07, inference time 290.41s, valid_top1 52.95 (best_top1 67.30), valid_top5 78.13
+2021-11-15 17:18:00 train 0000, loss 1.955e+00, top1 50.59, top5 77.65
+2021-11-15 17:18:00 train 0000, loss 2.125e+00, top1 52.94, top5 75.29
+2021-11-15 17:18:01 train 0000, loss 1.834e+00, top1 55.29, top5 80.00
+2021-11-15 17:27:40 train 1000, loss 2.082e+00, top1 52.76, top5 76.78
+2021-11-15 17:27:40 train 1000, loss 2.080e+00, top1 52.83, top5 76.84
+2021-11-15 17:27:40 train 1000, loss 2.092e+00, top1 52.60, top5 76.60
+2021-11-15 17:37:02 train 2000, loss 2.095e+00, top1 52.50, top5 76.57
+2021-11-15 17:37:02 train 2000, loss 2.104e+00, top1 52.39, top5 76.40
+2021-11-15 17:37:02 train 2000, loss 2.090e+00, top1 52.65, top5 76.69
+2021-11-15 17:46:25 train 3000, loss 2.102e+00, top1 52.42, top5 76.45
+2021-11-15 17:46:25 train 3000, loss 2.107e+00, top1 52.29, top5 76.37
+2021-11-15 17:46:25 train 3000, loss 2.110e+00, top1 52.33, top5 76.34
+2021-11-15 17:55:45 train 4000, loss 2.110e+00, top1 52.26, top5 76.35
+2021-11-15 17:55:45 train 4000, loss 2.115e+00, top1 52.24, top5 76.27
+2021-11-15 17:55:45 train 4000, loss 2.105e+00, top1 52.35, top5 76.45
+2021-11-15 18:05:10 train 5000, loss 2.114e+00, top1 52.24, top5 76.29
+2021-11-15 18:05:10 train 5000, loss 2.109e+00, top1 52.31, top5 76.36
+2021-11-15 18:05:10 train 5000, loss 2.117e+00, top1 52.17, top5 76.23
+2021-11-15 18:05:34 valid 0000, loss 8.407e-01, top1 82.35, top5 92.94
+2021-11-15 18:05:35 valid 0000, loss 8.407e-01, top1 82.35, top5 92.94
+2021-11-15 18:05:35 valid 0000, loss 8.407e-01, top1 82.35, top5 92.94
+2021-11-15 18:10:13 (JOBID 31907) epoch 26: train time 2857.49, inference time 288.36s, valid_top1 54.97 (best_top1 67.30), valid_top5 80.06
+2021-11-15 18:10:16 (JOBID 31907) epoch 26: train time 2859.46, inference time 291.23s, valid_top1 54.97 (best_top1 67.30), valid_top5 80.06
+2021-11-15 18:10:16 (JOBID 31907) epoch 26: train time 2858.96, inference time 292.13s, valid_top1 54.97 (best_top1 67.30), valid_top5 80.06
+2021-11-15 18:10:30 train 0000, loss 2.261e+00, top1 45.88, top5 74.12
+2021-11-15 18:10:28 train 0000, loss 2.124e+00, top1 51.76, top5 77.65
+2021-11-15 18:10:30 train 0000, loss 2.109e+00, top1 51.76, top5 75.29
+2021-11-15 18:20:00 train 1000, loss 2.081e+00, top1 52.62, top5 76.75
+2021-11-15 18:20:00 train 1000, loss 2.085e+00, top1 52.80, top5 76.69
+2021-11-15 18:20:00 train 1000, loss 2.084e+00, top1 52.66, top5 76.78
+2021-11-15 18:29:29 train 2000, loss 2.089e+00, top1 52.59, top5 76.61
+2021-11-15 18:29:30 train 2000, loss 2.093e+00, top1 52.49, top5 76.62
+2021-11-15 18:29:30 train 2000, loss 2.100e+00, top1 52.52, top5 76.44
+2021-11-15 18:38:56 train 3000, loss 2.104e+00, top1 52.37, top5 76.43
+2021-11-15 18:38:56 train 3000, loss 2.099e+00, top1 52.48, top5 76.48
+2021-11-15 18:38:56 train 3000, loss 2.103e+00, top1 52.35, top5 76.47
+2021-11-15 18:48:23 train 4000, loss 2.104e+00, top1 52.39, top5 76.39
+2021-11-15 18:48:23 train 4000, loss 2.108e+00, top1 52.31, top5 76.38
+2021-11-15 18:48:23 train 4000, loss 2.108e+00, top1 52.31, top5 76.36
+2021-11-15 18:57:50 train 5000, loss 2.111e+00, top1 52.27, top5 76.33
+2021-11-15 18:57:50 train 5000, loss 2.107e+00, top1 52.32, top5 76.34
+2021-11-15 18:57:50 train 5000, loss 2.114e+00, top1 52.20, top5 76.29
+2021-11-15 18:58:17 valid 0000, loss 1.069e+00, top1 78.82, top5 92.94
+2021-11-15 18:58:17 valid 0000, loss 1.069e+00, top1 78.82, top5 92.94
+2021-11-15 18:58:17 valid 0000, loss 1.069e+00, top1 78.82, top5 92.94
+2021-11-15 19:02:50 (JOBID 31907) epoch 27: train time 2868.38, inference time 286.12s, valid_top1 53.02 (best_top1 67.30), valid_top5 78.59
+2021-11-15 19:02:51 (JOBID 31907) epoch 27: train time 2867.59, inference time 286.73s, valid_top1 53.02 (best_top1 67.30), valid_top5 78.59
+2021-11-15 19:02:51 (JOBID 31907) epoch 27: train time 2870.99, inference time 286.38s, valid_top1 53.02 (best_top1 67.30), valid_top5 78.59
+2021-11-15 19:03:08 train 0000, loss 1.744e+00, top1 58.82, top5 82.35
+2021-11-15 19:03:08 train 0000, loss 3.036e+00, top1 36.47, top5 57.65
+2021-11-15 19:03:08 train 0000, loss 1.920e+00, top1 56.47, top5 81.18
+2021-11-15 19:12:41 train 1000, loss 2.097e+00, top1 52.32, top5 76.60
+2021-11-15 19:12:41 train 1000, loss 2.098e+00, top1 52.54, top5 76.64
+2021-11-15 19:12:41 train 1000, loss 2.088e+00, top1 52.67, top5 76.47
+2021-11-15 19:22:09 train 2000, loss 2.103e+00, top1 52.29, top5 76.49
+2021-11-15 19:22:09 train 2000, loss 2.096e+00, top1 52.59, top5 76.47
+2021-11-15 19:22:09 train 2000, loss 2.100e+00, top1 52.49, top5 76.50
+2021-11-15 19:31:36 train 3000, loss 2.105e+00, top1 52.35, top5 76.45
+2021-11-15 19:31:36 train 3000, loss 2.097e+00, top1 52.55, top5 76.45
+2021-11-15 19:31:36 train 3000, loss 2.102e+00, top1 52.42, top5 76.47
+2021-11-15 19:41:05 train 4000, loss 2.110e+00, top1 52.30, top5 76.38
+2021-11-15 19:41:05 train 4000, loss 2.107e+00, top1 52.38, top5 76.29
+2021-11-15 19:41:05 train 4000, loss 2.106e+00, top1 52.38, top5 76.43
+2021-11-15 19:50:35 train 5000, loss 2.113e+00, top1 52.27, top5 76.33
+2021-11-15 19:50:35 train 5000, loss 2.109e+00, top1 52.34, top5 76.22
+2021-11-15 19:50:35 train 5000, loss 2.109e+00, top1 52.33, top5 76.35
+2021-11-15 19:50:59 valid 0000, loss 1.873e+00, top1 50.59, top5 80.00
+2021-11-15 19:50:59 valid 0000, loss 1.873e+00, top1 50.59, top5 80.00
+2021-11-15 19:50:59 valid 0000, loss 1.873e+00, top1 50.59, top5 80.00
+2021-11-15 19:55:24 (JOBID 31907) epoch 28: train time 2879.00, inference time 274.66s, valid_top1 54.43 (best_top1 67.30), valid_top5 79.85
+2021-11-15 19:55:28 (JOBID 31907) epoch 28: train time 2878.37, inference time 278.70s, valid_top1 54.43 (best_top1 67.30), valid_top5 79.85
+2021-11-15 19:55:34 (JOBID 31907) epoch 28: train time 2878.24, inference time 285.26s, valid_top1 54.43 (best_top1 67.30), valid_top5 79.85
+2021-11-15 19:55:38 train 0000, loss 2.146e+00, top1 55.29, top5 80.00
+2021-11-15 19:55:42 train 0000, loss 2.025e+00, top1 47.06, top5 80.00
+2021-11-15 19:55:48 train 0000, loss 2.145e+00, top1 49.41, top5 74.12
+2021-11-15 20:05:22 train 1000, loss 2.103e+00, top1 52.42, top5 76.61
+2021-11-15 20:05:22 train 1000, loss 2.086e+00, top1 52.73, top5 76.60
+2021-11-15 20:05:22 train 1000, loss 2.088e+00, top1 52.83, top5 76.70
+2021-11-15 20:14:50 train 2000, loss 2.099e+00, top1 52.52, top5 76.45
+2021-11-15 20:14:50 train 2000, loss 2.101e+00, top1 52.43, top5 76.56
+2021-11-15 20:14:50 train 2000, loss 2.099e+00, top1 52.52, top5 76.53
+2021-11-15 20:24:22 train 3000, loss 2.107e+00, top1 52.33, top5 76.37
+2021-11-15 20:24:22 train 3000, loss 2.109e+00, top1 52.31, top5 76.40
+2021-11-15 20:24:22 train 3000, loss 2.104e+00, top1 52.43, top5 76.50
+2021-11-15 20:33:57 train 4000, loss 2.109e+00, top1 52.35, top5 76.38
+2021-11-15 20:33:57 train 4000, loss 2.110e+00, top1 52.28, top5 76.33
+2021-11-15 20:33:57 train 4000, loss 2.109e+00, top1 52.36, top5 76.40
+2021-11-15 20:43:31 train 5000, loss 2.113e+00, top1 52.31, top5 76.28
+2021-11-15 20:43:31 train 5000, loss 2.116e+00, top1 52.20, top5 76.26
+2021-11-15 20:43:31 train 5000, loss 2.111e+00, top1 52.33, top5 76.35
+2021-11-15 20:43:55 valid 0000, loss 9.749e-01, top1 81.18, top5 89.41
+2021-11-15 20:43:55 valid 0000, loss 9.749e-01, top1 81.18, top5 89.41
+2021-11-15 20:43:55 valid 0000, loss 9.749e-01, top1 81.18, top5 89.41
+2021-11-15 20:48:34 (JOBID 31907) epoch 29: train time 2890.80, inference time 288.89s, valid_top1 55.80 (best_top1 67.30), valid_top5 80.68
+2021-11-15 20:48:35 (JOBID 31907) epoch 29: train time 2901.25, inference time 289.47s, valid_top1 55.80 (best_top1 67.30), valid_top5 80.68
+2021-11-15 20:48:36 (JOBID 31907) epoch 29: train time 2896.92, inference time 290.16s, valid_top1 55.80 (best_top1 67.30), valid_top5 80.68
+2021-11-15 20:48:49 train 0000, loss 2.081e+00, top1 51.76, top5 77.65
+2021-11-15 20:48:49 train 0000, loss 2.289e+00, top1 45.88, top5 72.94
+2021-11-15 20:48:49 train 0000, loss 1.888e+00, top1 52.94, top5 80.00
+2021-11-15 20:58:20 train 1000, loss 1.696e+00, top1 61.11, top5 82.37
+2021-11-15 20:58:20 train 1000, loss 1.690e+00, top1 61.11, top5 82.16
+2021-11-15 20:58:20 train 1000, loss 1.695e+00, top1 61.14, top5 82.22
+2021-11-15 21:07:53 train 2000, loss 1.635e+00, top1 62.16, top5 82.94
+2021-11-15 21:07:53 train 2000, loss 1.644e+00, top1 61.99, top5 82.98
+2021-11-15 21:07:53 train 2000, loss 1.640e+00, top1 62.19, top5 83.01
+2021-11-15 21:17:25 train 3000, loss 1.605e+00, top1 62.79, top5 83.39
+2021-11-15 21:17:25 train 3000, loss 1.608e+00, top1 62.71, top5 83.47
+2021-11-15 21:17:25 train 3000, loss 1.606e+00, top1 62.90, top5 83.41
+2021-11-15 21:26:56 train 4000, loss 1.586e+00, top1 63.14, top5 83.74
+2021-11-15 21:26:56 train 4000, loss 1.585e+00, top1 63.25, top5 83.73
+2021-11-15 21:26:56 train 4000, loss 1.581e+00, top1 63.23, top5 83.73
+2021-11-15 21:36:28 train 5000, loss 1.571e+00, top1 63.43, top5 83.95
+2021-11-15 21:36:28 train 5000, loss 1.566e+00, top1 63.58, top5 83.97
+2021-11-15 21:36:28 train 5000, loss 1.567e+00, top1 63.52, top5 83.95
+2021-11-15 21:36:52 valid 0000, loss 7.377e-01, top1 83.53, top5 90.59
+2021-11-15 21:36:52 valid 0000, loss 7.377e-01, top1 83.53, top5 90.59
+2021-11-15 21:36:52 valid 0000, loss 7.377e-01, top1 83.53, top5 90.59
+2021-11-15 21:41:28 (JOBID 31907) epoch 30: train time 2888.05, inference time 286.32s, valid_top1 69.62 (best_top1 69.62), valid_top5 89.67
+2021-11-15 21:41:30 (JOBID 31907) epoch 30: train time 2886.40, inference time 287.15s, valid_top1 69.62 (best_top1 69.62), valid_top5 89.67
+2021-11-15 21:41:33 (JOBID 31907) epoch 30: train time 2887.54, inference time 290.76s, valid_top1 69.62 (best_top1 69.62), valid_top5 89.67
+2021-11-15 21:41:45 train 0000, loss 1.181e+00, top1 74.12, top5 90.59
+2021-11-15 21:41:43 train 0000, loss 1.521e+00, top1 58.82, top5 87.06
+2021-11-15 21:41:47 train 0000, loss 1.219e+00, top1 68.24, top5 92.94
+2021-11-15 21:51:09 train 1000, loss 1.463e+00, top1 65.75, top5 85.40
+2021-11-15 21:51:09 train 1000, loss 1.468e+00, top1 65.73, top5 85.45
+2021-11-15 21:51:09 train 1000, loss 1.457e+00, top1 65.62, top5 85.55
+2021-11-15 22:00:30 train 2000, loss 1.462e+00, top1 65.69, top5 85.46
+2021-11-15 22:00:30 train 2000, loss 1.464e+00, top1 65.67, top5 85.52
+2021-11-15 22:00:30 train 2000, loss 1.463e+00, top1 65.55, top5 85.43
+2021-11-15 22:09:50 train 3000, loss 1.458e+00, top1 65.80, top5 85.48
+2021-11-15 22:09:50 train 3000, loss 1.461e+00, top1 65.72, top5 85.48
+2021-11-15 22:09:50 train 3000, loss 1.459e+00, top1 65.66, top5 85.47
+2021-11-15 22:19:08 train 4000, loss 1.458e+00, top1 65.82, top5 85.50
+2021-11-15 22:19:08 train 4000, loss 1.453e+00, top1 65.89, top5 85.58
+2021-11-15 22:19:08 train 4000, loss 1.457e+00, top1 65.71, top5 85.52
+2021-11-15 22:28:27 train 5000, loss 1.448e+00, top1 65.99, top5 85.62
+2021-11-15 22:28:27 train 5000, loss 1.454e+00, top1 65.85, top5 85.56
+2021-11-15 22:28:27 train 5000, loss 1.453e+00, top1 65.79, top5 85.57
+2021-11-15 22:28:51 valid 0000, loss 6.286e-01, top1 85.88, top5 92.94
+2021-11-15 22:28:51 valid 0000, loss 6.286e-01, top1 85.88, top5 92.94
+2021-11-15 22:28:51 valid 0000, loss 6.286e-01, top1 85.88, top5 92.94
+2021-11-15 22:33:24 (JOBID 31907) epoch 31: train time 2830.43, inference time 282.97s, valid_top1 70.41 (best_top1 70.41), valid_top5 90.20
+2021-11-15 22:33:36 (JOBID 31907) epoch 31: train time 2827.81, inference time 295.07s, valid_top1 70.41 (best_top1 70.41), valid_top5 90.20
+2021-11-15 22:33:41 (JOBID 31907) epoch 31: train time 2832.31, inference time 300.82s, valid_top1 70.41 (best_top1 70.41), valid_top5 90.20
+2021-11-15 22:33:49 train 0000, loss 1.574e+00, top1 65.88, top5 84.71
+2021-11-15 22:33:39 train 0000, loss 1.331e+00, top1 72.94, top5 89.41
+2021-11-15 22:33:56 train 0000, loss 1.380e+00, top1 71.76, top5 85.88
+2021-11-15 22:43:17 train 1000, loss 1.400e+00, top1 66.82, top5 86.37
+2021-11-15 22:43:17 train 1000, loss 1.394e+00, top1 67.09, top5 86.46
+2021-11-15 22:43:17 train 1000, loss 1.402e+00, top1 66.86, top5 86.23
+2021-11-15 22:52:38 train 2000, loss 1.408e+00, top1 66.79, top5 86.16
+2021-11-15 22:52:38 train 2000, loss 1.406e+00, top1 66.86, top5 86.25
+2021-11-15 22:52:38 train 2000, loss 1.405e+00, top1 66.82, top5 86.30
+2021-11-15 23:02:04 train 3000, loss 1.408e+00, top1 66.78, top5 86.20
+2021-11-15 23:02:04 train 3000, loss 1.407e+00, top1 66.83, top5 86.17
+2021-11-15 23:02:04 train 3000, loss 1.405e+00, top1 66.85, top5 86.23
+2021-11-15 23:11:32 train 4000, loss 1.405e+00, top1 66.81, top5 86.17
+2021-11-15 23:11:32 train 4000, loss 1.407e+00, top1 66.79, top5 86.21
+2021-11-15 23:11:32 train 4000, loss 1.405e+00, top1 66.83, top5 86.24
+2021-11-15 23:20:58 train 5000, loss 1.406e+00, top1 66.78, top5 86.16
+2021-11-15 23:20:58 train 5000, loss 1.408e+00, top1 66.77, top5 86.21
+2021-11-15 23:20:58 train 5000, loss 1.402e+00, top1 66.88, top5 86.29
+2021-11-15 23:21:22 valid 0000, loss 4.956e-01, top1 87.06, top5 96.47
+2021-11-15 23:21:22 valid 0000, loss 4.956e-01, top1 87.06, top5 96.47
+2021-11-15 23:21:22 valid 0000, loss 4.956e-01, top1 87.06, top5 96.47
+2021-11-15 23:25:55 (JOBID 31907) epoch 32: train time 2850.67, inference time 282.71s, valid_top1 71.02 (best_top1 71.02), valid_top5 90.48
+2021-11-15 23:25:57 (JOBID 31907) epoch 32: train time 2856.39, inference time 284.83s, valid_top1 71.02 (best_top1 71.02), valid_top5 90.48
+2021-11-15 23:25:58 (JOBID 31907) epoch 32: train time 2867.65, inference time 284.53s, valid_top1 71.02 (best_top1 71.02), valid_top5 90.48
+2021-11-15 23:26:14 train 0000, loss 1.250e+00, top1 71.76, top5 88.24
+2021-11-15 23:26:14 train 0000, loss 1.688e+00, top1 67.06, top5 81.18
+2021-11-15 23:26:14 train 0000, loss 1.480e+00, top1 65.88, top5 82.35
+2021-11-15 23:35:44 train 1000, loss 1.388e+00, top1 67.23, top5 86.50
+2021-11-15 23:35:44 train 1000, loss 1.364e+00, top1 67.69, top5 86.75
+2021-11-15 23:35:44 train 1000, loss 1.362e+00, top1 67.57, top5 86.80
+2021-11-15 23:45:11 train 2000, loss 1.370e+00, top1 67.59, top5 86.67
+2021-11-15 23:45:11 train 2000, loss 1.389e+00, top1 67.11, top5 86.44
+2021-11-15 23:45:11 train 2000, loss 1.373e+00, top1 67.40, top5 86.63
+2021-11-15 23:54:37 train 3000, loss 1.373e+00, top1 67.50, top5 86.63
+2021-11-15 23:54:37 train 3000, loss 1.386e+00, top1 67.22, top5 86.47
+2021-11-15 23:54:37 train 3000, loss 1.377e+00, top1 67.35, top5 86.58
+2021-11-16 00:03:58 train 4000, loss 1.384e+00, top1 67.31, top5 86.48
+2021-11-16 00:03:58 train 4000, loss 1.375e+00, top1 67.48, top5 86.56
+2021-11-16 00:03:58 train 4000, loss 1.380e+00, top1 67.29, top5 86.52
+2021-11-16 00:13:22 train 5000, loss 1.376e+00, top1 67.44, top5 86.55
+2021-11-16 00:13:22 train 5000, loss 1.383e+00, top1 67.33, top5 86.46
+2021-11-16 00:13:22 train 5000, loss 1.379e+00, top1 67.34, top5 86.53
+2021-11-16 00:13:46 valid 0000, loss 4.908e-01, top1 88.24, top5 96.47
+2021-11-16 00:13:46 valid 0000, loss 4.908e-01, top1 88.24, top5 96.47
+2021-11-16 00:13:46 valid 0000, loss 4.908e-01, top1 88.24, top5 96.47
+2021-11-16 00:18:20 (JOBID 31907) epoch 33: train time 2860.92, inference time 284.38s, valid_top1 71.32 (best_top1 71.32), valid_top5 90.54
+2021-11-16 00:18:20 (JOBID 31907) epoch 33: train time 2858.22, inference time 283.26s, valid_top1 71.32 (best_top1 71.32), valid_top5 90.54
+2021-11-16 00:18:21 (JOBID 31907) epoch 33: train time 2858.81, inference time 284.84s, valid_top1 71.32 (best_top1 71.32), valid_top5 90.54
+2021-11-16 00:18:39 train 0000, loss 1.255e+00, top1 63.53, top5 91.76
+2021-11-16 00:18:39 train 0000, loss 1.214e+00, top1 74.12, top5 88.24
+2021-11-16 00:18:39 train 0000, loss 1.491e+00, top1 68.24, top5 85.88
+2021-11-16 00:28:08 train 1000, loss 1.351e+00, top1 67.92, top5 86.87
+2021-11-16 00:28:08 train 1000, loss 1.346e+00, top1 68.03, top5 86.89
+2021-11-16 00:28:08 train 1000, loss 1.356e+00, top1 67.95, top5 86.83
+2021-11-16 00:37:37 train 2000, loss 1.355e+00, top1 67.87, top5 86.88
+2021-11-16 00:37:37 train 2000, loss 1.360e+00, top1 67.90, top5 86.79
+2021-11-16 00:37:37 train 2000, loss 1.352e+00, top1 67.82, top5 86.84
+2021-11-16 00:47:05 train 3000, loss 1.358e+00, top1 67.87, top5 86.79
+2021-11-16 00:47:05 train 3000, loss 1.360e+00, top1 67.70, top5 86.81
+2021-11-16 00:47:05 train 3000, loss 1.357e+00, top1 67.75, top5 86.78
+2021-11-16 00:56:33 train 4000, loss 1.362e+00, top1 67.69, top5 86.78
+2021-11-16 00:56:33 train 4000, loss 1.359e+00, top1 67.79, top5 86.76
+2021-11-16 00:56:33 train 4000, loss 1.356e+00, top1 67.78, top5 86.83
+2021-11-16 01:06:01 train 5000, loss 1.358e+00, top1 67.82, top5 86.81
+2021-11-16 01:06:01 train 5000, loss 1.364e+00, top1 67.65, top5 86.73
+2021-11-16 01:06:01 train 5000, loss 1.358e+00, top1 67.74, top5 86.83
+2021-11-16 01:06:27 valid 0000, loss 6.090e-01, top1 89.41, top5 95.29
+2021-11-16 01:06:27 valid 0000, loss 6.090e-01, top1 89.41, top5 95.29
+2021-11-16 01:06:27 valid 0000, loss 6.090e-01, top1 89.41, top5 95.29
+2021-11-16 01:11:02 (JOBID 31907) epoch 34: train time 2874.61, inference time 287.19s, valid_top1 71.70 (best_top1 71.70), valid_top5 90.76
+2021-11-16 01:11:02 (JOBID 31907) epoch 34: train time 2875.05, inference time 287.21s, valid_top1 71.70 (best_top1 71.70), valid_top5 90.76
+2021-11-16 01:11:03 (JOBID 31907) epoch 34: train time 2875.02, inference time 287.12s, valid_top1 71.70 (best_top1 71.70), valid_top5 90.76
+2021-11-16 01:11:21 train 0000, loss 1.131e+00, top1 70.59, top5 90.59
+2021-11-16 01:11:21 train 0000, loss 1.290e+00, top1 68.24, top5 90.59
+2021-11-16 01:11:21 train 0000, loss 1.280e+00, top1 68.24, top5 88.24
+2021-11-16 01:20:41 train 1000, loss 1.324e+00, top1 68.48, top5 87.19
+2021-11-16 01:20:41 train 1000, loss 1.338e+00, top1 68.22, top5 87.01
+2021-11-16 01:20:41 train 1000, loss 1.339e+00, top1 68.16, top5 87.12
+2021-11-16 01:30:06 train 2000, loss 1.337e+00, top1 68.23, top5 87.03
+2021-11-16 01:30:06 train 2000, loss 1.330e+00, top1 68.35, top5 87.14
+2021-11-16 01:30:06 train 2000, loss 1.343e+00, top1 68.08, top5 87.03
+2021-11-16 01:39:31 train 3000, loss 1.342e+00, top1 68.11, top5 86.99
+2021-11-16 01:39:31 train 3000, loss 1.335e+00, top1 68.21, top5 87.08
+2021-11-16 01:39:31 train 3000, loss 1.346e+00, top1 68.05, top5 86.95
+2021-11-16 01:48:54 train 4000, loss 1.343e+00, top1 68.08, top5 86.96
+2021-11-16 01:48:54 train 4000, loss 1.341e+00, top1 68.07, top5 87.02
+2021-11-16 01:48:54 train 4000, loss 1.348e+00, top1 67.98, top5 86.96
+2021-11-16 01:58:17 train 5000, loss 1.347e+00, top1 68.00, top5 86.94
+2021-11-16 01:58:17 train 5000, loss 1.349e+00, top1 67.97, top5 86.95
+2021-11-16 01:58:17 train 5000, loss 1.346e+00, top1 68.02, top5 86.96
+2021-11-16 01:58:42 valid 0000, loss 5.576e-01, top1 85.88, top5 95.29
+2021-11-16 01:58:42 valid 0000, loss 5.576e-01, top1 85.88, top5 95.29
+2021-11-16 01:58:42 valid 0000, loss 5.576e-01, top1 85.88, top5 95.29
+2021-11-16 02:03:19 (JOBID 31907) epoch 35: train time 2849.09, inference time 287.09s, valid_top1 71.37 (best_top1 71.70), valid_top5 90.53
+2021-11-16 02:03:19 (JOBID 31907) epoch 35: train time 2849.08, inference time 287.18s, valid_top1 71.37 (best_top1 71.70), valid_top5 90.53
+2021-11-16 02:03:19 (JOBID 31907) epoch 35: train time 2848.13, inference time 287.04s, valid_top1 71.37 (best_top1 71.70), valid_top5 90.53
+2021-11-16 02:03:35 train 0000, loss 1.555e+00, top1 58.82, top5 80.00
+2021-11-16 02:03:35 train 0000, loss 1.329e+00, top1 68.24, top5 88.24
+2021-11-16 02:03:35 train 0000, loss 1.201e+00, top1 71.76, top5 87.06
+2021-11-16 02:12:54 train 1000, loss 1.330e+00, top1 68.37, top5 87.18
+2021-11-16 02:12:55 train 1000, loss 1.321e+00, top1 68.60, top5 87.46
+2021-11-16 02:12:55 train 1000, loss 1.335e+00, top1 68.21, top5 87.07
+2021-11-16 02:22:15 train 2000, loss 1.327e+00, top1 68.38, top5 87.34
+2021-11-16 02:22:15 train 2000, loss 1.336e+00, top1 68.17, top5 87.10
+2021-11-16 02:22:15 train 2000, loss 1.333e+00, top1 68.29, top5 87.19
+2021-11-16 02:31:36 train 3000, loss 1.333e+00, top1 68.27, top5 87.21
+2021-11-16 02:31:36 train 3000, loss 1.334e+00, top1 68.21, top5 87.18
+2021-11-16 02:31:36 train 3000, loss 1.337e+00, top1 68.14, top5 87.09
+2021-11-16 02:40:57 train 4000, loss 1.338e+00, top1 68.17, top5 87.13
+2021-11-16 02:40:57 train 4000, loss 1.338e+00, top1 68.13, top5 87.11
+2021-11-16 02:40:57 train 4000, loss 1.340e+00, top1 68.11, top5 87.08
+2021-11-16 02:50:18 train 5000, loss 1.340e+00, top1 68.06, top5 87.07
+2021-11-16 02:50:18 train 5000, loss 1.339e+00, top1 68.13, top5 87.09
+2021-11-16 02:50:18 train 5000, loss 1.343e+00, top1 68.05, top5 87.04
+2021-11-16 02:50:44 valid 0000, loss 6.031e-01, top1 88.24, top5 91.76
+2021-11-16 02:50:44 valid 0000, loss 6.031e-01, top1 88.24, top5 91.76
+2021-11-16 02:50:44 valid 0000, loss 6.031e-01, top1 88.24, top5 91.76
+2021-11-16 02:55:06 (JOBID 31907) epoch 36: train time 2833.50, inference time 274.01s, valid_top1 71.57 (best_top1 71.70), valid_top5 90.69
+2021-11-16 02:55:10 (JOBID 31907) epoch 36: train time 2833.18, inference time 277.15s, valid_top1 71.57 (best_top1 71.70), valid_top5 90.69
+2021-11-16 02:55:17 (JOBID 31907) epoch 36: train time 2833.38, inference time 285.37s, valid_top1 71.57 (best_top1 71.70), valid_top5 90.69
+2021-11-16 02:55:24 train 0000, loss 1.316e+00, top1 68.24, top5 85.88
+2021-11-16 02:55:23 train 0000, loss 9.665e-01, top1 76.47, top5 90.59
+2021-11-16 02:55:31 train 0000, loss 1.289e+00, top1 65.88, top5 89.41
+2021-11-16 03:04:52 train 1000, loss 1.314e+00, top1 68.85, top5 87.38
+2021-11-16 03:04:52 train 1000, loss 1.315e+00, top1 68.52, top5 87.39
+2021-11-16 03:04:52 train 1000, loss 1.319e+00, top1 68.52, top5 87.36
+2021-11-16 03:14:14 train 2000, loss 1.327e+00, top1 68.33, top5 87.26
+2021-11-16 03:14:14 train 2000, loss 1.319e+00, top1 68.41, top5 87.39
+2021-11-16 03:14:14 train 2000, loss 1.327e+00, top1 68.47, top5 87.25
+2021-11-16 03:23:37 train 3000, loss 1.323e+00, top1 68.38, top5 87.29
+2021-11-16 03:23:37 train 3000, loss 1.331e+00, top1 68.36, top5 87.16
+2021-11-16 03:23:37 train 3000, loss 1.333e+00, top1 68.24, top5 87.17
+2021-11-16 03:33:01 train 4000, loss 1.333e+00, top1 68.32, top5 87.17
+2021-11-16 03:33:01 train 4000, loss 1.326e+00, top1 68.34, top5 87.24
+2021-11-16 03:33:01 train 4000, loss 1.336e+00, top1 68.16, top5 87.12
+2021-11-16 03:42:21 train 5000, loss 1.330e+00, top1 68.25, top5 87.18
+2021-11-16 03:42:21 train 5000, loss 1.336e+00, top1 68.24, top5 87.12
+2021-11-16 03:42:21 train 5000, loss 1.337e+00, top1 68.13, top5 87.12
+2021-11-16 03:42:45 valid 0000, loss 5.045e-01, top1 88.24, top5 96.47
+2021-11-16 03:42:45 valid 0000, loss 5.045e-01, top1 88.24, top5 96.47
+2021-11-16 03:42:45 valid 0000, loss 5.045e-01, top1 88.24, top5 96.47
+2021-11-16 03:47:19 (JOBID 31907) epoch 37: train time 2845.51, inference time 283.86s, valid_top1 71.36 (best_top1 71.70), valid_top5 90.80
+2021-11-16 03:47:20 (JOBID 31907) epoch 37: train time 2849.08, inference time 285.18s, valid_top1 71.36 (best_top1 71.70), valid_top5 90.80
+2021-11-16 03:47:20 (JOBID 31907) epoch 37: train time 2837.74, inference time 285.27s, valid_top1 71.36 (best_top1 71.70), valid_top5 90.80
+2021-11-16 03:47:34 train 0000, loss 1.345e+00, top1 67.06, top5 87.06
+2021-11-16 03:47:34 train 0000, loss 1.619e+00, top1 64.71, top5 80.00
+2021-11-16 03:47:34 train 0000, loss 1.254e+00, top1 72.94, top5 91.76
+2021-11-16 03:57:04 train 1000, loss 1.326e+00, top1 68.40, top5 87.31
+2021-11-16 03:57:04 train 1000, loss 1.317e+00, top1 68.47, top5 87.29
+2021-11-16 03:57:04 train 1000, loss 1.319e+00, top1 68.47, top5 87.41
+2021-11-16 04:06:37 train 2000, loss 1.327e+00, top1 68.24, top5 87.22
+2021-11-16 04:06:37 train 2000, loss 1.323e+00, top1 68.49, top5 87.32
+2021-11-16 04:06:37 train 2000, loss 1.329e+00, top1 68.38, top5 87.31
+2021-11-16 04:16:08 train 3000, loss 1.328e+00, top1 68.24, top5 87.19
+2021-11-16 04:16:08 train 3000, loss 1.330e+00, top1 68.39, top5 87.22
+2021-11-16 04:16:08 train 3000, loss 1.333e+00, top1 68.28, top5 87.22
+2021-11-16 04:25:36 train 4000, loss 1.332e+00, top1 68.19, top5 87.16
+2021-11-16 04:25:37 train 4000, loss 1.333e+00, top1 68.29, top5 87.20
+2021-11-16 04:25:37 train 4000, loss 1.337e+00, top1 68.18, top5 87.17
+2021-11-16 04:35:03 train 5000, loss 1.335e+00, top1 68.18, top5 87.12
+2021-11-16 04:35:04 train 5000, loss 1.337e+00, top1 68.16, top5 87.18
+2021-11-16 04:35:04 train 5000, loss 1.334e+00, top1 68.25, top5 87.20
+2021-11-16 04:35:30 valid 0000, loss 5.608e-01, top1 87.06, top5 95.29
+2021-11-16 04:35:30 valid 0000, loss 5.608e-01, top1 87.06, top5 95.29
+2021-11-16 04:35:30 valid 0000, loss 5.608e-01, top1 87.06, top5 95.29
+2021-11-16 04:40:03 (JOBID 31907) epoch 38: train time 2877.06, inference time 285.88s, valid_top1 71.14 (best_top1 71.70), valid_top5 90.56
+2021-11-16 04:40:04 (JOBID 31907) epoch 38: train time 2878.04, inference time 286.34s, valid_top1 71.14 (best_top1 71.70), valid_top5 90.56
+2021-11-16 04:40:04 (JOBID 31907) epoch 38: train time 2877.11, inference time 286.69s, valid_top1 71.14 (best_top1 71.70), valid_top5 90.56
+2021-11-16 04:40:20 train 0000, loss 1.164e+00, top1 74.12, top5 89.41
+2021-11-16 04:40:20 train 0000, loss 1.465e+00, top1 64.71, top5 80.00
+2021-11-16 04:40:20 train 0000, loss 8.634e-01, top1 78.82, top5 94.12
+2021-11-16 04:49:49 train 1000, loss 1.319e+00, top1 68.51, top5 87.36
+2021-11-16 04:49:49 train 1000, loss 1.310e+00, top1 68.71, top5 87.47
+2021-11-16 04:49:49 train 1000, loss 1.306e+00, top1 68.83, top5 87.57
+2021-11-16 04:59:18 train 2000, loss 1.320e+00, top1 68.59, top5 87.34
+2021-11-16 04:59:18 train 2000, loss 1.320e+00, top1 68.44, top5 87.34
+2021-11-16 04:59:19 train 2000, loss 1.320e+00, top1 68.54, top5 87.34
+2021-11-16 05:08:48 train 3000, loss 1.325e+00, top1 68.40, top5 87.29
+2021-11-16 05:08:48 train 3000, loss 1.327e+00, top1 68.39, top5 87.22
+2021-11-16 05:08:48 train 3000, loss 1.325e+00, top1 68.46, top5 87.28
+2021-11-16 05:18:18 train 4000, loss 1.332e+00, top1 68.25, top5 87.13
+2021-11-16 05:18:17 train 4000, loss 1.331e+00, top1 68.30, top5 87.19
+2021-11-16 05:18:18 train 4000, loss 1.327e+00, top1 68.40, top5 87.28
+2021-11-16 05:27:46 train 5000, loss 1.335e+00, top1 68.17, top5 87.10
+2021-11-16 05:27:46 train 5000, loss 1.331e+00, top1 68.28, top5 87.25
+2021-11-16 05:27:46 train 5000, loss 1.333e+00, top1 68.22, top5 87.16
+2021-11-16 05:28:13 valid 0000, loss 6.372e-01, top1 87.06, top5 95.29
+2021-11-16 05:28:13 valid 0000, loss 6.372e-01, top1 87.06, top5 95.29
+2021-11-16 05:28:13 valid 0000, loss 6.372e-01, top1 87.06, top5 95.29
+2021-11-16 05:32:44 (JOBID 31907) epoch 39: train time 2876.03, inference time 283.01s, valid_top1 70.71 (best_top1 71.70), valid_top5 90.36
+2021-11-16 05:32:47 (JOBID 31907) epoch 39: train time 2876.69, inference time 287.24s, valid_top1 70.71 (best_top1 71.70), valid_top5 90.36
+2021-11-16 05:32:49 (JOBID 31907) epoch 39: train time 2876.04, inference time 288.42s, valid_top1 70.71 (best_top1 71.70), valid_top5 90.36
+2021-11-16 05:33:02 train 0000, loss 1.276e+00, top1 72.94, top5 85.88
+2021-11-16 05:32:59 train 0000, loss 1.251e+00, top1 74.12, top5 89.41
+2021-11-16 05:33:02 train 0000, loss 1.174e+00, top1 75.29, top5 90.59
+2021-11-16 05:42:28 train 1000, loss 1.314e+00, top1 68.68, top5 87.61
+2021-11-16 05:42:28 train 1000, loss 1.302e+00, top1 68.83, top5 87.57
+2021-11-16 05:42:28 train 1000, loss 1.303e+00, top1 68.82, top5 87.61
+2021-11-16 05:51:52 train 2000, loss 1.317e+00, top1 68.56, top5 87.44
+2021-11-16 05:51:52 train 2000, loss 1.311e+00, top1 68.71, top5 87.50
+2021-11-16 05:51:52 train 2000, loss 1.316e+00, top1 68.60, top5 87.37
+2021-11-16 06:01:14 train 3000, loss 1.323e+00, top1 68.44, top5 87.37
+2021-11-16 06:01:14 train 3000, loss 1.320e+00, top1 68.52, top5 87.36
+2021-11-16 06:01:15 train 3000, loss 1.320e+00, top1 68.48, top5 87.38
+2021-11-16 06:10:38 train 4000, loss 1.327e+00, top1 68.35, top5 87.29
+2021-11-16 06:10:38 train 4000, loss 1.326e+00, top1 68.39, top5 87.26
+2021-11-16 06:10:39 train 4000, loss 1.325e+00, top1 68.37, top5 87.30
+2021-11-16 06:20:04 train 5000, loss 1.333e+00, top1 68.22, top5 87.16
+2021-11-16 06:20:04 train 5000, loss 1.332e+00, top1 68.29, top5 87.23
+2021-11-16 06:20:04 train 5000, loss 1.330e+00, top1 68.30, top5 87.22
+2021-11-16 06:20:31 valid 0000, loss 7.140e-01, top1 84.71, top5 92.94
+2021-11-16 06:20:31 valid 0000, loss 7.140e-01, top1 84.71, top5 92.94
+2021-11-16 06:20:31 valid 0000, loss 7.140e-01, top1 84.71, top5 92.94
+2021-11-16 06:25:03 (JOBID 31907) epoch 40: train time 2850.80, inference time 284.75s, valid_top1 71.37 (best_top1 71.70), valid_top5 90.65
+2021-11-16 06:25:04 (JOBID 31907) epoch 40: train time 2849.56, inference time 285.27s, valid_top1 71.37 (best_top1 71.70), valid_top5 90.65
+2021-11-16 06:25:04 (JOBID 31907) epoch 40: train time 2854.65, inference time 285.29s, valid_top1 71.37 (best_top1 71.70), valid_top5 90.65
+2021-11-16 06:25:18 train 0000, loss 9.721e-01, top1 70.59, top5 94.12
+2021-11-16 06:25:18 train 0000, loss 1.353e+00, top1 69.41, top5 89.41
+2021-11-16 06:25:18 train 0000, loss 1.451e+00, top1 67.06, top5 85.88
+2021-11-16 06:34:46 train 1000, loss 1.315e+00, top1 68.55, top5 87.40
+2021-11-16 06:34:46 train 1000, loss 1.311e+00, top1 68.53, top5 87.57
+2021-11-16 06:34:46 train 1000, loss 1.314e+00, top1 68.67, top5 87.50
+2021-11-16 06:44:15 train 2000, loss 1.318e+00, top1 68.40, top5 87.45
+2021-11-16 06:44:15 train 2000, loss 1.323e+00, top1 68.37, top5 87.32
+2021-11-16 06:44:15 train 2000, loss 1.314e+00, top1 68.67, top5 87.48
+2021-11-16 06:53:42 train 3000, loss 1.323e+00, top1 68.39, top5 87.38
+2021-11-16 06:53:42 train 3000, loss 1.331e+00, top1 68.21, top5 87.22
+2021-11-16 06:53:42 train 3000, loss 1.321e+00, top1 68.50, top5 87.36
+2021-11-16 07:03:13 train 4000, loss 1.330e+00, top1 68.29, top5 87.23
+2021-11-16 07:03:13 train 4000, loss 1.327e+00, top1 68.31, top5 87.29
+2021-11-16 07:03:13 train 4000, loss 1.330e+00, top1 68.29, top5 87.25
+2021-11-16 07:12:42 train 5000, loss 1.336e+00, top1 68.15, top5 87.16
+2021-11-16 07:12:42 train 5000, loss 1.332e+00, top1 68.20, top5 87.21
+2021-11-16 07:12:42 train 5000, loss 1.334e+00, top1 68.21, top5 87.19
+2021-11-16 07:13:09 valid 0000, loss 5.664e-01, top1 85.88, top5 94.12
+2021-11-16 07:13:09 valid 0000, loss 5.664e-01, top1 85.88, top5 94.12
+2021-11-16 07:13:09 valid 0000, loss 5.664e-01, top1 85.88, top5 94.12
+2021-11-16 07:17:40 (JOBID 31907) epoch 41: train time 2872.26, inference time 284.43s, valid_top1 71.00 (best_top1 71.70), valid_top5 90.22
+2021-11-16 07:17:40 (JOBID 31907) epoch 41: train time 2872.80, inference time 284.56s, valid_top1 71.00 (best_top1 71.70), valid_top5 90.22
+2021-11-16 07:17:41 (JOBID 31907) epoch 41: train time 2871.99, inference time 284.63s, valid_top1 71.00 (best_top1 71.70), valid_top5 90.22
+2021-11-16 07:17:57 train 0000, loss 1.627e+00, top1 58.82, top5 83.53
+2021-11-16 07:17:57 train 0000, loss 9.569e-01, top1 69.41, top5 97.65
+2021-11-16 07:17:57 train 0000, loss 1.250e+00, top1 74.12, top5 87.06
+2021-11-16 07:27:21 train 1000, loss 1.305e+00, top1 68.75, top5 87.61
+2021-11-16 07:27:21 train 1000, loss 1.321e+00, top1 68.60, top5 87.24
+2021-11-16 07:27:21 train 1000, loss 1.320e+00, top1 68.45, top5 87.52
+2021-11-16 07:36:44 train 2000, loss 1.317e+00, top1 68.47, top5 87.41
+2021-11-16 07:36:44 train 2000, loss 1.324e+00, top1 68.43, top5 87.28
+2021-11-16 07:36:44 train 2000, loss 1.324e+00, top1 68.48, top5 87.37
+2021-11-16 07:46:07 train 3000, loss 1.319e+00, top1 68.46, top5 87.39
+2021-11-16 07:46:07 train 3000, loss 1.328e+00, top1 68.36, top5 87.23
+2021-11-16 07:46:07 train 3000, loss 1.325e+00, top1 68.44, top5 87.33
+2021-11-16 07:55:34 train 4000, loss 1.327e+00, top1 68.31, top5 87.28
+2021-11-16 07:55:35 train 4000, loss 1.334e+00, top1 68.23, top5 87.15
+2021-11-16 07:55:35 train 4000, loss 1.330e+00, top1 68.35, top5 87.28
+2021-11-16 08:05:07 train 5000, loss 1.338e+00, top1 68.16, top5 87.10
+2021-11-16 08:05:07 train 5000, loss 1.332e+00, top1 68.22, top5 87.23
+2021-11-16 08:05:08 train 5000, loss 1.332e+00, top1 68.27, top5 87.23
+2021-11-16 08:05:34 valid 0000, loss 5.812e-01, top1 89.41, top5 94.12
+2021-11-16 08:05:34 valid 0000, loss 5.812e-01, top1 89.41, top5 94.12
+2021-11-16 08:05:34 valid 0000, loss 5.812e-01, top1 89.41, top5 94.12
+2021-11-16 08:10:24 (JOBID 31907) epoch 42: train time 2861.64, inference time 301.97s, valid_top1 71.17 (best_top1 71.70), valid_top5 90.60
+2021-11-16 08:10:24 (JOBID 31907) epoch 42: train time 2861.18, inference time 301.98s, valid_top1 71.17 (best_top1 71.70), valid_top5 90.60
+2021-11-16 08:10:24 (JOBID 31907) epoch 42: train time 2861.54, inference time 302.42s, valid_top1 71.17 (best_top1 71.70), valid_top5 90.60
+2021-11-16 08:10:39 train 0000, loss 1.260e+00, top1 72.94, top5 90.59
+2021-11-16 08:10:39 train 0000, loss 1.446e+00, top1 67.06, top5 84.71
+2021-11-16 08:10:39 train 0000, loss 1.477e+00, top1 70.59, top5 82.35
+2021-11-16 08:20:12 train 1000, loss 1.318e+00, top1 68.44, top5 87.34
+2021-11-16 08:20:12 train 1000, loss 1.310e+00, top1 68.69, top5 87.52
+2021-11-16 08:20:12 train 1000, loss 1.322e+00, top1 68.42, top5 87.23
+2021-11-16 08:29:41 train 2000, loss 1.322e+00, top1 68.44, top5 87.29
+2021-11-16 08:29:41 train 2000, loss 1.319e+00, top1 68.48, top5 87.41
+2021-11-16 08:29:41 train 2000, loss 1.325e+00, top1 68.38, top5 87.17
+2021-11-16 08:39:12 train 3000, loss 1.327e+00, top1 68.32, top5 87.23
+2021-11-16 08:39:12 train 3000, loss 1.330e+00, top1 68.27, top5 87.14
+2021-11-16 08:39:12 train 3000, loss 1.329e+00, top1 68.29, top5 87.29
+2021-11-16 08:48:39 train 4000, loss 1.333e+00, top1 68.20, top5 87.11
+2021-11-16 08:48:39 train 4000, loss 1.335e+00, top1 68.19, top5 87.14
+2021-11-16 08:48:39 train 4000, loss 1.332e+00, top1 68.17, top5 87.24
+2021-11-16 08:58:09 train 5000, loss 1.336e+00, top1 68.11, top5 87.19
+2021-11-16 08:58:09 train 5000, loss 1.337e+00, top1 68.15, top5 87.14
+2021-11-16 08:58:09 train 5000, loss 1.338e+00, top1 68.10, top5 87.05
+2021-11-16 08:58:36 valid 0000, loss 5.876e-01, top1 88.24, top5 96.47
+2021-11-16 08:58:36 valid 0000, loss 5.876e-01, top1 88.24, top5 96.47
+2021-11-16 08:58:36 valid 0000, loss 5.876e-01, top1 88.24, top5 96.47
+2021-11-16 09:03:08 (JOBID 31907) epoch 43: train time 2878.86, inference time 284.70s, valid_top1 71.00 (best_top1 71.70), valid_top5 90.58
+2021-11-16 09:03:09 (JOBID 31907) epoch 43: train time 2879.22, inference time 285.09s, valid_top1 71.00 (best_top1 71.70), valid_top5 90.58
+2021-11-16 09:03:09 (JOBID 31907) epoch 43: train time 2879.36, inference time 285.81s, valid_top1 71.00 (best_top1 71.70), valid_top5 90.58
+2021-11-16 09:03:24 train 0000, loss 1.126e+00, top1 74.12, top5 90.59
+2021-11-16 09:03:24 train 0000, loss 1.279e+00, top1 62.35, top5 91.76
+2021-11-16 09:03:24 train 0000, loss 1.368e+00, top1 68.24, top5 85.88
+2021-11-16 09:12:54 train 1000, loss 1.308e+00, top1 68.59, top5 87.59
+2021-11-16 09:12:55 train 1000, loss 1.302e+00, top1 68.65, top5 87.80
+2021-11-16 09:12:55 train 1000, loss 1.322e+00, top1 68.65, top5 87.28
+2021-11-16 09:22:26 train 2000, loss 1.318e+00, top1 68.50, top5 87.46
+2021-11-16 09:22:26 train 2000, loss 1.316e+00, top1 68.45, top5 87.56
+2021-11-16 09:22:26 train 2000, loss 1.324e+00, top1 68.50, top5 87.36
+2021-11-16 09:31:56 train 3000, loss 1.323e+00, top1 68.28, top5 87.44
+2021-11-16 09:31:55 train 3000, loss 1.321e+00, top1 68.42, top5 87.36
+2021-11-16 09:31:56 train 3000, loss 1.328e+00, top1 68.40, top5 87.27
+2021-11-16 09:41:25 train 4000, loss 1.327e+00, top1 68.19, top5 87.38
+2021-11-16 09:41:25 train 4000, loss 1.325e+00, top1 68.36, top5 87.34
+2021-11-16 09:41:25 train 4000, loss 1.333e+00, top1 68.27, top5 87.21
+2021-11-16 09:50:59 train 5000, loss 1.332e+00, top1 68.14, top5 87.27
+2021-11-16 09:50:59 train 5000, loss 1.331e+00, top1 68.22, top5 87.24
+2021-11-16 09:50:59 train 5000, loss 1.340e+00, top1 68.12, top5 87.14
+2021-11-16 09:51:25 valid 0000, loss 5.190e-01, top1 89.41, top5 95.29
+2021-11-16 09:51:25 valid 0000, loss 5.190e-01, top1 89.41, top5 95.29
+2021-11-16 09:51:25 valid 0000, loss 5.190e-01, top1 89.41, top5 95.29
+2021-11-16 09:56:00 (JOBID 31907) epoch 44: train time 2885.05, inference time 287.30s, valid_top1 71.15 (best_top1 71.70), valid_top5 90.44
+2021-11-16 09:56:01 (JOBID 31907) epoch 44: train time 2884.19, inference time 287.33s, valid_top1 71.15 (best_top1 71.70), valid_top5 90.44
+2021-11-16 09:56:01 (JOBID 31907) epoch 44: train time 2883.88, inference time 287.79s, valid_top1 71.15 (best_top1 71.70), valid_top5 90.44
+2021-11-16 09:56:16 train 0000, loss 1.319e+00, top1 68.24, top5 88.24
+2021-11-16 09:56:16 train 0000, loss 1.558e+00, top1 63.53, top5 83.53
+2021-11-16 09:56:16 train 0000, loss 1.397e+00, top1 67.06, top5 87.06
+2021-11-16 10:05:50 train 1000, loss 1.307e+00, top1 68.73, top5 87.60
+2021-11-16 10:05:50 train 1000, loss 1.305e+00, top1 68.82, top5 87.68
+2021-11-16 10:05:50 train 1000, loss 1.311e+00, top1 68.70, top5 87.48
+2021-11-16 10:15:24 train 2000, loss 1.318e+00, top1 68.44, top5 87.46
+2021-11-16 10:15:24 train 2000, loss 1.313e+00, top1 68.65, top5 87.48
+2021-11-16 10:15:24 train 2000, loss 1.320e+00, top1 68.48, top5 87.39
+2021-11-16 10:24:56 train 3000, loss 1.324e+00, top1 68.39, top5 87.30
+2021-11-16 10:24:56 train 3000, loss 1.325e+00, top1 68.29, top5 87.38
+2021-11-16 10:24:56 train 3000, loss 1.331e+00, top1 68.25, top5 87.23
+2021-11-16 10:34:30 train 4000, loss 1.331e+00, top1 68.27, top5 87.20
+2021-11-16 10:34:31 train 4000, loss 1.329e+00, top1 68.21, top5 87.31
+2021-11-16 10:34:31 train 4000, loss 1.334e+00, top1 68.17, top5 87.19
+2021-11-16 10:44:07 train 5000, loss 1.335e+00, top1 68.21, top5 87.15
+2021-11-16 10:44:07 train 5000, loss 1.336e+00, top1 68.09, top5 87.19
+2021-11-16 10:44:07 train 5000, loss 1.339e+00, top1 68.08, top5 87.11
+2021-11-16 10:44:31 valid 0000, loss 4.061e-01, top1 89.41, top5 95.29
+2021-11-16 10:44:31 valid 0000, loss 4.061e-01, top1 89.41, top5 95.29
+2021-11-16 10:44:31 valid 0000, loss 4.061e-01, top1 89.41, top5 95.29
+2021-11-16 10:49:46 (JOBID 31907) epoch 45: train time 2900.66, inference time 324.16s, valid_top1 70.64 (best_top1 71.70), valid_top5 90.17
+2021-11-16 10:49:46 (JOBID 31907) epoch 45: train time 2901.06, inference time 324.64s, valid_top1 70.64 (best_top1 71.70), valid_top5 90.17
+2021-11-16 10:49:46 (JOBID 31907) epoch 45: train time 2900.60, inference time 324.80s, valid_top1 70.64 (best_top1 71.70), valid_top5 90.17
+2021-11-16 10:50:02 train 0000, loss 1.486e+00, top1 74.12, top5 83.53
+2021-11-16 10:50:02 train 0000, loss 1.092e+00, top1 72.94, top5 90.59
+2021-11-16 10:50:02 train 0000, loss 1.103e+00, top1 75.29, top5 89.41
+2021-11-16 10:59:40 train 1000, loss 1.316e+00, top1 68.83, top5 87.40
+2021-11-16 10:59:40 train 1000, loss 1.309e+00, top1 68.89, top5 87.63
+2021-11-16 10:59:40 train 1000, loss 1.298e+00, top1 68.95, top5 87.67
+2021-11-16 11:09:13 train 2000, loss 1.313e+00, top1 68.71, top5 87.50
+2021-11-16 11:09:13 train 2000, loss 1.328e+00, top1 68.47, top5 87.28
+2021-11-16 11:09:13 train 2000, loss 1.317e+00, top1 68.52, top5 87.45
+2021-11-16 11:18:45 train 3000, loss 1.324e+00, top1 68.43, top5 87.30
+2021-11-16 11:18:45 train 3000, loss 1.331e+00, top1 68.34, top5 87.22
+2021-11-16 11:18:45 train 3000, loss 1.324e+00, top1 68.39, top5 87.38
+2021-11-16 11:28:25 train 4000, loss 1.329e+00, top1 68.28, top5 87.25
+2021-11-16 11:28:25 train 4000, loss 1.333e+00, top1 68.29, top5 87.19
+2021-11-16 11:28:25 train 4000, loss 1.329e+00, top1 68.24, top5 87.33
+2021-11-16 11:37:58 train 5000, loss 1.338e+00, top1 68.19, top5 87.12
+2021-11-16 11:37:58 train 5000, loss 1.336e+00, top1 68.13, top5 87.15
+2021-11-16 11:37:59 train 5000, loss 1.334e+00, top1 68.14, top5 87.25
+2021-11-16 11:38:25 valid 0000, loss 6.619e-01, top1 85.88, top5 94.12
+2021-11-16 11:38:25 valid 0000, loss 6.619e-01, top1 85.88, top5 94.12
+2021-11-16 11:38:25 valid 0000, loss 6.619e-01, top1 85.88, top5 94.12
+2021-11-16 11:43:38 (JOBID 31907) epoch 46: train time 2906.69, inference time 325.31s, valid_top1 70.09 (best_top1 71.70), valid_top5 89.95
+2021-11-16 11:43:38 (JOBID 31907) epoch 46: train time 2906.49, inference time 325.42s, valid_top1 70.09 (best_top1 71.70), valid_top5 89.95
+2021-11-16 11:43:39 (JOBID 31907) epoch 46: train time 2906.81, inference time 325.44s, valid_top1 70.09 (best_top1 71.70), valid_top5 89.95
+2021-11-16 11:43:55 train 0000, loss 1.456e+00, top1 67.06, top5 85.88
+2021-11-16 11:43:55 train 0000, loss 1.331e+00, top1 65.88, top5 91.76
+2021-11-16 11:43:55 train 0000, loss 1.399e+00, top1 63.53, top5 87.06
+2021-11-16 11:53:30 train 1000, loss 1.328e+00, top1 68.42, top5 87.17
+2021-11-16 11:53:30 train 1000, loss 1.321e+00, top1 68.57, top5 87.38
+2021-11-16 11:53:30 train 1000, loss 1.305e+00, top1 68.65, top5 87.74
+2021-11-16 12:03:02 train 2000, loss 1.324e+00, top1 68.43, top5 87.34
+2021-11-16 12:03:02 train 2000, loss 1.312e+00, top1 68.55, top5 87.54
+2021-11-16 12:03:02 train 2000, loss 1.328e+00, top1 68.41, top5 87.22
+2021-11-16 12:12:35 train 3000, loss 1.330e+00, top1 68.22, top5 87.27
+2021-11-16 12:12:36 train 3000, loss 1.322e+00, top1 68.35, top5 87.40
+2021-11-16 12:12:36 train 3000, loss 1.332e+00, top1 68.30, top5 87.22
+2021-11-16 12:22:09 train 4000, loss 1.327e+00, top1 68.26, top5 87.33
+2021-11-16 12:22:09 train 4000, loss 1.330e+00, top1 68.22, top5 87.27
+2021-11-16 12:22:09 train 4000, loss 1.338e+00, top1 68.15, top5 87.13
+2021-11-16 12:31:37 train 5000, loss 1.338e+00, top1 68.14, top5 87.13
+2021-11-16 12:31:37 train 5000, loss 1.331e+00, top1 68.21, top5 87.24
+2021-11-16 12:31:37 train 5000, loss 1.337e+00, top1 68.12, top5 87.15
+2021-11-16 12:32:04 valid 0000, loss 5.079e-01, top1 87.06, top5 94.12
+2021-11-16 12:32:04 valid 0000, loss 5.079e-01, top1 87.06, top5 94.12
+2021-11-16 12:32:04 valid 0000, loss 5.079e-01, top1 87.06, top5 94.12
+2021-11-16 12:36:26 (JOBID 31907) epoch 47: train time 2893.63, inference time 274.76s, valid_top1 71.10 (best_top1 71.70), valid_top5 90.55
+2021-11-16 12:36:39 (JOBID 31907) epoch 47: train time 2893.68, inference time 287.81s, valid_top1 71.10 (best_top1 71.70), valid_top5 90.55
+2021-11-16 12:36:40 (JOBID 31907) epoch 47: train time 2893.18, inference time 288.28s, valid_top1 71.10 (best_top1 71.70), valid_top5 90.55
+2021-11-16 12:36:43 train 0000, loss 1.308e+00, top1 68.24, top5 84.71
+2021-11-16 12:36:53 train 0000, loss 1.319e+00, top1 67.06, top5 85.88
+2021-11-16 12:36:53 train 0000, loss 1.602e+00, top1 65.88, top5 85.88
+2021-11-16 12:46:25 train 1000, loss 1.308e+00, top1 68.71, top5 87.47
+2021-11-16 12:46:25 train 1000, loss 1.319e+00, top1 68.42, top5 87.42
+2021-11-16 12:46:25 train 1000, loss 1.302e+00, top1 68.72, top5 87.68
+2021-11-16 12:55:53 train 2000, loss 1.315e+00, top1 68.57, top5 87.37
+2021-11-16 12:55:53 train 2000, loss 1.324e+00, top1 68.34, top5 87.32
+2021-11-16 12:55:53 train 2000, loss 1.311e+00, top1 68.67, top5 87.55
+2021-11-16 13:05:27 train 3000, loss 1.320e+00, top1 68.42, top5 87.34
+2021-11-16 13:05:26 train 3000, loss 1.331e+00, top1 68.18, top5 87.23
+2021-11-16 13:05:27 train 3000, loss 1.320e+00, top1 68.44, top5 87.39
+2021-11-16 13:15:00 train 4000, loss 1.325e+00, top1 68.32, top5 87.29
+2021-11-16 13:15:00 train 4000, loss 1.326e+00, top1 68.28, top5 87.33
+2021-11-16 13:15:00 train 4000, loss 1.336e+00, top1 68.07, top5 87.16
+2021-11-16 13:24:28 train 5000, loss 1.332e+00, top1 68.20, top5 87.19
+2021-11-16 13:24:28 train 5000, loss 1.339e+00, top1 68.00, top5 87.13
+2021-11-16 13:24:28 train 5000, loss 1.330e+00, top1 68.20, top5 87.29
+2021-11-16 13:24:54 valid 0000, loss 5.850e-01, top1 84.71, top5 96.47
+2021-11-16 13:24:54 valid 0000, loss 5.850e-01, top1 84.71, top5 96.47
+2021-11-16 13:24:54 valid 0000, loss 5.850e-01, top1 84.71, top5 96.47
+2021-11-16 13:29:58 (JOBID 31907) epoch 48: train time 2896.50, inference time 314.64s, valid_top1 70.05 (best_top1 71.70), valid_top5 89.84
+2021-11-16 13:29:58 (JOBID 31907) epoch 48: train time 2883.47, inference time 315.14s, valid_top1 70.05 (best_top1 71.70), valid_top5 89.84
+2021-11-16 13:29:58 (JOBID 31907) epoch 48: train time 2882.62, inference time 314.80s, valid_top1 70.05 (best_top1 71.70), valid_top5 89.84
+2021-11-16 13:30:15 train 0000, loss 1.254e+00, top1 75.29, top5 90.59
+2021-11-16 13:30:15 train 0000, loss 1.366e+00, top1 64.71, top5 88.24
+2021-11-16 13:30:15 train 0000, loss 1.055e+00, top1 71.76, top5 91.76
+2021-11-16 13:39:47 train 1000, loss 1.306e+00, top1 68.58, top5 87.50
+2021-11-16 13:39:47 train 1000, loss 1.311e+00, top1 68.72, top5 87.63
+2021-11-16 13:39:47 train 1000, loss 1.320e+00, top1 68.54, top5 87.37
+2021-11-16 13:49:14 train 2000, loss 1.320e+00, top1 68.37, top5 87.33
+2021-11-16 13:49:13 train 2000, loss 1.321e+00, top1 68.47, top5 87.50
+2021-11-16 13:49:14 train 2000, loss 1.327e+00, top1 68.29, top5 87.32
+2021-11-16 13:58:45 train 3000, loss 1.326e+00, top1 68.37, top5 87.39
+2021-11-16 13:58:45 train 3000, loss 1.330e+00, top1 68.28, top5 87.28
+2021-11-16 13:58:45 train 3000, loss 1.327e+00, top1 68.26, top5 87.25
+2021-11-16 14:08:23 train 4000, loss 1.334e+00, top1 68.15, top5 87.17
+2021-11-16 14:08:22 train 4000, loss 1.330e+00, top1 68.28, top5 87.30
+2021-11-16 14:08:23 train 4000, loss 1.334e+00, top1 68.19, top5 87.21
+2021-11-16 14:17:52 train 5000, loss 1.337e+00, top1 68.06, top5 87.15
+2021-11-16 14:17:51 train 5000, loss 1.335e+00, top1 68.15, top5 87.22
+2021-11-16 14:17:52 train 5000, loss 1.335e+00, top1 68.13, top5 87.22
+2021-11-16 14:18:17 valid 0000, loss 4.662e-01, top1 89.41, top5 97.65
+2021-11-16 14:18:17 valid 0000, loss 4.662e-01, top1 89.41, top5 97.65
+2021-11-16 14:18:17 valid 0000, loss 4.662e-01, top1 89.41, top5 97.65
+2021-11-16 14:22:54 (JOBID 31907) epoch 49: train time 2887.45, inference time 287.68s, valid_top1 70.82 (best_top1 71.70), valid_top5 90.29
+2021-11-16 14:22:54 (JOBID 31907) epoch 49: train time 2887.90, inference time 288.13s, valid_top1 70.82 (best_top1 71.70), valid_top5 90.29
+2021-11-16 14:22:54 (JOBID 31907) epoch 49: train time 2887.39, inference time 288.72s, valid_top1 70.82 (best_top1 71.70), valid_top5 90.29
+2021-11-16 14:23:08 train 0000, loss 1.292e+00, top1 68.24, top5 84.71
+2021-11-16 14:23:08 train 0000, loss 1.379e+00, top1 63.53, top5 87.06
+2021-11-16 14:23:08 train 0000, loss 1.513e+00, top1 64.71, top5 85.88
+2021-11-16 14:32:40 train 1000, loss 1.315e+00, top1 68.50, top5 87.41
+2021-11-16 14:32:40 train 1000, loss 1.319e+00, top1 68.53, top5 87.30
+2021-11-16 14:32:40 train 1000, loss 1.317e+00, top1 68.74, top5 87.41
+2021-11-16 14:42:13 train 2000, loss 1.316e+00, top1 68.51, top5 87.46
+2021-11-16 14:42:14 train 2000, loss 1.321e+00, top1 68.57, top5 87.37
+2021-11-16 14:42:14 train 2000, loss 1.323e+00, top1 68.42, top5 87.31
+2021-11-16 14:51:51 train 3000, loss 1.323e+00, top1 68.48, top5 87.32
+2021-11-16 14:51:51 train 3000, loss 1.326e+00, top1 68.32, top5 87.33
+2021-11-16 14:51:51 train 3000, loss 1.331e+00, top1 68.26, top5 87.21
+2021-11-16 15:01:27 train 4000, loss 1.332e+00, top1 68.25, top5 87.25
+2021-11-16 15:01:27 train 4000, loss 1.327e+00, top1 68.40, top5 87.27
+2021-11-16 15:01:28 train 4000, loss 1.334e+00, top1 68.22, top5 87.14
+2021-11-16 15:11:01 train 5000, loss 1.335e+00, top1 68.15, top5 87.21
+2021-11-16 15:11:01 train 5000, loss 1.334e+00, top1 68.23, top5 87.17
+2021-11-16 15:11:01 train 5000, loss 1.334e+00, top1 68.21, top5 87.14
+2021-11-16 15:11:25 valid 0000, loss 4.600e-01, top1 88.24, top5 96.47
+2021-11-16 15:11:25 valid 0000, loss 4.600e-01, top1 88.24, top5 96.47
+2021-11-16 15:11:25 valid 0000, loss 4.600e-01, top1 88.24, top5 96.47
+2021-11-16 15:16:02 (JOBID 31907) epoch 50: train time 2900.80, inference time 287.32s, valid_top1 70.89 (best_top1 71.70), valid_top5 90.30
+2021-11-16 15:16:03 (JOBID 31907) epoch 50: train time 2901.47, inference time 287.40s, valid_top1 70.89 (best_top1 71.70), valid_top5 90.30
+2021-11-16 15:16:03 (JOBID 31907) epoch 50: train time 2901.53, inference time 287.26s, valid_top1 70.89 (best_top1 71.70), valid_top5 90.30
+2021-11-16 15:16:18 train 0000, loss 1.013e+00, top1 74.12, top5 91.76
+2021-11-16 15:16:18 train 0000, loss 1.265e+00, top1 70.59, top5 87.06
+2021-11-16 15:16:18 train 0000, loss 1.601e+00, top1 70.59, top5 82.35
+2021-11-16 15:25:50 train 1000, loss 1.314e+00, top1 68.47, top5 87.39
+2021-11-16 15:25:50 train 1000, loss 1.299e+00, top1 68.94, top5 87.67
+2021-11-16 15:25:51 train 1000, loss 1.307e+00, top1 68.78, top5 87.53
+2021-11-16 15:35:15 train 2000, loss 1.312e+00, top1 68.67, top5 87.45
+2021-11-16 15:35:15 train 2000, loss 1.320e+00, top1 68.34, top5 87.36
+2021-11-16 15:35:15 train 2000, loss 1.314e+00, top1 68.70, top5 87.44
+2021-11-16 15:44:41 train 3000, loss 1.326e+00, top1 68.23, top5 87.26
+2021-11-16 15:44:41 train 3000, loss 1.321e+00, top1 68.47, top5 87.33
+2021-11-16 15:44:41 train 3000, loss 1.319e+00, top1 68.56, top5 87.38
+2021-11-16 15:54:09 train 4000, loss 1.332e+00, top1 68.14, top5 87.19
+2021-11-16 15:54:09 train 4000, loss 1.326e+00, top1 68.37, top5 87.26
+2021-11-16 15:54:09 train 4000, loss 1.326e+00, top1 68.36, top5 87.28
+2021-11-16 16:03:32 train 5000, loss 1.331e+00, top1 68.22, top5 87.21
+2021-11-16 16:03:32 train 5000, loss 1.336e+00, top1 68.06, top5 87.16
+2021-11-16 16:03:32 train 5000, loss 1.332e+00, top1 68.18, top5 87.22
+2021-11-16 16:03:57 valid 0000, loss 4.810e-01, top1 88.24, top5 95.29
+2021-11-16 16:03:57 valid 0000, loss 4.810e-01, top1 88.24, top5 95.29
+2021-11-16 16:03:57 valid 0000, loss 4.810e-01, top1 88.24, top5 95.29
+2021-11-16 16:08:46 (JOBID 31907) epoch 51: train time 2863.88, inference time 299.56s, valid_top1 70.88 (best_top1 71.70), valid_top5 90.26
+2021-11-16 16:08:46 (JOBID 31907) epoch 51: train time 2864.05, inference time 299.59s, valid_top1 70.88 (best_top1 71.70), valid_top5 90.26
+2021-11-16 16:08:47 (JOBID 31907) epoch 51: train time 2863.70, inference time 300.36s, valid_top1 70.88 (best_top1 71.70), valid_top5 90.26
+2021-11-16 16:09:00 train 0000, loss 1.694e+00, top1 62.35, top5 78.82
+2021-11-16 16:09:00 train 0000, loss 1.194e+00, top1 67.06, top5 91.76
+2021-11-16 16:09:01 train 0000, loss 9.975e-01, top1 81.18, top5 91.76
+2021-11-16 16:18:32 train 1000, loss 1.308e+00, top1 68.63, top5 87.61
+2021-11-16 16:18:32 train 1000, loss 1.306e+00, top1 68.69, top5 87.59
+2021-11-16 16:18:32 train 1000, loss 1.304e+00, top1 68.87, top5 87.52
+2021-11-16 16:28:04 train 2000, loss 1.312e+00, top1 68.59, top5 87.48
+2021-11-16 16:28:04 train 2000, loss 1.315e+00, top1 68.62, top5 87.41
+2021-11-16 16:28:04 train 2000, loss 1.313e+00, top1 68.61, top5 87.49
+2021-11-16 16:37:37 train 3000, loss 1.319e+00, top1 68.41, top5 87.42
+2021-11-16 16:37:37 train 3000, loss 1.322e+00, top1 68.45, top5 87.42
+2021-11-16 16:37:37 train 3000, loss 1.320e+00, top1 68.47, top5 87.39
+2021-11-16 16:47:09 train 4000, loss 1.325e+00, top1 68.29, top5 87.33
+2021-11-16 16:47:10 train 4000, loss 1.329e+00, top1 68.30, top5 87.31
+2021-11-16 16:47:10 train 4000, loss 1.324e+00, top1 68.38, top5 87.31
+2021-11-16 16:56:39 train 5000, loss 1.331e+00, top1 68.23, top5 87.26
+2021-11-16 16:56:39 train 5000, loss 1.329e+00, top1 68.23, top5 87.28
+2021-11-16 16:56:39 train 5000, loss 1.328e+00, top1 68.29, top5 87.26
+2021-11-16 16:57:04 valid 0000, loss 4.465e-01, top1 90.59, top5 96.47
+2021-11-16 16:57:04 valid 0000, loss 4.465e-01, top1 90.59, top5 96.47
+2021-11-16 16:57:04 valid 0000, loss 4.465e-01, top1 90.59, top5 96.47
+2021-11-16 17:02:00 (JOBID 31907) epoch 52: train time 2887.41, inference time 306.79s, valid_top1 70.46 (best_top1 71.70), valid_top5 89.86
+2021-11-16 17:02:00 (JOBID 31907) epoch 52: train time 2887.42, inference time 306.79s, valid_top1 70.46 (best_top1 71.70), valid_top5 89.86
+2021-11-16 17:02:00 (JOBID 31907) epoch 52: train time 2886.52, inference time 306.65s, valid_top1 70.46 (best_top1 71.70), valid_top5 89.86
+2021-11-16 17:02:14 train 0000, loss 1.300e+00, top1 75.29, top5 89.41
+2021-11-16 17:02:14 train 0000, loss 1.726e+00, top1 62.35, top5 78.82
+2021-11-16 17:02:14 train 0000, loss 1.231e+00, top1 72.94, top5 89.41
+2021-11-16 17:11:40 train 1000, loss 1.309e+00, top1 68.82, top5 87.39
+2021-11-16 17:11:41 train 1000, loss 1.309e+00, top1 68.83, top5 87.48
+2021-11-16 17:11:41 train 1000, loss 1.303e+00, top1 68.89, top5 87.59
+2021-11-16 17:21:08 train 2000, loss 1.312e+00, top1 68.59, top5 87.51
+2021-11-16 17:21:08 train 2000, loss 1.316e+00, top1 68.62, top5 87.41
+2021-11-16 17:21:08 train 2000, loss 1.317e+00, top1 68.65, top5 87.41
+2021-11-16 17:30:38 train 3000, loss 1.320e+00, top1 68.54, top5 87.38
+2021-11-16 17:30:39 train 3000, loss 1.319e+00, top1 68.43, top5 87.42
+2021-11-16 17:30:39 train 3000, loss 1.323e+00, top1 68.48, top5 87.37
+2021-11-16 17:40:05 train 4000, loss 1.323e+00, top1 68.47, top5 87.34
+2021-11-16 17:40:05 train 4000, loss 1.323e+00, top1 68.35, top5 87.34
+2021-11-16 17:40:05 train 4000, loss 1.327e+00, top1 68.37, top5 87.32
+2021-11-16 17:49:29 train 5000, loss 1.327e+00, top1 68.31, top5 87.26
+2021-11-16 17:49:28 train 5000, loss 1.326e+00, top1 68.40, top5 87.32
+2021-11-16 17:49:29 train 5000, loss 1.331e+00, top1 68.23, top5 87.31
+2021-11-16 17:49:53 valid 0000, loss 7.641e-01, top1 82.35, top5 92.94
+2021-11-16 17:49:53 valid 0000, loss 7.641e-01, top1 82.35, top5 92.94
+2021-11-16 17:49:53 valid 0000, loss 7.641e-01, top1 82.35, top5 92.94
+2021-11-16 17:54:31 (JOBID 31907) epoch 53: train time 2862.38, inference time 288.14s, valid_top1 70.81 (best_top1 71.70), valid_top5 90.36
+2021-11-16 17:54:31 (JOBID 31907) epoch 53: train time 2862.27, inference time 288.87s, valid_top1 70.81 (best_top1 71.70), valid_top5 90.36
+2021-11-16 17:54:32 (JOBID 31907) epoch 53: train time 2862.10, inference time 289.02s, valid_top1 70.81 (best_top1 71.70), valid_top5 90.36
+2021-11-16 17:54:46 train 0000, loss 1.226e+00, top1 69.41, top5 87.06
+2021-11-16 17:54:46 train 0000, loss 9.464e-01, top1 78.82, top5 92.94
+2021-11-16 17:54:46 train 0000, loss 1.358e+00, top1 65.88, top5 85.88
+2021-11-16 18:03:59 train 1000, loss 1.302e+00, top1 69.03, top5 87.62
+2021-11-16 18:03:59 train 1000, loss 1.294e+00, top1 68.96, top5 87.69
+2021-11-16 18:03:59 train 1000, loss 1.310e+00, top1 68.66, top5 87.50
+2021-11-16 18:13:18 train 2000, loss 1.314e+00, top1 68.53, top5 87.42
+2021-11-16 18:13:18 train 2000, loss 1.312e+00, top1 68.74, top5 87.43
+2021-11-16 18:13:18 train 2000, loss 1.309e+00, top1 68.81, top5 87.47
+2021-11-16 18:22:43 train 3000, loss 1.321e+00, top1 68.49, top5 87.36
+2021-11-16 18:22:43 train 3000, loss 1.318e+00, top1 68.62, top5 87.37
+2021-11-16 18:22:43 train 3000, loss 1.319e+00, top1 68.43, top5 87.37
+2021-11-16 18:32:05 train 4000, loss 1.324e+00, top1 68.31, top5 87.31
+2021-11-16 18:32:05 train 4000, loss 1.324e+00, top1 68.43, top5 87.31
+2021-11-16 18:32:05 train 4000, loss 1.323e+00, top1 68.48, top5 87.30
+2021-11-16 18:41:23 train 5000, loss 1.327e+00, top1 68.38, top5 87.26
+2021-11-16 18:41:23 train 5000, loss 1.328e+00, top1 68.31, top5 87.25
+2021-11-16 18:41:23 train 5000, loss 1.329e+00, top1 68.21, top5 87.26
+2021-11-16 18:41:47 valid 0000, loss 6.257e-01, top1 88.24, top5 92.94
+2021-11-16 18:41:47 valid 0000, loss 6.257e-01, top1 88.24, top5 92.94
+2021-11-16 18:41:47 valid 0000, loss 6.257e-01, top1 88.24, top5 92.94
+2021-11-16 18:46:15 (JOBID 31907) epoch 54: train time 2825.99, inference time 278.42s, valid_top1 70.47 (best_top1 71.70), valid_top5 90.31
+2021-11-16 18:46:19 (JOBID 31907) epoch 54: train time 2824.76, inference time 281.92s, valid_top1 70.47 (best_top1 71.70), valid_top5 90.31
+2021-11-16 18:46:20 (JOBID 31907) epoch 54: train time 2825.39, inference time 282.88s, valid_top1 70.47 (best_top1 71.70), valid_top5 90.31
+2021-11-16 18:46:33 train 0000, loss 1.270e+00, top1 69.41, top5 89.41
+2021-11-16 18:46:31 train 0000, loss 8.718e-01, top1 83.53, top5 97.65
+2021-11-16 18:46:33 train 0000, loss 1.477e+00, top1 62.35, top5 85.88
+2021-11-16 18:56:02 train 1000, loss 1.306e+00, top1 68.83, top5 87.63
+2021-11-16 18:56:02 train 1000, loss 1.304e+00, top1 68.85, top5 87.67
+2021-11-16 18:56:02 train 1000, loss 1.304e+00, top1 68.70, top5 87.57
+2021-11-16 19:05:33 train 2000, loss 1.314e+00, top1 68.51, top5 87.55
+2021-11-16 19:05:33 train 2000, loss 1.308e+00, top1 68.77, top5 87.63
+2021-11-16 19:05:33 train 2000, loss 1.311e+00, top1 68.68, top5 87.48
+2021-11-16 19:15:07 train 3000, loss 1.317e+00, top1 68.44, top5 87.49
+2021-11-16 19:15:07 train 3000, loss 1.310e+00, top1 68.66, top5 87.55
+2021-11-16 19:15:07 train 3000, loss 1.318e+00, top1 68.51, top5 87.36
+2021-11-16 19:24:37 train 4000, loss 1.314e+00, top1 68.57, top5 87.49
+2021-11-16 19:24:37 train 4000, loss 1.318e+00, top1 68.41, top5 87.47
+2021-11-16 19:24:37 train 4000, loss 1.321e+00, top1 68.49, top5 87.34
+2021-11-16 19:34:04 train 5000, loss 1.322e+00, top1 68.38, top5 87.41
+2021-11-16 19:34:04 train 5000, loss 1.321e+00, top1 68.45, top5 87.42
+2021-11-16 19:34:04 train 5000, loss 1.324e+00, top1 68.38, top5 87.31
+2021-11-16 19:34:29 valid 0000, loss 6.196e-01, top1 87.06, top5 91.76
+2021-11-16 19:34:29 valid 0000, loss 6.196e-01, top1 87.06, top5 91.76
+2021-11-16 19:34:29 valid 0000, loss 6.196e-01, top1 87.06, top5 91.76
+2021-11-16 19:39:24 (JOBID 31907) epoch 55: train time 2883.14, inference time 305.23s, valid_top1 70.91 (best_top1 71.70), valid_top5 90.29
+2021-11-16 19:39:24 (JOBID 31907) epoch 55: train time 2878.66, inference time 305.24s, valid_top1 70.91 (best_top1 71.70), valid_top5 90.29
+2021-11-16 19:39:24 (JOBID 31907) epoch 55: train time 2879.40, inference time 305.16s, valid_top1 70.91 (best_top1 71.70), valid_top5 90.29
+2021-11-16 19:39:38 train 0000, loss 1.375e+00, top1 68.24, top5 89.41
+2021-11-16 19:39:38 train 0000, loss 1.320e+00, top1 74.12, top5 88.24
+2021-11-16 19:39:38 train 0000, loss 1.454e+00, top1 67.06, top5 84.71
+2021-11-16 19:49:04 train 1000, loss 1.293e+00, top1 69.06, top5 87.75
+2021-11-16 19:49:04 train 1000, loss 1.308e+00, top1 68.54, top5 87.50
+2021-11-16 19:49:04 train 1000, loss 1.303e+00, top1 68.86, top5 87.64
+2021-11-16 19:58:28 train 2000, loss 1.303e+00, top1 68.86, top5 87.62
+2021-11-16 19:58:28 train 2000, loss 1.312e+00, top1 68.50, top5 87.43
+2021-11-16 19:58:29 train 2000, loss 1.306e+00, top1 68.75, top5 87.56
+2021-11-16 20:07:54 train 3000, loss 1.313e+00, top1 68.61, top5 87.50
+2021-11-16 20:07:54 train 3000, loss 1.314e+00, top1 68.46, top5 87.44
+2021-11-16 20:07:54 train 3000, loss 1.310e+00, top1 68.71, top5 87.48
+2021-11-16 20:17:20 train 4000, loss 1.316e+00, top1 68.52, top5 87.45
+2021-11-16 20:17:20 train 4000, loss 1.315e+00, top1 68.57, top5 87.40
+2021-11-16 20:17:20 train 4000, loss 1.319e+00, top1 68.44, top5 87.36
+2021-11-16 20:26:48 train 5000, loss 1.324e+00, top1 68.34, top5 87.28
+2021-11-16 20:26:48 train 5000, loss 1.321e+00, top1 68.47, top5 87.41
+2021-11-16 20:26:48 train 5000, loss 1.322e+00, top1 68.43, top5 87.31
+2021-11-16 20:27:12 valid 0000, loss 4.666e-01, top1 91.76, top5 94.12
+2021-11-16 20:27:12 valid 0000, loss 4.666e-01, top1 91.76, top5 94.12
+2021-11-16 20:27:12 valid 0000, loss 4.666e-01, top1 91.76, top5 94.12
+2021-11-16 20:31:56 (JOBID 31907) epoch 56: train time 2858.29, inference time 293.99s, valid_top1 70.08 (best_top1 71.70), valid_top5 89.95
+2021-11-16 20:31:56 (JOBID 31907) epoch 56: train time 2858.29, inference time 294.01s, valid_top1 70.08 (best_top1 71.70), valid_top5 89.95
+2021-11-16 20:31:57 (JOBID 31907) epoch 56: train time 2858.19, inference time 294.12s, valid_top1 70.08 (best_top1 71.70), valid_top5 89.95
+2021-11-16 20:32:11 train 0000, loss 1.593e+00, top1 64.71, top5 84.71
+2021-11-16 20:32:11 train 0000, loss 1.288e+00, top1 67.06, top5 85.88
+2021-11-16 20:32:11 train 0000, loss 1.498e+00, top1 64.71, top5 83.53
+2021-11-16 20:41:34 train 1000, loss 1.304e+00, top1 68.62, top5 87.55
+2021-11-16 20:41:34 train 1000, loss 1.286e+00, top1 69.20, top5 87.80
+2021-11-16 20:41:34 train 1000, loss 1.290e+00, top1 69.17, top5 87.75
+2021-11-16 20:50:48 train 2000, loss 1.306e+00, top1 68.82, top5 87.52
+2021-11-16 20:50:48 train 2000, loss 1.313e+00, top1 68.64, top5 87.40
+2021-11-16 20:50:48 train 2000, loss 1.295e+00, top1 69.06, top5 87.69
+2021-11-16 21:00:03 train 3000, loss 1.308e+00, top1 68.82, top5 87.53
+2021-11-16 21:00:03 train 3000, loss 1.306e+00, top1 68.84, top5 87.58
+2021-11-16 21:00:03 train 3000, loss 1.316e+00, top1 68.63, top5 87.33
+2021-11-16 21:09:20 train 4000, loss 1.314e+00, top1 68.63, top5 87.47
+2021-11-16 21:09:19 train 4000, loss 1.314e+00, top1 68.66, top5 87.44
+2021-11-16 21:09:20 train 4000, loss 1.319e+00, top1 68.53, top5 87.32
+2021-11-16 21:18:38 train 5000, loss 1.317e+00, top1 68.57, top5 87.43
+2021-11-16 21:18:38 train 5000, loss 1.320e+00, top1 68.48, top5 87.36
+2021-11-16 21:18:38 train 5000, loss 1.323e+00, top1 68.41, top5 87.26
+2021-11-16 21:19:03 valid 0000, loss 6.122e-01, top1 87.06, top5 92.94
+2021-11-16 21:19:03 valid 0000, loss 6.122e-01, top1 87.06, top5 92.94
+2021-11-16 21:19:03 valid 0000, loss 6.122e-01, top1 87.06, top5 92.94
+2021-11-16 21:23:36 (JOBID 31907) epoch 57: train time 2815.89, inference time 284.75s, valid_top1 70.88 (best_top1 71.70), valid_top5 90.58
+2021-11-16 21:23:38 (JOBID 31907) epoch 57: train time 2815.35, inference time 285.35s, valid_top1 70.88 (best_top1 71.70), valid_top5 90.58
+2021-11-16 21:23:38 (JOBID 31907) epoch 57: train time 2815.87, inference time 286.09s, valid_top1 70.88 (best_top1 71.70), valid_top5 90.58
+2021-11-16 21:23:51 train 0000, loss 1.541e+00, top1 64.71, top5 83.53
+2021-11-16 21:23:51 train 0000, loss 1.323e+00, top1 67.06, top5 89.41
+2021-11-16 21:23:52 train 0000, loss 7.985e-01, top1 77.65, top5 94.12
+2021-11-16 21:33:19 train 1000, loss 1.291e+00, top1 69.30, top5 87.70
+2021-11-16 21:33:19 train 1000, loss 1.297e+00, top1 68.92, top5 87.62
+2021-11-16 21:33:19 train 1000, loss 1.294e+00, top1 68.98, top5 87.79
+2021-11-16 21:42:42 train 2000, loss 1.296e+00, top1 69.10, top5 87.61
+2021-11-16 21:42:43 train 2000, loss 1.304e+00, top1 68.76, top5 87.57
+2021-11-16 21:42:43 train 2000, loss 1.306e+00, top1 68.79, top5 87.58
+2021-11-16 21:52:08 train 3000, loss 1.310e+00, top1 68.60, top5 87.50
+2021-11-16 21:52:08 train 3000, loss 1.310e+00, top1 68.65, top5 87.54
+2021-11-16 21:52:08 train 3000, loss 1.300e+00, top1 68.95, top5 87.55
+2021-11-16 22:01:32 train 4000, loss 1.317e+00, top1 68.56, top5 87.43
+2021-11-16 22:01:32 train 4000, loss 1.308e+00, top1 68.76, top5 87.45
+2021-11-16 22:01:32 train 4000, loss 1.312e+00, top1 68.58, top5 87.51
+2021-11-16 22:10:58 train 5000, loss 1.316e+00, top1 68.50, top5 87.46
+2021-11-16 22:10:58 train 5000, loss 1.320e+00, top1 68.48, top5 87.37
+2021-11-16 22:10:59 train 5000, loss 1.313e+00, top1 68.61, top5 87.41
+2021-11-16 22:11:23 valid 0000, loss 7.707e-01, top1 85.88, top5 94.12
+2021-11-16 22:11:23 valid 0000, loss 7.707e-01, top1 85.88, top5 94.12
+2021-11-16 22:11:23 valid 0000, loss 7.707e-01, top1 85.88, top5 94.12
+2021-11-16 22:15:59 (JOBID 31907) epoch 58: train time 2854.81, inference time 286.03s, valid_top1 70.94 (best_top1 71.70), valid_top5 90.39
+2021-11-16 22:15:59 (JOBID 31907) epoch 58: train time 2856.16, inference time 286.02s, valid_top1 70.94 (best_top1 71.70), valid_top5 90.39
+2021-11-16 22:15:59 (JOBID 31907) epoch 58: train time 2855.12, inference time 285.99s, valid_top1 70.94 (best_top1 71.70), valid_top5 90.39
+2021-11-16 22:16:14 train 0000, loss 1.515e+00, top1 58.82, top5 85.88
+2021-11-16 22:16:14 train 0000, loss 1.362e+00, top1 64.71, top5 84.71
+2021-11-16 22:16:14 train 0000, loss 1.066e+00, top1 70.59, top5 91.76
+2021-11-16 22:25:41 train 1000, loss 1.305e+00, top1 68.73, top5 87.44
+2021-11-16 22:25:41 train 1000, loss 1.289e+00, top1 69.28, top5 87.84
+2021-11-16 22:25:41 train 1000, loss 1.303e+00, top1 68.56, top5 87.69
+2021-11-16 22:35:08 train 2000, loss 1.311e+00, top1 68.66, top5 87.48
+2021-11-16 22:35:08 train 2000, loss 1.306e+00, top1 68.86, top5 87.61
+2021-11-16 22:35:08 train 2000, loss 1.303e+00, top1 68.75, top5 87.65
+2021-11-16 22:44:34 train 3000, loss 1.313e+00, top1 68.67, top5 87.46
+2021-11-16 22:44:34 train 3000, loss 1.307e+00, top1 68.82, top5 87.55
+2021-11-16 22:44:34 train 3000, loss 1.308e+00, top1 68.69, top5 87.55
+2021-11-16 22:54:03 train 4000, loss 1.316e+00, top1 68.53, top5 87.45
+2021-11-16 22:54:03 train 4000, loss 1.313e+00, top1 68.69, top5 87.45
+2021-11-16 22:54:03 train 4000, loss 1.315e+00, top1 68.54, top5 87.46
+2021-11-16 23:03:29 train 5000, loss 1.318e+00, top1 68.51, top5 87.41
+2021-11-16 23:03:29 train 5000, loss 1.317e+00, top1 68.59, top5 87.38
+2021-11-16 23:03:29 train 5000, loss 1.315e+00, top1 68.53, top5 87.45
+2021-11-16 23:03:54 valid 0000, loss 5.475e-01, top1 89.41, top5 95.29
+2021-11-16 23:03:54 valid 0000, loss 5.475e-01, top1 89.41, top5 95.29
+2021-11-16 23:03:54 valid 0000, loss 5.475e-01, top1 89.41, top5 95.29
+2021-11-16 23:08:40 (JOBID 31907) epoch 59: train time 2864.12, inference time 296.92s, valid_top1 71.03 (best_top1 71.70), valid_top5 90.53
+2021-11-16 23:08:40 (JOBID 31907) epoch 59: train time 2864.12, inference time 296.93s, valid_top1 71.03 (best_top1 71.70), valid_top5 90.53
+2021-11-16 23:08:40 (JOBID 31907) epoch 59: train time 2863.78, inference time 296.93s, valid_top1 71.03 (best_top1 71.70), valid_top5 90.53
+2021-11-16 23:08:54 train 0000, loss 9.852e-01, top1 77.65, top5 94.12
+2021-11-16 23:08:54 train 0000, loss 1.356e+00, top1 68.24, top5 87.06
+2021-11-16 23:08:54 train 0000, loss 1.594e+00, top1 65.88, top5 84.71
+2021-11-16 23:18:22 train 1000, loss 1.169e+00, top1 71.89, top5 89.23
+2021-11-16 23:18:22 train 1000, loss 1.176e+00, top1 71.93, top5 88.91
+2021-11-16 23:18:22 train 1000, loss 1.169e+00, top1 71.95, top5 89.30
+2021-11-16 23:27:50 train 2000, loss 1.155e+00, top1 72.33, top5 89.26
+2021-11-16 23:27:50 train 2000, loss 1.149e+00, top1 72.29, top5 89.51
+2021-11-16 23:27:50 train 2000, loss 1.141e+00, top1 72.61, top5 89.60
+2021-11-16 23:37:17 train 3000, loss 1.132e+00, top1 72.74, top5 89.69
+2021-11-16 23:37:17 train 3000, loss 1.138e+00, top1 72.72, top5 89.48
+2021-11-16 23:37:17 train 3000, loss 1.131e+00, top1 72.86, top5 89.73
+2021-11-16 23:46:47 train 4000, loss 1.122e+00, top1 72.97, top5 89.81
+2021-11-16 23:46:46 train 4000, loss 1.127e+00, top1 72.96, top5 89.64
+2021-11-16 23:46:47 train 4000, loss 1.123e+00, top1 73.00, top5 89.80
+2021-11-16 23:56:14 train 5000, loss 1.120e+00, top1 73.13, top5 89.73
+2021-11-16 23:56:14 train 5000, loss 1.116e+00, top1 73.10, top5 89.86
+2021-11-16 23:56:15 train 5000, loss 1.116e+00, top1 73.14, top5 89.87
+2021-11-16 23:56:39 valid 0000, loss 4.579e-01, top1 91.76, top5 95.29
+2021-11-16 23:56:39 valid 0000, loss 4.579e-01, top1 91.76, top5 95.29
+2021-11-16 23:56:39 valid 0000, loss 4.579e-01, top1 91.76, top5 95.29
+2021-11-17 00:01:07 (JOBID 31907) epoch 60: train time 2869.02, inference time 277.96s, valid_top1 74.91 (best_top1 74.91), valid_top5 92.57
+2021-11-17 00:01:17 (JOBID 31907) epoch 60: train time 2868.72, inference time 287.87s, valid_top1 74.91 (best_top1 74.91), valid_top5 92.57
+2021-11-17 00:01:18 (JOBID 31907) epoch 60: train time 2869.11, inference time 289.40s, valid_top1 74.91 (best_top1 74.91), valid_top5 92.57
+2021-11-17 00:01:31 train 0000, loss 8.953e-01, top1 77.65, top5 94.12
+2021-11-17 00:01:20 train 0000, loss 1.179e+00, top1 71.76, top5 89.41
+2021-11-17 00:01:32 train 0000, loss 1.436e+00, top1 64.71, top5 87.06
+2021-11-17 00:10:57 train 1000, loss 1.073e+00, top1 74.05, top5 90.26
+2021-11-17 00:10:58 train 1000, loss 1.063e+00, top1 74.28, top5 90.51
+2021-11-17 00:10:58 train 1000, loss 1.068e+00, top1 74.10, top5 90.38
+2021-11-17 00:20:26 train 2000, loss 1.063e+00, top1 74.18, top5 90.45
+2021-11-17 00:20:26 train 2000, loss 1.061e+00, top1 74.31, top5 90.54
+2021-11-17 00:20:26 train 2000, loss 1.068e+00, top1 74.07, top5 90.44
+2021-11-17 00:29:52 train 3000, loss 1.064e+00, top1 74.28, top5 90.45
+2021-11-17 00:29:52 train 3000, loss 1.064e+00, top1 74.23, top5 90.47
+2021-11-17 00:29:52 train 3000, loss 1.061e+00, top1 74.31, top5 90.51
+2021-11-17 00:39:20 train 4000, loss 1.062e+00, top1 74.29, top5 90.47
+2021-11-17 00:39:20 train 4000, loss 1.057e+00, top1 74.39, top5 90.55
+2021-11-17 00:39:20 train 4000, loss 1.064e+00, top1 74.27, top5 90.45
+2021-11-17 00:48:46 train 5000, loss 1.056e+00, top1 74.43, top5 90.56
+2021-11-17 00:48:46 train 5000, loss 1.061e+00, top1 74.31, top5 90.47
+2021-11-17 00:48:46 train 5000, loss 1.061e+00, top1 74.32, top5 90.48
+2021-11-17 00:49:12 valid 0000, loss 4.547e-01, top1 91.76, top5 94.12
+2021-11-17 00:49:12 valid 0000, loss 4.547e-01, top1 91.76, top5 94.12
+2021-11-17 00:49:12 valid 0000, loss 4.547e-01, top1 91.76, top5 94.12
+2021-11-17 00:53:41 (JOBID 31907) epoch 61: train time 2862.19, inference time 280.22s, valid_top1 75.45 (best_top1 75.45), valid_top5 92.73
+2021-11-17 00:53:41 (JOBID 31907) epoch 61: train time 2873.67, inference time 280.81s, valid_top1 75.45 (best_top1 75.45), valid_top5 92.73
+2021-11-17 00:53:41 (JOBID 31907) epoch 61: train time 2862.93, inference time 280.22s, valid_top1 75.45 (best_top1 75.45), valid_top5 92.73
+2021-11-17 00:53:56 train 0000, loss 9.575e-01, top1 75.29, top5 89.41
+2021-11-17 00:53:56 train 0000, loss 1.111e+00, top1 69.41, top5 91.76
+2021-11-17 00:53:56 train 0000, loss 1.177e+00, top1 68.24, top5 88.24
+2021-11-17 01:03:19 train 1000, loss 1.052e+00, top1 74.56, top5 90.54
+2021-11-17 01:03:19 train 1000, loss 1.034e+00, top1 75.01, top5 90.78
+2021-11-17 01:03:19 train 1000, loss 1.041e+00, top1 74.80, top5 90.68
+2021-11-17 01:12:45 train 2000, loss 1.045e+00, top1 74.63, top5 90.69
+2021-11-17 01:12:45 train 2000, loss 1.041e+00, top1 74.76, top5 90.71
+2021-11-17 01:12:45 train 2000, loss 1.041e+00, top1 74.71, top5 90.67
+2021-11-17 01:22:09 train 3000, loss 1.046e+00, top1 74.58, top5 90.64
+2021-11-17 01:22:09 train 3000, loss 1.040e+00, top1 74.79, top5 90.69
+2021-11-17 01:22:09 train 3000, loss 1.042e+00, top1 74.73, top5 90.67
+2021-11-17 01:31:36 train 4000, loss 1.044e+00, top1 74.66, top5 90.67
+2021-11-17 01:31:36 train 4000, loss 1.039e+00, top1 74.77, top5 90.69
+2021-11-17 01:31:37 train 4000, loss 1.043e+00, top1 74.71, top5 90.64
+2021-11-17 01:41:03 train 5000, loss 1.044e+00, top1 74.67, top5 90.68
+2021-11-17 01:41:03 train 5000, loss 1.039e+00, top1 74.79, top5 90.71
+2021-11-17 01:41:03 train 5000, loss 1.044e+00, top1 74.67, top5 90.64
+2021-11-17 01:41:27 valid 0000, loss 4.850e-01, top1 91.76, top5 94.12
+2021-11-17 01:41:27 valid 0000, loss 4.850e-01, top1 91.76, top5 94.12
+2021-11-17 01:41:27 valid 0000, loss 4.850e-01, top1 91.76, top5 94.12
+2021-11-17 01:46:14 (JOBID 31907) epoch 62: train time 2856.30, inference time 296.98s, valid_top1 75.52 (best_top1 75.52), valid_top5 92.74
+2021-11-17 01:46:14 (JOBID 31907) epoch 62: train time 2855.91, inference time 296.81s, valid_top1 75.52 (best_top1 75.52), valid_top5 92.74
+2021-11-17 01:46:15 (JOBID 31907) epoch 62: train time 2855.64, inference time 296.90s, valid_top1 75.52 (best_top1 75.52), valid_top5 92.74
+2021-11-17 01:46:29 train 0000, loss 9.173e-01, top1 72.94, top5 92.94
+2021-11-17 01:46:29 train 0000, loss 1.223e+00, top1 74.12, top5 84.71
+2021-11-17 01:46:29 train 0000, loss 1.010e+00, top1 78.82, top5 91.76
+2021-11-17 01:55:54 train 1000, loss 1.026e+00, top1 75.13, top5 90.90
+2021-11-17 01:55:54 train 1000, loss 1.022e+00, top1 75.25, top5 90.89
+2021-11-17 01:55:54 train 1000, loss 1.030e+00, top1 74.98, top5 90.77
+2021-11-17 02:05:21 train 2000, loss 1.022e+00, top1 75.35, top5 90.93
+2021-11-17 02:05:21 train 2000, loss 1.027e+00, top1 75.18, top5 90.86
+2021-11-17 02:05:21 train 2000, loss 1.028e+00, top1 75.04, top5 90.79
+2021-11-17 02:14:49 train 3000, loss 1.027e+00, top1 75.16, top5 90.88
+2021-11-17 02:14:49 train 3000, loss 1.021e+00, top1 75.33, top5 90.95
+2021-11-17 02:14:49 train 3000, loss 1.029e+00, top1 75.00, top5 90.80
+2021-11-17 02:24:15 train 4000, loss 1.023e+00, top1 75.24, top5 90.92
+2021-11-17 02:24:16 train 4000, loss 1.026e+00, top1 75.08, top5 90.83
+2021-11-17 02:24:16 train 4000, loss 1.025e+00, top1 75.17, top5 90.91
+2021-11-17 02:33:42 train 5000, loss 1.024e+00, top1 75.23, top5 90.92
+2021-11-17 02:33:43 train 5000, loss 1.025e+00, top1 75.13, top5 90.89
+2021-11-17 02:33:43 train 5000, loss 1.029e+00, top1 75.02, top5 90.80
+2021-11-17 02:34:07 valid 0000, loss 4.740e-01, top1 90.59, top5 94.12
+2021-11-17 02:34:07 valid 0000, loss 4.740e-01, top1 90.59, top5 94.12
+2021-11-17 02:34:07 valid 0000, loss 4.740e-01, top1 90.59, top5 94.12
+2021-11-17 02:38:42 (JOBID 31907) epoch 63: train time 2862.49, inference time 285.27s, valid_top1 75.59 (best_top1 75.59), valid_top5 92.80
+2021-11-17 02:38:48 (JOBID 31907) epoch 63: train time 2862.46, inference time 291.65s, valid_top1 75.59 (best_top1 75.59), valid_top5 92.80
+2021-11-17 02:38:49 (JOBID 31907) epoch 63: train time 2861.87, inference time 291.50s, valid_top1 75.59 (best_top1 75.59), valid_top5 92.80
+2021-11-17 02:39:02 train 0000, loss 9.319e-01, top1 77.65, top5 95.29
+2021-11-17 02:38:57 train 0000, loss 1.157e+00, top1 70.59, top5 88.24
+2021-11-17 02:39:03 train 0000, loss 9.290e-01, top1 74.12, top5 95.29
+2021-11-17 02:48:30 train 1000, loss 1.004e+00, top1 75.75, top5 91.13
+2021-11-17 02:48:30 train 1000, loss 1.010e+00, top1 75.48, top5 91.06
+2021-11-17 02:48:30 train 1000, loss 1.015e+00, top1 75.35, top5 91.02
+2021-11-17 02:57:56 train 2000, loss 1.011e+00, top1 75.39, top5 91.09
+2021-11-17 02:57:56 train 2000, loss 1.011e+00, top1 75.47, top5 91.07
+2021-11-17 02:57:56 train 2000, loss 1.015e+00, top1 75.39, top5 91.03
+2021-11-17 03:07:24 train 3000, loss 1.010e+00, top1 75.44, top5 91.08
+2021-11-17 03:07:24 train 3000, loss 1.018e+00, top1 75.35, top5 90.98
+2021-11-17 03:07:24 train 3000, loss 1.013e+00, top1 75.35, top5 91.06
+2021-11-17 03:16:53 train 4000, loss 1.016e+00, top1 75.36, top5 91.01
+2021-11-17 03:16:53 train 4000, loss 1.011e+00, top1 75.45, top5 91.05
+2021-11-17 03:16:53 train 4000, loss 1.011e+00, top1 75.39, top5 91.09
+2021-11-17 03:26:20 train 5000, loss 1.011e+00, top1 75.43, top5 91.05
+2021-11-17 03:26:20 train 5000, loss 1.016e+00, top1 75.31, top5 91.02
+2021-11-17 03:26:20 train 5000, loss 1.013e+00, top1 75.36, top5 91.08
+2021-11-17 03:26:45 valid 0000, loss 4.611e-01, top1 90.59, top5 94.12
+2021-11-17 03:26:45 valid 0000, loss 4.611e-01, top1 90.59, top5 94.12
+2021-11-17 03:26:45 valid 0000, loss 4.611e-01, top1 90.59, top5 94.12
+2021-11-17 03:31:19 (JOBID 31907) epoch 64: train time 2866.43, inference time 284.10s, valid_top1 75.77 (best_top1 75.77), valid_top5 92.96
+2021-11-17 03:31:20 (JOBID 31907) epoch 64: train time 2872.84, inference time 284.98s, valid_top1 75.77 (best_top1 75.77), valid_top5 92.96
+2021-11-17 03:31:20 (JOBID 31907) epoch 64: train time 2865.76, inference time 284.88s, valid_top1 75.77 (best_top1 75.77), valid_top5 92.96
+2021-11-17 03:31:34 train 0000, loss 5.562e-01, top1 83.53, top5 98.82
+2021-11-17 03:31:34 train 0000, loss 1.012e+00, top1 78.82, top5 90.59
+2021-11-17 03:31:34 train 0000, loss 1.303e+00, top1 72.94, top5 88.24
+2021-11-17 03:41:01 train 1000, loss 1.004e+00, top1 75.64, top5 91.06
+2021-11-17 03:41:01 train 1000, loss 9.968e-01, top1 75.89, top5 91.18
+2021-11-17 03:41:01 train 1000, loss 9.925e-01, top1 75.83, top5 91.29
+2021-11-17 03:50:29 train 2000, loss 1.006e+00, top1 75.55, top5 91.11
+2021-11-17 03:50:29 train 2000, loss 1.002e+00, top1 75.67, top5 91.18
+2021-11-17 03:50:29 train 2000, loss 9.922e-01, top1 75.86, top5 91.31
+2021-11-17 03:59:56 train 3000, loss 1.003e+00, top1 75.65, top5 91.12
+2021-11-17 03:59:56 train 3000, loss 9.969e-01, top1 75.72, top5 91.23
+2021-11-17 03:59:56 train 3000, loss 1.005e+00, top1 75.61, top5 91.15
+2021-11-17 04:09:25 train 4000, loss 1.003e+00, top1 75.63, top5 91.11
+2021-11-17 04:09:25 train 4000, loss 1.005e+00, top1 75.61, top5 91.11
+2021-11-17 04:09:25 train 4000, loss 1.001e+00, top1 75.63, top5 91.18
+2021-11-17 04:18:53 train 5000, loss 1.004e+00, top1 75.62, top5 91.09
+2021-11-17 04:18:53 train 5000, loss 1.006e+00, top1 75.59, top5 91.12
+2021-11-17 04:18:53 train 5000, loss 1.002e+00, top1 75.61, top5 91.19
+2021-11-17 04:19:18 valid 0000, loss 5.080e-01, top1 88.24, top5 94.12
+2021-11-17 04:19:18 valid 0000, loss 5.080e-01, top1 88.24, top5 94.12
+2021-11-17 04:19:18 valid 0000, loss 5.080e-01, top1 88.24, top5 94.12
+2021-11-17 04:24:06 (JOBID 31907) epoch 65: train time 2869.00, inference time 298.92s, valid_top1 75.83 (best_top1 75.83), valid_top5 92.91
+2021-11-17 04:24:08 (JOBID 31907) epoch 65: train time 2867.28, inference time 299.68s, valid_top1 75.83 (best_top1 75.83), valid_top5 92.91
+2021-11-17 04:24:10 (JOBID 31907) epoch 65: train time 2868.01, inference time 302.56s, valid_top1 75.83 (best_top1 75.83), valid_top5 92.91
+2021-11-17 04:24:22 train 0000, loss 9.289e-01, top1 75.29, top5 94.12
+2021-11-17 04:24:22 train 0000, loss 1.137e+00, top1 72.94, top5 90.59
+2021-11-17 04:24:24 train 0000, loss 9.422e-01, top1 78.82, top5 94.12
+2021-11-17 04:33:50 train 1000, loss 9.921e-01, top1 75.90, top5 91.23
+2021-11-17 04:33:50 train 1000, loss 1.000e+00, top1 75.73, top5 91.20
+2021-11-17 04:33:50 train 1000, loss 1.005e+00, top1 75.78, top5 91.12
+2021-11-17 04:43:18 train 2000, loss 9.961e-01, top1 75.87, top5 91.22
+2021-11-17 04:43:18 train 2000, loss 9.949e-01, top1 75.78, top5 91.26
+2021-11-17 04:43:18 train 2000, loss 1.001e+00, top1 75.81, top5 91.17
+2021-11-17 04:52:47 train 3000, loss 9.912e-01, top1 75.86, top5 91.32
+2021-11-17 04:52:47 train 3000, loss 9.958e-01, top1 75.82, top5 91.19
+2021-11-17 04:52:48 train 3000, loss 9.970e-01, top1 75.83, top5 91.24
+2021-11-17 05:02:16 train 4000, loss 9.920e-01, top1 75.84, top5 91.30
+2021-11-17 05:02:16 train 4000, loss 9.966e-01, top1 75.81, top5 91.17
+2021-11-17 05:02:17 train 4000, loss 9.977e-01, top1 75.80, top5 91.20
+2021-11-17 05:11:44 train 5000, loss 9.910e-01, top1 75.87, top5 91.31
+2021-11-17 05:11:44 train 5000, loss 9.969e-01, top1 75.79, top5 91.18
+2021-11-17 05:11:44 train 5000, loss 9.959e-01, top1 75.81, top5 91.22
+2021-11-17 05:12:09 valid 0000, loss 5.346e-01, top1 90.59, top5 94.12
+2021-11-17 05:12:09 valid 0000, loss 5.346e-01, top1 90.59, top5 94.12
+2021-11-17 05:12:09 valid 0000, loss 5.346e-01, top1 90.59, top5 94.12
+2021-11-17 05:16:48 (JOBID 31907) epoch 66: train time 2872.11, inference time 289.69s, valid_top1 75.78 (best_top1 75.83), valid_top5 92.93
+2021-11-17 05:16:48 (JOBID 31907) epoch 66: train time 2868.52, inference time 289.69s, valid_top1 75.78 (best_top1 75.83), valid_top5 92.93
+2021-11-17 05:16:49 (JOBID 31907) epoch 66: train time 2870.55, inference time 289.69s, valid_top1 75.78 (best_top1 75.83), valid_top5 92.93
+2021-11-17 05:17:03 train 0000, loss 1.092e+00, top1 74.12, top5 90.59
+2021-11-17 05:17:04 train 0000, loss 7.963e-01, top1 77.65, top5 95.29
+2021-11-17 05:17:03 train 0000, loss 1.166e+00, top1 71.76, top5 90.59
+2021-11-17 05:26:28 train 1000, loss 9.875e-01, top1 76.02, top5 91.25
+2021-11-17 05:26:28 train 1000, loss 9.819e-01, top1 76.02, top5 91.43
+2021-11-17 05:26:28 train 1000, loss 9.756e-01, top1 76.27, top5 91.47
+2021-11-17 05:35:53 train 2000, loss 9.797e-01, top1 76.09, top5 91.47
+2021-11-17 05:35:53 train 2000, loss 9.874e-01, top1 75.96, top5 91.33
+2021-11-17 05:35:53 train 2000, loss 9.788e-01, top1 76.24, top5 91.45
+2021-11-17 05:45:18 train 3000, loss 9.886e-01, top1 75.89, top5 91.33
+2021-11-17 05:45:18 train 3000, loss 9.833e-01, top1 76.13, top5 91.39
+2021-11-17 05:45:18 train 3000, loss 9.835e-01, top1 76.03, top5 91.40
+2021-11-17 05:54:42 train 4000, loss 9.909e-01, top1 75.85, top5 91.30
+2021-11-17 05:54:42 train 4000, loss 9.871e-01, top1 76.01, top5 91.37
+2021-11-17 05:54:42 train 4000, loss 9.859e-01, top1 76.00, top5 91.35
+2021-11-17 06:04:06 train 5000, loss 9.883e-01, top1 76.01, top5 91.36
+2021-11-17 06:04:06 train 5000, loss 9.871e-01, top1 76.01, top5 91.34
+2021-11-17 06:04:06 train 5000, loss 9.914e-01, top1 75.84, top5 91.30
+2021-11-17 06:04:31 valid 0000, loss 4.837e-01, top1 89.41, top5 94.12
+2021-11-17 06:04:31 valid 0000, loss 4.837e-01, top1 89.41, top5 94.12
+2021-11-17 06:04:31 valid 0000, loss 4.837e-01, top1 89.41, top5 94.12
+2021-11-17 06:09:07 (JOBID 31907) epoch 67: train time 2851.85, inference time 287.08s, valid_top1 75.98 (best_top1 75.98), valid_top5 92.99
+2021-11-17 06:09:07 (JOBID 31907) epoch 67: train time 2851.80, inference time 287.19s, valid_top1 75.98 (best_top1 75.98), valid_top5 92.99
+2021-11-17 06:09:08 (JOBID 31907) epoch 67: train time 2851.60, inference time 286.94s, valid_top1 75.98 (best_top1 75.98), valid_top5 92.99
+2021-11-17 06:09:22 train 0000, loss 1.044e+00, top1 72.94, top5 89.41
+2021-11-17 06:09:22 train 0000, loss 7.959e-01, top1 76.47, top5 92.94
+2021-11-17 06:09:22 train 0000, loss 9.111e-01, top1 77.65, top5 91.76
+2021-11-17 06:18:59 train 1000, loss 9.728e-01, top1 76.36, top5 91.44
+2021-11-17 06:18:59 train 1000, loss 9.815e-01, top1 76.25, top5 91.34
+2021-11-17 06:18:59 train 1000, loss 9.852e-01, top1 76.07, top5 91.32
+2021-11-17 06:28:32 train 2000, loss 9.820e-01, top1 76.12, top5 91.36
+2021-11-17 06:28:32 train 2000, loss 9.801e-01, top1 76.17, top5 91.36
+2021-11-17 06:28:32 train 2000, loss 9.810e-01, top1 76.18, top5 91.41
+2021-11-17 06:38:04 train 3000, loss 9.833e-01, top1 76.13, top5 91.34
+2021-11-17 06:38:04 train 3000, loss 9.830e-01, top1 76.08, top5 91.41
+2021-11-17 06:38:05 train 3000, loss 9.771e-01, top1 76.21, top5 91.43
+2021-11-17 06:47:37 train 4000, loss 9.781e-01, top1 76.18, top5 91.41
+2021-11-17 06:47:37 train 4000, loss 9.857e-01, top1 76.08, top5 91.31
+2021-11-17 06:47:37 train 4000, loss 9.837e-01, top1 76.07, top5 91.41
+2021-11-17 06:57:09 train 5000, loss 9.857e-01, top1 76.03, top5 91.36
+2021-11-17 06:57:09 train 5000, loss 9.869e-01, top1 76.02, top5 91.29
+2021-11-17 06:57:10 train 5000, loss 9.788e-01, top1 76.15, top5 91.41
+2021-11-17 06:57:35 valid 0000, loss 4.801e-01, top1 90.59, top5 94.12
+2021-11-17 06:57:35 valid 0000, loss 4.801e-01, top1 90.59, top5 94.12
+2021-11-17 06:57:35 valid 0000, loss 4.801e-01, top1 90.59, top5 94.12
+2021-11-17 07:02:30 (JOBID 31907) epoch 68: train time 2896.36, inference time 306.39s, valid_top1 75.98 (best_top1 75.98), valid_top5 93.03
+2021-11-17 07:02:30 (JOBID 31907) epoch 68: train time 2896.30, inference time 306.38s, valid_top1 75.98 (best_top1 75.98), valid_top5 93.03
+2021-11-17 07:02:31 (JOBID 31907) epoch 68: train time 2895.71, inference time 306.30s, valid_top1 75.98 (best_top1 75.98), valid_top5 93.03
+2021-11-17 07:02:45 train 0000, loss 7.342e-01, top1 82.35, top5 94.12
+2021-11-17 07:02:45 train 0000, loss 1.209e+00, top1 68.24, top5 85.88
+2021-11-17 07:02:45 train 0000, loss 1.031e+00, top1 75.29, top5 89.41
+2021-11-17 07:12:22 train 1000, loss 9.701e-01, top1 76.50, top5 91.45
+2021-11-17 07:12:22 train 1000, loss 9.734e-01, top1 76.27, top5 91.54
+2021-11-17 07:12:22 train 1000, loss 9.716e-01, top1 76.21, top5 91.53
+2021-11-17 07:21:55 train 2000, loss 9.777e-01, top1 76.36, top5 91.37
+2021-11-17 07:21:55 train 2000, loss 9.795e-01, top1 76.11, top5 91.44
+2021-11-17 07:21:55 train 2000, loss 9.717e-01, top1 76.24, top5 91.50
+2021-11-17 07:31:27 train 3000, loss 9.740e-01, top1 76.27, top5 91.49
+2021-11-17 07:31:27 train 3000, loss 9.818e-01, top1 76.19, top5 91.33
+2021-11-17 07:31:27 train 3000, loss 9.708e-01, top1 76.27, top5 91.53
+2021-11-17 07:41:00 train 4000, loss 9.762e-01, top1 76.23, top5 91.47
+2021-11-17 07:41:00 train 4000, loss 9.808e-01, top1 76.18, top5 91.37
+2021-11-17 07:41:00 train 4000, loss 9.714e-01, top1 76.27, top5 91.51
+2021-11-17 07:50:33 train 5000, loss 9.810e-01, top1 76.17, top5 91.37
+2021-11-17 07:50:33 train 5000, loss 9.769e-01, top1 76.21, top5 91.49
+2021-11-17 07:50:33 train 5000, loss 9.733e-01, top1 76.26, top5 91.51
+2021-11-17 07:50:58 valid 0000, loss 4.613e-01, top1 89.41, top5 95.29
+2021-11-17 07:50:58 valid 0000, loss 4.613e-01, top1 89.41, top5 95.29
+2021-11-17 07:50:58 valid 0000, loss 4.613e-01, top1 89.41, top5 95.29
+2021-11-17 07:55:35 (JOBID 31907) epoch 69: train time 2897.00, inference time 288.25s, valid_top1 76.01 (best_top1 76.01), valid_top5 92.87
+2021-11-17 07:55:35 (JOBID 31907) epoch 69: train time 2897.01, inference time 288.40s, valid_top1 76.01 (best_top1 76.01), valid_top5 92.87
+2021-11-17 07:55:36 (JOBID 31907) epoch 69: train time 2896.16, inference time 288.49s, valid_top1 76.01 (best_top1 76.01), valid_top5 92.87
+2021-11-17 07:55:51 train 0000, loss 1.009e+00, top1 78.82, top5 90.59
+2021-11-17 07:55:51 train 0000, loss 9.239e-01, top1 78.82, top5 90.59
+2021-11-17 07:55:51 train 0000, loss 6.910e-01, top1 84.71, top5 92.94
+2021-11-17 08:05:11 train 1000, loss 9.742e-01, top1 76.33, top5 91.39
+2021-11-17 08:05:11 train 1000, loss 9.663e-01, top1 76.56, top5 91.62
+2021-11-17 08:05:11 train 1000, loss 9.679e-01, top1 76.64, top5 91.49
+2021-11-17 08:14:30 train 2000, loss 9.679e-01, top1 76.53, top5 91.58
+2021-11-17 08:14:30 train 2000, loss 9.686e-01, top1 76.46, top5 91.55
+2021-11-17 08:14:30 train 2000, loss 9.689e-01, top1 76.35, top5 91.50
+2021-11-17 08:23:50 train 3000, loss 9.696e-01, top1 76.38, top5 91.51
+2021-11-17 08:23:50 train 3000, loss 9.691e-01, top1 76.42, top5 91.54
+2021-11-17 08:23:50 train 3000, loss 9.680e-01, top1 76.53, top5 91.56
+2021-11-17 08:33:10 train 4000, loss 9.715e-01, top1 76.34, top5 91.51
+2021-11-17 08:33:10 train 4000, loss 9.713e-01, top1 76.36, top5 91.50
+2021-11-17 08:33:10 train 4000, loss 9.678e-01, top1 76.50, top5 91.57
+2021-11-17 08:42:30 train 5000, loss 9.704e-01, top1 76.36, top5 91.54
+2021-11-17 08:42:30 train 5000, loss 9.681e-01, top1 76.51, top5 91.55
+2021-11-17 08:42:30 train 5000, loss 9.738e-01, top1 76.31, top5 91.47
+2021-11-17 08:42:55 valid 0000, loss 5.021e-01, top1 90.59, top5 94.12
+2021-11-17 08:42:55 valid 0000, loss 5.021e-01, top1 90.59, top5 94.12
+2021-11-17 08:42:55 valid 0000, loss 5.021e-01, top1 90.59, top5 94.12
+2021-11-17 08:47:45 (JOBID 31907) epoch 70: train time 2828.58, inference time 301.54s, valid_top1 76.07 (best_top1 76.07), valid_top5 92.99
+2021-11-17 08:47:45 (JOBID 31907) epoch 70: train time 2828.43, inference time 301.58s, valid_top1 76.07 (best_top1 76.07), valid_top5 92.99
+2021-11-17 08:47:46 (JOBID 31907) epoch 70: train time 2827.62, inference time 301.79s, valid_top1 76.07 (best_top1 76.07), valid_top5 92.99
+2021-11-17 08:48:02 train 0000, loss 6.189e-01, top1 82.35, top5 98.82
+2021-11-17 08:48:02 train 0000, loss 8.003e-01, top1 84.71, top5 91.76
+2021-11-17 08:48:02 train 0000, loss 7.155e-01, top1 81.18, top5 95.29
+2021-11-17 08:57:29 train 1000, loss 9.634e-01, top1 76.46, top5 91.62
+2021-11-17 08:57:29 train 1000, loss 9.618e-01, top1 76.68, top5 91.57
+2021-11-17 08:57:29 train 1000, loss 9.582e-01, top1 76.64, top5 91.70
+2021-11-17 09:06:55 train 2000, loss 9.667e-01, top1 76.38, top5 91.60
+2021-11-17 09:06:55 train 2000, loss 9.598e-01, top1 76.57, top5 91.62
+2021-11-17 09:06:55 train 2000, loss 9.607e-01, top1 76.66, top5 91.59
+2021-11-17 09:16:23 train 3000, loss 9.672e-01, top1 76.35, top5 91.59
+2021-11-17 09:16:23 train 3000, loss 9.641e-01, top1 76.43, top5 91.58
+2021-11-17 09:16:23 train 3000, loss 9.620e-01, top1 76.60, top5 91.56
+2021-11-17 09:25:53 train 4000, loss 9.639e-01, top1 76.45, top5 91.60
+2021-11-17 09:25:53 train 4000, loss 9.670e-01, top1 76.39, top5 91.58
+2021-11-17 09:25:53 train 4000, loss 9.614e-01, top1 76.61, top5 91.59
+2021-11-17 09:35:20 train 5000, loss 9.657e-01, top1 76.42, top5 91.60
+2021-11-17 09:35:20 train 5000, loss 9.638e-01, top1 76.49, top5 91.60
+2021-11-17 09:35:20 train 5000, loss 9.622e-01, top1 76.54, top5 91.60
+2021-11-17 09:35:46 valid 0000, loss 4.680e-01, top1 91.76, top5 94.12
+2021-11-17 09:35:46 valid 0000, loss 4.680e-01, top1 91.76, top5 94.12
+2021-11-17 09:35:46 valid 0000, loss 4.680e-01, top1 91.76, top5 94.12
+2021-11-17 09:40:29 (JOBID 31907) epoch 71: train time 2868.57, inference time 295.40s, valid_top1 76.14 (best_top1 76.14), valid_top5 93.04
+2021-11-17 09:40:29 (JOBID 31907) epoch 71: train time 2868.53, inference time 295.40s, valid_top1 76.14 (best_top1 76.14), valid_top5 93.04
+2021-11-17 09:40:30 (JOBID 31907) epoch 71: train time 2867.53, inference time 295.36s, valid_top1 76.14 (best_top1 76.14), valid_top5 93.04
+2021-11-17 09:40:46 train 0000, loss 7.876e-01, top1 81.18, top5 91.76
+2021-11-17 09:40:46 train 0000, loss 1.088e+00, top1 75.29, top5 89.41
+2021-11-17 09:40:46 train 0000, loss 1.231e+00, top1 65.88, top5 87.06
+2021-11-17 09:42:59 CARME Slurm ID: 31932
+2021-11-17 09:42:59 CARME Slurm ID: 31932
+2021-11-17 09:42:59 args = Namespace(arch='resnet50', baseline_model='pretrained_conv12_layer_adaptive_mu_0_01', batch_size=256, data='/home/SSD/Dataset_ImageNet', dist_backend='nccl', dist_url='tcp://192.168.152.37:23456', distributed=True, epochs=90, evaluate=False, gpu=0, lr=0.1, momentum=0.9, multiprocessing_distributed=True, path_to_resume='retrain_resnet50_pretrained_conv12_layer_adaptive_mu_0_01_20211114-181104', path_to_save='retrain_resnet50_pretrained_conv12_layer_adaptive_mu_0_01_20211114-181104', print_freq=1000, pruning_threshold=1e-06, rank=0, run_id='resnet50_pretrained_conv12_layer_adaptive_mu_0_01_20211114-181104', seed=None, start_epoch=0, weight_decay=0.0001, workers=4, world_size=3)
+2021-11-17 09:42:59 args = Namespace(arch='resnet50', baseline_model='pretrained_conv12_layer_adaptive_mu_0_01', batch_size=256, data='/home/SSD/Dataset_ImageNet', dist_backend='nccl', dist_url='tcp://192.168.152.37:23456', distributed=True, epochs=90, evaluate=False, gpu=1, lr=0.1, momentum=0.9, multiprocessing_distributed=True, path_to_resume='retrain_resnet50_pretrained_conv12_layer_adaptive_mu_0_01_20211114-181104', path_to_save='retrain_resnet50_pretrained_conv12_layer_adaptive_mu_0_01_20211114-181104', print_freq=1000, pruning_threshold=1e-06, rank=0, run_id='resnet50_pretrained_conv12_layer_adaptive_mu_0_01_20211114-181104', seed=None, start_epoch=0, weight_decay=0.0001, workers=4, world_size=3)
+2021-11-17 09:42:59 CARME Slurm ID: 31932
+2021-11-17 09:42:59 args = Namespace(arch='resnet50', baseline_model='pretrained_conv12_layer_adaptive_mu_0_01', batch_size=256, data='/home/SSD/Dataset_ImageNet', dist_backend='nccl', dist_url='tcp://192.168.152.37:23456', distributed=True, epochs=90, evaluate=False, gpu=2, lr=0.1, momentum=0.9, multiprocessing_distributed=True, path_to_resume='retrain_resnet50_pretrained_conv12_layer_adaptive_mu_0_01_20211114-181104', path_to_save='retrain_resnet50_pretrained_conv12_layer_adaptive_mu_0_01_20211114-181104', print_freq=1000, pruning_threshold=1e-06, rank=0, run_id='resnet50_pretrained_conv12_layer_adaptive_mu_0_01_20211114-181104', seed=None, start_epoch=0, weight_decay=0.0001, workers=4, world_size=3)
+2021-11-17 09:43:09 Computational complexity:       3.22 GMac
+2021-11-17 09:43:09 Number of parameters:           22.7 M  
+2021-11-17 09:43:09 => loading checkpoint 'retrain_resnet50_pretrained_conv12_layer_adaptive_mu_0_01_20211114-181104'
+2021-11-17 09:43:09 Computational complexity:       3.22 GMac
+2021-11-17 09:43:09 Number of parameters:           22.7 M  
+2021-11-17 09:43:09 => loading checkpoint 'retrain_resnet50_pretrained_conv12_layer_adaptive_mu_0_01_20211114-181104'
+2021-11-17 09:43:09 Computational complexity:       3.22 GMac
+2021-11-17 09:43:09 Number of parameters:           22.7 M  
+2021-11-17 09:43:09 => loading checkpoint 'retrain_resnet50_pretrained_conv12_layer_adaptive_mu_0_01_20211114-181104'
+2021-11-17 09:43:10 => loaded checkpoint 'retrain_resnet50_pretrained_conv12_layer_adaptive_mu_0_01_20211114-181104' (epoch 72)
+2021-11-17 09:43:10 => loaded checkpoint 'retrain_resnet50_pretrained_conv12_layer_adaptive_mu_0_01_20211114-181104' (epoch 72)
+2021-11-17 09:43:10 => loaded checkpoint 'retrain_resnet50_pretrained_conv12_layer_adaptive_mu_0_01_20211114-181104' (epoch 72)
+2021-11-17 09:43:29 valid 0000, loss 4.680e-01, top1 91.76, top5 94.12
+2021-11-17 09:43:29 valid 0000, loss 4.680e-01, top1 91.76, top5 94.12
+2021-11-17 09:43:29 valid 0000, loss 4.680e-01, top1 91.76, top5 94.12
+2021-11-17 09:48:25 (JOBID 31932) epoch -1: valid_top1 76.14, valid_top5 93.04, inference time 310.11
+2021-11-17 09:49:03 (JOBID 31932) epoch -1: valid_top1 76.14, valid_top5 93.04, inference time 347.59
+2021-11-17 09:49:08 (JOBID 31932) epoch -1: valid_top1 76.14, valid_top5 93.04, inference time 353.14
+2021-11-17 09:49:29 train 0000, loss 1.363e+00, top1 75.29, top5 85.88
+2021-11-17 09:49:29 train 0000, loss 1.051e+00, top1 72.94, top5 92.94
+2021-11-17 09:49:29 train 0000, loss 9.705e-01, top1 77.65, top5 91.76
+2021-11-17 09:59:13 train 1000, loss 9.532e-01, top1 76.81, top5 91.76
+2021-11-17 09:59:13 train 1000, loss 9.475e-01, top1 76.99, top5 91.75
+2021-11-17 09:59:13 train 1000, loss 9.589e-01, top1 76.80, top5 91.62
+2021-11-17 10:08:54 train 2000, loss 9.561e-01, top1 76.80, top5 91.60
+2021-11-17 10:08:54 train 2000, loss 9.580e-01, top1 76.66, top5 91.68
+2021-11-17 10:08:54 train 2000, loss 9.590e-01, top1 76.76, top5 91.61
+2021-11-17 10:18:35 train 3000, loss 9.605e-01, top1 76.66, top5 91.64
+2021-11-17 10:18:35 train 3000, loss 9.585e-01, top1 76.68, top5 91.59
+2021-11-17 10:18:36 train 3000, loss 9.593e-01, top1 76.67, top5 91.61
+2021-11-17 10:28:19 train 4000, loss 9.630e-01, top1 76.61, top5 91.57
+2021-11-17 10:28:19 train 4000, loss 9.606e-01, top1 76.63, top5 91.59
+2021-11-17 10:28:19 train 4000, loss 9.594e-01, top1 76.65, top5 91.62
+2021-11-17 10:38:01 train 5000, loss 9.612e-01, top1 76.60, top5 91.58
+2021-11-17 10:38:01 train 5000, loss 9.630e-01, top1 76.63, top5 91.58
+2021-11-17 10:38:01 train 5000, loss 9.616e-01, top1 76.60, top5 91.60
+2021-11-17 10:38:32 valid 0000, loss 4.639e-01, top1 89.41, top5 95.29
+2021-11-17 10:38:32 valid 0000, loss 4.639e-01, top1 89.41, top5 95.29
+2021-11-17 10:38:32 valid 0000, loss 4.639e-01, top1 89.41, top5 95.29
+2021-11-17 10:42:51 (JOBID 31932) epoch 72: train time 2996.15, inference time 269.48s, valid_top1 75.89 (best_top1 76.14), valid_top5 92.87
+2021-11-17 10:43:10 (JOBID 31932) epoch 72: train time 2953.11, inference time 288.26s, valid_top1 75.89 (best_top1 76.14), valid_top5 92.87
+2021-11-17 10:43:19 (JOBID 31932) epoch 72: train time 2958.69, inference time 296.75s, valid_top1 75.89 (best_top1 76.14), valid_top5 92.87
+2021-11-17 10:43:24 train 0000, loss 8.915e-01, top1 77.65, top5 92.94
+2021-11-17 10:43:06 train 0000, loss 1.301e+00, top1 74.12, top5 84.71
+2021-11-17 10:43:33 train 0000, loss 7.944e-01, top1 84.71, top5 94.12
+2021-11-17 10:53:07 train 1000, loss 9.480e-01, top1 76.89, top5 91.79
+2021-11-17 10:53:07 train 1000, loss 9.575e-01, top1 76.75, top5 91.57
+2021-11-17 10:53:07 train 1000, loss 9.568e-01, top1 76.68, top5 91.66
+2021-11-17 11:02:40 train 2000, loss 9.567e-01, top1 76.75, top5 91.60
+2021-11-17 11:02:40 train 2000, loss 9.539e-01, top1 76.79, top5 91.66
+2021-11-17 11:02:40 train 2000, loss 9.537e-01, top1 76.74, top5 91.75
+2021-11-17 11:12:12 train 3000, loss 9.547e-01, top1 76.77, top5 91.64
+2021-11-17 11:12:12 train 3000, loss 9.528e-01, top1 76.79, top5 91.72
+2021-11-17 11:12:12 train 3000, loss 9.589e-01, top1 76.70, top5 91.58
+2021-11-17 11:21:42 train 4000, loss 9.558e-01, top1 76.75, top5 91.62
+2021-11-17 11:21:42 train 4000, loss 9.555e-01, top1 76.72, top5 91.68
+2021-11-17 11:21:42 train 4000, loss 9.580e-01, top1 76.66, top5 91.60
+2021-11-17 11:31:13 train 5000, loss 9.596e-01, top1 76.61, top5 91.60
+2021-11-17 11:31:13 train 5000, loss 9.569e-01, top1 76.68, top5 91.65
+2021-11-17 11:31:13 train 5000, loss 9.583e-01, top1 76.68, top5 91.62
+2021-11-17 11:31:38 valid 0000, loss 4.487e-01, top1 90.59, top5 95.29
+2021-11-17 11:31:38 valid 0000, loss 4.487e-01, top1 90.59, top5 95.29
+2021-11-17 11:31:38 valid 0000, loss 4.487e-01, top1 90.59, top5 95.29
+2021-11-17 11:36:08 (JOBID 31932) epoch 73: train time 2916.55, inference time 280.51s, valid_top1 75.91 (best_top1 76.14), valid_top5 93.02
+2021-11-17 11:36:09 (JOBID 31932) epoch 73: train time 2888.95, inference time 281.60s, valid_top1 75.91 (best_top1 76.14), valid_top5 93.02
+2021-11-17 11:36:10 (JOBID 31932) epoch 73: train time 2897.77, inference time 282.15s, valid_top1 75.91 (best_top1 76.14), valid_top5 93.02
+2021-11-17 11:36:23 train 0000, loss 1.139e+00, top1 69.41, top5 89.41
+2021-11-17 11:36:24 train 0000, loss 9.004e-01, top1 82.35, top5 91.76
+2021-11-17 11:36:24 train 0000, loss 6.525e-01, top1 77.65, top5 97.65
+2021-11-17 11:46:08 train 1000, loss 9.496e-01, top1 76.73, top5 91.79
+2021-11-17 11:46:07 train 1000, loss 9.508e-01, top1 76.79, top5 91.66
+2021-11-17 11:46:08 train 1000, loss 9.367e-01, top1 77.16, top5 91.87
+2021-11-17 11:55:51 train 2000, loss 9.515e-01, top1 76.81, top5 91.68
+2021-11-17 11:55:51 train 2000, loss 9.495e-01, top1 76.81, top5 91.75
+2021-11-17 11:55:51 train 2000, loss 9.424e-01, top1 77.09, top5 91.80
+2021-11-17 12:05:35 train 3000, loss 9.518e-01, top1 76.75, top5 91.72
+2021-11-17 12:05:35 train 3000, loss 9.539e-01, top1 76.71, top5 91.67
+2021-11-17 12:05:35 train 3000, loss 9.476e-01, top1 76.98, top5 91.73
+2021-11-17 12:15:25 train 4000, loss 9.521e-01, top1 76.74, top5 91.69
+2021-11-17 12:15:25 train 4000, loss 9.527e-01, top1 76.75, top5 91.68
+2021-11-17 12:15:25 train 4000, loss 9.508e-01, top1 76.85, top5 91.69
+2021-11-17 12:25:14 train 5000, loss 9.522e-01, top1 76.72, top5 91.68
+2021-11-17 12:25:14 train 5000, loss 9.525e-01, top1 76.73, top5 91.72
+2021-11-17 12:25:14 train 5000, loss 9.496e-01, top1 76.86, top5 91.71
+2021-11-17 12:25:39 valid 0000, loss 4.817e-01, top1 89.41, top5 95.29
+2021-11-17 12:25:39 valid 0000, loss 4.817e-01, top1 89.41, top5 95.29
+2021-11-17 12:25:39 valid 0000, loss 4.817e-01, top1 89.41, top5 95.29
+2021-11-17 12:30:02 (JOBID 31932) epoch 74: train time 2960.43, inference time 273.60s, valid_top1 75.91 (best_top1 76.14), valid_top5 93.08
+2021-11-17 12:30:06 (JOBID 31932) epoch 74: train time 2959.08, inference time 277.39s, valid_top1 75.91 (best_top1 76.14), valid_top5 93.08
+2021-11-17 12:30:07 (JOBID 31932) epoch 74: train time 2958.80, inference time 278.64s, valid_top1 75.91 (best_top1 76.14), valid_top5 93.08
+2021-11-17 12:30:17 train 0000, loss 8.710e-01, top1 81.18, top5 92.94
+2021-11-17 12:30:20 train 0000, loss 1.263e+00, top1 70.59, top5 85.88
+2021-11-17 12:30:20 train 0000, loss 1.150e+00, top1 76.47, top5 89.41
+2021-11-17 12:40:10 train 1000, loss 9.451e-01, top1 77.07, top5 91.77
+2021-11-17 12:40:10 train 1000, loss 9.390e-01, top1 77.13, top5 91.88
+2021-11-17 12:40:10 train 1000, loss 9.426e-01, top1 77.12, top5 91.85
+2021-11-17 12:50:01 train 2000, loss 9.391e-01, top1 77.07, top5 91.89
+2021-11-17 12:50:01 train 2000, loss 9.429e-01, top1 77.08, top5 91.77
+2021-11-17 12:50:01 train 2000, loss 9.433e-01, top1 77.08, top5 91.81
+2021-11-17 12:59:51 train 3000, loss 9.424e-01, top1 77.06, top5 91.79
+2021-11-17 12:59:51 train 3000, loss 9.410e-01, top1 77.06, top5 91.84
+2021-11-17 12:59:51 train 3000, loss 9.455e-01, top1 76.97, top5 91.80
+2021-11-17 13:09:38 train 4000, loss 9.428e-01, top1 77.07, top5 91.81
+2021-11-17 13:09:38 train 4000, loss 9.435e-01, top1 77.00, top5 91.81
+2021-11-17 13:09:38 train 4000, loss 9.473e-01, top1 76.93, top5 91.76
+2021-11-17 13:19:24 train 5000, loss 9.447e-01, top1 76.96, top5 91.81
+2021-11-17 13:19:24 train 5000, loss 9.452e-01, top1 76.98, top5 91.79
+2021-11-17 13:19:25 train 5000, loss 9.485e-01, top1 76.89, top5 91.75
+2021-11-17 13:19:50 valid 0000, loss 4.663e-01, top1 90.59, top5 94.12
+2021-11-17 13:19:50 valid 0000, loss 4.663e-01, top1 90.59, top5 94.12
+2021-11-17 13:19:50 valid 0000, loss 4.663e-01, top1 90.59, top5 94.12
+2021-11-17 13:24:06 (JOBID 31932) epoch 75: train time 2971.96, inference time 267.31s, valid_top1 76.00 (best_top1 76.14), valid_top5 93.00
+2021-11-17 13:24:29 (JOBID 31932) epoch 75: train time 2977.01, inference time 290.01s, valid_top1 76.00 (best_top1 76.14), valid_top5 93.00
+2021-11-17 13:24:30 (JOBID 31932) epoch 75: train time 2972.80, inference time 290.90s, valid_top1 76.00 (best_top1 76.14), valid_top5 93.00
+2021-11-17 13:24:21 train 0000, loss 7.755e-01, top1 72.94, top5 95.29
+2021-11-17 13:24:43 train 0000, loss 8.714e-01, top1 78.82, top5 94.12
+2021-11-17 13:24:43 train 0000, loss 9.694e-01, top1 74.12, top5 90.59
+2021-11-17 13:34:07 train 1000, loss 9.377e-01, top1 77.19, top5 91.89
+2021-11-17 13:34:08 train 1000, loss 9.438e-01, top1 77.12, top5 91.67
+2021-11-17 13:34:08 train 1000, loss 9.338e-01, top1 77.18, top5 91.83
+2021-11-17 13:43:37 train 2000, loss 9.439e-01, top1 77.04, top5 91.72
+2021-11-17 13:43:37 train 2000, loss 9.359e-01, top1 77.24, top5 91.93
+2021-11-17 13:43:38 train 2000, loss 9.381e-01, top1 77.11, top5 91.79
+2021-11-17 13:53:04 train 3000, loss 9.370e-01, top1 77.19, top5 91.91
+2021-11-17 13:53:04 train 3000, loss 9.411e-01, top1 77.12, top5 91.75
+2021-11-17 13:53:04 train 3000, loss 9.418e-01, top1 77.00, top5 91.77
+2021-11-17 14:02:32 train 4000, loss 9.411e-01, top1 77.06, top5 91.82
+2021-11-17 14:02:32 train 4000, loss 9.408e-01, top1 77.09, top5 91.78
+2021-11-17 14:02:32 train 4000, loss 9.433e-01, top1 76.93, top5 91.77
+2021-11-17 14:11:57 train 5000, loss 9.427e-01, top1 77.02, top5 91.80
+2021-11-17 14:11:57 train 5000, loss 9.408e-01, top1 77.06, top5 91.81
+2021-11-17 14:11:57 train 5000, loss 9.439e-01, top1 76.95, top5 91.76
+2021-11-17 14:12:21 valid 0000, loss 5.053e-01, top1 90.59, top5 94.12
+2021-11-17 14:12:21 valid 0000, loss 5.053e-01, top1 90.59, top5 94.12
+2021-11-17 14:12:21 valid 0000, loss 5.053e-01, top1 90.59, top5 94.12
+2021-11-17 14:16:55 (JOBID 31932) epoch 76: train time 2884.73, inference time 284.04s, valid_top1 76.14 (best_top1 76.14), valid_top5 92.97
+2021-11-17 14:16:55 (JOBID 31932) epoch 76: train time 2862.02, inference time 284.05s, valid_top1 76.14 (best_top1 76.14), valid_top5 92.97
+2021-11-17 14:16:55 (JOBID 31932) epoch 76: train time 2860.80, inference time 284.07s, valid_top1 76.14 (best_top1 76.14), valid_top5 92.97
+2021-11-17 14:17:09 train 0000, loss 8.021e-01, top1 78.82, top5 95.29
+2021-11-17 14:17:09 train 0000, loss 7.876e-01, top1 78.82, top5 94.12
+2021-11-17 14:17:09 train 0000, loss 8.856e-01, top1 75.29, top5 92.94
+2021-11-17 14:26:57 train 1000, loss 9.274e-01, top1 77.24, top5 92.03
+2021-11-17 14:26:57 train 1000, loss 9.328e-01, top1 77.27, top5 91.99
+2021-11-17 14:26:57 train 1000, loss 9.216e-01, top1 77.43, top5 92.15
+2021-11-17 14:36:44 train 2000, loss 9.351e-01, top1 77.21, top5 91.90
+2021-11-17 14:36:44 train 2000, loss 9.334e-01, top1 77.26, top5 91.97
+2021-11-17 14:36:44 train 2000, loss 9.261e-01, top1 77.38, top5 92.04
+2021-11-17 14:46:38 train 3000, loss 9.290e-01, top1 77.31, top5 91.98
+2021-11-17 14:46:38 train 3000, loss 9.343e-01, top1 77.24, top5 91.91
+2021-11-17 14:46:38 train 3000, loss 9.311e-01, top1 77.29, top5 91.98
+2021-11-17 14:56:24 train 4000, loss 9.374e-01, top1 77.15, top5 91.88
+2021-11-17 14:56:24 train 4000, loss 9.344e-01, top1 77.18, top5 91.90
+2021-11-17 14:56:24 train 4000, loss 9.364e-01, top1 77.15, top5 91.90
+2021-11-17 15:06:14 train 5000, loss 9.396e-01, top1 77.09, top5 91.85
+2021-11-17 15:06:14 train 5000, loss 9.395e-01, top1 77.10, top5 91.84
+2021-11-17 15:06:14 train 5000, loss 9.355e-01, top1 77.15, top5 91.89
+2021-11-17 15:06:39 valid 0000, loss 4.638e-01, top1 91.76, top5 95.29
+2021-11-17 15:06:39 valid 0000, loss 4.638e-01, top1 91.76, top5 95.29
+2021-11-17 15:06:39 valid 0000, loss 4.638e-01, top1 91.76, top5 95.29
+2021-11-17 15:11:07 (JOBID 31932) epoch 77: train time 2973.37, inference time 278.36s, valid_top1 76.16 (best_top1 76.16), valid_top5 93.08
+2021-11-17 15:11:08 (JOBID 31932) epoch 77: train time 2973.31, inference time 278.65s, valid_top1 76.16 (best_top1 76.16), valid_top5 93.08
+2021-11-17 15:11:08 (JOBID 31932) epoch 77: train time 2973.37, inference time 279.99s, valid_top1 76.16 (best_top1 76.16), valid_top5 93.08
+2021-11-17 15:11:22 train 0000, loss 8.017e-01, top1 77.65, top5 92.94
+2021-11-17 15:11:22 train 0000, loss 9.374e-01, top1 81.18, top5 89.41
+2021-11-17 15:11:22 train 0000, loss 9.314e-01, top1 76.47, top5 92.94
+2021-11-17 15:21:07 train 1000, loss 9.314e-01, top1 77.31, top5 91.93
+2021-11-17 15:21:07 train 1000, loss 9.253e-01, top1 77.47, top5 92.03
+2021-11-17 15:21:08 train 1000, loss 9.297e-01, top1 77.34, top5 92.01
+2021-11-17 15:30:51 train 2000, loss 9.308e-01, top1 77.33, top5 91.93
+2021-11-17 15:30:52 train 2000, loss 9.324e-01, top1 77.25, top5 91.91
+2021-11-17 15:30:52 train 2000, loss 9.342e-01, top1 77.25, top5 91.87
+2021-11-17 15:40:53 train 3000, loss 9.330e-01, top1 77.31, top5 91.90
+2021-11-17 15:40:53 train 3000, loss 9.339e-01, top1 77.22, top5 91.89
+2021-11-17 15:40:53 train 3000, loss 9.352e-01, top1 77.21, top5 91.87
+2021-11-17 15:50:48 train 4000, loss 9.348e-01, top1 77.27, top5 91.86
+2021-11-17 15:50:48 train 4000, loss 9.346e-01, top1 77.21, top5 91.87
+2021-11-17 15:50:48 train 4000, loss 9.351e-01, top1 77.18, top5 91.88
+2021-11-17 16:01:01 train 5000, loss 9.346e-01, top1 77.21, top5 91.89
+2021-11-17 16:01:01 train 5000, loss 9.360e-01, top1 77.22, top5 91.85
+2021-11-17 16:01:01 train 5000, loss 9.358e-01, top1 77.18, top5 91.88
+2021-11-17 16:01:27 valid 0000, loss 4.935e-01, top1 89.41, top5 95.29
+2021-11-17 16:01:27 valid 0000, loss 4.935e-01, top1 89.41, top5 95.29
+2021-11-17 16:01:27 valid 0000, loss 4.935e-01, top1 89.41, top5 95.29
+2021-11-17 16:05:52 (JOBID 31932) epoch 78: train time 3008.85, inference time 276.66s, valid_top1 76.17 (best_top1 76.17), valid_top5 92.96
+2021-11-17 16:05:55 (JOBID 31932) epoch 78: train time 3007.22, inference time 278.80s, valid_top1 76.17 (best_top1 76.17), valid_top5 92.96
+2021-11-17 16:05:56 (JOBID 31932) epoch 78: train time 3007.57, inference time 279.49s, valid_top1 76.17 (best_top1 76.17), valid_top5 92.96
+2021-11-17 16:06:08 train 0000, loss 9.210e-01, top1 76.47, top5 90.59
+2021-11-17 16:06:08 train 0000, loss 1.116e+00, top1 72.94, top5 88.24
+2021-11-17 16:06:10 train 0000, loss 8.022e-01, top1 78.82, top5 94.12
+2021-11-17 16:16:05 train 1000, loss 9.203e-01, top1 77.53, top5 92.02
+2021-11-17 16:16:05 train 1000, loss 9.284e-01, top1 77.40, top5 92.00
+2021-11-17 16:16:05 train 1000, loss 9.349e-01, top1 77.32, top5 91.81
+2021-11-17 16:25:50 train 2000, loss 9.303e-01, top1 77.26, top5 91.93
+2021-11-17 16:25:50 train 2000, loss 9.251e-01, top1 77.39, top5 91.99
+2021-11-17 16:25:50 train 2000, loss 9.292e-01, top1 77.40, top5 91.88
+2021-11-17 16:35:36 train 3000, loss 9.257e-01, top1 77.37, top5 92.04
+2021-11-17 16:35:36 train 3000, loss 9.298e-01, top1 77.31, top5 91.91
+2021-11-17 16:35:36 train 3000, loss 9.302e-01, top1 77.32, top5 91.91
+2021-11-17 16:45:28 train 4000, loss 9.247e-01, top1 77.41, top5 92.01
+2021-11-17 16:45:28 train 4000, loss 9.315e-01, top1 77.30, top5 91.92
+2021-11-17 16:45:28 train 4000, loss 9.301e-01, top1 77.29, top5 91.93
+2021-11-17 16:55:14 train 5000, loss 9.337e-01, top1 77.25, top5 91.91
+2021-11-17 16:55:14 train 5000, loss 9.271e-01, top1 77.35, top5 91.98
+2021-11-17 16:55:14 train 5000, loss 9.317e-01, top1 77.26, top5 91.91
+2021-11-17 16:55:40 valid 0000, loss 4.710e-01, top1 90.59, top5 95.29
+2021-11-17 16:55:40 valid 0000, loss 4.710e-01, top1 90.59, top5 95.29
+2021-11-17 16:55:40 valid 0000, loss 4.710e-01, top1 90.59, top5 95.29
+2021-11-17 17:00:17 (JOBID 31932) epoch 79: train time 2975.66, inference time 288.64s, valid_top1 76.06 (best_top1 76.17), valid_top5 93.06
+2021-11-17 17:00:18 (JOBID 31932) epoch 79: train time 2973.61, inference time 289.63s, valid_top1 76.06 (best_top1 76.17), valid_top5 93.06
+2021-11-17 17:00:19 (JOBID 31932) epoch 79: train time 2972.01, inference time 290.07s, valid_top1 76.06 (best_top1 76.17), valid_top5 93.06
+2021-11-17 17:00:32 train 0000, loss 1.108e+00, top1 74.12, top5 90.59
+2021-11-17 17:00:32 train 0000, loss 8.866e-01, top1 78.82, top5 91.76
+2021-11-17 17:00:32 train 0000, loss 1.015e+00, top1 75.29, top5 88.24
+2021-11-17 17:10:07 train 1000, loss 9.215e-01, top1 77.53, top5 92.07
+2021-11-17 17:10:07 train 1000, loss 9.239e-01, top1 77.49, top5 91.97
+2021-11-17 17:10:07 train 1000, loss 9.229e-01, top1 77.52, top5 91.94
+2021-11-17 17:19:44 train 2000, loss 9.234e-01, top1 77.43, top5 92.05
+2021-11-17 17:19:44 train 2000, loss 9.241e-01, top1 77.41, top5 92.00
+2021-11-17 17:19:44 train 2000, loss 9.219e-01, top1 77.46, top5 92.02
+2021-11-17 17:29:19 train 3000, loss 9.273e-01, top1 77.36, top5 91.95
+2021-11-17 17:29:19 train 3000, loss 9.251e-01, top1 77.41, top5 92.06
+2021-11-17 17:29:20 train 3000, loss 9.225e-01, top1 77.46, top5 92.04
+2021-11-17 17:38:56 train 4000, loss 9.300e-01, top1 77.30, top5 91.91
+2021-11-17 17:38:56 train 4000, loss 9.272e-01, top1 77.35, top5 91.99
+2021-11-17 17:38:56 train 4000, loss 9.252e-01, top1 77.41, top5 92.01
+2021-11-17 17:48:29 train 5000, loss 9.290e-01, top1 77.34, top5 91.97
+2021-11-17 17:48:29 train 5000, loss 9.307e-01, top1 77.28, top5 91.93
+2021-11-17 17:48:29 train 5000, loss 9.252e-01, top1 77.39, top5 92.02
+2021-11-17 17:48:54 valid 0000, loss 5.355e-01, top1 90.59, top5 94.12
+2021-11-17 17:48:54 valid 0000, loss 5.355e-01, top1 90.59, top5 94.12
+2021-11-17 17:48:54 valid 0000, loss 5.355e-01, top1 90.59, top5 94.12
+2021-11-17 17:53:16 (JOBID 31932) epoch 80: train time 2905.70, inference time 272.75s, valid_top1 76.15 (best_top1 76.17), valid_top5 93.05
+2021-11-17 17:53:24 (JOBID 31932) epoch 80: train time 2905.07, inference time 279.97s, valid_top1 76.15 (best_top1 76.17), valid_top5 93.05
+2021-11-17 17:53:24 (JOBID 31932) epoch 80: train time 2906.77, inference time 280.83s, valid_top1 76.15 (best_top1 76.17), valid_top5 93.05
+2021-11-17 17:53:32 train 0000, loss 8.463e-01, top1 77.65, top5 96.47
+2021-11-17 17:53:37 train 0000, loss 9.873e-01, top1 78.82, top5 89.41
+2021-11-17 17:53:37 train 0000, loss 6.410e-01, top1 87.06, top5 95.29
+2021-11-17 18:03:27 train 1000, loss 9.236e-01, top1 77.53, top5 91.97
+2021-11-17 18:03:27 train 1000, loss 9.154e-01, top1 77.51, top5 92.17
+2021-11-17 18:03:27 train 1000, loss 9.228e-01, top1 77.54, top5 92.00
+2021-11-17 18:13:14 train 2000, loss 9.167e-01, top1 77.65, top5 92.06
+2021-11-17 18:13:14 train 2000, loss 9.158e-01, top1 77.59, top5 92.12
+2021-11-17 18:13:15 train 2000, loss 9.231e-01, top1 77.54, top5 91.97
+2021-11-17 18:23:03 train 3000, loss 9.169e-01, top1 77.50, top5 92.08
+2021-11-17 18:23:03 train 3000, loss 9.182e-01, top1 77.61, top5 92.06
+2021-11-17 18:23:03 train 3000, loss 9.235e-01, top1 77.45, top5 92.05
+2021-11-17 18:32:55 train 4000, loss 9.196e-01, top1 77.57, top5 92.03
+2021-11-17 18:32:55 train 4000, loss 9.223e-01, top1 77.42, top5 92.04
+2021-11-17 18:32:55 train 4000, loss 9.245e-01, top1 77.44, top5 92.03
+2021-11-17 18:42:43 train 5000, loss 9.230e-01, top1 77.47, top5 92.01
+2021-11-17 18:42:43 train 5000, loss 9.262e-01, top1 77.34, top5 92.00
+2021-11-17 18:42:43 train 5000, loss 9.243e-01, top1 77.43, top5 92.04
+2021-11-17 18:43:08 valid 0000, loss 4.530e-01, top1 91.76, top5 95.29
+2021-11-17 18:43:08 valid 0000, loss 4.530e-01, top1 91.76, top5 95.29
+2021-11-17 18:43:08 valid 0000, loss 4.530e-01, top1 91.76, top5 95.29
+2021-11-17 18:47:37 (JOBID 31932) epoch 81: train time 2973.50, inference time 279.22s, valid_top1 76.19 (best_top1 76.19), valid_top5 93.05
+2021-11-17 18:47:37 (JOBID 31932) epoch 81: train time 2981.52, inference time 279.50s, valid_top1 76.19 (best_top1 76.19), valid_top5 93.05
+2021-11-17 18:47:39 (JOBID 31932) epoch 81: train time 2973.97, inference time 279.86s, valid_top1 76.19 (best_top1 76.19), valid_top5 93.05
+2021-11-17 18:47:52 train 0000, loss 1.057e+00, top1 76.47, top5 90.59
+2021-11-17 18:47:52 train 0000, loss 7.766e-01, top1 82.35, top5 95.29
+2021-11-17 18:47:54 train 0000, loss 8.742e-01, top1 81.18, top5 91.76
+2021-11-17 18:57:39 train 1000, loss 9.122e-01, top1 77.74, top5 92.21
+2021-11-17 18:57:39 train 1000, loss 9.096e-01, top1 77.84, top5 92.19
+2021-11-17 18:57:39 train 1000, loss 9.116e-01, top1 77.88, top5 92.13
+2021-11-17 19:07:23 train 2000, loss 9.127e-01, top1 77.74, top5 92.19
+2021-11-17 19:07:23 train 2000, loss 9.125e-01, top1 77.70, top5 92.17
+2021-11-17 19:07:23 train 2000, loss 9.074e-01, top1 77.84, top5 92.23
+2021-11-17 19:17:15 train 3000, loss 9.146e-01, top1 77.63, top5 92.12
+2021-11-17 19:17:15 train 3000, loss 9.192e-01, top1 77.53, top5 92.07
+2021-11-17 19:17:16 train 3000, loss 9.138e-01, top1 77.67, top5 92.16
+2021-11-17 19:27:03 train 4000, loss 9.160e-01, top1 77.58, top5 92.13
+2021-11-17 19:27:03 train 4000, loss 9.198e-01, top1 77.53, top5 92.05
+2021-11-17 19:27:03 train 4000, loss 9.154e-01, top1 77.62, top5 92.14
+2021-11-17 19:36:48 train 5000, loss 9.213e-01, top1 77.47, top5 92.07
+2021-11-17 19:36:48 train 5000, loss 9.227e-01, top1 77.46, top5 92.02
+2021-11-17 19:36:48 train 5000, loss 9.174e-01, top1 77.54, top5 92.10
+2021-11-17 19:37:13 valid 0000, loss 5.168e-01, top1 90.59, top5 94.12
+2021-11-17 19:37:13 valid 0000, loss 5.168e-01, top1 90.59, top5 94.12
+2021-11-17 19:37:13 valid 0000, loss 5.168e-01, top1 90.59, top5 94.12
+2021-11-17 19:41:29 (JOBID 31932) epoch 82: train time 2965.62, inference time 266.17s, valid_top1 76.11 (best_top1 76.19), valid_top5 93.00
+2021-11-17 19:41:51 (JOBID 31932) epoch 82: train time 2964.19, inference time 288.20s, valid_top1 76.11 (best_top1 76.19), valid_top5 93.00
+2021-11-17 19:41:54 (JOBID 31932) epoch 82: train time 2965.27, inference time 291.37s, valid_top1 76.11 (best_top1 76.19), valid_top5 93.00
+2021-11-17 19:42:06 train 0000, loss 1.165e+00, top1 71.76, top5 89.41
+2021-11-17 19:41:43 train 0000, loss 8.486e-01, top1 78.82, top5 90.59
+2021-11-17 19:42:08 train 0000, loss 1.053e+00, top1 74.12, top5 90.59
+2021-11-17 19:51:50 train 1000, loss 8.995e-01, top1 77.98, top5 92.30
+2021-11-17 19:51:49 train 1000, loss 9.132e-01, top1 77.62, top5 92.08
+2021-11-17 19:51:50 train 1000, loss 9.146e-01, top1 77.74, top5 92.13
+2021-11-17 20:01:32 train 2000, loss 9.178e-01, top1 77.63, top5 92.04
+2021-11-17 20:01:32 train 2000, loss 9.120e-01, top1 77.66, top5 92.13
+2021-11-17 20:01:32 train 2000, loss 9.067e-01, top1 77.93, top5 92.19
+2021-11-17 20:11:22 train 3000, loss 9.165e-01, top1 77.64, top5 92.07
+2021-11-17 20:11:22 train 3000, loss 9.135e-01, top1 77.74, top5 92.08
+2021-11-17 20:11:22 train 3000, loss 9.129e-01, top1 77.64, top5 92.14
+2021-11-17 20:21:05 train 4000, loss 9.131e-01, top1 77.74, top5 92.10
+2021-11-17 20:21:05 train 4000, loss 9.161e-01, top1 77.57, top5 92.09
+2021-11-17 20:21:05 train 4000, loss 9.186e-01, top1 77.59, top5 92.08
+2021-11-17 20:30:44 train 5000, loss 9.156e-01, top1 77.66, top5 92.10
+2021-11-17 20:30:44 train 5000, loss 9.179e-01, top1 77.54, top5 92.05
+2021-11-17 20:30:44 train 5000, loss 9.182e-01, top1 77.57, top5 92.09
+2021-11-17 20:31:10 valid 0000, loss 4.527e-01, top1 89.41, top5 94.12
+2021-11-17 20:31:10 valid 0000, loss 4.527e-01, top1 89.41, top5 94.12
+2021-11-17 20:31:10 valid 0000, loss 4.527e-01, top1 89.41, top5 94.12
+2021-11-17 20:35:30 (JOBID 31932) epoch 83: train time 2947.10, inference time 271.63s, valid_top1 76.19 (best_top1 76.19), valid_top5 92.95
+2021-11-17 20:35:47 (JOBID 31932) epoch 83: train time 2944.56, inference time 288.59s, valid_top1 76.19 (best_top1 76.19), valid_top5 92.95
+2021-11-17 20:35:54 (JOBID 31932) epoch 83: train time 2969.61, inference time 295.41s, valid_top1 76.19 (best_top1 76.19), valid_top5 92.95
+2021-11-17 20:36:02 train 0000, loss 7.048e-01, top1 80.00, top5 94.12
+2021-11-17 20:35:45 train 0000, loss 7.496e-01, top1 82.35, top5 92.94
+2021-11-17 20:36:07 train 0000, loss 1.152e+00, top1 74.12, top5 88.24
+2021-11-17 20:45:31 train 1000, loss 9.093e-01, top1 77.90, top5 92.21
+2021-11-17 20:45:31 train 1000, loss 8.978e-01, top1 77.96, top5 92.37
+2021-11-17 20:45:31 train 1000, loss 9.088e-01, top1 77.72, top5 92.23
+2021-11-17 20:54:53 train 2000, loss 9.008e-01, top1 77.93, top5 92.29
+2021-11-17 20:54:53 train 2000, loss 9.101e-01, top1 77.79, top5 92.16
+2021-11-17 20:54:53 train 2000, loss 9.092e-01, top1 77.73, top5 92.20
+2021-11-17 21:04:16 train 3000, loss 9.060e-01, top1 77.85, top5 92.23
+2021-11-17 21:04:16 train 3000, loss 9.118e-01, top1 77.75, top5 92.13
+2021-11-17 21:04:16 train 3000, loss 9.119e-01, top1 77.67, top5 92.16
+2021-11-17 21:13:35 train 4000, loss 9.088e-01, top1 77.77, top5 92.20
+2021-11-17 21:13:35 train 4000, loss 9.123e-01, top1 77.71, top5 92.14
+2021-11-17 21:13:35 train 4000, loss 9.136e-01, top1 77.61, top5 92.15
+2021-11-17 21:22:54 train 5000, loss 9.104e-01, top1 77.73, top5 92.17
+2021-11-17 21:22:54 train 5000, loss 9.110e-01, top1 77.71, top5 92.18
+2021-11-17 21:22:54 train 5000, loss 9.169e-01, top1 77.54, top5 92.10
+2021-11-17 21:23:19 valid 0000, loss 4.900e-01, top1 90.59, top5 94.12
+2021-11-17 21:23:19 valid 0000, loss 4.900e-01, top1 90.59, top5 94.12
+2021-11-17 21:23:19 valid 0000, loss 4.900e-01, top1 90.59, top5 94.12
+2021-11-17 21:27:48 (JOBID 31932) epoch 84: train time 2840.47, inference time 280.71s, valid_top1 76.03 (best_top1 76.19), valid_top5 92.95
+2021-11-17 21:27:48 (JOBID 31932) epoch 84: train time 2833.67, inference time 280.69s, valid_top1 76.03 (best_top1 76.19), valid_top5 92.95
+2021-11-17 21:27:49 (JOBID 31932) epoch 84: train time 2857.12, inference time 281.54s, valid_top1 76.03 (best_top1 76.19), valid_top5 92.95
+2021-11-17 21:28:04 train 0000, loss 1.080e+00, top1 72.94, top5 88.24
+2021-11-17 21:28:04 train 0000, loss 8.668e-01, top1 78.82, top5 92.94
+2021-11-17 21:28:04 train 0000, loss 5.725e-01, top1 85.88, top5 96.47
+2021-11-17 21:37:48 train 1000, loss 9.002e-01, top1 78.12, top5 92.34
+2021-11-17 21:37:48 train 1000, loss 9.024e-01, top1 77.97, top5 92.28
+2021-11-17 21:37:48 train 1000, loss 9.186e-01, top1 77.71, top5 92.05
+2021-11-17 21:47:36 train 2000, loss 9.013e-01, top1 77.96, top5 92.31
+2021-11-17 21:47:36 train 2000, loss 9.021e-01, top1 77.91, top5 92.29
+2021-11-17 21:47:36 train 2000, loss 9.134e-01, top1 77.69, top5 92.08
+2021-11-17 21:57:24 train 3000, loss 9.056e-01, top1 77.82, top5 92.28
+2021-11-17 21:57:24 train 3000, loss 9.130e-01, top1 77.69, top5 92.13
+2021-11-17 21:57:24 train 3000, loss 9.058e-01, top1 77.84, top5 92.26
+2021-11-17 22:07:09 train 4000, loss 9.062e-01, top1 77.81, top5 92.23
+2021-11-17 22:07:09 train 4000, loss 9.065e-01, top1 77.79, top5 92.25
+2021-11-17 22:07:09 train 4000, loss 9.108e-01, top1 77.70, top5 92.16
+2021-11-17 22:16:54 train 5000, loss 9.081e-01, top1 77.76, top5 92.20
+2021-11-17 22:16:54 train 5000, loss 9.084e-01, top1 77.76, top5 92.21
+2021-11-17 22:16:54 train 5000, loss 9.100e-01, top1 77.71, top5 92.17
+2021-11-17 22:17:19 valid 0000, loss 5.160e-01, top1 89.41, top5 95.29
+2021-11-17 22:17:19 valid 0000, loss 5.160e-01, top1 89.41, top5 95.29
+2021-11-17 22:17:19 valid 0000, loss 5.160e-01, top1 89.41, top5 95.29
+2021-11-17 22:21:50 (JOBID 31932) epoch 85: train time 2960.89, inference time 280.94s, valid_top1 76.06 (best_top1 76.19), valid_top5 93.12
+2021-11-17 22:21:50 (JOBID 31932) epoch 85: train time 2960.58, inference time 281.26s, valid_top1 76.06 (best_top1 76.19), valid_top5 93.12
+2021-11-17 22:21:50 (JOBID 31932) epoch 85: train time 2959.64, inference time 280.78s, valid_top1 76.06 (best_top1 76.19), valid_top5 93.12
+2021-11-17 22:22:04 train 0000, loss 6.997e-01, top1 78.82, top5 98.82
+2021-11-17 22:22:04 train 0000, loss 1.144e+00, top1 71.76, top5 85.88
+2021-11-17 22:22:04 train 0000, loss 9.359e-01, top1 77.65, top5 90.59
+2021-11-17 22:31:50 train 1000, loss 8.985e-01, top1 77.86, top5 92.30
+2021-11-17 22:31:50 train 1000, loss 8.967e-01, top1 77.96, top5 92.29
+2021-11-17 22:31:50 train 1000, loss 8.976e-01, top1 78.05, top5 92.29
+2021-11-17 22:41:34 train 2000, loss 9.005e-01, top1 77.87, top5 92.28
+2021-11-17 22:41:34 train 2000, loss 9.043e-01, top1 77.83, top5 92.23
+2021-11-17 22:41:34 train 2000, loss 9.017e-01, top1 77.87, top5 92.31
+2021-11-17 22:51:16 train 3000, loss 9.074e-01, top1 77.75, top5 92.20
+2021-11-17 22:51:16 train 3000, loss 9.034e-01, top1 77.85, top5 92.26
+2021-11-17 22:51:16 train 3000, loss 9.017e-01, top1 77.90, top5 92.29
+2021-11-17 23:00:58 train 4000, loss 9.086e-01, top1 77.73, top5 92.19
+2021-11-17 23:00:58 train 4000, loss 9.049e-01, top1 77.84, top5 92.24
+2021-11-17 23:00:58 train 4000, loss 9.049e-01, top1 77.84, top5 92.23
+2021-11-17 23:10:42 train 5000, loss 9.067e-01, top1 77.82, top5 92.23
+2021-11-17 23:10:42 train 5000, loss 9.076e-01, top1 77.78, top5 92.20
+2021-11-17 23:10:42 train 5000, loss 9.073e-01, top1 77.76, top5 92.19
+2021-11-17 23:11:07 valid 0000, loss 4.853e-01, top1 91.76, top5 95.29
+2021-11-17 23:11:07 valid 0000, loss 4.853e-01, top1 91.76, top5 95.29
+2021-11-17 23:11:07 valid 0000, loss 4.853e-01, top1 91.76, top5 95.29
+2021-11-17 23:15:45 (JOBID 31932) epoch 86: train time 2946.47, inference time 287.97s, valid_top1 75.84 (best_top1 76.19), valid_top5 92.95
+2021-11-17 23:15:45 (JOBID 31932) epoch 86: train time 2946.49, inference time 287.97s, valid_top1 75.84 (best_top1 76.19), valid_top5 92.95
+2021-11-17 23:15:45 (JOBID 31932) epoch 86: train time 2946.40, inference time 288.01s, valid_top1 75.84 (best_top1 76.19), valid_top5 92.95
+2021-11-17 23:15:59 train 0000, loss 1.142e+00, top1 75.29, top5 89.41
+2021-11-17 23:15:59 train 0000, loss 7.618e-01, top1 82.35, top5 91.76
+2021-11-17 23:15:59 train 0000, loss 8.168e-01, top1 77.65, top5 94.12
+2021-11-17 23:25:44 train 1000, loss 8.974e-01, top1 78.10, top5 92.29
+2021-11-17 23:25:44 train 1000, loss 8.940e-01, top1 78.26, top5 92.28
+2021-11-17 23:25:44 train 1000, loss 8.910e-01, top1 78.15, top5 92.28
+2021-11-17 23:35:27 train 2000, loss 9.010e-01, top1 77.99, top5 92.27
+2021-11-17 23:35:27 train 2000, loss 8.941e-01, top1 78.08, top5 92.39
+2021-11-17 23:35:27 train 2000, loss 8.954e-01, top1 78.07, top5 92.27
+2021-11-17 23:45:12 train 3000, loss 9.004e-01, top1 78.00, top5 92.23
+2021-11-17 23:45:12 train 3000, loss 9.001e-01, top1 77.93, top5 92.30
+2021-11-17 23:45:12 train 3000, loss 9.022e-01, top1 77.93, top5 92.25
+2021-11-17 23:54:55 train 4000, loss 9.003e-01, top1 77.94, top5 92.32
+2021-11-17 23:54:55 train 4000, loss 9.060e-01, top1 77.82, top5 92.18
+2021-11-17 23:54:56 train 4000, loss 9.021e-01, top1 77.94, top5 92.23
+2021-11-18 00:04:41 train 5000, loss 9.076e-01, top1 77.81, top5 92.15
+2021-11-18 00:04:41 train 5000, loss 9.012e-01, top1 77.94, top5 92.32
+2021-11-18 00:04:41 train 5000, loss 9.022e-01, top1 77.95, top5 92.23
+2021-11-18 00:05:06 valid 0000, loss 5.232e-01, top1 89.41, top5 94.12
+2021-11-18 00:05:06 valid 0000, loss 5.232e-01, top1 89.41, top5 94.12
+2021-11-18 00:05:06 valid 0000, loss 5.232e-01, top1 89.41, top5 94.12
+2021-11-18 00:09:36 (JOBID 31932) epoch 87: train time 2950.67, inference time 280.91s, valid_top1 76.19 (best_top1 76.19), valid_top5 93.04
+2021-11-18 00:09:37 (JOBID 31932) epoch 87: train time 2950.26, inference time 281.02s, valid_top1 76.19 (best_top1 76.19), valid_top5 93.04
+2021-11-18 00:09:38 (JOBID 31932) epoch 87: train time 2950.85, inference time 282.51s, valid_top1 76.19 (best_top1 76.19), valid_top5 93.04
+2021-11-18 00:09:52 train 0000, loss 7.083e-01, top1 80.00, top5 96.47
+2021-11-18 00:09:52 train 0000, loss 8.286e-01, top1 81.18, top5 92.94
+2021-11-18 00:09:52 train 0000, loss 1.221e+00, top1 74.12, top5 87.06
+2021-11-18 00:19:37 train 1000, loss 9.122e-01, top1 77.83, top5 92.06
+2021-11-18 00:19:37 train 1000, loss 8.957e-01, top1 78.11, top5 92.32
+2021-11-18 00:19:37 train 1000, loss 8.916e-01, top1 78.10, top5 92.38
+2021-11-18 00:29:23 train 2000, loss 9.081e-01, top1 77.84, top5 92.17
+2021-11-18 00:29:23 train 2000, loss 8.950e-01, top1 78.07, top5 92.32
+2021-11-18 00:29:23 train 2000, loss 9.000e-01, top1 78.00, top5 92.31
+2021-11-18 00:39:09 train 3000, loss 9.064e-01, top1 77.85, top5 92.19
+2021-11-18 00:39:09 train 3000, loss 9.005e-01, top1 77.98, top5 92.31
+2021-11-18 00:39:09 train 3000, loss 9.007e-01, top1 77.99, top5 92.26
+2021-11-18 00:48:55 train 4000, loss 9.061e-01, top1 77.83, top5 92.19
+2021-11-18 00:48:55 train 4000, loss 8.999e-01, top1 78.02, top5 92.32
+2021-11-18 00:48:55 train 4000, loss 9.005e-01, top1 77.97, top5 92.29
+2021-11-18 00:58:42 train 5000, loss 9.057e-01, top1 77.83, top5 92.19
+2021-11-18 00:58:42 train 5000, loss 9.010e-01, top1 77.99, top5 92.29
+2021-11-18 00:58:42 train 5000, loss 9.019e-01, top1 77.94, top5 92.26
+2021-11-18 00:59:07 valid 0000, loss 5.188e-01, top1 89.41, top5 94.12
+2021-11-18 00:59:07 valid 0000, loss 5.188e-01, top1 89.41, top5 94.12
+2021-11-18 00:59:07 valid 0000, loss 5.188e-01, top1 89.41, top5 94.12
+2021-11-18 01:03:36 (JOBID 31932) epoch 88: train time 2960.11, inference time 279.96s, valid_top1 75.93 (best_top1 76.19), valid_top5 92.99
+2021-11-18 01:03:37 (JOBID 31932) epoch 88: train time 2958.33, inference time 281.18s, valid_top1 75.93 (best_top1 76.19), valid_top5 92.99
+2021-11-18 01:03:40 (JOBID 31932) epoch 88: train time 2959.78, inference time 283.21s, valid_top1 75.93 (best_top1 76.19), valid_top5 92.99
+2021-11-18 01:03:51 train 0000, loss 6.726e-01, top1 83.53, top5 95.29
+2021-11-18 01:03:51 train 0000, loss 5.502e-01, top1 85.88, top5 96.47
+2021-11-18 01:03:54 train 0000, loss 9.564e-01, top1 77.65, top5 90.59
+2021-11-18 01:13:38 train 1000, loss 8.929e-01, top1 78.15, top5 92.49
+2021-11-18 01:13:38 train 1000, loss 8.950e-01, top1 78.12, top5 92.27
+2021-11-18 01:13:38 train 1000, loss 8.961e-01, top1 78.09, top5 92.33
+2021-11-18 01:23:23 train 2000, loss 8.955e-01, top1 78.05, top5 92.38
+2021-11-18 01:23:23 train 2000, loss 8.976e-01, top1 78.01, top5 92.25
+2021-11-18 01:23:23 train 2000, loss 8.951e-01, top1 78.10, top5 92.37
+2021-11-18 01:33:08 train 3000, loss 8.972e-01, top1 78.00, top5 92.28
+2021-11-18 01:33:08 train 3000, loss 9.000e-01, top1 77.97, top5 92.28
+2021-11-18 01:33:08 train 3000, loss 8.947e-01, top1 78.06, top5 92.38
+2021-11-18 01:42:54 train 4000, loss 9.023e-01, top1 77.91, top5 92.27
+2021-11-18 01:42:54 train 4000, loss 8.974e-01, top1 78.02, top5 92.34
+2021-11-18 01:42:54 train 4000, loss 8.956e-01, top1 78.04, top5 92.34
+2021-11-18 01:52:40 train 5000, loss 9.013e-01, top1 77.93, top5 92.28
+2021-11-18 01:52:40 train 5000, loss 8.990e-01, top1 77.93, top5 92.31
+2021-11-18 01:52:40 train 5000, loss 8.990e-01, top1 77.99, top5 92.31
+2021-11-18 01:53:05 valid 0000, loss 4.652e-01, top1 89.41, top5 94.12
+2021-11-18 01:53:05 valid 0000, loss 4.652e-01, top1 89.41, top5 94.12
+2021-11-18 01:53:05 valid 0000, loss 4.652e-01, top1 89.41, top5 94.12
+2021-11-18 01:57:37 (JOBID 31932) epoch 89: train time 2956.98, inference time 282.94s, valid_top1 76.01 (best_top1 76.19), valid_top5 92.93
+2021-11-18 01:57:37 (JOBID 31932) epoch 89: train time 2958.06, inference time 283.08s, valid_top1 76.01 (best_top1 76.19), valid_top5 92.93
+2021-11-18 01:57:38 (JOBID 31932) epoch 89: train time 2954.29, inference time 283.07s, valid_top1 76.01 (best_top1 76.19), valid_top5 92.93

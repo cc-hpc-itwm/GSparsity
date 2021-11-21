@@ -1,0 +1,75 @@
+2021-11-02 09:24:53 CARME Slurm ID: 31575
+2021-11-02 09:24:53 CARME Slurm ID: 31575
+2021-11-02 09:24:53 args = Namespace(adaptive_lr=True, arch='resnet50', batch_size=256, data='/home/SSD/Dataset_ImageNet', dist_backend='nccl', dist_url='tcp://192.168.152.34:23456', distributed=True, epochs=90, evaluate=False, gpu=2, lr=0.001, momentum=0.9, multiprocessing_distributed=True, normalization='div', path_to_save='conv12_lr_0.001_momentum_0.9_wd_0.08_normalization_div_pretrained_True_20211102-092449', pretrained=True, print_freq=1000, rank=0, resume='', run_id='lr_0.001_momentum_0.9_wd_0.08_normalization_div_pretrained_True_20211102-092449', seed=None, start_epoch=0, weight_decay=0.08, workers=4, world_size=3)
+2021-11-02 09:24:53 CARME Slurm ID: 31575
+2021-11-02 09:24:53 args = Namespace(adaptive_lr=True, arch='resnet50', batch_size=256, data='/home/SSD/Dataset_ImageNet', dist_backend='nccl', dist_url='tcp://192.168.152.34:23456', distributed=True, epochs=90, evaluate=False, gpu=0, lr=0.001, momentum=0.9, multiprocessing_distributed=True, normalization='div', path_to_save='conv12_lr_0.001_momentum_0.9_wd_0.08_normalization_div_pretrained_True_20211102-092449', pretrained=True, print_freq=1000, rank=0, resume='', run_id='lr_0.001_momentum_0.9_wd_0.08_normalization_div_pretrained_True_20211102-092449', seed=None, start_epoch=0, weight_decay=0.08, workers=4, world_size=3)
+2021-11-02 09:24:53 args = Namespace(adaptive_lr=True, arch='resnet50', batch_size=256, data='/home/SSD/Dataset_ImageNet', dist_backend='nccl', dist_url='tcp://192.168.152.34:23456', distributed=True, epochs=90, evaluate=False, gpu=1, lr=0.001, momentum=0.9, multiprocessing_distributed=True, normalization='div', path_to_save='conv12_lr_0.001_momentum_0.9_wd_0.08_normalization_div_pretrained_True_20211102-092449', pretrained=True, print_freq=1000, rank=0, resume='', run_id='lr_0.001_momentum_0.9_wd_0.08_normalization_div_pretrained_True_20211102-092449', seed=None, start_epoch=0, weight_decay=0.08, workers=4, world_size=3)
+2021-11-02 09:25:00 prunable/total params (ratio): 15.65M/25.56M (61.22%)
+2021-11-02 09:25:00 prunable/total params (ratio): 15.65M/25.56M (61.22%)
+2021-11-02 09:25:00 prunable/total params (ratio): 15.65M/25.56M (61.22%)
+2021-11-02 09:25:29 train 0000, loss 9.813e-01, top1 81.18, top5 91.76
+2021-11-02 09:25:29 train 0000, loss 6.390e-01, top1 82.35, top5 94.12
+2021-11-02 09:25:29 train 0000, loss 7.797e-01, top1 80.00, top5 91.76
+2021-11-02 09:32:37 train 1000, loss 2.927e+00, top1 36.97, top5 63.93
+2021-11-02 09:32:37 train 1000, loss 2.934e+00, top1 36.94, top5 63.56
+2021-11-02 09:32:37 train 1000, loss 2.942e+00, top1 36.72, top5 63.70
+2021-11-02 09:39:48 train 2000, loss 2.749e+00, top1 40.19, top5 66.62
+2021-11-02 09:39:48 train 2000, loss 2.746e+00, top1 40.25, top5 66.62
+2021-11-02 09:39:48 train 2000, loss 2.759e+00, top1 39.94, top5 66.47
+2021-11-02 09:47:00 train 3000, loss 2.654e+00, top1 41.92, top5 68.09
+2021-11-02 09:47:00 train 3000, loss 2.650e+00, top1 42.00, top5 68.12
+2021-11-02 09:47:00 train 3000, loss 2.661e+00, top1 41.79, top5 67.95
+2021-11-02 09:54:11 train 4000, loss 2.589e+00, top1 43.15, top5 69.06
+2021-11-02 09:54:11 train 4000, loss 2.592e+00, top1 43.13, top5 68.97
+2021-11-02 09:54:11 train 4000, loss 2.585e+00, top1 43.17, top5 69.08
+2021-11-02 10:01:25 train 5000, loss 2.539e+00, top1 44.09, top5 69.84
+2021-11-02 10:01:25 train 5000, loss 2.535e+00, top1 44.15, top5 69.85
+2021-11-02 10:01:25 train 5000, loss 2.541e+00, top1 44.05, top5 69.73
+2021-11-02 10:01:49 valid 0000, loss 2.741e+00, top1 50.59, top5 67.06
+2021-11-02 10:01:49 valid 0000, loss 2.741e+00, top1 50.59, top5 67.06
+2021-11-02 10:01:49 valid 0000, loss 2.741e+00, top1 50.59, top5 67.06
+2021-11-02 10:06:14 (JOBID 31575) epoch 0: time 2468.91s, valid_top1 23.19 (best_top1 23.19), valid_top5 46.54
+2021-11-02 10:06:14 pruning threshold: 1e-06, layer 0: zero/total filters (conv1/2) 12/384 (3.125%)
+2021-11-02 10:06:14 pruning threshold: 1e-06, layer 1: zero/total filters (conv1/2) 0/1024 (0.0%)
+2021-11-02 10:06:14 pruning threshold: 1e-06, layer 2: zero/total filters (conv1/2) 0/3072 (0.0%)
+2021-11-02 10:06:14 pruning threshold: 1e-06, layer 3: zero/total filters (conv1/2) 0/3072 (0.0%)
+2021-11-02 10:06:14 pruning threshold: 1e-06,   total: zero/total filters (conv1/2) 12/7552 (0.16%)
+2021-11-02 10:06:14 pruning threshold: 1e-06, zero/total filters (ratio): 30/22656 (0.13%)
+2021-11-02 10:06:14 pruning threshold: 1e-06,  zero/total params (ratio): 0.005116/25.557032M (0.02%)
+2021-11-02 10:06:15 (JOBID 31575) epoch 0: time 2469.48s, valid_top1 23.19 (best_top1 23.19), valid_top5 46.54
+2021-11-02 10:06:15 pruning threshold: 1e-06, layer 0: zero/total filters (conv1/2) 12/384 (3.125%)
+2021-11-02 10:06:15 pruning threshold: 1e-06, layer 1: zero/total filters (conv1/2) 0/1024 (0.0%)
+2021-11-02 10:06:15 pruning threshold: 1e-06, layer 2: zero/total filters (conv1/2) 0/3072 (0.0%)
+2021-11-02 10:06:15 pruning threshold: 1e-06, layer 3: zero/total filters (conv1/2) 0/3072 (0.0%)
+2021-11-02 10:06:15 pruning threshold: 1e-06,   total: zero/total filters (conv1/2) 12/7552 (0.16%)
+2021-11-02 10:06:15 pruning threshold: 1e-06, zero/total filters (ratio): 30/22656 (0.13%)
+2021-11-02 10:06:15 pruning threshold: 1e-06,  zero/total params (ratio): 0.005116/25.557032M (0.02%)
+2021-11-02 10:06:15 pruning threshold: 1e-06, computational complexity: 4.09 GMac, number of parameters: 25.55 M
+2021-11-02 10:06:16 pruning threshold: 1e-06, computational complexity: 4.09 GMac, number of parameters: 25.55 M
+2021-11-02 10:06:16 (JOBID 31575) epoch 0: time 2471.06s, valid_top1 23.19 (best_top1 23.19), valid_top5 46.54
+2021-11-02 10:06:16 pruning threshold: 1e-06, layer 0: zero/total filters (conv1/2) 12/384 (3.125%)
+2021-11-02 10:06:16 pruning threshold: 1e-06, layer 1: zero/total filters (conv1/2) 0/1024 (0.0%)
+2021-11-02 10:06:16 pruning threshold: 1e-06, layer 2: zero/total filters (conv1/2) 0/3072 (0.0%)
+2021-11-02 10:06:16 pruning threshold: 1e-06, layer 3: zero/total filters (conv1/2) 0/3072 (0.0%)
+2021-11-02 10:06:16 pruning threshold: 1e-06,   total: zero/total filters (conv1/2) 12/7552 (0.16%)
+2021-11-02 10:06:16 pruning threshold: 1e-06, zero/total filters (ratio): 30/22656 (0.13%)
+2021-11-02 10:06:16 pruning threshold: 1e-06,  zero/total params (ratio): 0.005116/25.557032M (0.02%)
+2021-11-02 10:06:17 pruning threshold: 1e-06, computational complexity: 4.09 GMac, number of parameters: 25.55 M
+2021-11-02 10:15:10 CARME Slurm ID: 31575
+2021-11-02 10:15:10 CARME Slurm ID: 31575
+2021-11-02 10:15:10 CARME Slurm ID: 31575
+2021-11-02 10:15:10 args = Namespace(adaptive_lr=True, arch='resnet50', batch_size=256, data='/home/SSD/Dataset_ImageNet', dist_backend='nccl', dist_url='tcp://192.168.152.34:23456', distributed=True, epochs=90, evaluate=False, gpu=1, lr=0.001, momentum=0.9, multiprocessing_distributed=True, normalization='div', path_to_save='conv12_lr_0.001_momentum_0.9_wd_0.08_normalization_div_pretrained_True_20211102-092449', pretrained=True, print_freq=1000, rank=0, resume='conv12_lr_0.001_momentum_0.9_wd_0.08_normalization_div_pretrained_True_20211102-092449', run_id='lr_0.001_momentum_0.9_wd_0.08_normalization_div_pretrained_True_20211102-092449', seed=None, start_epoch=0, weight_decay=0.08, workers=4, world_size=3)
+2021-11-02 10:15:10 args = Namespace(adaptive_lr=True, arch='resnet50', batch_size=256, data='/home/SSD/Dataset_ImageNet', dist_backend='nccl', dist_url='tcp://192.168.152.34:23456', distributed=True, epochs=90, evaluate=False, gpu=0, lr=0.001, momentum=0.9, multiprocessing_distributed=True, normalization='div', path_to_save='conv12_lr_0.001_momentum_0.9_wd_0.08_normalization_div_pretrained_True_20211102-092449', pretrained=True, print_freq=1000, rank=0, resume='conv12_lr_0.001_momentum_0.9_wd_0.08_normalization_div_pretrained_True_20211102-092449', run_id='lr_0.001_momentum_0.9_wd_0.08_normalization_div_pretrained_True_20211102-092449', seed=None, start_epoch=0, weight_decay=0.08, workers=4, world_size=3)
+2021-11-02 10:15:10 args = Namespace(adaptive_lr=True, arch='resnet50', batch_size=256, data='/home/SSD/Dataset_ImageNet', dist_backend='nccl', dist_url='tcp://192.168.152.34:23456', distributed=True, epochs=90, evaluate=False, gpu=2, lr=0.001, momentum=0.9, multiprocessing_distributed=True, normalization='div', path_to_save='conv12_lr_0.001_momentum_0.9_wd_0.08_normalization_div_pretrained_True_20211102-092449', pretrained=True, print_freq=1000, rank=0, resume='conv12_lr_0.001_momentum_0.9_wd_0.08_normalization_div_pretrained_True_20211102-092449', run_id='lr_0.001_momentum_0.9_wd_0.08_normalization_div_pretrained_True_20211102-092449', seed=None, start_epoch=0, weight_decay=0.08, workers=4, world_size=3)
+2021-11-02 10:15:16 prunable/total params (ratio): 15.65M/25.56M (61.22%)
+2021-11-02 10:15:16 prunable/total params (ratio): 15.65M/25.56M (61.22%)
+2021-11-02 10:15:16 prunable/total params (ratio): 15.65M/25.56M (61.22%)
+2021-11-02 10:15:16 => loading checkpoint 'conv12_lr_0.001_momentum_0.9_wd_0.08_normalization_div_pretrained_True_20211102-092449'
+2021-11-02 10:15:16 => loading checkpoint 'conv12_lr_0.001_momentum_0.9_wd_0.08_normalization_div_pretrained_True_20211102-092449'
+2021-11-02 10:15:16 => loading checkpoint 'conv12_lr_0.001_momentum_0.9_wd_0.08_normalization_div_pretrained_True_20211102-092449'
+2021-11-02 10:15:17 => loaded checkpoint 'conv12_lr_0.001_momentum_0.9_wd_0.08_normalization_div_pretrained_True_20211102-092449' (epoch 1)
+2021-11-02 10:15:17 => loaded checkpoint 'conv12_lr_0.001_momentum_0.9_wd_0.08_normalization_div_pretrained_True_20211102-092449' (epoch 1)
+2021-11-02 10:15:17 => loaded checkpoint 'conv12_lr_0.001_momentum_0.9_wd_0.08_normalization_div_pretrained_True_20211102-092449' (epoch 1)
+2021-11-02 10:15:46 train 0000, loss 2.843e+00, top1 38.82, top5 68.24
+2021-11-02 10:15:46 train 0000, loss 2.788e+00, top1 36.47, top5 68.24
+2021-11-02 10:15:46 train 0000, loss 2.618e+00, top1 40.00, top5 65.88

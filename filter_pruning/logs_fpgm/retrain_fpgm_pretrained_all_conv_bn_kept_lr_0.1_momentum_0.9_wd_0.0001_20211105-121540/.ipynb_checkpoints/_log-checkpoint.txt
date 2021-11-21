@@ -1,0 +1,18 @@
+2021-11-05 12:15:45 CARME Slurm ID: 31648
+2021-11-05 12:15:45 args = Namespace(arch='resnet50', baseline_model='fpgm_pretrained', batch_size=256, data='/home/yangy/Dataset_ImageNet', dist_backend='nccl', dist_url='tcp://192.168.152.43:23456', distributed=True, epochs=90, evaluate=True, gpu=1, lr=0.1, momentum=0.9, multiprocessing_distributed=True, path_to_resume='', path_to_save='retrain_fpgm_pretrained_all_conv_bn_kept_lr_0.1_momentum_0.9_wd_0.0001_20211105-121540', pretrained=False, print_freq=1000, pruning_threshold=1e-06, rank=0, run_id='fpgm_pretrained_all_conv_bn_kept_lr_0.1_momentum_0.9_wd_0.0001_20211105-121540', seed=None, start_epoch=0, weight_decay=0.0001, workers=4, world_size=3)
+2021-11-05 12:15:45 CARME Slurm ID: 31648
+2021-11-05 12:15:45 CARME Slurm ID: 31648
+2021-11-05 12:15:45 args = Namespace(arch='resnet50', baseline_model='fpgm_pretrained', batch_size=256, data='/home/yangy/Dataset_ImageNet', dist_backend='nccl', dist_url='tcp://192.168.152.43:23456', distributed=True, epochs=90, evaluate=True, gpu=2, lr=0.1, momentum=0.9, multiprocessing_distributed=True, path_to_resume='', path_to_save='retrain_fpgm_pretrained_all_conv_bn_kept_lr_0.1_momentum_0.9_wd_0.0001_20211105-121540', pretrained=False, print_freq=1000, pruning_threshold=1e-06, rank=0, run_id='fpgm_pretrained_all_conv_bn_kept_lr_0.1_momentum_0.9_wd_0.0001_20211105-121540', seed=None, start_epoch=0, weight_decay=0.0001, workers=4, world_size=3)
+2021-11-05 12:15:45 args = Namespace(arch='resnet50', baseline_model='fpgm_pretrained', batch_size=256, data='/home/yangy/Dataset_ImageNet', dist_backend='nccl', dist_url='tcp://192.168.152.43:23456', distributed=True, epochs=90, evaluate=True, gpu=0, lr=0.1, momentum=0.9, multiprocessing_distributed=True, path_to_resume='', path_to_save='retrain_fpgm_pretrained_all_conv_bn_kept_lr_0.1_momentum_0.9_wd_0.0001_20211105-121540', pretrained=False, print_freq=1000, pruning_threshold=1e-06, rank=0, run_id='fpgm_pretrained_all_conv_bn_kept_lr_0.1_momentum_0.9_wd_0.0001_20211105-121540', seed=None, start_epoch=0, weight_decay=0.0001, workers=4, world_size=3)
+2021-11-05 12:15:50 => loading baseline model '_fgpm_pretrained_best.resnet50.2018-07-16-4310/checkpoint.pth.tar'
+2021-11-05 12:15:50 => loading baseline model '_fgpm_pretrained_best.resnet50.2018-07-16-4310/checkpoint.pth.tar'
+2021-11-05 12:15:50 => loading baseline model '_fgpm_pretrained_best.resnet50.2018-07-16-4310/checkpoint.pth.tar'
+2021-11-05 12:15:51 => loaded baseline model '_fgpm_pretrained_best.resnet50.2018-07-16-4310/checkpoint.pth.tar'
+2021-11-05 12:15:51 => loaded baseline model '_fgpm_pretrained_best.resnet50.2018-07-16-4310/checkpoint.pth.tar'
+2021-11-05 12:15:51 => loaded baseline model '_fgpm_pretrained_best.resnet50.2018-07-16-4310/checkpoint.pth.tar'
+2021-11-05 12:17:16 valid 0000, loss 3.859e-01, top1 91.76, top5 97.65
+2021-11-05 12:17:16 valid 0000, loss 3.859e-01, top1 91.76, top5 97.65
+2021-11-05 12:17:16 valid 0000, loss 3.859e-01, top1 91.76, top5 97.65
+2021-11-05 12:25:05 (JOBID 31648) epoch -1: valid_top1 74.83, valid_top5 92.32, inference time 485.75
+2021-11-05 12:25:05 (JOBID 31648) epoch -1: valid_top1 74.83, valid_top5 92.32, inference time 485.75
+2021-11-05 12:25:05 (JOBID 31648) epoch -1: valid_top1 74.83, valid_top5 92.32, inference time 485.76
