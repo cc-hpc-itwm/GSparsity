@@ -7,7 +7,7 @@ This implementation is tailored to ResNet-50. Modifications are needed for other
 ## Preparation
 - For distributed training configurations, please refer to the [original implementation](https://github.com/pytorch/examples/tree/master/imagenet).
 - `args.dist_url` may need to be modified based on the computing environment.
-- The conda environment used to run this experiment is summarized in `conda_list.txt` (probably not all libraries are needed to run this particular experiment).
+- The conda environment used to run this experiment is summarized in `environment.yml` (but probably not all libraries are needed to run this particular experiment).
 
 ## Searching
 
@@ -64,3 +64,5 @@ An example of `path_to_experiment` is `retrain_resnet50_pretrained_conv12_layer_
 - To directly use the checkpoint of GSparsity, please move the folder containing the searching or retraining experiment to the same level as the python scripts (i.e., one level above).
 
 - Due to the file size limit of GitHub and space limit of Google Drive, only the checkpoints of mu={0.02, 0.05, 0.07, 0.1} are saved at Google Drive ([here](https://drive.google.com/drive/folders/1qvl_YcjVHd4Xus2Ck3VoccMwlf8D_bmJ?usp=sharing)). Other checkpoints will be uploaded when a practical solution is found, or per request.
+
+- `ptflops` is used to calculate the model complexity (see [here](https://github.com/sovrasov/flops-counter.pytorch) for more information).
