@@ -1,0 +1,73 @@
+2022-01-28 19:29:07 This file contains the log of testing the performance of the model trained by RESREP.
+2022-01-28 19:29:07 args = Namespace(arch='resnet50', batch_size=256, data='/home/SSD/Dataset_ImageNet', dist_backend='nccl', dist_url='tcp://192.168.152.45:23456', distributed=False, gpu=None, multiprocessing_distributed=False, path_to_save='.', pretrained=True, print_freq=100, rank=0, resume='.', seed=None, workers=4, world_size=1)
+2022-01-28 19:29:14 => loaded resrep final model
+2022-01-28 19:29:14 prunable/total params (ratio): 15.65M/25.56M (61.22%)
+2022-01-28 19:29:25 valid 0000, loss 7.451e+02, top1 0.00, top5 0.00
+2022-01-28 19:30:36 valid 0100, loss 6.576e+02, top1 0.17, top5 0.71
+2022-01-28 19:31:44 validation accuracy of unpruned model: top1 0.09%, top5 0.48%.
+2022-01-28 19:31:44 pruning threshold: 1e-06, layer 0: zero/total filters (conv1/2) 12/384 (3.125%)
+2022-01-28 19:31:44 pruning threshold: 1e-06, layer 1: zero/total filters (conv1/2) 0/1024 (0.0%)
+2022-01-28 19:31:44 pruning threshold: 1e-06, layer 2: zero/total filters (conv1/2) 0/3072 (0.0%)
+2022-01-28 19:31:44 pruning threshold: 1e-06, layer 3: zero/total filters (conv1/2) 0/3072 (0.0%)
+2022-01-28 19:31:44 pruning threshold: 1e-06,   total: zero/total filters (conv1/2) 12/7552 (0.16%)
+2022-01-28 19:31:44 pruning threshold: 1e-06, zero/total filters (ratio): 65/22656 (0.29%)
+2022-01-28 19:31:44 pruning threshold: 1e-06,  zero/total params (ratio): 0.009346/25.557032M (0.04%)
+2022-01-28 19:31:45 pruning threshold: 1e-06, computational complexity: 4.09 GMac, number of parameters: 25.55 M
+2022-01-28 19:31:49 valid 0000, loss 7.451e+02, top1 0.00, top5 0.00
+2022-01-28 19:33:00 valid 0100, loss 6.576e+02, top1 0.17, top5 0.71
+2022-01-28 19:34:04 validation accuracy of pruned model: top1 0.09%, top5 0.48%.
+2022-01-28 19:34:05 pruning threshold: 1e-05, layer 0: zero/total filters (conv1/2) 12/384 (3.125%)
+2022-01-28 19:34:05 pruning threshold: 1e-05, layer 1: zero/total filters (conv1/2) 0/1024 (0.0%)
+2022-01-28 19:34:05 pruning threshold: 1e-05, layer 2: zero/total filters (conv1/2) 0/3072 (0.0%)
+2022-01-28 19:34:05 pruning threshold: 1e-05, layer 3: zero/total filters (conv1/2) 0/3072 (0.0%)
+2022-01-28 19:34:05 pruning threshold: 1e-05,   total: zero/total filters (conv1/2) 12/7552 (0.16%)
+2022-01-28 19:34:05 pruning threshold: 1e-05, zero/total filters (ratio): 101/22656 (0.45%)
+2022-01-28 19:34:05 pruning threshold: 1e-05,  zero/total params (ratio): 0.015882/25.557032M (0.06%)
+2022-01-28 19:34:07 pruning threshold: 1e-05, computational complexity: 4.09 GMac, number of parameters: 25.55 M
+2022-01-28 19:34:11 valid 0000, loss 7.451e+02, top1 0.00, top5 0.00
+2022-01-28 19:35:24 valid 0100, loss 6.576e+02, top1 0.17, top5 0.71
+2022-01-28 19:36:32 validation accuracy of pruned model: top1 0.09%, top5 0.48%.
+2022-01-28 19:36:32 pruning threshold: 0.0001, layer 0: zero/total filters (conv1/2) 12/384 (3.125%)
+2022-01-28 19:36:32 pruning threshold: 0.0001, layer 1: zero/total filters (conv1/2) 0/1024 (0.0%)
+2022-01-28 19:36:32 pruning threshold: 0.0001, layer 2: zero/total filters (conv1/2) 0/3072 (0.0%)
+2022-01-28 19:36:32 pruning threshold: 0.0001, layer 3: zero/total filters (conv1/2) 0/3072 (0.0%)
+2022-01-28 19:36:32 pruning threshold: 0.0001,   total: zero/total filters (conv1/2) 12/7552 (0.16%)
+2022-01-28 19:36:32 pruning threshold: 0.0001, zero/total filters (ratio): 131/22656 (0.58%)
+2022-01-28 19:36:32 pruning threshold: 0.0001,  zero/total params (ratio): 0.02119/25.557032M (0.08%)
+2022-01-28 19:36:33 pruning threshold: 0.0001, computational complexity: 4.09 GMac, number of parameters: 25.55 M
+2022-01-28 19:36:37 valid 0000, loss 7.451e+02, top1 0.00, top5 0.00
+2022-01-28 19:37:50 valid 0100, loss 6.576e+02, top1 0.17, top5 0.71
+2022-01-28 19:38:57 validation accuracy of pruned model: top1 0.09%, top5 0.48%.
+2022-01-28 19:38:57 pruning threshold: 0.001, layer 0: zero/total filters (conv1/2) 12/384 (3.125%)
+2022-01-28 19:38:57 pruning threshold: 0.001, layer 1: zero/total filters (conv1/2) 0/1024 (0.0%)
+2022-01-28 19:38:57 pruning threshold: 0.001, layer 2: zero/total filters (conv1/2) 0/3072 (0.0%)
+2022-01-28 19:38:57 pruning threshold: 0.001, layer 3: zero/total filters (conv1/2) 0/3072 (0.0%)
+2022-01-28 19:38:57 pruning threshold: 0.001,   total: zero/total filters (conv1/2) 12/7552 (0.16%)
+2022-01-28 19:38:57 pruning threshold: 0.001, zero/total filters (ratio): 156/22656 (0.69%)
+2022-01-28 19:38:57 pruning threshold: 0.001,  zero/total params (ratio): 0.025528/25.557032M (0.10%)
+2022-01-28 19:38:58 pruning threshold: 0.001, computational complexity: 4.09 GMac, number of parameters: 25.55 M
+2022-01-28 19:39:02 valid 0000, loss 7.451e+02, top1 0.00, top5 0.00
+2022-01-28 19:40:15 valid 0100, loss 6.576e+02, top1 0.17, top5 0.71
+2022-01-28 19:41:19 validation accuracy of pruned model: top1 0.09%, top5 0.48%.
+2022-01-28 19:41:19 pruning threshold: 0.01, layer 0: zero/total filters (conv1/2) 13/384 (3.3854166666666665%)
+2022-01-28 19:41:19 pruning threshold: 0.01, layer 1: zero/total filters (conv1/2) 0/1024 (0.0%)
+2022-01-28 19:41:19 pruning threshold: 0.01, layer 2: zero/total filters (conv1/2) 0/3072 (0.0%)
+2022-01-28 19:41:19 pruning threshold: 0.01, layer 3: zero/total filters (conv1/2) 0/3072 (0.0%)
+2022-01-28 19:41:19 pruning threshold: 0.01,   total: zero/total filters (conv1/2) 13/7552 (0.17%)
+2022-01-28 19:41:19 pruning threshold: 0.01, zero/total filters (ratio): 165/22656 (0.73%)
+2022-01-28 19:41:19 pruning threshold: 0.01,  zero/total params (ratio): 0.027274/25.557032M (0.11%)
+2022-01-28 19:41:20 pruning threshold: 0.01, computational complexity: 4.09 GMac, number of parameters: 25.55 M
+2022-01-28 19:41:24 valid 0000, loss 7.451e+02, top1 0.00, top5 0.00
+2022-01-28 19:42:37 valid 0100, loss 6.576e+02, top1 0.17, top5 0.71
+2022-01-28 19:43:44 validation accuracy of pruned model: top1 0.09%, top5 0.48%.
+2022-01-28 19:43:45 pruning threshold: 0.1, layer 0: zero/total filters (conv1/2) 13/384 (3.3854166666666665%)
+2022-01-28 19:43:45 pruning threshold: 0.1, layer 1: zero/total filters (conv1/2) 5/1024 (0.48828125%)
+2022-01-28 19:43:45 pruning threshold: 0.1, layer 2: zero/total filters (conv1/2) 0/3072 (0.0%)
+2022-01-28 19:43:45 pruning threshold: 0.1, layer 3: zero/total filters (conv1/2) 0/3072 (0.0%)
+2022-01-28 19:43:45 pruning threshold: 0.1,   total: zero/total filters (conv1/2) 18/7552 (0.24%)
+2022-01-28 19:43:45 pruning threshold: 0.1, zero/total filters (ratio): 709/22656 (3.13%)
+2022-01-28 19:43:45 pruning threshold: 0.1,  zero/total params (ratio): 0.10273/25.557032M (0.40%)
+2022-01-28 19:43:46 pruning threshold: 0.1, computational complexity: 4.08 GMac, number of parameters: 25.54 M
+2022-01-28 19:43:50 valid 0000, loss 7.451e+02, top1 0.00, top5 0.00
+2022-01-28 19:45:02 valid 0100, loss 6.576e+02, top1 0.17, top5 0.71
+2022-01-28 19:46:09 validation accuracy of pruned model: top1 0.09%, top5 0.48%.

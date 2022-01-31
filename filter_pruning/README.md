@@ -1,8 +1,10 @@
 # Filter pruning on ImageNet and ResNet-50
 
-This implementation is based on the pytorch implementation of ImageNet and ResNet-50 ([here](https://github.com/pytorch/examples/tree/master/imagenet)).
+This implementation performs filter pruning on ResNet-50 and ImageNet.
 
-This implementation is tailored to ResNet-50. Modifications are needed for other architectures.
+- This implementation is based on the pytorch implementation of ImageNet and ResNet-50 ([here](https://github.com/pytorch/examples/tree/master/imagenet)).
+
+- This implementation is tailored to ResNet-50. Modifications are needed for other architectures.
 
 ## Preparation
 - For distributed training configurations, please refer to the [original implementation](https://github.com/pytorch/examples/tree/master/imagenet).
@@ -23,7 +25,7 @@ To determine which filters could be pruned, run
 - Note that **[x]** means that this is the approach adopted in the paper.
 
 - To resume training, run\
-`python main_search_conv12.py --resume='path_to_experiment'`\
+`python main_search_conv12.py --resume='path_to_experiment'` **[x]**, or\
 `python main_search_all_conv.py --resume='path_to_experiment'`
 
 An example of `path_to_experiment` is `conv12_lr_0.001_momentum_0.9_wd_0.05_normalization_div_pretrained_True_20211102-092334`.
