@@ -12,6 +12,7 @@ import numpy as np
 import glob
 import sys
 import json
+import h5py
 
 import torch
 import torch.nn as nn
@@ -52,7 +53,7 @@ parser.add_argument('-b', '--batch-size', default=256, type=int,
                          'using Data Parallel or Distributed Data Parallel')
 parser.add_argument('-p', '--print-freq', default=100, type=int,
                     metavar='N', help='print frequency (default: 10)')
-parser.add_argument('--resume', default='.', type=str, metavar='PATH',
+parser.add_argument('--resume', default='./sres50_train_20220126-163758', type=str, metavar='PATH',
                     help='path to latest checkpoint (default: none)')
 parser.add_argument('--world-size', default=1, type=int,
                     help='number of nodes for distributed training')
@@ -114,28 +115,31 @@ def main_worker(gpu, ngpus_per_node, args):
     
     args.gpu = gpu
 
-    logger = set_logger(logger_name="{}/_log.txt".format(args.path_to_save))    
+    logger = set_logger(logger_name="{}/_log_reproduce.txt".format(args.path_to_save))    
     logger.info("This file contains the log of testing the performance of the model trained by RESREP.")
     logger.info("args = %s", args)
     
     if args.gpu is not None:
         print("Use GPU: {} for training".format(args.gpu))
 
-    # create model
-    if args.pretrained:
-        print("=> using pre-trained model '{}'".format(args.arch))
-        model = models.__dict__[args.arch](pretrained=True)
-    else:
-        print("=> creating model '{}' with random initial weights".format(args.arch))
-        model = models.__dict__[args.arch]()
-        
     if args.resume:
-        path_to_checkpoint = '{}/sres50_train/latest.pth'.format(args.resume)
+        # path_to_checkpoint = '{}/sres50_train/latest.pth'.format(args.resume)
+        path_to_checkpoint = '{}/finish_converted.hdf5'.format(args.resume)
         if os.path.isfile(path_to_checkpoint):
-            print("=> loading resrep final model")
-            checkpoint = torch.load(path_to_checkpoint)
-            model = transform_res50(model, checkpoint['model']) # copy weights from resrep
-            logger.info("=> loaded resrep final model")
+            logger.info("creating pruned model (with random initial weights)")
+            mask = [[[[20],[23],[]], [[22],[33],[]], [[1],[27],[]]], 
+                    [[[61],[95],[]], [[13],[46],[]], [[39],[71],[]], [[34],[86],[]]],
+                    [[[191],[203],[]], [[69],[140],[]], [[65],[142],[]], [[62],[95],[]], [[64],[90],[]], [[80],[87],[]]],
+                    [[[466],[482],[]], [[167],[298],[]], [[512],[512],[]]]]
+            model = models_with_reduce_conv12.__dict__[args.arch](mask)
+            macs, params = get_model_complexity_info(model, (3, 224, 224), as_strings=True,
+                                                     print_per_layer_stat=False, verbose=False)
+            logger.info("pruned model: computational complexity: {}, number of parameters: {}".format(macs, params))
+
+            logger.info("=> loading resrep hdf5 model")
+            model_hdf5 = read_hdf5(path_to_checkpoint)
+            model = transform_res50(model, model_hdf5)
+            logger.info("=> loaded resrep hdf5 model")
         else:
             raise ValueError("The model to load does not exist!")
     else:
@@ -177,9 +181,6 @@ def main_worker(gpu, ngpus_per_node, args):
     # define loss function (criterion) and optimizer
     criterion = nn.CrossEntropyLoss().cuda(args.gpu)
 
-    num_prunable_params, num_total_params = compute_pruning_upper_bound(model)
-    logger.info("prunable/total params (ratio): {:.2f}M/{:.2f}M ({:.2f}%)".format(num_prunable_params/1e6, num_total_params/1e6, num_prunable_params/num_total_params*100))
-
     cudnn.benchmark = True
 
     # Data loading code
@@ -196,23 +197,9 @@ def main_worker(gpu, ngpus_per_node, args):
         ])),
         batch_size=args.batch_size, shuffle=False,
         num_workers=args.workers, pin_memory=True)
-
     
     val1, val5 = validate(val_loader, model, criterion, logger, args)
     logger.info("validation accuracy of unpruned model: top1 {:.2f}%, top5 {:.2f}%.".format(val1, val5))
-
-    
-    for pruning_threshold in [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1]:
-        print_nonzeros_filters(model, logger, pruning_threshold=pruning_threshold)
-        model_compressed = compute_and_save_mask(model, args.path_to_save, logger, pruning_threshold=pruning_threshold, arch=args.arch)
-        
-        val1, val5 = validate(val_loader, model, criterion, logger, args)
-        logger.info("validation accuracy of pruned model: top1 {:.2f}%, top5 {:.2f}%.".format(val1, val5))
-
-        if not args.multiprocessing_distributed or (args.multiprocessing_distributed
-                and args.rank % ngpus_per_node == 0):
-            torch.save({'small_model': model_compressed.state_dict()}, "{}/small_model_conv12_{}.pth.tar".format(args.path_to_save, pruning_threshold))
-
 
 def validate(val_loader, model, criterion, logger, args):
     batch_time = AverageMeter('Time', ':6.3f')
@@ -245,7 +232,7 @@ def validate(val_loader, model, criterion, logger, args):
 
     return top1.avg, top5.avg
 
-def transform_res50(resnet18, model2):
+def transform_res50(model1, model2):
     key_replace_dict = {
         'layer1.': 'stage1.block',
         'layer2.': 'stage2.block',
@@ -278,19 +265,44 @@ def transform_res50(resnet18, model2):
         return origin_name
 
     save_dict = {}
-    for k, v in resnet18.state_dict().items():
+    for k, v in model1.state_dict().items():
         if k in exact_replace_dict:
-            save_dict[k] = model2[exact_replace_dict[k]]
+            new_k = exact_replace_dict[k]
         elif 'downsample' in k:
-            save_dict[k] = model2[k.replace('layer', 'stage')
-                .replace('0.downsample.0.weight', 'projection.conv.weight')
-                .replace('0.downsample.1.', 'projection.bn.')]
+            new_k = k.replace('layer', 'stage').replace('0.downsample.0.weight', 'projection.conv.weight').replace('0.downsample.1.', 'projection.bn.')
         else:
-            save_dict[k] = model2[replace_keyword(replace_keyword(replace_keyword(k)))]
+            new_k = replace_keyword(replace_keyword(replace_keyword(k)))
+        
+        if new_k in model2:
+            save_dict[k] = torch.tensor(model2[new_k])
+        else:
+            raise ValueError("The parameters with key '{}' are not found in the saved model!".format(new_k))
             
-    resnet18.load_state_dict(save_dict)
-    return resnet18
+    model1.load_state_dict(save_dict)
     
+    return model1
+
+
+def representsInt(s):
+    try:
+        int(s)
+        return True
+    except ValueError:
+        return False
+
+def read_hdf5(file_path):
+    result = {}
+    with h5py.File(file_path, 'r') as f:
+        for k in f.keys():
+            value = np.asarray(f[k])
+            if representsInt(k):
+                result[int(k)] = value
+            else:
+                result[str(k).replace('+','/')] = value
+    print('read {} arrays from {}'.format(len(result), file_path))
+    f.close()
+    return result
+
 class AverageMeter(object):
     """Computes and stores the average and current value"""
     def __init__(self, name, fmt=':f'):
@@ -360,43 +372,6 @@ def create_exp_dir(path, scripts_to_save=None):
       dst_file = os.path.join(path, 'scripts', os.path.basename(script))
       shutil.copyfile(script, dst_file)
 
-
-def print_nonzeros_filters(model, logger, pruning_threshold=1e-6):
-    num_zero_filters = 0
-    num_total_filters = 0
-    
-    num_zero_filters_per_layer = [0, 0, 0, 0]
-    num_total_filters_per_layer = [0, 0, 0, 0]
-    
-    num_zero_params = 0
-    num_total_params = 0
-    
-    for name, param in model.named_parameters():
-        num_total_params += param.numel()
-        if "layer" in name and "conv" in name:
-            layer = int(name[12])
-            filter_norms = torch.norm(param.view(param.shape[0],-1),p=2,dim=1)
-#             print("name: {}, number of output channels {}".format(name, filter_norms.size()))
-#             print("    value {}".format(filter_norms))
-            num_zero_filters_tmp = (torch.sum(filter_norms <= pruning_threshold)).item()
-            num_total_filters_tmp = param.shape[0]
-            num_zero_filters += num_zero_filters_tmp
-            num_total_filters += num_total_filters_tmp
-            
-            if "conv1" in name or "conv2" in name:
-                num_zero_filters_per_layer[layer - 1]  +=  num_zero_filters_tmp
-                num_total_filters_per_layer[layer - 1] += num_total_filters_tmp
-            
-            num_zero_params += param.numel() * num_zero_filters_tmp / num_total_filters_tmp
-        elif "layer" in name and "bn" in name:
-            num_zero_params += param.numel() * num_zero_filters_tmp / num_total_filters_tmp
-    
-    for layer in range(0, 4):
-        logger.info("pruning threshold: {}, layer {}: zero/total filters (conv1/2) {}/{} ({}%)".format(pruning_threshold, layer, num_zero_filters_per_layer[layer], num_total_filters_per_layer[layer], num_zero_filters_per_layer[layer]/num_total_filters_per_layer[layer]*100))
-        
-    logger.info("pruning threshold: {},   total: zero/total filters (conv1/2) {}/{} ({:.2f}%)".format(pruning_threshold, np.sum(num_zero_filters_per_layer), np.sum(num_total_filters_per_layer), np.sum(num_zero_filters_per_layer)/np.sum(num_total_filters_per_layer)*100))
-    logger.info("pruning threshold: {}, zero/total filters (ratio): {}/{} ({:.2f}%)".format(pruning_threshold, num_zero_filters, num_total_filters, num_zero_filters/num_total_filters*100))
-    logger.info("pruning threshold: {},  zero/total params (ratio): {}/{}M ({:.2f}%)".format(pruning_threshold, num_zero_params/1e6, num_total_params/1e6, num_zero_params/num_total_params*100))
     
 
 def compute_pruning_upper_bound(model):
@@ -415,74 +390,5 @@ def compute_pruning_upper_bound(model):
     return num_prunable_params, num_total_params
 
 
-def compute_and_save_mask(model, file_path, logger, pruning_threshold=1e-6, arch='resnet50'):
-    # valid for resnet50 only
-    mask = [[[[],[],[]], [[],[],[]], [[],[],[]]], 
-            [[[],[],[]], [[],[],[]], [[],[],[]], [[],[],[]]],
-            [[[],[],[]], [[],[],[]], [[],[],[]], [[],[],[]], [[],[],[]], [[],[],[]]],
-            [[[],[],[]], [[],[],[]], [[],[],[]]]]
-    for name, param in model.named_parameters():
-        if "layer" in name:
-            layer_index = int(name[12])
-            block_index = int(name[14])
-            if "conv" in name:
-                conv_index = int(name[20])
-                filter_norms = torch.norm(param.view(param.shape[0], -1), p=2, dim=1)
-                mask[layer_index-1][block_index][conv_index-1] = (filter_norms.gt(pruning_threshold)).cpu().detach().numpy()
-
-    np.save("{}/mask_{}".format(file_path, pruning_threshold), mask)
-
-    model_compressed = models_with_reduce_conv12.__dict__[arch](mask)
-    macs, params = get_model_complexity_info(model_compressed, (3, 224, 224), as_strings=True,
-                                             print_per_layer_stat=False, verbose=False)
-    logger.info("pruning threshold: {}, computational complexity: {}, number of parameters: {}".format(pruning_threshold, macs, params))
-
-    model_compressed = transfer_model_parameters(model_compressed, mask, arch, model)
-
-    return model_compressed
-
-
-def transfer_model_parameters(small_model, mask, arch, big_model):
-    if arch == "resnet50":
-        indices = [[[[],[],[]], [[],[],[]], [[],[],[]]], 
-                  [[[],[],[]], [[],[],[]], [[],[],[]], [[],[],[]]],
-                  [[[],[],[]], [[],[],[]], [[],[],[]], [[],[],[]], [[],[],[]], [[],[],[]]],
-                  [[[],[],[]], [[],[],[]], [[],[],[]]]]
-        for layer_index, mask_layer in enumerate(mask):
-            for block_index, mask_block in enumerate(mask_layer):
-                for conv_index, mask_conv in enumerate(mask_block):
-                    for filter_index, mask_filter in enumerate(mask_conv):
-                        if mask_filter:
-                            indices[layer_index][block_index][conv_index].append(filter_index)
-        
-    big_state_dict = big_model.state_dict()
-    small_state_dict = small_model.state_dict()
-    for key, value in small_state_dict.items():
-        key_module = "module." + key
-        if "layer" in key: #layer1.0.downsample.0.weight
-            layer_index = int(key[5]) - 1
-            block_index = int(key[7])
-            if "conv" in key or "bn" in key:
-                if "num_batches_tracked" in key:
-                    small_state_dict[key] = big_state_dict[key_module]
-                    pass
-                else:
-                    if "conv" in key:
-                        conv_index = int(key[13]) - 1
-                    compressed_parameters = big_state_dict[key_module]
-                    if conv_index == 0 or conv_index == 1:
-                         compressed_parameters = torch.index_select(compressed_parameters, 0, torch.tensor(indices[layer_index][block_index][conv_index]).cuda())
-                    if "conv2" in key or "conv3" in key: # if conv_index == 2 or conv_index == 3:
-                        compressed_parameters = torch.index_select(compressed_parameters, 1, torch.tensor(indices[layer_index][block_index][conv_index-1]).cuda())
-                    small_state_dict[key] = compressed_parameters
-            else:
-                small_state_dict[key] = big_state_dict[key_module]
-        else:
-            small_state_dict[key] = big_state_dict[key_module]
-    small_model.load_state_dict(small_state_dict)
-    
-    return small_model
-
-    
 if __name__ == '__main__':
     main()
