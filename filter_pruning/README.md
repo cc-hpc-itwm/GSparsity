@@ -46,8 +46,8 @@ Retrain a model, run
 `python main_reduce_retrain_all_conv.py --baseline_model="xxx"`
 
 - To resume retraining, run\
-`python main_reduce_retrain_conv12.py --path_to_resume='path_to_experiment'` **[x]**, or\
-`python main_reduce_retrain_all_conv.py --path_to_resume='path_to_experiment'`
+`python main_reduce_retrain_conv12.py --resume='path_to_experiment'` **[x]**, or\
+`python main_reduce_retrain_all_conv.py --resume='path_to_experiment'`
 
 An example of `path_to_experiment` is `retrain_resnet50_pretrained_conv12_layer_adaptive_mu_0_05_20211105-074034`.
 

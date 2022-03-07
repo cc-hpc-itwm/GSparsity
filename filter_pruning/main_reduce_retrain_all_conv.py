@@ -67,7 +67,7 @@ parser.add_argument('--pruning_threshold', default=1e-6, type=float,
                     metavar='W', help='pruning threshold (default: 1e-6)')
 parser.add_argument('-p', '--print-freq', default=1000, type=int,
                     metavar='N', help='print frequency (default: 10)')
-parser.add_argument('--path_to_resume', default='', type=str, metavar='PATH',
+parser.add_argument('--resume', default='', type=str, metavar='PATH',
                     help='path to latest checkpoint (default: none)')
 parser.add_argument('-e', '--evaluate', dest='evaluate', action='store_true',
                     help='evaluate model on validation set')
@@ -75,8 +75,8 @@ parser.add_argument('--world-size', default=1, type=int,
                     help='number of nodes for distributed training')
 parser.add_argument('--rank', default=0, type=int,
                     help='node rank for distributed training')
-# parser.add_argument('--dist-url', default='tcp://192.168.152.41:23456', type=str,
-#                     help='url used to set up distributed training')
+parser.add_argument('--dist-url', default='tcp://{}:23456'.format(os.environ['CARME_MASTER_IP']), type=str,
+                    help='url used to set up distributed training')
 parser.add_argument('--dist-backend', default='nccl', type=str,
                     help='distributed backend')
 parser.add_argument('--seed', default=None, type=int,
@@ -98,12 +98,12 @@ best_acc1 = 0
 def main():
     args = parser.parse_args()
 
-    if args.path_to_resume:
-        resume_training = args.path_to_resume
-        f = open("{}/run_info.json".format(args.path_to_resume))
+    if args.resume:
+        resume_training = args.resume
+        f = open("{}/run_info.json".format(args.resume))
         run_info = json.load(f)
         vars(args).update(run_info['args'])
-        args.path_to_resume = resume_training
+        args.resume = resume_training
     else:
         if args.run_id is None:
             args.run_id = "{}_lr_{}_momentum_{}_wd_{}_{}".format(args.baseline_model,
@@ -125,8 +125,6 @@ def main():
         run_info['args'] = vars(args)        
         with open('{}/run_info.json'.format(args.path_to_save), 'w') as f:
             json.dump(run_info, f)
-    
-    args.dist_url = 'tcp://{}:23456'.format(os.environ['CARME_MASTER_IP'])
     
     if args.seed is not None:
         random.seed(args.seed)
@@ -187,11 +185,11 @@ def main_worker(gpu, ngpus_per_node, args):
     if os.path.isfile(path_to_prune):
         mask = np.load(path_to_prune, allow_pickle=True)
 
-    # create model
-    print("=> creating model '{}'".format(args.arch))
+    # create compressed model
+    print("=> creating (compressed) model '{}'".format(args.arch))
     model = models_with_reduce_all_conv.__dict__[args.arch](mask)
 
-    if args.path_to_resume:
+    if args.resume:
         pass
     else:
         path_to_prune = "{}/small_model_all_conv_{}.pth.tar".format(eval("list_of_models.%s" % args.baseline_model), args.pruning_threshold)
@@ -239,16 +237,16 @@ def main_worker(gpu, ngpus_per_node, args):
                                            print_per_layer_stat=False, verbose=False)
     logger.info('{:<30}  {:<8}'.format('Computational complexity: ', macs))
     logger.info('{:<30}  {:<8}'.format('Number of parameters: ', params))
+    
     # define loss function (criterion) and optimizer
     criterion = nn.CrossEntropyLoss().cuda(args.gpu)
-
     optimizer = torch.optim.SGD(model.parameters(),
                                 args.lr,
                                 momentum=args.momentum,
                                 weight_decay=args.weight_decay)
     
     # optionally resume from a checkpoint
-    if args.path_to_resume:
+    if args.resume:
         path_to_checkpoint = "{}/checkpoint.pth.tar".format(args.path_to_save)
         if os.path.isfile(path_to_checkpoint):
             logger.info("=> loading checkpoint '{}'".format(args.path_to_save))
@@ -269,21 +267,6 @@ def main_worker(gpu, ngpus_per_node, args):
                   .format(args.path_to_save, checkpoint['epoch']))
         else:
             logger.info("=> no checkpoint found at '{}'".format(args.path_to_save))
-#     else:
-#         path_to_prune = "{}/checkpoint.pth.tar".format(eval("list_of_models.%s" % args.baseline_model))
-#         if os.path.isfile(path_to_prune):
-#             logger.info("=> loading baseline model '{}'".format(path_to_prune))
-#             if args.gpu is None:
-#                 checkpoint = torch.load(path_to_prune)
-#             else:
-#                 # Map model to be loaded to specified single gpu.
-#                 loc = 'cuda:{}'.format(args.gpu)
-#                 checkpoint = torch.load(path_to_prune, map_location=loc)
-#             model.load_state_dict(checkpoint['state_dict'])
-#             logger.info("=> loaded baseline model '{}'"
-#                   .format(path_to_prune))
-#         else:
-#             logger.info("=> no baseline model found at '{}'".format(path_to_prune))
             
     cudnn.benchmark = True
 
@@ -363,12 +346,11 @@ def main_worker(gpu, ngpus_per_node, args):
                             is_best,
                             args.path_to_save)
         
-        
         logger.info('(JOBID %s) epoch %d: train time %.2f, inference time %.2fs, valid_top1 %.2f (best_top1 %.2f), valid_top5 %.2f',
                     os.environ['SLURM_JOBID'],
                     epoch,
-                    t1 - t0,
-                    t2 - t1,
+                    t1-t0,
+                    t2-t1,
                     acc1,
                     best_acc1,
                     acc5)
@@ -380,10 +362,6 @@ def train(train_loader, model, criterion, optimizer, epoch, logger, args):
     losses = AverageMeter('Loss', ':.4e')
     top1 = AverageMeter('Acc@1', ':6.2f')
     top5 = AverageMeter('Acc@5', ':6.2f')
-#     progress = ProgressMeter(
-#         len(train_loader),
-#         [batch_time, data_time, losses, top1, top5],
-#         prefix="Epoch: [{}]".format(epoch))
 
     # switch to train mode
     model.train()
@@ -428,10 +406,6 @@ def validate(val_loader, model, criterion, logger, args):
     losses = AverageMeter('Loss', ':.4e')
     top1 = AverageMeter('Acc@1', ':6.2f')
     top5 = AverageMeter('Acc@5', ':6.2f')
-#     progress = ProgressMeter(
-#         len(val_loader),
-#         [batch_time, losses, top1, top5],
-#         prefix='Test: ')
 
     # switch to evaluate mode
     model.eval()
@@ -462,10 +436,6 @@ def validate(val_loader, model, criterion, logger, args):
 #                 progress.display(i)
             if i % args.print_freq == 0:
                 logger.info('valid %04d, loss %.3e, top1 %.2f, top5 %.2f', i, losses.avg, top1.avg, top5.avg)
-
-#         # TODO: this should also be done with the ProgressMeter
-#         print(' * Acc@1 {top1.avg:.3f} Acc@5 {top5.avg:.3f}'
-#               .format(top1=top1, top5=top5))
 
     return top1.avg, top5.avg
 
@@ -502,23 +472,6 @@ class AverageMeter(object):
         return fmtstr.format(**self.__dict__)
 
 
-class ProgressMeter(object):
-    def __init__(self, num_batches, meters, prefix=""):
-        self.batch_fmtstr = self._get_batch_fmtstr(num_batches)
-        self.meters = meters
-        self.prefix = prefix
-
-    def display(self, batch):
-        entries = [self.prefix + self.batch_fmtstr.format(batch)]
-        entries += [str(meter) for meter in self.meters]
-        print('\t'.join(entries))
-
-    def _get_batch_fmtstr(self, num_batches):
-        num_digits = len(str(num_batches // 1))
-        fmt = '{:' + str(num_digits) + 'd}'
-        return '[' + fmt + '/' + fmt.format(num_batches) + ']'
-
-
 def adjust_learning_rate(optimizer, epoch, args):
     """Sets the learning rate to the initial LR decayed by 10 every 30 epochs"""
     lr = args.lr * (0.1 ** (epoch // 30))
@@ -542,6 +495,7 @@ def accuracy(output, target, topk=(1,)):
             res.append(correct_k.mul_(100.0 / batch_size))
         return res
 
+
 def set_logger(logger_name, level=logging.INFO):
     """
     Method to return a custom logger with the given name and level
@@ -560,8 +514,6 @@ def set_logger(logger_name, level=logging.INFO):
     logger.addHandler(file_handler)
     return logger
 
-def count_parameters_in_MB(model):
-  return np.sum(np.prod(v.size()) for name, v in model.named_parameters() if "auxiliary" not in name)/1e6
 
 def create_exp_dir(path, scripts_to_save=None):
   if not os.path.exists(path):
@@ -573,31 +525,6 @@ def create_exp_dir(path, scripts_to_save=None):
     for script in scripts_to_save:
       dst_file = os.path.join(path, 'scripts', os.path.basename(script))
       shutil.copyfile(script, dst_file)
-
-
-def print_nonzeros_filters(model, pruning_threshold=1e-6):
-    num_zero_filters = 0
-    num_total_filters = 0
-    
-    num_zero_params = 0
-    num_total_params = 0
-    for name, param in model.named_parameters():
-        num_total_params += param.numel()
-        if "layer" in name and "conv" in name:
-#             print("    value {}".format(filter_norms))
-            filter_norms = torch.norm(param.view(param.shape[0], -1), p=2, dim=1)
-#             print("name: {}, number of output and zero channels {} and {}".format(name, filter_norms.size(), (torch.sum(filter_norms <= pruning_threshold)).item()))
-            num_zero_filters_tmp = (torch.sum(filter_norms <= pruning_threshold)).item()
-            num_total_filters_tmp = param.shape[0]
-            num_zero_filters += num_zero_filters_tmp
-            num_total_filters += num_total_filters_tmp
-            
-            num_zero_params += param.numel() * num_zero_filters_tmp / num_total_filters_tmp
-        elif "layer" in name and "bn" in name:
-            num_zero_params += param.numel() * num_zero_filters_tmp / num_total_filters_tmp
-            
-    
-    return num_zero_filters, num_total_filters, num_zero_params, num_total_params
 
 
 if __name__ == '__main__':
