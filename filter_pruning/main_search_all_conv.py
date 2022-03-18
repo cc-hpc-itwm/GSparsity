@@ -3,7 +3,6 @@
 
 import argparse
 import os
-# os.environ["NCCL_DEBUG"] = "INFO"
 import random
 import shutil
 import time
@@ -232,10 +231,6 @@ def main_worker(gpu, ngpus_per_node, args):
     # define loss function (criterion) and optimizer
     criterion = nn.CrossEntropyLoss().cuda(args.gpu)
 
-#     optimizer = torch.optim.SGD(model.parameters(),
-#                                 args.lr,
-#                                 momentum=args.momentum,
-#                                 weight_decay=args.weight_decay)
     num_prunable_params, num_total_params = compute_pruning_upper_bound(model)
     logger.info("prunable/total params (ratio): {:.2f}M/{:.2f}M ({:.2f}%)".format(num_prunable_params/1e6, num_total_params/1e6, num_prunable_params/num_total_params*100))
     
@@ -357,19 +352,8 @@ def main_worker(gpu, ngpus_per_node, args):
                 and args.rank % ngpus_per_node == 0):
             torch.save({'small_model': model_compressed.state_dict()}, "{}/small_model_all_conv_{}.pth.tar".format(args.path_to_save, pruning_threshold))
 
-    
-    for pruning_threshold in [1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1]:
-        print_nonzeros_filters(model, logger, pruning_threshold=pruning_threshold, arch=args.arch)
-        model_compressed = compute_save_mask(model, args.path_to_save, logger, pruning_threshold=pruning_threshold, arch=args.arch)
-        if not args.multiprocessing_distributed or (args.multiprocessing_distributed
-                and args.rank % ngpus_per_node == 0):
-            torch.save({'small_model': model_compressed.state_dict()}, "{}/small_model_all_conv_{}.pth.tar".format(args.path_to_save, pruning_threshold))
-
-        
 
 def train(train_loader, model, criterion, optimizer, epoch, logger, args):
-    batch_time = AverageMeter('Time', ':6.3f')
-    data_time = AverageMeter('Data', ':6.3f')
     losses = AverageMeter('Loss', ':.4e')
     top1 = AverageMeter('Acc@1', ':6.2f')
     top5 = AverageMeter('Acc@5', ':6.2f')
@@ -377,10 +361,7 @@ def train(train_loader, model, criterion, optimizer, epoch, logger, args):
     # switch to train mode
     model.train()
 
-#     end = time.time()
     for i, (images, target) in enumerate(train_loader):
-#         # measure data loading time
-#         data_time.update(time.time() - end)
 
         if args.gpu is not None:
             images = images.cuda(args.gpu, non_blocking=True)
@@ -402,18 +383,11 @@ def train(train_loader, model, criterion, optimizer, epoch, logger, args):
         loss.backward()
         optimizer.step()
 
-#         # measure elapsed time
-#         batch_time.update(time.time() - end)
-#         end = time.time()
-
-#         if i % args.print_freq == 0:
-#             progress.display(i)
         if i % args.print_freq == 0:
             logger.info('train %04d, loss %.3e, top1 %.2f, top5 %.2f', i, losses.avg, top1.avg, top5.avg)
 
 
 def validate(val_loader, model, criterion, logger, args):
-    batch_time = AverageMeter('Time', ':6.3f')
     losses = AverageMeter('Loss', ':.4e')
     top1 = AverageMeter('Acc@1', ':6.2f')
     top5 = AverageMeter('Acc@5', ':6.2f')
@@ -422,7 +396,6 @@ def validate(val_loader, model, criterion, logger, args):
     model.eval()
 
     with torch.no_grad():
-#         end = time.time()
         for i, (images, target) in enumerate(val_loader):
             if args.gpu is not None:
                 images = images.cuda(args.gpu, non_blocking=True)
@@ -439,12 +412,6 @@ def validate(val_loader, model, criterion, logger, args):
             top1.update(acc1[0], images.size(0))
             top5.update(acc5[0], images.size(0))
 
-#             # measure elapsed time
-#             batch_time.update(time.time() - end)
-#             end = time.time()
-
-#             if i % args.print_freq == 0:
-#                 progress.display(i)
             if i % args.print_freq == 0:
                 logger.info('valid %04d, loss %.3e, top1 %.2f, top5 %.2f', i, losses.avg, top1.avg, top5.avg)
 
@@ -508,9 +475,8 @@ def accuracy(output, target, topk=(1,)):
 
 
 def set_logger(logger_name, level=logging.INFO):
-    """
-    Method to return a custom logger with the given name and level
-    """
+    """Method to return a custom logger with the given name and level"""
+
     logger = logging.getLogger(logger_name)
     logger.setLevel(level)
     log_format = logging.Formatter("%(asctime)s %(message)s", '%Y-%m-%d %H:%M:%S')
@@ -539,7 +505,7 @@ def create_exp_dir(path, scripts_to_save=None):
 
 
 def print_nonzeros_filters(model, logger, pruning_threshold=1e-6, arch="resnet50"):
-# compute and print the number of zero filters in each layer
+    """compute and print the number of zero filters in each layer"""
 
     if arch not in ['resnet50']:
         raise NotImplementedError('Currently only ResNet-50 is supported.')
@@ -579,7 +545,7 @@ def print_nonzeros_filters(model, logger, pruning_threshold=1e-6, arch="resnet50
     
 
 def compute_pruning_upper_bound(model, pruning_threshold=1e-6):
-# compute and return the number of prunable parameters and total parameters
+    """compute and return the number of prunable parameters and total parameters"""
 
     num_zero_filters = 0
     num_total_filters = 0    
@@ -596,15 +562,19 @@ def compute_pruning_upper_bound(model, pruning_threshold=1e-6):
 
 
 def compute_save_mask(model, file_path, logger, pruning_threshold=1e-6, arch='resnet50'):
-# Given a model, this function computes and saves the mask of zero filters.
+    """
+    Given a model, this function computes and saves the mask of zero filters.
 
-# variable: model
-# variable: file_path, the path to save mask
-# variable: logger, to save the complexity of compressed model
-# variable: pruning_threshold, threshold to keep a filter or not
-# variable: arch, network architecture (Currently only ResNet-50 is supported.)
+    variable:
+        model
+        file_path, the path to save mask
+        logger, to save the complexity of compressed model
+        pruning_threshold, threshold to keep a filter or not
+        arch, network architecture (Currently only ResNet-50 is supported.)
 
-# return: compressed model, with the parameters of nonzero filters transferred from model to the compressed model.
+    return:
+        compressed model, with the parameters of nonzero filters transferred from model to the compressed model.
+    """
 
     if arch not in ['resnet50']:
         raise NotImplementedError('Currently only ResNet-50 is supported.')
@@ -639,7 +609,8 @@ def compute_save_mask(model, file_path, logger, pruning_threshold=1e-6, arch='re
 
 
 def transfer_model_parameters(big_model, small_model, mask, arch='resnet50'):
-# transfer the weights of nonzero filters (together with the following bn) from big_model to small_model
+    """transfer the weights of nonzero filters (together with the following bn) from big_model to small_model"""
+
     if arch in ["resnet50"]:
         # detect the indices of nonzero filters
         indices = [[[[],[],[]], [[],[],[]], [[],[],[]]], 
@@ -660,8 +631,7 @@ def transfer_model_parameters(big_model, small_model, mask, arch='resnet50'):
     small_state_dict = small_model.state_dict()
     for key, value in small_state_dict.items():
         key_module = "module." + key
-        print("small_state key {}, value size {}".format(key, value.size()))
-        print("  big_state key {}, value size {}".format(key_module, big_state_dict[key_module].size()))
+
         if "layer" in key: #An example of key is layer1.0.downsample.0.weight
             layer_index = int(key[5]) - 1
             block_index = int(key[7])
@@ -686,9 +656,11 @@ def transfer_model_parameters(big_model, small_model, mask, arch='resnet50'):
 
 
 def group_model_parameters(model, mu):
-# assign regularization gain mu. If a parameter is not prunable, mu=0.
-# variable: model, regularization (mu)
-# return: network parameters that will be passed to the optimizer
+    """
+    assign regularization gain mu. If a parameter is not prunable, mu=0.
+    variable: model, regularization (mu)
+    return: network parameters that will be passed to the optimizer
+    """
 
     if mu is not None and mu < 0:
         raise ValueError("Invalid weight decay value: {}".format(mu))

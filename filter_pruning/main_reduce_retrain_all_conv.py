@@ -311,7 +311,7 @@ def main_worker(gpu, ngpus_per_node, args):
                 os.environ['SLURM_JOBID'],
                 acc1,
                 acc5,
-                time1 - time0)
+                time1-time0)
     if args.evaluate:
         return
 
@@ -357,8 +357,6 @@ def main_worker(gpu, ngpus_per_node, args):
         
 
 def train(train_loader, model, criterion, optimizer, epoch, logger, args):
-    batch_time = AverageMeter('Time', ':6.3f')
-    data_time = AverageMeter('Data', ':6.3f')
     losses = AverageMeter('Loss', ':.4e')
     top1 = AverageMeter('Acc@1', ':6.2f')
     top5 = AverageMeter('Acc@5', ':6.2f')
@@ -366,10 +364,7 @@ def train(train_loader, model, criterion, optimizer, epoch, logger, args):
     # switch to train mode
     model.train()
 
-#     end = time.time()
     for i, (images, target) in enumerate(train_loader):
-#         # measure data loading time
-#         data_time.update(time.time() - end)
 
         if args.gpu is not None:
             images = images.cuda(args.gpu, non_blocking=True)
@@ -391,18 +386,11 @@ def train(train_loader, model, criterion, optimizer, epoch, logger, args):
         loss.backward()
         optimizer.step()
 
-#         # measure elapsed time
-#         batch_time.update(time.time() - end)
-#         end = time.time()
-
-#         if i % args.print_freq == 0:
-#             progress.display(i)
         if i % args.print_freq == 0:
             logger.info('train %04d, loss %.3e, top1 %.2f, top5 %.2f', i, losses.avg, top1.avg, top5.avg)
 
 
 def validate(val_loader, model, criterion, logger, args):
-    batch_time = AverageMeter('Time', ':6.3f')
     losses = AverageMeter('Loss', ':.4e')
     top1 = AverageMeter('Acc@1', ':6.2f')
     top5 = AverageMeter('Acc@5', ':6.2f')
@@ -411,7 +399,6 @@ def validate(val_loader, model, criterion, logger, args):
     model.eval()
 
     with torch.no_grad():
-#         end = time.time()
         for i, (images, target) in enumerate(val_loader):
             if args.gpu is not None:
                 images = images.cuda(args.gpu, non_blocking=True)
@@ -428,12 +415,6 @@ def validate(val_loader, model, criterion, logger, args):
             top1.update(acc1[0], images.size(0))
             top5.update(acc5[0], images.size(0))
 
-#             # measure elapsed time
-#             batch_time.update(time.time() - end)
-#             end = time.time()
-
-#             if i % args.print_freq == 0:
-#                 progress.display(i)
             if i % args.print_freq == 0:
                 logger.info('valid %04d, loss %.3e, top1 %.2f, top5 %.2f', i, losses.avg, top1.avg, top5.avg)
 
@@ -497,9 +478,8 @@ def accuracy(output, target, topk=(1,)):
 
 
 def set_logger(logger_name, level=logging.INFO):
-    """
-    Method to return a custom logger with the given name and level
-    """
+    """Method to return a custom logger with the given name and level"""
+
     logger = logging.getLogger(logger_name)
     logger.setLevel(level)
     log_format = logging.Formatter("%(asctime)s %(message)s", '%Y-%m-%d %H:%M:%S')
