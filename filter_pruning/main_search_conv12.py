@@ -1,5 +1,7 @@
-# Use ProxSGD to prune filters; all filters in each block are prunable.
-# After training is completed, the model is compressed to a small dense model, and the weights of the nonzero filters are passed to the compressed model.
+'''
+Use ProxSGD to prune filters; all filters in conv1 and conv2 of each block are prunable.
+After training is completed, the model is compressed to a small dense model, and the weights of the nonzero filters are transferred to the compressed model.
+'''
 
 import argparse
 import os
@@ -8,11 +10,11 @@ import shutil
 import time
 import warnings
 import logging
-import numpy as np
 import glob
 import sys
 import json
 
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.parallel
@@ -25,12 +27,10 @@ import torch.utils.data.distributed
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
 import torchvision.models as models
+from ptflops import get_model_complexity_info
 
 from ProxSGD_for_filters import ProxSGD
 import models_with_reduce_conv12
-import models_with_reduce_all_conv
-import models_with_masks
-from ptflops import get_model_complexity_info
 
 model_names = sorted(name for name in models.__dict__
     if name.islower() and not name.startswith("__")
@@ -59,8 +59,10 @@ parser.add_argument('--lr', default=0.001, type=float,
                     metavar='LR', help='initial learning rate', dest='lr')
 parser.add_argument('--momentum', default=0.9, type=float, metavar='M',
                     help='momentum')
-parser.add_argument('--weight_decay', default=0.09, type=float,
-                    metavar='W', help='regularization gain mu (default: 0.09)')
+parser.add_argument('--weight_decay', default=0.05, type=float,
+                    metavar='W', help='regularization gain mu (default: 0.05)')
+parser.add_argument('--pruning_threshold', default=1e-6, type=float,
+                    help='pruning threshold for filter L2 norm (default: 1e-6)')
 parser.add_argument('-p', '--print-freq', default=1000, type=int,
                     metavar='N', help='print frequency (default: 10)')
 parser.add_argument('--resume', default='', type=str, metavar='PATH',
@@ -73,8 +75,8 @@ parser.add_argument('--world-size', default=1, type=int,
                     help='number of nodes for distributed training')
 parser.add_argument('--rank', default=0, type=int,
                     help='node rank for distributed training')
-parser.add_argument('--dist-url', default='tcp://{}:23456'.format(os.environ['CARME_MASTER_IP']), type=str,
-                    help='url used to set up distributed training')
+parser.add_argument('--dist-url', default='tcp://{}:23456'.format(os.environ['CARME_MASTER_IP']),
+		    type=str, help='url used to set up distributed training')
 parser.add_argument('--dist-backend', default='nccl', type=str,
                     help='distributed backend')
 parser.add_argument('--seed', default=None, type=int,
@@ -86,12 +88,12 @@ parser.add_argument('--multiprocessing_distributed', action='store_true', defaul
                          'N processes per node, which has N GPUs. This is the '
                          'fastest way to use PyTorch for either single node or '
                          'multi node data parallel training')
-parser.add_argument('--path_to_save', type=str, default="conv12", help='path to the folder where the experiment will be saved')
+parser.add_argument('--path_to_save', type=str, default="conv12",
+		    help='path to the folder where the experiment will be saved')
 parser.add_argument('--run_id', type=str, default=None, help='the identifier of this specific run')
 parser.add_argument('--adaptive_lr', action='store_true', default=True, help='use lr scheduler')
-parser.add_argument('--normalization', choices=[None, "mul", "div"],
+parser.add_argument('--normalization', default="div", choices=[None, "mul", "div"],
                     help='normalize the regularization (mu) by operation dimension: none, mul or div')
-
 
 best_acc1 = 0
 
@@ -101,10 +103,12 @@ def main():
 
     if args.resume:
         resume_training = args.resume
+        new_dist_url = args.dist_url
         f = open("{}/run_info.json".format(args.resume))
         run_info = json.load(f)
         vars(args).update(run_info['args'])
         args.resume = resume_training
+        args.dist_url = new_dist_url
     else:
         if args.run_id is None:
             args.run_id = "lr_{}_momentum_{}_wd_{}_normalization_{}_pretrained_{}_{}".format(args.lr,
@@ -123,12 +127,12 @@ def main():
                                                                                                 time.strftime("%Y%m%d-%H%M%S"))
         args.path_to_save = "{}_{}".format(args.path_to_save, args.run_id)
         create_exp_dir(args.path_to_save, scripts_to_save=glob.glob('*.py'))
-        
+
         run_info = {}
-        run_info['args'] = vars(args)        
+        run_info['args'] = vars(args)
         with open('{}/run_info.json'.format(args.path_to_save), 'w') as f:
             json.dump(run_info, f)
-    
+
     if args.seed is not None:
         random.seed(args.seed)
         torch.manual_seed(args.seed)
@@ -162,11 +166,10 @@ def main():
 
 
 def main_worker(gpu, ngpus_per_node, args):
-    
+
     global best_acc1
     args.gpu = gpu
 
-    
     logger = set_logger(logger_name="{}/_log.txt".format(args.path_to_save))    
     logger.info('CARME Slurm ID: {}'.format(os.environ['SLURM_JOBID']))
     logger.info("args = %s", args)
@@ -191,8 +194,6 @@ def main_worker(gpu, ngpus_per_node, args):
         print("=> creating model '{}'".format(args.arch))
         model = models.__dict__[args.arch]()
 
-#     print("torch.cuda.is_available is {}, args.distributed is {}, args.gpu is {}, ".format(torch.cuda.is_available(), args.distributed, args.gpu))
-    
     if not torch.cuda.is_available():
         print('using CPU, this will be slow')
     elif args.distributed:
@@ -305,7 +306,6 @@ def main_worker(gpu, ngpus_per_node, args):
                     time1-time0)
         return
 
-    print("start epoch is {}".format(args.start_epoch))
     for epoch in range(args.start_epoch, args.epochs):
         time0 = time.time()
         
@@ -314,7 +314,7 @@ def main_worker(gpu, ngpus_per_node, args):
         adjust_learning_rate(optimizer, epoch, args)
 
         # train for one epoch
-        train(train_loader, model, criterion, optimizer, epoch, logger, args)
+        train(train_loader, model, criterion, optimizer, logger, args)
 
         # evaluate on validation set
         acc1, acc5 = validate(val_loader, model, criterion, logger, args)
@@ -329,7 +329,7 @@ def main_worker(gpu, ngpus_per_node, args):
                              'arch': args.arch,
                              'state_dict': model.state_dict(),
                              'best_acc1': best_acc1,
-                             'optimizer' : optimizer.state_dict()},
+                             'optimizer': optimizer.state_dict()},
                             is_best,
                             args.path_to_save)
         
@@ -343,15 +343,14 @@ def main_worker(gpu, ngpus_per_node, args):
                     best_acc1,
                     acc5)
         
-        pruning_threshold = 1e-6
-        print_nonzeros_filters(model, logger, pruning_threshold=pruning_threshold, arch=args.arch)
-        model_compressed = compute_save_mask(model, args.path_to_save, logger, pruning_threshold=pruning_threshold, arch=args.arch)
+        print_nonzeros_filters(model, logger, args.pruning_threshold, arch=args.arch)
+        model_compressed = compute_save_mask(model, args.path_to_save, logger, args.pruning_threshold, arch=args.arch)
         if not args.multiprocessing_distributed or (args.multiprocessing_distributed
                 and args.rank % ngpus_per_node == 0):
-            torch.save({'small_model': model_compressed.state_dict()}, "{}/small_model_conv12_{}.pth.tar".format(args.path_to_save, pruning_threshold))
+            torch.save({'small_model': model_compressed.state_dict()}, "{}/small_model_conv12_{}.pth.tar".format(args.path_to_save, args.pruning_threshold))
 
 
-def train(train_loader, model, criterion, optimizer, epoch, logger, args):
+def train(train_loader, model, criterion, optimizer, logger, args):
     losses = AverageMeter('Loss', ':.4e')
     top1 = AverageMeter('Acc@1', ':6.2f')
     top5 = AverageMeter('Acc@5', ':6.2f')
@@ -490,32 +489,26 @@ def set_logger(logger_name, level=logging.INFO):
 
 
 def create_exp_dir(path, scripts_to_save=None):
-  if not os.path.exists(path):
-    os.makedirs(path)
-  print('Experiment dir : {}'.format(path))
+    if not os.path.exists(path):
+        os.makedirs(path)
+    print('Experiment dir : {}'.format(path))
 
-  if scripts_to_save is not None:
-    os.makedirs(os.path.join(path, 'scripts'))
-    for script in scripts_to_save:
-      dst_file = os.path.join(path, 'scripts', os.path.basename(script))
-      shutil.copyfile(script, dst_file)
+    if scripts_to_save is not None:
+        os.makedirs(os.path.join(path, 'scripts'))
+        for script in scripts_to_save:
+            dst_file = os.path.join(path, 'scripts', os.path.basename(script))
+            shutil.copyfile(script, dst_file)
 
 
-def print_nonzeros_filters(model, logger, pruning_threshold=1e-6, arch="resnet50"):
+def print_nonzeros_filters(model, logger, pruning_threshold, arch="resnet50"):
     """compute and print the number of zero filters in each layer"""
 
     if arch not in ['resnet50']:
         raise NotImplementedError('Currently only ResNet-50 is supported.')
 
-    num_zero_filters_per_layer = [0, 0, 0, 0]
-    num_total_filters_per_layer = [0, 0, 0, 0]
-    
-    num_zero_filters = 0
-    num_total_filters = 0
-
-    num_zero_params = 0 # the number of parameters in zero filters. Other sporadic zero parameters are not recorded.
-    num_total_params = 0 # the number of total parameters in the model
-    
+    num_zero_filters_per_layer, num_total_filters_per_layer = [0, 0, 0, 0], [0, 0, 0, 0]
+    num_zero_filters, num_total_filters = 0, 0
+    num_zero_params, num_total_params = 0, 0  # the number of parameters in zero filters. Other sporadic zero parameters are not recorded.
     for name, param in model.named_parameters():
         num_total_params += param.numel()
         if "layer" in name and "conv" in name:
@@ -528,7 +521,7 @@ def print_nonzeros_filters(model, logger, pruning_threshold=1e-6, arch="resnet50
             num_total_filters += num_total_filters_tmp
             
             if "conv1" in name or "conv2" in name:
-                num_zero_filters_per_layer[layer - 1]  +=  num_zero_filters_tmp
+                num_zero_filters_per_layer[layer - 1] += num_zero_filters_tmp
                 num_total_filters_per_layer[layer - 1] += num_total_filters_tmp
             
             num_zero_params += param.numel() * num_zero_filters_tmp / num_total_filters_tmp
@@ -546,9 +539,6 @@ def print_nonzeros_filters(model, logger, pruning_threshold=1e-6, arch="resnet50
 def compute_pruning_upper_bound(model):
     """compute and return the number of prunable parameters and total parameters"""
 
-    num_zero_filters = 0
-    num_total_filters = 0    
-    
     num_prunable_params = 0
     num_total_params = 0
     
@@ -561,7 +551,7 @@ def compute_pruning_upper_bound(model):
     return num_prunable_params, num_total_params
 
 
-def compute_save_mask(model, file_path, logger, pruning_threshold=1e-6, arch='resnet50'):
+def compute_save_mask(model, file_path, logger, pruning_threshold, arch='resnet50'):
     """
     Given a model, this function computes and saves the mask of zero filters.
 
@@ -580,10 +570,10 @@ def compute_save_mask(model, file_path, logger, pruning_threshold=1e-6, arch='re
         raise NotImplementedError('Currently only ResNet-50 is supported.')
 
     # compute and save the mask (if a filter is/isn't zero, the mask is 0/1)
-    mask = [[[[],[],[]], [[],[],[]], [[],[],[]]], 
-            [[[],[],[]], [[],[],[]], [[],[],[]], [[],[],[]]],
-            [[[],[],[]], [[],[],[]], [[],[],[]], [[],[],[]], [[],[],[]], [[],[],[]]],
-            [[[],[],[]], [[],[],[]], [[],[],[]]]]
+    mask = [[[[], [], []], [[], [], []], [[], [], []]],
+            [[[], [], []], [[], [], []], [[], [], []], [[], [], []]],
+            [[[], [], []], [[], [], []], [[], [], []], [[], [], []], [[], [], []], [[], [], []]],
+            [[[], [], []], [[], [], []], [[], [], []]]]
     for name, param in model.named_parameters():
         if "layer" in name:
             layer_index = int(name[12])
@@ -613,10 +603,10 @@ def transfer_model_parameters(big_model, small_model, mask, arch='resnet50'):
 
     if arch in ["resnet50"]:
         # detect the indices of nonzero filters
-        indices = [[[[],[],[]], [[],[],[]], [[],[],[]]], 
-                  [[[],[],[]], [[],[],[]], [[],[],[]], [[],[],[]]],
-                  [[[],[],[]], [[],[],[]], [[],[],[]], [[],[],[]], [[],[],[]], [[],[],[]]],
-                  [[[],[],[]], [[],[],[]], [[],[],[]]]]
+        indices = [[[[], [], []], [[], [], []], [[], [], []]],
+                  [[[], [], []], [[], [], []], [[], [], []], [[], [], []]],
+                  [[[], [], []], [[], [], []], [[], [], []], [[], [], []], [[], [], []], [[], [], []]],
+                  [[[], [], []], [[], [], []], [[], [], []]]]
         for layer_index, mask_layer in enumerate(mask):
             for block_index, mask_block in enumerate(mask_layer):
                 for conv_index, mask_conv in enumerate(mask_block):
@@ -629,22 +619,21 @@ def transfer_model_parameters(big_model, small_model, mask, arch='resnet50'):
     # transfer the weights of nonzero filters (together with the following bn) to the compressed model
     big_state_dict = big_model.state_dict()
     small_state_dict = small_model.state_dict()
-    for key, value in small_state_dict.items():
+    for key, _ in small_state_dict.items():
         key_module = "module." + key
-        if "layer" in key: #An example of key is layer1.0.downsample.0.weight
+        if "layer" in key:  # An example of key is layer1.0.downsample.0.weight
             layer_index = int(key[5]) - 1
             block_index = int(key[7])
             if "conv" in key or "bn" in key:
                 if "num_batches_tracked" in key:
                     small_state_dict[key] = big_state_dict[key_module]
-                    pass
                 else:
                     if "conv" in key:
                         conv_index = int(key[13]) - 1
                     compressed_parameters = big_state_dict[key_module]
                     if conv_index == 0 or conv_index == 1:
-                         compressed_parameters = torch.index_select(compressed_parameters, 0, torch.tensor(indices[layer_index][block_index][conv_index]).cuda())
-                    if "conv2" in key or "conv3" in key: # if conv_index == 2 or conv_index == 3:
+                        compressed_parameters = torch.index_select(compressed_parameters, 0, torch.tensor(indices[layer_index][block_index][conv_index]).cuda())
+                    if "conv2" in key or "conv3" in key:  # if conv_index == 2 or conv_index == 3:
                         compressed_parameters = torch.index_select(compressed_parameters, 1, torch.tensor(indices[layer_index][block_index][conv_index-1]).cuda())
                     small_state_dict[key] = compressed_parameters
             else:
@@ -660,7 +649,7 @@ def group_model_parameters(model, mu):
     """
     assign regularization gain mu. If a parameter is not prunable, mu=0.
     variable: model, regularization (mu)
-    return: network parameters that will be passed to the optimizer
+    return: network parameters that will be transferred to the optimizer
     """
 
     if mu is not None and mu < 0:
@@ -679,7 +668,7 @@ def group_model_parameters(model, mu):
             model_params.append(dict(params=op_param, op_name=op_name, weight_decay=None))
 
     return model_params
-    
+
 
 if __name__ == '__main__':
     main()
