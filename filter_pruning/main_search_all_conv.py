@@ -1,4 +1,4 @@
-# Use ProxSGD to prune filters; filters of all convs (conv1, conv2 and conv2 in each block are prunable.
+# Use ProxSGD to prune filters; filters of all convs (conv1, conv2 and conv3 in each block are prunable).
 # After training is completed, the model is compressed to a small dense model, and the weights of the nonzero filters are transferred to the compressed model.
 
 import argparse
