@@ -1,5 +1,8 @@
-# retrain the compressed model (where only filters of conv1 and conv2 in each block are prunable.)
-# the initial weights are inherited from optimal weights found by ProxSGD in the search phase
+'''
+retrain the compressed model (where only filters of conv1 and conv2 in each block are prunable.)
+the initial weights are inherited from optimal weights found by ProxSGD in the search phase
+'''
+
 import argparse
 import os
 import random
@@ -7,11 +10,11 @@ import shutil
 import time
 import warnings
 import logging
-import numpy as np
 import glob
 import sys
 import json
 
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.parallel
@@ -23,9 +26,8 @@ import torch.utils.data
 import torch.utils.data.distributed
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
-torch.autograd.set_detect_anomaly(True)
-
 from ptflops import get_model_complexity_info
+
 import list_of_models as list_of_models
 import models_with_reduce_conv12
 
@@ -97,10 +99,12 @@ def main():
 
     if args.resume:
         resume_training = args.resume
+        new_dist_url = args.dist_url
         f = open("{}/run_info.json".format(args.resume))
         run_info = json.load(f)
         vars(args).update(run_info['args'])
         args.resume = resume_training
+        args.dist_url = new_dist_url
     else:
         if args.run_id is None:
             args.run_id = "{}_{}_{}".format(args.arch,
@@ -156,7 +160,6 @@ def main_worker(gpu, ngpus_per_node, args):
     global best_acc1
     args.gpu = gpu
 
-    
     logger = set_logger(logger_name="{}/_log.txt".format(args.path_to_save))    
     logger.info('CARME Slurm ID: {}'.format(os.environ['SLURM_JOBID']))
     logger.info("args = %s", args)
@@ -174,25 +177,27 @@ def main_worker(gpu, ngpus_per_node, args):
         dist.init_process_group(backend=args.dist_backend, init_method=args.dist_url,
                                 world_size=args.world_size, rank=args.rank)
 
-    path_to_prune = "{}/mask_{}.npy".format(eval("list_of_models.%s" % args.baseline_model), args.pruning_threshold)
-    if os.path.isfile(path_to_prune):
-        mask = np.load(path_to_prune, allow_pickle=True)
+    path_to_mask = "{}/mask_{}.npy".format(eval("list_of_models.%s" % args.baseline_model), args.pruning_threshold)
+    if os.path.isfile(path_to_mask):
+        mask = np.load(path_to_mask, allow_pickle=True)
 
-    # create compressed model
-    print("=> creating (compressed) model '{}'".format(args.arch))
-    model = models_with_reduce_conv12.__dict__[args.arch](mask)
+        # create compressed (small and dense) model
+        print("=> creating (compressed) model '{}'".format(args.arch))
+        model = models_with_reduce_conv12.__dict__[args.arch](mask)
+    else:
+	raise ValueError("The mask cannot be found at the specified path: {}".format(path_to_mask))
 
     if args.resume:
         pass
     else:
-        path_to_prune = "{}/small_model_conv12_{}.pth.tar".format(eval("list_of_models.%s" % args.baseline_model), args.pruning_threshold)
-        if os.path.isfile(path_to_prune):
-            logger.info("=> loading baseline model '{}'".format(path_to_prune))
-            checkpoint = torch.load(path_to_prune)
+        path_to_small_model = "{}/small_model_conv12_{}.pth.tar".format(eval("list_of_models.%s" % args.baseline_model), args.pruning_threshold)
+        if os.path.isfile(path_to_small_model):
+            logger.info("=> loading compressed model from SEARCH: '{}'".format(path_to_small_model))
+            checkpoint = torch.load(path_to_small_model)
             model.load_state_dict(checkpoint['small_model'])
-            logger.info("=> loaded baseline model '{}'".format(path_to_prune))
+            logger.info("=> loaded compressed model from SEARCH: '{}'".format(path_to_small_model))
         else:
-            logger.info("=> no baseline model found at '{}'".format(path_to_prune))
+            raise ValueError("=> no compressed model from SEARCH found at '{}'".format(path_to_small_model))
             
     if not torch.cuda.is_available():
         print('using CPU, this will be slow')
@@ -335,18 +340,12 @@ def main_worker(gpu, ngpus_per_node, args):
                              'arch': args.arch,
                              'state_dict': model.state_dict(),
                              'best_acc1': best_acc1,
-                             'optimizer' : optimizer.state_dict()},
+                             'optimizer': optimizer.state_dict()},
                             is_best,
                             args.path_to_save)
         
         logger.info('(JOBID %s) epoch %d: train time %.2f, inference time %.2fs, valid_top1 %.2f (best_top1 %.2f), valid_top5 %.2f',
-                    os.environ['SLURM_JOBID'],
-                    epoch,
-                    t1-t0,
-                    t2-t1,
-                    acc1,
-                    best_acc1,
-                    acc5)
+                    os.environ['SLURM_JOBID'], epoch, t1-t0, t2-t1, acc1, best_acc1, acc5)
         
 
 def train(train_loader, model, criterion, optimizer, epoch, logger, args):
@@ -383,7 +382,6 @@ def train(train_loader, model, criterion, optimizer, epoch, logger, args):
 
 
 def validate(val_loader, model, criterion, logger, args):
-    batch_time = AverageMeter('Time', ':6.3f')
     losses = AverageMeter('Loss', ':.4e')
     top1 = AverageMeter('Acc@1', ':6.2f')
     top5 = AverageMeter('Acc@5', ':6.2f')
@@ -489,15 +487,15 @@ def set_logger(logger_name, level=logging.INFO):
 
 
 def create_exp_dir(path, scripts_to_save=None):
-  if not os.path.exists(path):
-    os.makedirs(path)
-  print('Experiment dir : {}'.format(path))
+    if not os.path.exists(path):
+      os.makedirs(path)
+    print('Experiment dir : {}'.format(path))
 
-  if scripts_to_save is not None:
-    os.makedirs(os.path.join(path, 'scripts'))
-    for script in scripts_to_save:
-      dst_file = os.path.join(path, 'scripts', os.path.basename(script))
-      shutil.copyfile(script, dst_file)
+    if scripts_to_save is not None:
+        os.makedirs(os.path.join(path, 'scripts'))
+        for script in scripts_to_save:
+            dst_file = os.path.join(path, 'scripts', os.path.basename(script))
+            shutil.copyfile(script, dst_file)
 
 
 if __name__ == '__main__':
