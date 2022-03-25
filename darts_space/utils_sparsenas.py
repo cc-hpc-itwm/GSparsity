@@ -25,8 +25,6 @@ def get_regularization_term(model_params, args):
             group_dim += torch.numel(x)
         group_norm = torch.sqrt(group_norm)
 
-#         print("group name: {}, dim {} (sqrt_dim {})".format(group['op_name'], group_dim.item(), group_dim.item() ** args.normalization_exponent))
-        
         if args.normalization == "mul":
             reg_loss += group_norm * torch.pow(group_dim, args.normalization_exponent)
         elif args.normalization == "div":
@@ -35,6 +33,7 @@ def get_regularization_term(model_params, args):
             reg_loss += group_norm
 
     return reg_loss
+
 
 def plot_individual_op_norm(model, filename, normalization="none", normalization_exponent=0):
     """plot the norm of each operation in the given model"""
@@ -191,33 +190,32 @@ def group_model_params_by_cell(model, network, mu=None):
         edge_index = 0
         
         for name, param in m.named_parameters():
-#             print("op_name: {}".format(name), end=" ")
             """
             An example of "name" is _ops.8._ops.4.op.2.weight, where 8 represents the edge, 4 is the op index, and 2 is the subop of op 4 (op 4 consists of several subops).
             """
             if "_ops" in name:
-                if "_ops.0._ops.0" in name: # beginning of a new cell
-                    cur_op_name = name[0:13] # assuming the number of cells < 10
+                if "_ops.0._ops.0" in name:  # beginning of a new cell
+                    cur_op_name = name[0:13]  # assuming the number of cells < 10
                     pre_op_name = cur_op_name
                 else:
                     if edge_index <= 9:
-                        cur_op_name = name[0:13] #example: extract "_ops.3._ops.4" from "_ops.3._ops.4.op.2.weight"
+                        cur_op_name = name[0:13]  #example: extract "_ops.3._ops.4" from "_ops.3._ops.4.op.2.weight"
                     else:
-                        cur_op_name = name[0:14] #example: extract "_ops.13._ops.4" from "_ops.13._ops.4.op.2.weight"
+                        cur_op_name = name[0:14]  #example: extract "_ops.13._ops.4" from "_ops.13._ops.4.op.2.weight"
                 
-                if cur_op_name == pre_op_name: #still the same op
+                if cur_op_name == pre_op_name:  # still the same op
                     pass
-                else: # current op is a new op
+                else:  # current op is a new op
                     op_index += 1
-                    if op_index == network.num_ops: # the current op belongs to a new edge
+                    if op_index == network.num_ops:  # the current op belongs to a new edge
                         new_edge = True
                         op_index = 0
                         edge_index += 1
-                    else: # still the same edge
+                    else:  # still the same edge
                         new_edge = False
                         pre_op_name = cur_op_name
                         
-                    if edge_index <= 9: # get the name of the current (new) op
+                    if edge_index <= 9:  # get the name of the current (new) op
                         cur_op_name = name[0:13]
                     else:
                         cur_op_name = name[0:14]
@@ -231,7 +229,7 @@ def group_model_params_by_cell(model, network, mu=None):
                 
                 if cell_index in network.reduce_cell_indices:
                     ops_prunable_reduce[cur_op_name].append(param)
-                    op_is_scale_reduce[cur_op_name].append("scale" in name)
+                    op_is_scale_reduce[cur_op_name].append("scale" in name)  # parameterless operations
 #                     print("is a scale op? {}".format(op_is_scale_reduce[cur_op_name][-1]))
                 else:
                     ops_prunable_normal[cur_op_name].append(param)
@@ -256,14 +254,16 @@ def group_model_params_by_cell(model, network, mu=None):
   return model_params
 
 
-
 def compute_op_norm_across_cells(model_params):
-    # compute the norm of the vector containing the weights of the same operation in different cells (e.g., sep_conv_3x3)
-    # normal cells and reduction cells are computed separately
+    '''
+    compute the norm of the vector containing the weights of the same operation in different cells (e.g., sep_conv_3x3)
+    normal cells and reduction cells are computed separately
+    '''
+
     op_norm_normal_dict = {}
     op_norm_reduce_dict = {}
     for operation in model_params:
-        if operation["label"] == "unprunable": # weights from ops like stem, cell preprocessing and classifier.
+        if operation["label"] == "unprunable":  # weights from unprunable ops like stem, cell preprocessing and classifier.
             continue
         
         params = operation["params"]
@@ -274,11 +274,12 @@ def compute_op_norm_across_cells(model_params):
             params_size += param.numel()
          
         if operation["label"] == "normal":
-            op_norm_normal_dict[operation["op_name"]] = (torch.sqrt(params_norm_square), params_size) # take the square root to get the L2 norm
+            op_norm_normal_dict[operation["op_name"]] = (torch.sqrt(params_norm_square), params_size)  # take the square root to get the L2 norm
         elif operation["label"] == "reduce":
             op_norm_reduce_dict[operation["op_name"]] = (torch.sqrt(params_norm_square), params_size)
 
     return op_norm_normal_dict, op_norm_reduce_dict
+
 
 def plot_op_norm_across_cells(model_params, filename, normalization="none", normalization_exponent=0):
     op_norm_normal_dict, op_norm_reduce_dict = compute_op_norm_across_cells(model_params)
@@ -344,6 +345,7 @@ def discretize_search_model_by_cell(model_path, network_eval, network_search, th
   
   All suboperations of an operation are grouped into a single vector. For example, op 3 of edge 7 has the following suboperations: _ops.7._ops.3.op.1.weight, _ops.7._ops.3.op.2.weight, _ops.7._ops.3.op.5.weight, _ops.7._ops.3.op.6.weight. All of these suboperations are grouped into a single vector called "_ops.7._ops.3". During discretization, the operation "_ops.7._ops.3" will be pruned if its norm is smaller than the pruning threshold.
   """
+
   model = SearchNetwork(network_search.init_channels, CIFAR_CLASSES, network_search.cells, network_search.criterion, network_search.ops)
   model = model.cuda()
   model.load_state_dict(torch.load(model_path))
@@ -354,7 +356,7 @@ def discretize_search_model_by_cell(model_path, network_eval, network_search, th
   alpha_normal = []
   alpha_edge = []
   edge_index = 0  
-  for op_index, (op_name, (op_norm, op_size)) in enumerate(op_norm_normal.items()): # iterate over the operations (not suboperations)
+  for op_index, (op_name, (op_norm, op_size)) in enumerate(op_norm_normal.items()):  # iterate over the operations (not suboperations)
         if  edge_index * network_search.num_ops <= op_index < (edge_index + 1) * network_search.num_ops:
             if normalization == "none":
                 op_norm_normalized = op_norm
@@ -398,15 +400,16 @@ def discretize_search_model_by_cell(model_path, network_eval, network_search, th
   alpha_network = []
   num_reduce_cell = len(network_eval.reduce_cell_indices)
   cur_reduce_cell = 0
-  for cell_index in range(network_eval.cells): # cells up to the last reduce cell (included)
+  for cell_index in range(network_eval.cells):  # cells up to the last reduce cell (included)
     if cell_index < network_eval.reduce_cell_indices[cur_reduce_cell]:
         alpha_network.append((False, np.vstack(alpha_normal)))
     elif cell_index == network_eval.reduce_cell_indices[cur_reduce_cell]:
         alpha_network.append((True,  np.vstack(alpha_reduce)))
-        cur_reduce_cell += 1        
+        cur_reduce_cell += 1
         if cur_reduce_cell == num_reduce_cell:
-            break            
-  # cells after the last reduce cell            
+            break
+
+  # cells after the last reduce cell
   for cell_index in range(network_eval.reduce_cell_indices[-1]+1, network_eval.cells):
         alpha_network.append((False, np.vstack(alpha_normal)))
         
@@ -415,8 +418,6 @@ def discretize_search_model_by_cell(model_path, network_eval, network_search, th
   return alpha_network, genotype_network
 
 
-
-        
 def get_genotype(genotype_supernet, alpha_network):
     genotype_network = []
     for i, (reduce_cell, alpha_cell) in enumerate(alpha_network):
@@ -427,6 +428,7 @@ def get_genotype(genotype_supernet, alpha_network):
         else:
             genotype_network.append([genotype_supernet.normal[x] for x in indices.astype(int)])
     return genotype_network
+
 
 def visualize_cell(alpha, steps, primitives, filename):
   colors = ["sienna3", "red", "green4", "royalblue", "magenta"]

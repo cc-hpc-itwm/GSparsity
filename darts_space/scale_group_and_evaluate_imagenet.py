@@ -1,43 +1,40 @@
 import os
 import sys
-import numpy as np
+import json
 import time
-import torch
-import utils
 import glob
 import random
-import logging
 import argparse
-import torch.nn as nn
-import genotypes
-import torch.utils
-import torchvision.datasets as dset
-import torchvision.transforms as transforms
-import torch.backends.cudnn as cudnn
-import json
-from collections import OrderedDict
+import numpy as np
 
+import torch
+import torch.utils
+from torch import nn
+from torchvision import datasets as dset
+from torchvision import transforms
+from torch.backends import cudnn
 from torch.autograd import Variable
 
-from genotypes import spaces_dict
 import list_of_models as list_of_models
 import utils
 import utils_sparsenas_imagenet as utils_sparsenas
+from genotypes import spaces_dict
 from model_eval_multipath import NetworkImageNet as Network
+
 
 class network_params():
     def __init__(self, init_channels, cells, steps, operations, criterion):
         self.init_channels = init_channels
         self.cells = cells
-        self.steps = steps #the number of nodes between input nodes and the output node
-        self.num_edges = sum([i+2 for i in range(steps)]) #14
+        self.steps = steps  # the number of nodes between input nodes and the output node
+        self.num_edges = sum([i+2 for i in range(steps)])  # 14
         self.ops = operations
         self.num_ops = len(operations['primitives_normal'][0])
         self.reduce_cell_indices = [cells//3, (2*cells)//3]
         self.criterion = criterion
 
-class CrossEntropyLabelSmooth(nn.Module):
 
+class CrossEntropyLabelSmooth(nn.Module):
     def __init__(self, num_classes, epsilon):
         super(CrossEntropyLabelSmooth, self).__init__()
         self.num_classes = num_classes
@@ -56,10 +53,10 @@ def main(args):
     if not torch.cuda.is_available():
         print('no gpu device available')
         sys.exit(1)
-    
+
     if args.path_to_resume is None:
         resume_training = False
-        
+
         run_id = "arch_{}_cells_{}_{}".format(args.arch,
                                               args.cells,
                                               time.strftime("%Y%m%d-%H%M%S"))
@@ -84,16 +81,16 @@ def main(args):
     run_info_search = json.load(f_search)
     search_space = run_info_search['args']['search_space']
     PRIMITIVES = spaces_dict[search_space]
-        
+
     logger = utils.set_logger(logger_name="{}/_log_{}.txt".format(args.path_to_save, run_id))
 
     IMAGENET_CLASSES = 1000
-    
+
     np.random.seed(args.seed)
     torch.cuda.set_device(args.gpu)
     cudnn.benchmark = True
     torch.manual_seed(args.seed)
-    cudnn.enabled=True
+    cudnn.enabled = True
     torch.cuda.manual_seed(args.seed)
 
     logger.info('CARME Slurm ID: {}'.format(os.environ['SLURM_JOBID']))
@@ -104,8 +101,6 @@ def main(args):
     criterion = criterion.cuda()
     criterion_smooth = CrossEntropyLabelSmooth(IMAGENET_CLASSES, args.label_smooth)
     criterion_smooth = criterion_smooth.cuda()
-
-    
 
     network_search = network_params(args.init_channels_search,
                                     args.cells_search,
@@ -119,17 +114,16 @@ def main(args):
                                   criterion_smooth)
 
     model_to_discretize = "{}/model_final".format(eval("list_of_models.%s" % args.arch))
-    
+
     if args.scale_type == "cell":
         alpha_network, genotype_network = utils_sparsenas.discretize_search_model_by_cell(model_to_discretize,
                                                                                           network_eval,
                                                                                           network_search,
-                                                                                          threshold=args.pruning_threshold) #alpha for each cell
+                                                                                          threshold=args.pruning_threshold)  # alpha for each cell
     assert len(alpha_network) == args.cells, "Each cell should have its individual alpha."
     logger.info("Model to discretize is in: {}\n".format(model_to_discretize))
     logger.info("alpha_network:\n {}".format(alpha_network))
     logger.info("genotype_network:\n {}".format(genotype_network))
-
 
     model = Network(args.init_channels,
                     IMAGENET_CLASSES,
@@ -139,10 +133,9 @@ def main(args):
                     alpha_network,
                     network_eval.reduce_cell_indices,
                     network_eval.steps,
-                    PRIMITIVES
-                   )
+                    PRIMITIVES)
     model = model.cuda()
-    
+
     optimizer = torch.optim.SGD(model.parameters(),
                                 args.learning_rate,
                                 momentum=args.momentum,
@@ -157,15 +150,15 @@ def main(args):
         best_top1 = checkpoint['best_top1']
         model.drop_path_prob = checkpoint['drop_path_prob']
         last_epoch = checkpoint['last_epoch']
-        assert last_epoch>=0 and args.epochs>=0 and last_epoch<=args.epochs
+        assert last_epoch >= 0 and args.epochs >= 0 and last_epoch <= args.epochs
     else:
         last_epoch = 0
         best_top1 = 0
         model.drop_path_prob = 0
-        
+
     if args.parallel:
         model = nn.DataParallel(model)
-        
+
     logger.info("param size = %fMB", utils.count_parameters_in_MB(model))
 
     traindir = os.path.join(args.data, 'train')
@@ -190,7 +183,6 @@ def main(args):
                                       normalize]))
 
     train_queue = torch.utils.data.DataLoader(train_data, batch_size=args.batch_size, shuffle=True, pin_memory=True, num_workers=14)
-
     valid_queue = torch.utils.data.DataLoader(valid_data, batch_size=args.batch_size, shuffle=False, pin_memory=True, num_workers=14)
 
     if resume_training:
@@ -213,7 +205,7 @@ def main(args):
         if epoch < 6 and args.batch_size > 128:
             for param_group in optimizer.param_groups:
                 param_group['lr'] = lr * epoch / 5.0
-            logging.info('Warming-up Epoch: %d, LR: %e', epoch, lr * (epoch + 1) / 5.0)
+            logger.info('Warming-up Epoch: %d, LR: %e', epoch, lr * (epoch + 1) / 5.0)
         model.drop_path_prob = args.drop_path_prob * epoch / args.epochs
 
         train_top1_tmp, train_loss_tmp = train(train_queue, model, criterion_smooth, optimizer, logger)
@@ -253,13 +245,12 @@ def main(args):
         else:
             torch.save(model.state_dict(), "{}/latest_model".format(args.path_to_save))
 
-
         utils.save_checkpoint({'last_epoch': epoch,
                                'best_top1': best_top1,
-                               'optimizer' : optimizer.state_dict(),
+                               'optimizer': optimizer.state_dict(),
                                'lr_scheduler': lr_scheduler.state_dict(),
                                'drop_path_prob': model.drop_path_prob},
-                              False,
+                              is_best,
                               args.path_to_save)
 
         logger.info('(JOBID %s) epoch %d lr %e: train_top1 %f, valid_top1 %f (best_top1 %f), valid_top5 %f',
@@ -272,6 +263,7 @@ def main(args):
                      valid_top5_tmp)
 
     logger.info("args = %s", args)
+
 
 def train(train_queue, model, criterion, optimizer, logger):
     objs = utils.AvgrageMeter()
@@ -343,7 +335,7 @@ if __name__ == '__main__':
     parser.add_argument('--data', type=str, default='/home/SSD/ImageNet_raw/', help='location of the data corpus')
     parser.add_argument('--path_to_resume', type=str, default=None, help='path to the model to resume training')
     parser.add_argument('--path_to_save', type=str, default=None, help='path to the folder where the experiment will be saved')
-    
+
     parser.add_argument('--scale_type', choices=["cell"],
                         default="cell", help='scale type: scale cell')
     parser.add_argument('--momentum', type=float, default=0.9, help='momentum')
@@ -364,8 +356,8 @@ if __name__ == '__main__':
     parser.add_argument('--init_channels_search', type=int, default=16, help='num of init channels')
     parser.add_argument('--cells_search', type=int, default=8, help='total number of cells')
     args = parser.parse_args()
-    
+
     if args.path_to_save is None:
         args.path_to_save = "{}/{}".format(args.exp_name, args.exp_name)
-            
+
     main(args)

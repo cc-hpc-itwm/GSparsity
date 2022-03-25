@@ -1,37 +1,39 @@
-# This file searches for a cell structure that will be scaled up to form the full network for evaluation (retraining).
+'''
+This file searches for a cell structure that will be scaled up to form the full network for evaluation (retraining).
+'''
 
 import os
 import sys
 import time
 import glob
-import numpy as np
-import torch
 import utils
-import logging
 import argparse
-import torch.nn as nn
-import torch.utils
-import torch.nn.functional as F
-import torchvision.datasets as dset
-import torch.backends.cudnn as cudnn
-from torch.autograd import Variable
-from model_search_multipath import Network
-import utils_sparsenas
-from genotypes import spaces_dict
 import random
 import json
+import numpy as np
 
+import torch
+import torch.utils
+from torch import nn
+from torchvision import datasets as dset
+from torch.backends import cudnn
+
+from model_search_multipath import Network
+from genotypes import spaces_dict
 from ProxSGD_for_groups import ProxSGD
+import utils_sparsenas
+
 
 class network_params():
     def __init__(self, init_channels, cells, steps, operations):
         self.init_channels = init_channels
         self.cells = cells
-        self.steps = steps #the number of nodes between input nodes and the output node
-        self.num_edges = sum([i+2 for i in range(steps)]) #14
+        self.steps = steps  # the number of nodes between input nodes and the output node
+        self.num_edges = sum([i+2 for i in range(steps)])  # 14
         self.ops = operations
         self.num_ops = len(operations['primitives_normal'][0])
         self.reduce_cell_indices = [cells//3, (2*cells)//3]
+
 
 def main(args):
     if not torch.cuda.is_available():
@@ -50,7 +52,7 @@ def main(args):
 
         run_info = {}
         run_info['args'] = vars(args)
-        
+
         utils.create_exp_dir(args.path_to_save, scripts_to_save=glob.glob('*.py'))
         with open('{}/run_info.json'.format(args.path_to_save), 'w') as f:
             json.dump(run_info, f)
@@ -65,12 +67,12 @@ def main(args):
 
     PRIMITIVES = spaces_dict[args.search_space]
     CIFAR_CLASSES = 10
-    
+
     np.random.seed(args.seed)
     torch.cuda.set_device(args.gpu)
     cudnn.benchmark = True
     torch.manual_seed(args.seed)
-    cudnn.enabled=True
+    cudnn.enabled = True
     torch.cuda.manual_seed(args.seed)
 
     logger.info('CARME Slurm ID: {}'.format(os.environ['SLURM_JOBID']))
@@ -79,10 +81,9 @@ def main(args):
 
     criterion = nn.CrossEntropyLoss()
     criterion = criterion.cuda()
-    model = Network(args.init_channels, CIFAR_CLASSES, args.cells, criterion,
-                    PRIMITIVES)
+    model = Network(args.init_channels, CIFAR_CLASSES, args.cells, criterion, PRIMITIVES)
     model = model.cuda()
-    
+
     logger.info("param size = %fM", utils.count_parameters_in_MB(model))
 
     if args.search_type is None:
@@ -91,19 +92,14 @@ def main(args):
                                     momentum=args.momentum,
                                     weight_decay=3e-4)
     else:
-        network_search = network_params(args.init_channels,
-                                        args.cells,
-                                        4,
-                                        PRIMITIVES)
+        network_search = network_params(args.init_channels, args.cells, 4, PRIMITIVES)
         if args.search_type == "cell":
-            model_params = utils_sparsenas.group_model_params_by_cell(model,
-                                                                      network_search,
-                                                                      mu=args.mu)
+            model_params = utils_sparsenas.group_model_params_by_cell(model, network_search, mu=args.mu)
         optimizer = ProxSGD(model_params,
-                            lr=args.learning_rate, 
+                            lr=args.learning_rate,
                             weight_decay=args.mu,
                             clip_bounds=(0, 1),
-                            momentum=args.momentum, 
+                            momentum=args.momentum,
                             normalization=args.normalization,
                             normalization_exponent=args.normalization_exponent)
 
@@ -148,14 +144,14 @@ def main(args):
         valid_loss = np.load("{}/valid_loss.npy".format(args.path_to_save), allow_pickle=True)
         if args.search_type == "cell":
             train_regl = np.load("{}/train_regl.npy".format(args.path_to_save), allow_pickle=True)
-        
+
         checkpoint = torch.load("{}/checkpoint.pth.tar".format(args.path_to_save))
         model.load_state_dict(checkpoint['latest_model'])
         optimizer.load_state_dict(checkpoint['optimizer'])
         lr_scheduler.load_state_dict(checkpoint['lr_scheduler'])
         best_top1 = checkpoint['best_top1']
         last_epoch = checkpoint['last_epoch']
-        assert last_epoch>=0 and args.epochs>=0 and last_epoch<=args.epochs
+        assert last_epoch >= 0 and args.epochs >= 0 and last_epoch <= args.epochs
     else:
         train_top1 = np.array([])
         train_loss = np.array([])
@@ -163,18 +159,17 @@ def main(args):
         valid_loss = np.array([])
         if args.search_type == "cell":
             train_regl = np.array([])
-        
+
         best_top1 = 0
         last_epoch = 0
-        
+
         if args.plot_freq > 0:
             utils_sparsenas.plot_individual_op_norm(model, "{}/operator_norm_individual_{}_epoch_{:03d}.png".format(args.path_to_save, args.run_id, 0))
             if args.search_type == "cell":
                 utils_sparsenas.plot_op_norm_across_cells(model_params, "{}/operator_norm_cell_{}_epoch_{:03d}".format(args.path_to_save, args.run_id, 0))
-            
-    
+
     for epoch in range(last_epoch+1, args.epochs+1):
-        train_top1_tmp, train_loss_tmp = train(train_queue, valid_queue, model, criterion, optimizer, args.learning_rate, args.report_freq, logger)
+        train_top1_tmp, train_loss_tmp = train(train_queue, model, criterion, optimizer, args.report_freq, logger)
         valid_top1_tmp, valid_loss_tmp = infer(valid_queue, model, criterion, args.report_freq, logger)
 
         train_top1 = np.append(train_top1, train_top1_tmp.item())
@@ -192,13 +187,12 @@ def main(args):
             best_top1 = valid_top1_tmp
             is_best = True
 
-        if args.search_type == None:
+        if args.search_type is None:
             utils_sparsenas.acc_n_loss(train_loss,
                                        valid_top1,
                                        "{}/acc_n_loss_{}.png".format(args.path_to_save, args.run_id),
                                        train_top1,
-                                       valid_loss
-                                      )
+                                       valid_loss)
         elif args.search_type == "cell":
             train_regl_tmp = utils_sparsenas.get_regularization_term(model_params, args)
             train_regl = np.append(train_regl, train_regl_tmp.item())
@@ -217,9 +211,8 @@ def main(args):
                                        "{}/acc_n_loss_{}.png".format(args.path_to_save, args.run_id),
                                        train_top1,
                                        valid_loss,
-                                       train_loss + args.mu * train_regl
-                                      )
-        
+                                       train_loss + args.mu*train_regl)
+
         current_lr = lr_scheduler.get_lr()[0]
         if args.use_lr_scheduler:
             lr_scheduler.step()
@@ -227,14 +220,14 @@ def main(args):
         utils.save_checkpoint({'last_epoch': epoch,
                                'latest_model': model.state_dict(),
                                'best_top1': best_top1,
-                               'optimizer' : optimizer.state_dict(),
+                               'optimizer': optimizer.state_dict(),
                                'lr_scheduler': lr_scheduler.state_dict()},
                               is_best,
                               args.path_to_save)
 
         if args.plot_freq > 0:
-            if epoch % args.plot_freq == 0 or epoch == args.epochs: #Plot group sparsity after args.plot_freq epochs
-                '''comment plot_individual_op_norm to save time'''
+            if epoch % args.plot_freq == 0 or epoch == args.epochs:
+                # comment plot_individual_op_norm could save time
                 utils_sparsenas.plot_individual_op_norm(model,
                                                         "{}/operator_norm_individual_{}_epoch_{:03d}.png".format(args.path_to_save, args.run_id, epoch))
                 if args.search_type == "cell":
@@ -242,7 +235,7 @@ def main(args):
                                                               "{}/operator_norm_cell_{}_epoch_{:03d}".format(args.path_to_save, args.run_id, epoch))
 
         torch.save(model.state_dict(), "{}/model_final".format(args.path_to_save))
-        
+
         logger.info('(JOBID %s) epoch %d lr %.3e: train_top1 %.2f, valid_top1 %.2f (best_top1 %.2f)',
                     os.environ['SLURM_JOBID'],
                     epoch,
@@ -250,44 +243,45 @@ def main(args):
                     train_top1_tmp,
                     valid_top1_tmp,
                     best_top1)
-        
+
     if args.search_type == "cell":
         utils_sparsenas.plot_individual_op_norm(model,
                                                 "{}/operator_norm_individual_{}_epoch_{:03d}.png".format(args.path_to_save, args.run_id, epoch))
     logger.info("args = %s", args)
 
 
-def train(train_queue, valid_queue, model, criterion, optimizer, lr, report_freq, logger):
+def train(train_queue, model, criterion, optimizer, report_freq, logger):
     objs = utils.AvgrageMeter()
     top1 = utils.AvgrageMeter()
     top5 = utils.AvgrageMeter()
     model.train()
-    
-    for step, (input, target) in enumerate(train_queue):      
+
+    for step, (input, target) in enumerate(train_queue):
         input = input.cuda()
-        target = target.cuda()#async=True)
+        target = target.cuda()
 
         optimizer.zero_grad()
         logits = model(input)
         loss = criterion(logits, target)
 
-        loss.backward()        
+        loss.backward()
         if args.grad_clip > 0:
-            nn.utils.clip_grad_norm_(model.parameters(), args.grad_clip)            
+            nn.utils.clip_grad_norm_(model.parameters(), args.grad_clip)
         optimizer.step()
 
         prec1, prec5 = utils.accuracy(logits, target, topk=(1, 5))
-        
+
         n = input.size(0)
         objs.update(loss.data, n)
         top1.update(prec1.data, n)
         top5.update(prec5.data, n)
-        
+
         if report_freq > 0 and step % report_freq == 0:
             logger.info('train %03d %e %f %f', step, objs.avg, top1.avg, top5.avg)
 
     return top1.avg, objs.avg
-  
+
+
 def infer(valid_queue, model, criterion, report_freq, logger):
     objs = utils.AvgrageMeter()
     top1 = utils.AvgrageMeter()
@@ -297,13 +291,13 @@ def infer(valid_queue, model, criterion, report_freq, logger):
     with torch.no_grad():
         for step, (input, target) in enumerate(valid_queue):
             input = input.cuda()
-            target = target.cuda()#async=True)
+            target = target.cuda()
 
             logits = model(input)
             loss = criterion(logits, target)
 
             prec1, prec5 = utils.accuracy(logits, target, topk=(1, 5))
-            
+
             n = input.size(0)
             objs.update(loss.data, n)
             top1.update(prec1.data, n)
@@ -316,7 +310,7 @@ def infer(valid_queue, model, criterion, report_freq, logger):
     return top1.avg, objs.avg
 
 
-if __name__ == '__main__':    
+if __name__ == '__main__':
     parser = argparse.ArgumentParser("cifar")
     parser.add_argument('--learning_rate', type=float, default=0.001, help='init learning rate')
     parser.add_argument('--learning_rate_min', type=float, default=0.0001, help='min learning rate')
@@ -333,7 +327,7 @@ if __name__ == '__main__':
     parser.add_argument('--batch_size', type=int, default=64, help='batch size')
     parser.add_argument('--use_lr_scheduler', action='store_true', default=False, help='use lr scheduler')
     parser.add_argument('--seed', type=int, default=None, help='random seed if NONE')
-    
+
     parser.add_argument('--path_to_resume', type=str, default=None, help='path to the pretrained model to prune')
     parser.add_argument('--path_to_save', type=str, default=None, help='path to the folder where the experiment will be saved')
     parser.add_argument('--exp_name', type=str, default="log-search", help='experiment name (default None)')
@@ -349,12 +343,12 @@ if __name__ == '__main__':
     parser.add_argument('--gpu', type=int, default=0, help='gpu device id')
     parser.add_argument('--cutout', action='store_true', default=False, help='use cutout')
     parser.add_argument('--cutout_length', type=int, default=16, help='cutout length')
-    
+
     args = parser.parse_args()
-    
+
     if args.path_to_save is None:
         args.path_to_save = "{}/{}".format(args.exp_name, args.exp_name)
-    
+
     if args.normalization == "none":
         args.normalization_exponent = 0
 
