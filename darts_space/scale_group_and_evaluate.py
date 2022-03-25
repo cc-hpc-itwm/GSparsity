@@ -115,8 +115,7 @@ def main(args):
                     alpha_network,
                     network_eval.reduce_cell_indices,
                     network_eval.steps,
-                    PRIMITIVES
-                   )
+                    PRIMITIVES)
     model = model.cuda()
 
     logger.info("param size = %fM", utils.count_parameters_in_MB(model))
@@ -141,7 +140,7 @@ def main(args):
         lr_scheduler.load_state_dict(checkpoint['lr_scheduler'])
         best_top1 = checkpoint['best_top1']
         last_epoch = checkpoint['last_epoch']
-        assert last_epoch>=0 and args.epochs>=0 and last_epoch<=args.epochs
+        assert last_epoch >= 0 and args.epochs >= 0 and last_epoch <= args.epochs
     else:
         train_top1 = np.array([])
         train_loss = np.array([])
@@ -165,7 +164,6 @@ def main(args):
                                               shuffle=False,
                                               pin_memory=True,
                                               num_workers=2)
-
     
     for epoch in range(last_epoch+1, args.epochs+1):
         model.drop_path_prob = args.drop_path_prob * (epoch-1) / args.epochs
@@ -178,10 +176,10 @@ def main(args):
         valid_top1 = np.append(valid_top1, valid_top1_tmp.item())
         valid_loss = np.append(valid_loss, valid_loss_tmp.item())
 
-        np.save(args.path_to_save+"/train_top1", train_top1)
-        np.save(args.path_to_save+"/train_loss", train_loss)
-        np.save(args.path_to_save+"/valid_top1", valid_top1)
-        np.save(args.path_to_save+"/valid_loss", valid_loss)
+        np.save(args.path_to_save + "/train_top1", train_top1)
+        np.save(args.path_to_save + "/train_loss", train_loss)
+        np.save(args.path_to_save + "/valid_top1", valid_top1)
+        np.save(args.path_to_save + "/valid_loss", valid_loss)
 
         utils_sparsenas.acc_n_loss(train_loss,
                                    valid_top1,

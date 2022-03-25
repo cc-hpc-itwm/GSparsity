@@ -194,21 +194,21 @@ def main(args):
         if epoch < 6 and args.batch_size > 32:
             for param_group in optimizer.param_groups:
                 param_group['lr'] = lr * epoch / 5.0
-            logger.info('Warming-up Epoch: %d, LR: %e', epoch, lr * (epoch) / 5.0)
+            logger.info('Warming-up Epoch: %d, LR: %e', epoch, lr*epoch/5.0)
 
         train_top1_tmp, train_loss_tmp = train(train_queue, model, criterion, optimizer, args.learning_rate, args.report_freq, logger)
         train_top1 = np.append(train_top1, train_top1_tmp.item())
         train_loss = np.append(train_loss, train_loss_tmp.item())
-        np.save(args.path_to_save+"/train_top1", train_top1)
-        np.save(args.path_to_save+"/train_loss", train_loss)
+        np.save(args.path_to_save + "/train_top1", train_top1)
+        np.save(args.path_to_save + "/train_loss", train_loss)
 
         is_best = False
         if epoch >= args.epochs - 2:
             valid_top1_tmp, valid_loss_tmp = infer(valid_queue, model, criterion, args.report_freq, logger)
             valid_top1 = np.append(valid_top1, valid_top1_tmp.item())
             valid_loss = np.append(valid_loss, valid_loss_tmp.item())
-            np.save(args.path_to_save+"/valid_top1", valid_top1)
-            np.save(args.path_to_save+"/valid_loss", valid_loss)
+            np.save(args.path_to_save + "/valid_top1", valid_top1)
+            np.save(args.path_to_save + "/valid_loss", valid_loss)
 
             if valid_top1_tmp >= best_top1:
                 best_top1 = valid_top1_tmp
@@ -229,7 +229,7 @@ def main(args):
             logger.info('(JOBID %s) epoch %d obj_val %.2f: loss %.2f + regl %.2f (%.2f * %.2f)',
                         os.environ['SLURM_JOBID'],
                         epoch,
-                        train_loss_tmp + args.weight_decay * train_regl_tmp,
+                        train_loss_tmp + args.weight_decay*train_regl_tmp,
                         train_loss_tmp,
                         args.weight_decay * train_regl_tmp,
                         args.weight_decay,
@@ -239,8 +239,7 @@ def main(args):
                                        "{}/acc_n_loss_{}.png".format(args.path_to_save, run_id),
                                        train_top1,
                                        valid_loss,
-                                       train_loss + args.weight_decay * train_regl
-                                      )
+                                       train_loss + args.weight_decay*train_regl)
 
         current_lr = lr_scheduler.get_lr()[0]
         if args.use_lr_scheduler:

@@ -44,8 +44,8 @@ class CrossEntropyLabelSmooth(nn.Module):
     def forward(self, inputs, targets):
         log_probs = self.logsoftmax(inputs)
         targets = torch.zeros_like(log_probs).scatter_(1, targets.unsqueeze(1), 1)
-        targets = (1 - self.epsilon) * targets + self.epsilon / self.num_classes
-        loss = (-targets * log_probs).mean(0).sum()
+        targets = (1-self.epsilon)*targets + self.epsilon/self.num_classes
+        loss = (-targets*log_probs).mean(0).sum()
         return loss
 
 
@@ -205,7 +205,7 @@ def main(args):
         if epoch < 6 and args.batch_size > 128:
             for param_group in optimizer.param_groups:
                 param_group['lr'] = lr * epoch / 5.0
-            logger.info('Warming-up Epoch: %d, LR: %e', epoch, lr * (epoch + 1) / 5.0)
+            logger.info('Warming-up Epoch: %d, LR: %e', epoch, lr*(epoch+1)/5.0)
         model.drop_path_prob = args.drop_path_prob * epoch / args.epochs
 
         train_top1_tmp, train_loss_tmp = train(train_queue, model, criterion_smooth, optimizer, logger)
@@ -228,11 +228,11 @@ def main(args):
         valid_top5 = np.append(valid_top5, valid_top5_tmp.item())
         valid_loss = np.append(valid_loss, valid_loss_tmp.item())
 
-        np.save(args.path_to_save+"/train_top1", train_top1)
-        np.save(args.path_to_save+"/train_loss", train_loss)
-        np.save(args.path_to_save+"/valid_top1", valid_top1)
-        np.save(args.path_to_save+"/valid_top5", valid_top5)
-        np.save(args.path_to_save+"/valid_loss", valid_loss)
+        np.save(args.path_to_save + "/train_top1", train_top1)
+        np.save(args.path_to_save + "/train_loss", train_loss)
+        np.save(args.path_to_save + "/valid_top1", valid_top1)
+        np.save(args.path_to_save + "/valid_top5", valid_top5)
+        np.save(args.path_to_save + "/valid_loss", valid_loss)
 
         utils_sparsenas.acc_n_loss(train_loss,
                                    valid_top1,

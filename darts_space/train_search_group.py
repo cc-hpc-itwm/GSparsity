@@ -71,8 +71,8 @@ def main(args):
     np.random.seed(args.seed)
     torch.cuda.set_device(args.gpu)
     cudnn.benchmark = True
-    torch.manual_seed(args.seed)
     cudnn.enabled = True
+    torch.manual_seed(args.seed)
     torch.cuda.manual_seed(args.seed)
 
     logger.info('CARME Slurm ID: {}'.format(os.environ['SLURM_JOBID']))
@@ -177,10 +177,10 @@ def main(args):
         valid_top1 = np.append(valid_top1, valid_top1_tmp.item())
         valid_loss = np.append(valid_loss, valid_loss_tmp.item())
 
-        np.save(args.path_to_save+"/train_top1", train_top1)
-        np.save(args.path_to_save+"/train_loss", train_loss)
-        np.save(args.path_to_save+"/valid_top1", valid_top1)
-        np.save(args.path_to_save+"/valid_loss", valid_loss)
+        np.save(args.path_to_save + "/train_top1", train_top1)
+        np.save(args.path_to_save + "/train_loss", train_loss)
+        np.save(args.path_to_save + "/valid_top1", valid_top1)
+        np.save(args.path_to_save + "/valid_loss", valid_loss)
 
         is_best = False
         if valid_top1_tmp >= best_top1:
@@ -201,7 +201,7 @@ def main(args):
             logger.info('(JOBID %s) epoch %d obj_val %.2f: loss %.2f + regl %.2f (%.2f * %.2f)',
                         os.environ['SLURM_JOBID'],
                         epoch,
-                        train_loss_tmp + args.mu * train_regl_tmp,
+                        train_loss_tmp + args.mu*train_regl_tmp,
                         train_loss_tmp,
                         args.mu * train_regl_tmp,
                         args.mu,
