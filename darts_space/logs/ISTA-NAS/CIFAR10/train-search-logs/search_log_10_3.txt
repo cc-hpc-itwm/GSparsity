@@ -1,0 +1,1064 @@
+Param size = 1.953804MB
+Files already downloaded and verified
+[Epoch initial]
+normal cell:
+Step 1: node1 op6, node0 op0
+Step 2: node0 op0, node2 op1
+Step 3: node3 op2, node0 op1
+Step 4: node3 op0, node4 op2
+reduction cell:
+Step 1: node1 op2, node0 op5
+Step 2: node0 op2, node1 op4
+Step 3: node0 op4, node1 op5
+Step 4: node2 op3, node3 op1
+Genotype(normal=[('dil_conv_5x5', 1), ('max_pool_3x3', 0), ('max_pool_3x3', 0), ('avg_pool_3x3', 2), ('skip_connect', 3), ('avg_pool_3x3', 0), ('max_pool_3x3', 3), ('skip_connect', 4)], normal_concat=range(2, 6), reduce=[('skip_connect', 1), ('dil_conv_3x3', 0), ('skip_connect', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 0), ('dil_conv_3x3', 1), ('sep_conv_3x3', 2), ('avg_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  1 lr: [0.0998047424859661]
+Train[000] Loss: 4.5966 Top1: 0.0000 Top5: 12.1094
+Train[050] Loss: 3.2609 Top1: 19.4087 Top5: 67.3866
+04/05 02:10:18 PM train_acc 27.6320
+ Valid[000] Loss: 1.7870 Top1: 41.4062 Top5: 90.6250
+ Valid[050] Loss: 1.8080 Top1: 39.4455 Top5: 87.5996
+04/05 02:10:25 PM valid_acc 39.7680
+Doing Recovery ...
+[Epoch 1]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node0 op0, node2 op2
+Step 3: node3 op5, node1 op4
+Step 4: node0 op1, node1 op5
+reduction cell:
+Step 1: node1 op2, node0 op5
+Step 2: node2 op0, node0 op2
+Step 3: node0 op5, node1 op5
+Step 4: node3 op6, node0 op4
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('max_pool_3x3', 0), ('skip_connect', 2), ('dil_conv_3x3', 3), ('sep_conv_5x5', 1), ('avg_pool_3x3', 0), ('dil_conv_3x3', 1)], normal_concat=range(2, 6), reduce=[('skip_connect', 1), ('dil_conv_3x3', 0), ('max_pool_3x3', 2), ('skip_connect', 0), ('dil_conv_3x3', 0), ('dil_conv_3x3', 1), ('dil_conv_5x5', 3), ('sep_conv_5x5', 0)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  2 lr: [0.09931789829087821]
+Train[000] Loss: 2.5101 Top1: 12.5000 Top5: 60.9375
+Train[050] Loss: 1.8266 Top1: 33.9154 Top5: 86.8566
+04/05 02:11:12 PM train_acc 39.3680
+ Valid[000] Loss: 1.6404 Top1: 43.7500 Top5: 89.8438
+ Valid[050] Loss: 1.6274 Top1: 43.4666 Top5: 89.6369
+04/05 02:11:20 PM valid_acc 42.7640
+Doing Recovery ...
+[Epoch 2]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node1 op4, node0 op0
+Step 3: node3 op5, node1 op4
+Step 4: node0 op3, node3 op5
+reduction cell:
+Step 1: node1 op2, node0 op5
+Step 2: node1 op4, node0 op2
+Step 3: node2 op0, node2 op4
+Step 4: node0 op1, node4 op3
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('sep_conv_5x5', 1), ('max_pool_3x3', 0), ('dil_conv_3x3', 3), ('sep_conv_5x5', 1), ('sep_conv_3x3', 0), ('dil_conv_3x3', 3)], normal_concat=range(2, 6), reduce=[('skip_connect', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 1), ('skip_connect', 0), ('max_pool_3x3', 2), ('sep_conv_5x5', 2), ('avg_pool_3x3', 0), ('sep_conv_3x3', 4)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  3 lr: [0.09863915989351911]
+Train[000] Loss: 2.2489 Top1: 25.0000 Top5: 69.1406
+Train[050] Loss: 1.5022 Top1: 46.8903 Top5: 91.7509
+04/05 02:12:16 PM train_acc 50.1160
+ Valid[000] Loss: 1.2227 Top1: 57.8125 Top5: 95.7031
+ Valid[050] Loss: 1.3225 Top1: 52.7114 Top5: 94.4240
+04/05 02:12:25 PM valid_acc 52.3280
+Doing Recovery ...
+[Epoch 3]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node0 op1, node3 op2
+Step 4: node0 op3, node3 op5
+reduction cell:
+Step 1: node1 op2, node0 op5
+Step 2: node1 op4, node0 op2
+Step 3: node0 op4, node2 op0
+Step 4: node0 op1, node1 op4
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('avg_pool_3x3', 0), ('skip_connect', 3), ('sep_conv_3x3', 0), ('dil_conv_3x3', 3)], normal_concat=range(2, 6), reduce=[('skip_connect', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 1), ('skip_connect', 0), ('sep_conv_5x5', 0), ('max_pool_3x3', 2), ('avg_pool_3x3', 0), ('sep_conv_5x5', 1)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  4 lr: [0.09777120367510003]
+Train[000] Loss: 1.3856 Top1: 50.0000 Top5: 93.7500
+Train[050] Loss: 1.2719 Top1: 54.6492 Top5: 94.7763
+04/05 02:13:10 PM train_acc 56.7200
+ Valid[000] Loss: 1.5392 Top1: 47.6562 Top5: 90.2344
+ Valid[050] Loss: 1.4327 Top1: 51.3710 Top5: 92.1415
+04/05 02:13:18 PM valid_acc 50.6840
+Doing Recovery ...
+[Epoch 4]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node0 op1, node0 op0
+Step 3: node3 op2, node0 op1
+Step 4: node2 op6, node0 op3
+reduction cell:
+Step 1: node1 op2, node0 op5
+Step 2: node1 op4, node0 op2
+Step 3: node3 op4, node2 op0
+Step 4: node0 op1, node1 op4
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('avg_pool_3x3', 0), ('max_pool_3x3', 0), ('skip_connect', 3), ('avg_pool_3x3', 0), ('dil_conv_5x5', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('skip_connect', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 1), ('skip_connect', 0), ('sep_conv_5x5', 3), ('max_pool_3x3', 2), ('avg_pool_3x3', 0), ('sep_conv_5x5', 1)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  5 lr: [0.09671745275722587]
+Train[000] Loss: 1.4916 Top1: 49.2188 Top5: 92.9688
+Train[050] Loss: 1.1695 Top1: 58.3104 Top5: 95.5193
+04/05 02:14:04 PM train_acc 59.6120
+ Valid[000] Loss: 1.1836 Top1: 57.8125 Top5: 95.7031
+ Valid[050] Loss: 1.1764 Top1: 58.3793 Top5: 95.5346
+04/05 02:14:12 PM valid_acc 57.6600
+Doing Recovery ...
+[Epoch 5]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node3 op2, node0 op1
+Step 4: node0 op2, node0 op3
+reduction cell:
+Step 1: node1 op2, node0 op5
+Step 2: node1 op3, node0 op2
+Step 3: node0 op4, node2 op0
+Step 4: node0 op1, node1 op4
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('skip_connect', 3), ('avg_pool_3x3', 0), ('skip_connect', 0), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('skip_connect', 1), ('dil_conv_3x3', 0), ('sep_conv_3x3', 1), ('skip_connect', 0), ('sep_conv_5x5', 0), ('max_pool_3x3', 2), ('avg_pool_3x3', 0), ('sep_conv_5x5', 1)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  6 lr: [0.09548206348304984]
+Train[000] Loss: 1.2919 Top1: 55.8594 Top5: 96.0938
+Train[050] Loss: 1.0440 Top1: 63.2276 Top5: 96.6222
+04/05 02:14:55 PM train_acc 64.0760
+ Valid[000] Loss: 1.1928 Top1: 59.3750 Top5: 93.7500
+ Valid[050] Loss: 1.1935 Top1: 59.4899 Top5: 94.9295
+04/05 02:15:02 PM valid_acc 59.3840
+Doing Recovery ...
+[Epoch 6]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node3 op2, node0 op1
+Step 4: node3 op4, node0 op3
+reduction cell:
+Step 1: node1 op2, node0 op5
+Step 2: node2 op0, node0 op2
+Step 3: node1 op6, node0 op4
+Step 4: node1 op4, node0 op1
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('skip_connect', 3), ('avg_pool_3x3', 0), ('sep_conv_5x5', 3), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('skip_connect', 1), ('dil_conv_3x3', 0), ('max_pool_3x3', 2), ('skip_connect', 0), ('dil_conv_5x5', 1), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('avg_pool_3x3', 0)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  7 lr: [0.0940699090043822]
+Train[000] Loss: 0.9958 Top1: 66.7969 Top5: 97.2656
+Train[050] Loss: 0.9500 Top1: 66.1765 Top5: 97.3192
+04/05 02:15:51 PM train_acc 67.1800
+ Valid[000] Loss: 1.0961 Top1: 61.3281 Top5: 94.5312
+ Valid[050] Loss: 1.0891 Top1: 62.3851 Top5: 96.3848
+04/05 02:15:59 PM valid_acc 62.8680
+Doing Recovery ...
+[Epoch 7]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node1 op4, node0 op1
+Step 4: node0 op2, node0 op3
+reduction cell:
+Step 1: node1 op2, node0 op5
+Step 2: node1 op4, node0 op2
+Step 3: node1 op5, node0 op4
+Step 4: node0 op1, node1 op4
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('sep_conv_5x5', 1), ('avg_pool_3x3', 0), ('skip_connect', 0), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('skip_connect', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 1), ('skip_connect', 0), ('dil_conv_3x3', 1), ('sep_conv_5x5', 0), ('avg_pool_3x3', 0), ('sep_conv_5x5', 1)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  8 lr: [0.09248656003938255]
+Train[000] Loss: 0.8210 Top1: 69.9219 Top5: 98.8281
+Train[050] Loss: 0.8744 Top1: 69.0947 Top5: 97.8171
+04/05 02:16:49 PM train_acc 69.5720
+ Valid[000] Loss: 1.0397 Top1: 62.8906 Top5: 96.4844
+ Valid[050] Loss: 1.0403 Top1: 63.8251 Top5: 96.4767
+04/05 02:16:57 PM valid_acc 64.0880
+Doing Recovery ...
+[Epoch 8]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node1 op4, node0 op1
+Step 4: node0 op6, node0 op3
+reduction cell:
+Step 1: node1 op2, node0 op5
+Step 2: node2 op6, node0 op2
+Step 3: node1 op5, node0 op4
+Step 4: node1 op4, node0 op1
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('sep_conv_5x5', 1), ('avg_pool_3x3', 0), ('dil_conv_5x5', 0), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('skip_connect', 1), ('dil_conv_3x3', 0), ('dil_conv_5x5', 2), ('skip_connect', 0), ('dil_conv_3x3', 1), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1), ('avg_pool_3x3', 0)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  9 lr: [0.09073826287662036]
+Train[000] Loss: 0.8407 Top1: 69.1406 Top5: 98.4375
+Train[050] Loss: 0.8126 Top1: 70.9789 Top5: 98.0239
+04/05 02:17:48 PM train_acc 71.4320
+ Valid[000] Loss: 0.8782 Top1: 69.1406 Top5: 97.2656
+ Valid[050] Loss: 0.9596 Top1: 66.7586 Top5: 96.6988
+04/05 02:17:57 PM valid_acc 67.2960
+Doing Recovery ...
+[Epoch 9]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op5, node0 op3
+reduction cell:
+Step 1: node1 op2, node0 op5
+Step 2: node1 op4, node0 op2
+Step 3: node1 op5, node0 op4
+Step 4: node0 op4, node1 op4
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('dil_conv_3x3', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('skip_connect', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 1), ('skip_connect', 0), ('dil_conv_3x3', 1), ('sep_conv_5x5', 0), ('sep_conv_5x5', 0), ('sep_conv_5x5', 1)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  10 lr: [0.08883191471213384]
+Train[000] Loss: 0.7747 Top1: 70.7031 Top5: 98.0469
+Train[050] Loss: 0.7854 Top1: 72.7175 Top5: 98.1694
+04/05 02:18:45 PM train_acc 72.8520
+ Valid[000] Loss: 0.7962 Top1: 70.3125 Top5: 96.8750
+ Valid[050] Loss: 0.8348 Top1: 70.9635 Top5: 97.7711
+04/05 02:18:53 PM valid_acc 70.8680
+Doing Recovery ...
+[Epoch 10]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op5, node0 op3
+reduction cell:
+Step 1: node1 op2, node0 op5
+Step 2: node2 op6, node0 op2
+Step 3: node1 op5, node0 op4
+Step 4: node3 op0, node0 op2
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('dil_conv_3x3', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('skip_connect', 1), ('dil_conv_3x3', 0), ('dil_conv_5x5', 2), ('skip_connect', 0), ('dil_conv_3x3', 1), ('sep_conv_5x5', 0), ('max_pool_3x3', 3), ('skip_connect', 0)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  11 lr: [0.08677503641662233]
+Train[000] Loss: 0.8759 Top1: 66.7969 Top5: 98.4375
+Train[050] Loss: 0.7576 Top1: 73.5524 Top5: 98.3839
+04/05 02:19:39 PM train_acc 73.9760
+ Valid[000] Loss: 0.8556 Top1: 69.1406 Top5: 97.2656
+ Valid[050] Loss: 0.8417 Top1: 70.7184 Top5: 97.6945
+04/05 02:19:47 PM valid_acc 70.4240
+Doing Recovery ...
+[Epoch 11]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op5, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node1 op4, node0 op2
+Step 3: node1 op5, node0 op4
+Step 4: node3 op0, node0 op2
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('dil_conv_3x3', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 1), ('skip_connect', 0), ('dil_conv_3x3', 1), ('sep_conv_5x5', 0), ('max_pool_3x3', 3), ('skip_connect', 0)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  12 lr: [0.0845757428400149]
+Train[000] Loss: 0.9166 Top1: 73.0469 Top5: 96.4844
+Train[050] Loss: 0.7290 Top1: 74.4102 Top5: 98.5218
+04/05 02:20:33 PM train_acc 75.3200
+ Valid[000] Loss: 0.7696 Top1: 71.4844 Top5: 98.4375
+ Valid[050] Loss: 0.8004 Top1: 71.6222 Top5: 98.3532
+04/05 02:20:40 PM valid_acc 71.8040
+Doing Recovery ...
+[Epoch 12]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op5, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node1 op6, node0 op2
+Step 3: node1 op5, node0 op4
+Step 4: node0 op2, node3 op0
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('dil_conv_3x3', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('dil_conv_5x5', 1), ('skip_connect', 0), ('dil_conv_3x3', 1), ('sep_conv_5x5', 0), ('skip_connect', 0), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  13 lr: [0.08224271077034011]
+Train[000] Loss: 0.6413 Top1: 75.0000 Top5: 99.2188
+Train[050] Loss: 0.6727 Top1: 76.5165 Top5: 98.8128
+04/05 02:21:26 PM train_acc 76.6400
+ Valid[000] Loss: 0.7663 Top1: 73.8281 Top5: 98.8281
+ Valid[050] Loss: 0.7377 Top1: 74.9923 Top5: 98.4835
+04/05 02:21:33 PM valid_acc 74.2760
+Doing Recovery ...
+[Epoch 13]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node1 op0, node0 op2
+Step 3: node1 op5, node0 op4
+Step 4: node3 op0, node0 op2
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('max_pool_3x3', 1), ('skip_connect', 0), ('dil_conv_3x3', 1), ('sep_conv_5x5', 0), ('max_pool_3x3', 3), ('skip_connect', 0)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  14 lr: [0.07978514467302872]
+Train[000] Loss: 0.6353 Top1: 76.1719 Top5: 98.0469
+Train[050] Loss: 0.6279 Top1: 78.2782 Top5: 98.7975
+04/05 02:22:16 PM train_acc 78.2640
+ Valid[000] Loss: 0.6695 Top1: 76.1719 Top5: 99.2188
+ Valid[050] Loss: 0.7188 Top1: 75.0613 Top5: 98.6443
+04/05 02:22:23 PM valid_acc 74.5200
+Doing Recovery ...
+[Epoch 14]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op5, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node1 op5, node0 op4
+Step 4: node3 op0, node0 op2
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('dil_conv_3x3', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('dil_conv_3x3', 1), ('sep_conv_5x5', 0), ('max_pool_3x3', 3), ('skip_connect', 0)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  15 lr: [0.07721274034547886]
+Train[000] Loss: 0.6428 Top1: 78.1250 Top5: 99.2188
+Train[050] Loss: 0.5828 Top1: 79.9556 Top5: 99.0656
+04/05 02:23:09 PM train_acc 79.3840
+ Valid[000] Loss: 0.7254 Top1: 73.8281 Top5: 97.2656
+ Valid[050] Loss: 0.7652 Top1: 73.1694 Top5: 98.4145
+04/05 02:23:16 PM valid_acc 72.9840
+Doing Recovery ...
+[Epoch 15]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op5, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node2 op6, node0 op4
+Step 4: node0 op2, node3 op0
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('dil_conv_3x3', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('dil_conv_5x5', 2), ('sep_conv_5x5', 0), ('skip_connect', 0), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  16 lr: [0.07453564662986169]
+Train[000] Loss: 0.5604 Top1: 80.4688 Top5: 99.2188
+Train[050] Loss: 0.5727 Top1: 80.2926 Top5: 99.1192
+04/05 02:24:02 PM train_acc 80.2520
+ Valid[000] Loss: 0.6053 Top1: 78.9062 Top5: 99.2188
+ Valid[050] Loss: 0.6757 Top1: 76.9608 Top5: 98.8894
+04/05 02:24:09 PM valid_acc 77.4320
+Doing Recovery ...
+[Epoch 16]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node1 op4, node0 op4
+Step 4: node0 op2, node3 op0
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 0), ('skip_connect', 0), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  17 lr: [0.07176442533471097]
+Train[000] Loss: 0.6991 Top1: 69.9219 Top5: 99.2188
+Train[050] Loss: 0.5513 Top1: 80.9896 Top5: 99.2034
+04/05 02:24:55 PM train_acc 81.1280
+ Valid[000] Loss: 0.7383 Top1: 74.6094 Top5: 98.0469
+ Valid[050] Loss: 0.6889 Top1: 76.0187 Top5: 98.7439
+04/05 02:25:02 PM valid_acc 76.0280
+Doing Recovery ...
+[Epoch 17]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node2 op4, node0 op4
+Step 4: node0 op2, node3 op0
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('skip_connect', 0), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  18 lr: [0.06891000952278027]
+Train[000] Loss: 0.5123 Top1: 80.8594 Top5: 99.6094
+Train[050] Loss: 0.5126 Top1: 82.2381 Top5: 99.3336
+04/05 02:25:46 PM train_acc 82.1600
+ Valid[000] Loss: 0.7082 Top1: 73.0469 Top5: 97.6562
+ Valid[050] Loss: 0.6513 Top1: 77.6884 Top5: 98.7515
+04/05 02:25:54 PM valid_acc 77.5800
+Doing Recovery ...
+[Epoch 18]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node2 op0, node0 op4
+Step 4: node0 op2, node3 op0
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('max_pool_3x3', 2), ('sep_conv_5x5', 0), ('skip_connect', 0), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  19 lr: [0.06598366032894128]
+Train[000] Loss: 0.4656 Top1: 85.5469 Top5: 99.6094
+Train[050] Loss: 0.5068 Top1: 82.7282 Top5: 99.2417
+04/05 02:26:37 PM train_acc 82.7240
+ Valid[000] Loss: 0.6934 Top1: 76.5625 Top5: 99.2188
+ Valid[050] Loss: 0.6684 Top1: 77.4203 Top5: 98.5907
+04/05 02:26:44 PM valid_acc 77.5320
+Doing Recovery ...
+[Epoch 19]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node2 op0, node0 op4
+Step 4: node2 op5, node3 op0
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('max_pool_3x3', 2), ('sep_conv_5x5', 0), ('dil_conv_3x3', 2), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  20 lr: [0.06299692247748792]
+Train[000] Loss: 0.4930 Top1: 82.4219 Top5: 99.6094
+Train[050] Loss: 0.4853 Top1: 83.4099 Top5: 99.4562
+04/05 02:27:27 PM train_acc 83.1120
+ Valid[000] Loss: 0.6104 Top1: 77.7344 Top5: 99.6094
+ Valid[050] Loss: 0.6360 Top1: 78.1939 Top5: 98.6596
+04/05 02:27:34 PM valid_acc 77.8720
+Doing Recovery ...
+[Epoch 20]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node2 op0, node0 op4
+Step 4: node0 op2, node3 op0
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('max_pool_3x3', 2), ('sep_conv_5x5', 0), ('skip_connect', 0), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  21 lr: [0.05996157867307832]
+Train[000] Loss: 0.4470 Top1: 82.4219 Top5: 100.0000
+Train[050] Loss: 0.4568 Top1: 84.3061 Top5: 99.4485
+04/05 02:28:18 PM train_acc 84.1320
+ Valid[000] Loss: 0.6408 Top1: 80.8594 Top5: 99.6094
+ Valid[050] Loss: 0.6161 Top1: 79.2433 Top5: 98.9966
+04/05 02:28:25 PM valid_acc 79.2560
+Doing Recovery ...
+[Epoch 21]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node2 op0, node0 op4
+Step 4: node4 op1, node3 op0
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('max_pool_3x3', 2), ('sep_conv_5x5', 0), ('avg_pool_3x3', 4), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  22 lr: [0.05688960304364095]
+Train[000] Loss: 0.4276 Top1: 86.3281 Top5: 99.6094
+Train[050] Loss: 0.4454 Top1: 84.7963 Top5: 99.4409
+04/05 02:29:08 PM train_acc 84.8440
+ Valid[000] Loss: 0.7657 Top1: 74.6094 Top5: 98.4375
+ Valid[050] Loss: 0.6662 Top1: 77.4510 Top5: 98.8434
+04/05 02:29:15 PM valid_acc 77.5440
+Doing Recovery ...
+[Epoch 22]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node2 op0, node0 op4
+Step 4: node0 op0, node3 op0
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('max_pool_3x3', 2), ('sep_conv_5x5', 0), ('max_pool_3x3', 0), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  23 lr: [0.05379311381685622]
+Train[000] Loss: 0.3655 Top1: 89.0625 Top5: 99.6094
+Train[050] Loss: 0.4230 Top1: 85.7690 Top5: 99.5098
+04/05 02:29:58 PM train_acc 85.5400
+ Valid[000] Loss: 0.6421 Top1: 79.6875 Top5: 99.2188
+ Valid[050] Loss: 0.6220 Top1: 79.0441 Top5: 98.9737
+04/05 02:30:05 PM valid_acc 78.9600
+Doing Recovery ...
+[Epoch 23]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node2 op0, node0 op4
+Step 4: node4 op1, node3 op0
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('max_pool_3x3', 2), ('sep_conv_5x5', 0), ('avg_pool_3x3', 4), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  24 lr: [0.05068432541424077]
+Train[000] Loss: 0.4791 Top1: 83.5938 Top5: 99.6094
+Train[050] Loss: 0.3891 Top1: 86.8260 Top5: 99.6860
+04/05 02:30:47 PM train_acc 86.0760
+ Valid[000] Loss: 0.6528 Top1: 80.0781 Top5: 98.0469
+ Valid[050] Loss: 0.5754 Top1: 80.4228 Top5: 98.9047
+04/05 02:30:55 PM valid_acc 80.1680
+Doing Recovery ...
+[Epoch 24]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node2 op0, node0 op4
+Step 4: node4 op1, node3 op0
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('max_pool_3x3', 2), ('sep_conv_5x5', 0), ('avg_pool_3x3', 4), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  25 lr: [0.04757550014834764]
+Train[000] Loss: 0.3148 Top1: 90.2344 Top5: 100.0000
+Train[050] Loss: 0.3963 Top1: 86.7034 Top5: 99.5787
+04/05 02:31:37 PM train_acc 86.4960
+ Valid[000] Loss: 0.5682 Top1: 81.6406 Top5: 98.0469
+ Valid[050] Loss: 0.6327 Top1: 78.8603 Top5: 98.8741
+04/05 02:31:44 PM valid_acc 78.4840
+Doing Recovery ...
+[Epoch 25]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node2 op0, node0 op4
+Step 4: node2 op4, node3 op0
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('max_pool_3x3', 2), ('sep_conv_5x5', 0), ('sep_conv_5x5', 2), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  26 lr: [0.044478899709064657]
+Train[000] Loss: 0.3496 Top1: 89.0625 Top5: 99.6094
+Train[050] Loss: 0.3792 Top1: 87.2702 Top5: 99.6017
+04/05 02:32:28 PM train_acc 86.9920
+ Valid[000] Loss: 0.5572 Top1: 81.6406 Top5: 99.2188
+ Valid[050] Loss: 0.5325 Top1: 81.8627 Top5: 99.1039
+04/05 02:32:35 PM valid_acc 81.2960
+Doing Recovery ...
+[Epoch 26]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node3 op0, node0 op4
+Step 4: node2 op6, node3 op0
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('max_pool_3x3', 3), ('sep_conv_5x5', 0), ('dil_conv_5x5', 2), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  27 lr: [0.04140673662432582]
+Train[000] Loss: 0.3911 Top1: 87.1094 Top5: 100.0000
+Train[050] Loss: 0.3656 Top1: 87.7757 Top5: 99.6324
+04/05 02:33:19 PM train_acc 87.4880
+ Valid[000] Loss: 0.6463 Top1: 78.1250 Top5: 98.0469
+ Valid[050] Loss: 0.5594 Top1: 80.9206 Top5: 99.0273
+04/05 02:33:26 PM valid_acc 81.2720
+Doing Recovery ...
+[Epoch 27]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op5, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node3 op4, node0 op4
+Step 4: node2 op6, node3 op0
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('dil_conv_3x3', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('sep_conv_5x5', 3), ('sep_conv_5x5', 0), ('dil_conv_5x5', 2), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  28 lr: [0.038371125878580145]
+Train[000] Loss: 0.3144 Top1: 89.4531 Top5: 99.2188
+Train[050] Loss: 0.3476 Top1: 88.6029 Top5: 99.6936
+04/05 02:34:11 PM train_acc 88.1840
+ Valid[000] Loss: 0.4398 Top1: 87.1094 Top5: 99.2188
+ Valid[050] Loss: 0.5395 Top1: 81.6636 Top5: 99.2341
+04/05 02:34:19 PM valid_acc 81.5880
+Doing Recovery ...
+[Epoch 28]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op5, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node2 op0, node0 op4
+Step 4: node2 op6, node3 op0
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('dil_conv_3x3', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('max_pool_3x3', 2), ('sep_conv_5x5', 0), ('dil_conv_5x5', 2), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  29 lr: [0.03538403686884125]
+Train[000] Loss: 0.4026 Top1: 84.7656 Top5: 100.0000
+Train[050] Loss: 0.3441 Top1: 88.4881 Top5: 99.7472
+04/05 02:35:04 PM train_acc 88.3640
+ Valid[000] Loss: 0.5425 Top1: 81.2500 Top5: 100.0000
+ Valid[050] Loss: 0.5903 Top1: 80.1854 Top5: 98.9200
+04/05 02:35:12 PM valid_acc 80.6200
+Doing Recovery ...
+[Epoch 29]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op5, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node2 op0, node0 op4
+Step 4: node3 op0, node2 op6
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('dil_conv_3x3', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('max_pool_3x3', 2), ('sep_conv_5x5', 0), ('max_pool_3x3', 3), ('dil_conv_5x5', 2)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  30 lr: [0.03245724587269886]
+Train[000] Loss: 0.3560 Top1: 86.3281 Top5: 100.0000
+Train[050] Loss: 0.3431 Top1: 88.5110 Top5: 99.7626
+04/05 02:35:57 PM train_acc 88.7400
+ Valid[000] Loss: 0.5193 Top1: 83.5938 Top5: 99.6094
+ Valid[050] Loss: 0.5186 Top1: 82.3912 Top5: 99.3413
+04/05 02:36:04 PM valid_acc 82.2160
+Doing Recovery ...
+[Epoch 30]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node1 op4, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node3 op5, node0 op4
+Step 4: node2 op6, node3 op0
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('sep_conv_5x5', 1), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('dil_conv_3x3', 3), ('sep_conv_5x5', 0), ('dil_conv_5x5', 2), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  31 lr: [0.0296022891947379]
+Train[000] Loss: 0.3307 Top1: 88.2812 Top5: 100.0000
+Train[050] Loss: 0.3221 Top1: 89.5144 Top5: 99.6783
+04/05 02:36:53 PM train_acc 89.0920
+ Valid[000] Loss: 0.5822 Top1: 83.2031 Top5: 98.4375
+ Valid[050] Loss: 0.5461 Top1: 82.2840 Top5: 99.0273
+04/05 02:37:01 PM valid_acc 82.0840
+Doing Recovery ...
+[Epoch 31]
+normal cell:
+Step 1: node0 op1, node1 op2
+Step 2: node2 op2, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node4 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node3 op5, node0 op4
+Step 4: node2 op6, node3 op0
+Genotype(normal=[('avg_pool_3x3', 0), ('skip_connect', 1), ('skip_connect', 2), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 4), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('dil_conv_3x3', 3), ('sep_conv_5x5', 0), ('dil_conv_5x5', 2), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  32 lr: [0.026830417146486835]
+Train[000] Loss: 1.6621 Top1: 44.5312 Top5: 88.6719
+Train[050] Loss: 0.8978 Top1: 69.0104 Top5: 97.7941
+04/05 02:37:40 PM train_acc 73.4600
+ Valid[000] Loss: 0.7130 Top1: 77.3438 Top5: 98.0469
+ Valid[050] Loss: 0.7422 Top1: 75.5285 Top5: 98.0545
+04/05 02:37:47 PM valid_acc 75.2680
+Doing Recovery ...
+[Epoch 32]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node1 op4, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node0 op6, node0 op4
+Step 4: node2 op6, node3 op0
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('sep_conv_5x5', 1), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('dil_conv_5x5', 0), ('sep_conv_5x5', 0), ('dil_conv_5x5', 2), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  33 lr: [0.02415254899886045]
+Train[000] Loss: 0.8365 Top1: 71.8750 Top5: 98.4375
+Train[050] Loss: 0.4195 Top1: 86.0754 Top5: 99.5098
+04/05 02:38:37 PM train_acc 87.2000
+ Valid[000] Loss: 0.6315 Top1: 78.1250 Top5: 97.6562
+ Valid[050] Loss: 0.5250 Top1: 82.1538 Top5: 99.2111
+04/05 02:38:45 PM valid_acc 82.5000
+Doing Recovery ...
+[Epoch 33]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node1 op4, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node0 op6, node0 op4
+Step 4: node2 op6, node3 op0
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('sep_conv_5x5', 1), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('dil_conv_5x5', 0), ('sep_conv_5x5', 0), ('dil_conv_5x5', 2), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  34 lr: [0.021579229022719595]
+Train[000] Loss: 0.4430 Top1: 85.5469 Top5: 100.0000
+Train[050] Loss: 0.3140 Top1: 89.5450 Top5: 99.7626
+04/05 02:39:35 PM train_acc 89.3440
+ Valid[000] Loss: 0.4569 Top1: 86.7188 Top5: 100.0000
+ Valid[050] Loss: 0.5041 Top1: 83.0729 Top5: 99.2264
+04/05 02:39:43 PM valid_acc 83.4280
+Doing Recovery ...
+[Epoch 34]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node2 op4, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op6, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node0 op6, node0 op4
+Step 4: node2 op6, node3 op0
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('sep_conv_5x5', 2), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('dil_conv_5x5', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('dil_conv_5x5', 0), ('sep_conv_5x5', 0), ('dil_conv_5x5', 2), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  35 lr: [0.01912058369867478]
+Train[000] Loss: 0.4339 Top1: 85.9375 Top5: 99.6094
+Train[050] Loss: 0.3206 Top1: 89.9969 Top5: 99.7396
+04/05 02:40:36 PM train_acc 90.1000
+ Valid[000] Loss: 0.5511 Top1: 79.6875 Top5: 98.8281
+ Valid[050] Loss: 0.4816 Top1: 83.8312 Top5: 99.3336
+04/05 02:40:44 PM valid_acc 83.6400
+Doing Recovery ...
+[Epoch 35]
+normal cell:
+Step 1: node0 op4, node1 op2
+Step 2: node1 op0, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node0 op6, node0 op4
+Step 4: node2 op6, node3 op0
+Genotype(normal=[('sep_conv_5x5', 0), ('skip_connect', 1), ('max_pool_3x3', 1), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('dil_conv_5x5', 0), ('sep_conv_5x5', 0), ('dil_conv_5x5', 2), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  36 lr: [0.01678628012479576]
+Train[000] Loss: 0.3491 Top1: 89.0625 Top5: 100.0000
+Train[050] Loss: 0.2754 Top1: 91.0386 Top5: 99.8545
+04/05 02:41:30 PM train_acc 90.8160
+ Valid[000] Loss: 0.4094 Top1: 84.3750 Top5: 99.6094
+ Valid[050] Loss: 0.4798 Top1: 83.9844 Top5: 99.2724
+04/05 02:41:37 PM valid_acc 83.9320
+Doing Recovery ...
+[Epoch 36]
+normal cell:
+Step 1: node1 op3, node1 op2
+Step 2: node1 op0, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node3 op6, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node0 op6, node0 op4
+Step 4: node2 op6, node3 op0
+Genotype(normal=[('sep_conv_3x3', 1), ('skip_connect', 1), ('max_pool_3x3', 1), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('dil_conv_5x5', 3), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('dil_conv_5x5', 0), ('sep_conv_5x5', 0), ('dil_conv_5x5', 2), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  37 lr: [0.014585485568378177]
+Train[000] Loss: 1.4968 Top1: 48.4375 Top5: 94.5312
+Train[050] Loss: 0.6968 Top1: 76.8612 Top5: 98.6673
+04/05 02:42:23 PM train_acc 79.9400
+ Valid[000] Loss: 0.6913 Top1: 73.0469 Top5: 98.4375
+ Valid[050] Loss: 0.6215 Top1: 78.9752 Top5: 98.7898
+04/05 02:42:31 PM valid_acc 79.0320
+Doing Recovery ...
+[Epoch 37]
+normal cell:
+Step 1: node0 op1, node1 op2
+Step 2: node1 op6, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node3 op6, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node0 op6, node0 op4
+Step 4: node2 op6, node3 op0
+Genotype(normal=[('avg_pool_3x3', 0), ('skip_connect', 1), ('dil_conv_5x5', 1), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('dil_conv_5x5', 3), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('dil_conv_5x5', 0), ('sep_conv_5x5', 0), ('dil_conv_5x5', 2), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  38 lr: [0.012526827973271905]
+Train[000] Loss: 0.5022 Top1: 84.7656 Top5: 99.6094
+Train[050] Loss: 0.4669 Top1: 84.4133 Top5: 99.4562
+04/05 02:43:16 PM train_acc 84.7000
+ Valid[000] Loss: 0.6413 Top1: 80.4688 Top5: 98.0469
+ Valid[050] Loss: 0.5901 Top1: 80.3692 Top5: 98.7209
+04/05 02:43:23 PM valid_acc 80.4520
+Doing Recovery ...
+[Epoch 38]
+normal cell:
+Step 1: node1 op0, node1 op2
+Step 2: node2 op5, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node1 op4, node0 op4
+Step 4: node2 op6, node3 op0
+Genotype(normal=[('max_pool_3x3', 1), ('skip_connect', 1), ('dil_conv_3x3', 2), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 0), ('dil_conv_5x5', 2), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  39 lr: [0.010618357005654975]
+Train[000] Loss: 0.4874 Top1: 83.9844 Top5: 100.0000
+Train[050] Loss: 0.4438 Top1: 85.2482 Top5: 99.6400
+04/05 02:44:05 PM train_acc 85.7000
+ Valid[000] Loss: 0.4979 Top1: 82.8125 Top5: 99.2188
+ Valid[050] Loss: 0.5461 Top1: 81.6330 Top5: 99.2034
+04/05 02:44:12 PM valid_acc 81.5280
+Doing Recovery ...
+[Epoch 39]
+normal cell:
+Step 1: node1 op0, node1 op2
+Step 2: node1 op3, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node1 op5, node0 op4
+Step 4: node2 op6, node3 op0
+Genotype(normal=[('max_pool_3x3', 1), ('skip_connect', 1), ('sep_conv_3x3', 1), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('dil_conv_3x3', 1), ('sep_conv_5x5', 0), ('dil_conv_5x5', 2), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  40 lr: [0.008867504815958396]
+Train[000] Loss: 0.2990 Top1: 91.4062 Top5: 99.6094
+Train[050] Loss: 0.3987 Top1: 86.9715 Top5: 99.5634
+04/05 02:44:55 PM train_acc 86.8680
+ Valid[000] Loss: 0.4899 Top1: 84.7656 Top5: 99.6094
+ Valid[050] Loss: 0.5196 Top1: 82.7053 Top5: 99.2494
+04/05 02:45:02 PM valid_acc 82.4200
+Doing Recovery ...
+[Epoch 40]
+normal cell:
+Step 1: node1 op0, node1 op2
+Step 2: node1 op5, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node2 op4, node0 op4
+Step 4: node2 op6, node3 op0
+Genotype(normal=[('max_pool_3x3', 1), ('skip_connect', 1), ('dil_conv_3x3', 1), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('dil_conv_5x5', 2), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  41 lr: [0.00728104494224538]
+Train[000] Loss: 0.4822 Top1: 80.0781 Top5: 99.2188
+Train[050] Loss: 0.3764 Top1: 87.4847 Top5: 99.6706
+04/05 02:45:44 PM train_acc 87.7640
+ Valid[000] Loss: 0.4915 Top1: 83.9844 Top5: 99.6094
+ Valid[050] Loss: 0.5143 Top1: 83.0040 Top5: 99.2341
+04/05 02:45:51 PM valid_acc 82.6760
+Doing Recovery ...
+[Epoch 41]
+normal cell:
+Step 1: node1 op0, node1 op2
+Step 2: node1 op5, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node2 op4, node0 op4
+Step 4: node2 op6, node3 op0
+Genotype(normal=[('max_pool_3x3', 1), ('skip_connect', 1), ('dil_conv_3x3', 1), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('dil_conv_5x5', 2), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  42 lr: [0.0058650463085945]
+Train[000] Loss: 0.4234 Top1: 86.3281 Top5: 98.8281
+Train[050] Loss: 0.3588 Top1: 88.0974 Top5: 99.7319
+04/05 02:46:33 PM train_acc 88.0200
+ Valid[000] Loss: 0.4413 Top1: 84.7656 Top5: 99.6094
+ Valid[050] Loss: 0.5217 Top1: 82.2151 Top5: 99.1498
+04/05 02:46:39 PM valid_acc 81.7120
+Doing Recovery ...
+[Epoch 42]
+normal cell:
+Step 1: node1 op0, node1 op2
+Step 2: node1 op5, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node2 op4, node0 op4
+Step 4: node2 op6, node3 op0
+Genotype(normal=[('max_pool_3x3', 1), ('skip_connect', 1), ('dil_conv_3x3', 1), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('dil_conv_5x5', 2), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  43 lr: [0.004624816217263275]
+Train[000] Loss: 0.3712 Top1: 86.3281 Top5: 99.2188
+Train[050] Loss: 0.3329 Top1: 88.9246 Top5: 99.7779
+04/05 02:47:21 PM train_acc 88.9200
+ Valid[000] Loss: 0.4946 Top1: 80.4688 Top5: 98.8281
+ Valid[050] Loss: 0.5053 Top1: 82.7589 Top5: 99.1575
+04/05 02:47:28 PM valid_acc 82.7600
+Doing Recovery ...
+[Epoch 43]
+normal cell:
+Step 1: node1 op0, node1 op2
+Step 2: node1 op5, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node2 op4, node0 op4
+Step 4: node2 op6, node3 op0
+Genotype(normal=[('max_pool_3x3', 1), ('skip_connect', 1), ('dil_conv_3x3', 1), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('dil_conv_5x5', 2), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  44 lr: [0.0035648194373289976]
+Train[000] Loss: 0.3622 Top1: 88.2812 Top5: 99.6094
+Train[050] Loss: 0.3329 Top1: 89.2616 Top5: 99.7472
+04/05 02:48:10 PM train_acc 89.3960
+ Valid[000] Loss: 0.5861 Top1: 80.8594 Top5: 98.8281
+ Valid[050] Loss: 0.5080 Top1: 82.7665 Top5: 99.2877
+04/05 02:48:16 PM valid_acc 82.9240
+Doing Recovery ...
+[Epoch 44]
+normal cell:
+Step 1: node1 op0, node1 op2
+Step 2: node1 op5, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node1 op4, node0 op4
+Step 4: node2 op6, node3 op0
+Genotype(normal=[('max_pool_3x3', 1), ('skip_connect', 1), ('dil_conv_3x3', 1), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('sep_conv_5x5', 1), ('sep_conv_5x5', 0), ('dil_conv_5x5', 2), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  45 lr: [0.002688544059060512]
+Train[000] Loss: 0.3012 Top1: 89.4531 Top5: 100.0000
+Train[050] Loss: 0.3196 Top1: 89.5297 Top5: 99.7932
+04/05 02:48:59 PM train_acc 89.4560
+ Valid[000] Loss: 0.3908 Top1: 86.7188 Top5: 99.6094
+ Valid[050] Loss: 0.4806 Top1: 83.6014 Top5: 99.2264
+04/05 02:49:06 PM valid_acc 83.3640
+Doing Recovery ...
+[Epoch 45]
+normal cell:
+Step 1: node1 op0, node1 op2
+Step 2: node1 op5, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node2 op4, node0 op4
+Step 4: node2 op6, node3 op0
+Genotype(normal=[('max_pool_3x3', 1), ('skip_connect', 1), ('dil_conv_3x3', 1), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('sep_conv_5x5', 2), ('sep_conv_5x5', 0), ('dil_conv_5x5', 2), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  46 lr: [0.001998240739171279]
+Train[000] Loss: 0.3188 Top1: 90.6250 Top5: 99.2188
+Train[050] Loss: 0.3083 Top1: 89.8208 Top5: 99.7779
+04/05 02:49:47 PM train_acc 89.7120
+ Valid[000] Loss: 0.4567 Top1: 85.9375 Top5: 99.6094
+ Valid[050] Loss: 0.4818 Top1: 83.6091 Top5: 99.3873
+04/05 02:49:54 PM valid_acc 83.4440
+Doing Recovery ...
+[Epoch 46]
+normal cell:
+Step 1: node1 op0, node1 op2
+Step 2: node1 op3, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node3 op2, node0 op4
+Step 4: node2 op6, node3 op0
+Genotype(normal=[('max_pool_3x3', 1), ('skip_connect', 1), ('sep_conv_3x3', 1), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('skip_connect', 3), ('sep_conv_5x5', 0), ('dil_conv_5x5', 2), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  47 lr: [0.0014943273783090826]
+Train[000] Loss: 0.2787 Top1: 90.2344 Top5: 100.0000
+Train[050] Loss: 0.3018 Top1: 90.2191 Top5: 99.7549
+04/05 02:50:37 PM train_acc 89.9160
+ Valid[000] Loss: 0.5106 Top1: 81.6406 Top5: 100.0000
+ Valid[050] Loss: 0.4837 Top1: 83.5172 Top5: 99.4256
+04/05 02:50:43 PM valid_acc 83.4280
+Doing Recovery ...
+[Epoch 47]
+normal cell:
+Step 1: node1 op0, node1 op2
+Step 2: node1 op5, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node3 op4, node0 op4
+Step 4: node2 op6, node3 op0
+Genotype(normal=[('max_pool_3x3', 1), ('skip_connect', 1), ('dil_conv_3x3', 1), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('sep_conv_5x5', 3), ('sep_conv_5x5', 0), ('dil_conv_5x5', 2), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  48 lr: [0.0011737622857508631]
+Train[000] Loss: 0.2770 Top1: 91.7969 Top5: 99.6094
+Train[050] Loss: 0.2954 Top1: 90.5790 Top5: 99.8315
+04/05 02:51:25 PM train_acc 90.4520
+ Valid[000] Loss: 0.5430 Top1: 82.4219 Top5: 98.8281
+ Valid[050] Loss: 0.4897 Top1: 83.8312 Top5: 99.3107
+04/05 02:51:32 PM valid_acc 83.5960
+Doing Recovery ...
+[Epoch 48]
+normal cell:
+Step 1: node1 op0, node1 op2
+Step 2: node1 op6, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node3 op4, node0 op4
+Step 4: node2 op6, node3 op0
+Genotype(normal=[('max_pool_3x3', 1), ('skip_connect', 1), ('dil_conv_5x5', 1), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('sep_conv_5x5', 3), ('sep_conv_5x5', 0), ('dil_conv_5x5', 2), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  49 lr: [0.00102444335238633]
+Train[000] Loss: 0.2598 Top1: 92.1875 Top5: 99.6094
+Train[050] Loss: 0.2975 Top1: 90.4259 Top5: 99.8085
+04/05 02:52:14 PM train_acc 90.3880
+ Valid[000] Loss: 0.4409 Top1: 83.2031 Top5: 99.6094
+ Valid[050] Loss: 0.4791 Top1: 83.9001 Top5: 99.2570
+04/05 02:52:21 PM valid_acc 83.7000
+Doing Recovery ...
+[Epoch 49]
+normal cell:
+Step 1: node1 op0, node1 op2
+Step 2: node1 op6, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node3 op4, node0 op4
+Step 4: node2 op6, node3 op0
+Genotype(normal=[('max_pool_3x3', 1), ('skip_connect', 1), ('dil_conv_5x5', 1), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('sep_conv_5x5', 3), ('sep_conv_5x5', 0), ('dil_conv_5x5', 2), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
+Doing Search ...
+epoch:  50 lr: [0.001]
+Train[000] Loss: 0.3509 Top1: 89.0625 Top5: 99.2188
+Train[050] Loss: 0.2979 Top1: 90.4412 Top5: 99.7396
+04/05 02:53:04 PM train_acc 90.3200
+ Valid[000] Loss: 0.6352 Top1: 80.8594 Top5: 98.8281
+ Valid[050] Loss: 0.4761 Top1: 83.9461 Top5: 99.3566
+04/05 02:53:11 PM valid_acc 83.8640
+Doing Recovery ...
+[Epoch 50]
+normal cell:
+Step 1: node1 op0, node1 op2
+Step 2: node1 op6, node0 op0
+Step 3: node1 op0, node0 op1
+Step 4: node2 op2, node0 op3
+reduction cell:
+Step 1: node1 op0, node0 op5
+Step 2: node0 op4, node0 op2
+Step 3: node3 op4, node0 op4
+Step 4: node2 op6, node3 op0
+Genotype(normal=[('max_pool_3x3', 1), ('skip_connect', 1), ('dil_conv_5x5', 1), ('max_pool_3x3', 0), ('max_pool_3x3', 1), ('avg_pool_3x3', 0), ('skip_connect', 2), ('sep_conv_3x3', 0)], normal_concat=range(2, 6), reduce=[('max_pool_3x3', 1), ('dil_conv_3x3', 0), ('sep_conv_5x5', 0), ('skip_connect', 0), ('sep_conv_5x5', 3), ('sep_conv_5x5', 0), ('dil_conv_5x5', 2), ('max_pool_3x3', 3)], reduce_concat=range(2, 6))
