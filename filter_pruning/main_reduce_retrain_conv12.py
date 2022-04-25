@@ -184,7 +184,6 @@ def main_worker(gpu, ngpus_per_node, args):
         # create compressed (small and dense) model
         print("=> creating (compressed) model '{}'".format(args.arch))
         model = models_with_reduce_conv12.__dict__[args.arch](mask)
-        print(kkk)
     else:
         raise ValueError("The mask cannot be found at the specified path: {}".format(path_to_mask))
 
