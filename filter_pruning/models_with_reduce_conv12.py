@@ -98,6 +98,7 @@ class Bottleneck(nn.Module):
         
         self.num_out_filters1 = np.sum(mask[0])
         self.num_out_filters2 = np.sum(mask[1])
+        # print("The number of output filters in conv1 and conv2 and conv3 is {} and {} and {}".format(self.num_out_filters1, self.num_out_filters2, planes * self.expansion))
 
         # Both self.conv2 and self.downsample layers downsample the input when stride != 1
         if self.num_out_filters1 > 0 and self.num_out_filters2 > 0:
@@ -173,11 +174,15 @@ class ResNet(nn.Module):
         self.bn1 = norm_layer(self.inplanes)
         self.relu = nn.ReLU(inplace=True)
         self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
+        # print("layer 1")
         self.layer1 = self._make_layer(block,  64, layers[0], mask[0])
+        # print("layer 2")
         self.layer2 = self._make_layer(block, 128, layers[1], mask[1], stride=2,
                                        dilate=replace_stride_with_dilation[0])
+        # print("layer 3")
         self.layer3 = self._make_layer(block, 256, layers[2], mask[2], stride=2,
                                        dilate=replace_stride_with_dilation[1])
+        # print("layer 4")
         self.layer4 = self._make_layer(block, 512, layers[3], mask[3], stride=2,
                                        dilate=replace_stride_with_dilation[2])
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
@@ -216,11 +221,13 @@ class ResNet(nn.Module):
 
         layers = []
         block_index = 0
+        # print("block {}".format(block_index))
         layers.append(block(self.inplanes, planes, mask[block_index], stride, downsample, self.groups,
                             self.base_width, previous_dilation, norm_layer))
         self.inplanes = planes * block.expansion
 
         for block_index in range(1, blocks):
+            # print("block {}".format(block_index))
             layers.append(block(self.inplanes, planes, mask[block_index], groups=self.groups,
                                 base_width=self.base_width, dilation=self.dilation,
                                 norm_layer=norm_layer))

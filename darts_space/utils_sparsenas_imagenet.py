@@ -7,6 +7,7 @@ from model_search_imagenet import Network as SearchNetwork
 
 matplotlib.use("Agg")
 
+
 def get_regularization_term(model_params, args):
     reg_loss = 0
     for group in model_params:
@@ -44,15 +45,15 @@ def plot_individual_op_norm(model, filename, normalization="none", normalization
     f = plt.figure(num=None, figsize=(num_ops*0.15, 6), dpi=100, facecolor='w', edgecolor='k')
     if normalization == "none":
         for i, op_norm in enumerate(op_norms):
-            plt.semilogy(i, op_norm.item(),"o")
+            plt.semilogy(i, op_norm.item(), "o")
     elif normalization == "mul":
         for i, (op_norm, op_size) in enumerate(zip(op_norms, op_sizes)):
             op_norm_normalized = op_norm * (op_size ** normalization_exponent)
-            plt.semilogy(i, op_norm_normalized.item(),"o")
+            plt.semilogy(i, op_norm_normalized.item(), "o")
     elif normalization == "div":
         for i, (op_norm, op_size) in enumerate(zip(op_norms, op_sizes)):
             op_norm_normalized = op_norm / (op_size ** normalization_exponent)
-            plt.semilogy(i, op_norm_normalized.item(),"o")
+            plt.semilogy(i, op_norm_normalized.item(), "o")
 
     plt.xticks(np.arange(num_ops), op_names, rotation=90)
     plt.xlim(-1, num_ops)
@@ -67,33 +68,33 @@ def acc_n_loss(train_loss, test_acc, filename, train_acc=None, test_loss=None, t
     if train_acc is not None and test_loss is not None:
         fig, axs = plt.subplots(2, 2, figsize=(9.6, 7.2))
         fig.suptitle('Loss and Acc')
-        axs[0,0].semilogy(train_loss, label='loss')
+        axs[0, 0].semilogy(train_loss, label='loss')
 
         if train_loss_reg is not None:
-            axs[0,0].semilogy(train_loss_reg, label='loss+reg')
+            axs[0, 0].semilogy(train_loss_reg, label='loss+reg')
 
-        axs[0,0].grid(True)
-        axs[0,0].set_xlabel('Epochs')
-        axs[0,0].set_ylabel('Training loss')
+        axs[0, 0].grid(True)
+        axs[0, 0].set_xlabel('Epochs')
+        axs[0, 0].set_ylabel('Training loss')
 
-        axs[0,1].plot(train_acc)
-        axs[0,1].grid(True)
-        axs[0,1].set_ylim(0,101)
-        axs[0,1].set_yticks(np.arange(0, 101, 5))
-        axs[0,1].set_xlabel('Epochs')
-        axs[0,1].set_ylabel('Train accuracy (in %)')
+        axs[0, 1].plot(train_acc)
+        axs[0, 1].grid(True)
+        axs[0, 1].set_ylim(0, 101)
+        axs[0, 1].set_yticks(np.arange(0, 101, 5))
+        axs[0, 1].set_xlabel('Epochs')
+        axs[0, 1].set_ylabel('Train accuracy (in %)')
 
-        axs[1,0].semilogy(test_loss)
-        axs[1,0].grid(True)
-        axs[1,0].set_xlabel('Epochs')
-        axs[1,0].set_ylabel('Test loss')
+        axs[1, 0].semilogy(test_loss)
+        axs[1, 0].grid(True)
+        axs[1, 0].set_xlabel('Epochs')
+        axs[1, 0].set_ylabel('Test loss')
 
-        axs[1,1].plot(test_acc)
-        axs[1,1].grid(True)
-        axs[1,1].set_ylim(0,101)
-        axs[1,1].set_yticks(np.arange(0, 101, 5))
-        axs[1,1].set_xlabel('Epochs')
-        axs[1,1].set_ylabel('Test accuracy (in %)')
+        axs[1, 1].plot(test_acc)
+        axs[1, 1].grid(True)
+        axs[1, 1].set_ylim(0, 101)
+        axs[1, 1].set_yticks(np.arange(0, 101, 5))
+        axs[1, 1].set_xlabel('Epochs')
+        axs[1, 1].set_ylabel('Test accuracy (in %)')
 
         fig.tight_layout()
         plt.savefig(filename)
@@ -109,14 +110,14 @@ def acc_n_loss(train_loss, test_acc, filename, train_acc=None, test_loss=None, t
 
         ax2.plot(train_acc)
         ax2.grid(True)
-        ax2.set_ylim(0,101)
+        ax2.set_ylim(0, 101)
         ax2.set_yticks(np.arange(0, 101, 5))
         ax2.set_xlabel('Epochs')
         ax2.set_ylabel('Train accuracy (in %)')
 
         ax3.plot(test_acc)
         ax3.grid(True)
-        ax3.set_ylim(0,101)
+        ax3.set_ylim(0, 101)
         ax3.set_yticks(np.arange(0, 101, 5))
         ax3.set_xlabel('Epochs')
         ax3.set_ylabel('Test accuracy (in %)')
@@ -132,7 +133,7 @@ def acc_n_loss(train_loss, test_acc, filename, train_acc=None, test_loss=None, t
         ax2.plot(test_acc)
         ax1.grid(True)
         ax2.grid(True)
-        ax2.set_ylim(0,101)
+        ax2.set_ylim(0, 101)
         ax2.set_yticks(np.arange(0, 101, 5))
         ax1.title.set_text('Loss')
         ax1.set_xlabel('Epochs')
@@ -150,14 +151,12 @@ def group_model_params_by_cell(model, network, mu=None):
     This functions put the same operation of different cells into the same vector (the group will be passed to optimizer).
 
     One operation may consist of several suboperations. For example, op 3 of edge 7 consists of (_ops.7._ops.3.op.1.weight, _ops.7._ops.3.op.2.weight, _ops.7._ops.3.op.5.weight, _ops.7._ops.3.op.6.weight). Op 3 of edge 7 from all cells of the same type (normal or reduce) will be grouped as one, "_ops.7._ops.3". During discretization, the operation "_ops.7._ops.3" will be pruned if its norm is smaller than the pruning threshold.
-    """
-
-    assert network.num_ops <=9, "The number of operations should be smaller than 10 (but got {}).".format(network.num_ops)
-    assert network.num_edges <=100, "The number of edges should be smaller than 100 (but got {}).".format(network.num_edges)
-
-    """
     The operations that are trainable but not prunable should be separated from trainable and prunable operations. "Unprunable" means these are the operations that will be definitely kept in the final network (such as the preprocessing layer, the final classifier layer, and the preprocessing of input nodes in each cell), in contrast to the operations that may be pruned away after searching is completed.
     """
+
+    assert network.num_ops <= 9, "The number of operations should be smaller than 10 (but got {}).".format(network.num_ops)
+    assert network.num_edges <= 100, "The number of edges should be smaller than 100 (but got {}).".format(network.num_edges)
+
     ops_unprunable = []
     ops_unscale = []
 
@@ -197,28 +196,28 @@ def group_model_params_by_cell(model, network, mu=None):
             An example of "name" is _ops.8._ops.4.op.2.weight, where 8 represents the edge, 4 is the op index, and 2 is the subop of op 4 (op 4 consists of several subops).
             """
             if "_ops" in name:
-                if "_ops.0._ops.0" in name: # beginning of a new cell
-                    cur_op_name = name[0:13] # assuming the number of cells < 10
+                if "_ops.0._ops.0" in name:  # beginning of a new cell
+                    cur_op_name = name[0:13]  # assuming the number of cells < 10
                     pre_op_name = cur_op_name
                 else:
                     if edge_index <= 9:
-                        cur_op_name = name[0:13] #example: extract "_ops.3._ops.4" from "_ops.3._ops.4.op.2.weight"
+                        cur_op_name = name[0:13]  # example: extract "_ops.3._ops.4" from "_ops.3._ops.4.op.2.weight"
                     else:
-                        cur_op_name = name[0:14] #example: extract "_ops.13._ops.4" from "_ops.13._ops.4.op.2.weight"
+                        cur_op_name = name[0:14]  # example: extract "_ops.13._ops.4" from "_ops.13._ops.4.op.2.weight"
 
-                if cur_op_name == pre_op_name: #still the same op
+                if cur_op_name == pre_op_name:  # still the same op
                     pass
-                else: # current op is a new op
+                else:  # current op is a new op
                     op_index += 1
-                    if op_index == network.num_ops: # the current op belongs to a new edge
+                    if op_index == network.num_ops:  # the current op belongs to a new edge
                         new_edge = True
                         op_index = 0
                         edge_index += 1
-                    else: # still the same edge
+                    else:  # still the same edge
                         new_edge = False
                         pre_op_name = cur_op_name
 
-                    if edge_index <= 9: # get the name of the current (new) op
+                    if edge_index <= 9:  # get the name of the current (new) op
                         cur_op_name = name[0:13]
                     else:
                         cur_op_name = name[0:14]
@@ -250,12 +249,14 @@ def group_model_params_by_cell(model, network, mu=None):
 
 
 def compute_op_norm_across_cells(model_params):
-    # compute the norm of the vector containing the weights of the same operation in different cells (e.g., sep_conv_3x3)
-    # normal cells and reduction cells are computed separately
+    ''' compute the norm of the vector containing the weights of the same operation in different cells (e.g., sep_conv_3x3)
+    normal cells and reduction cells are computed separately
+    '''
+
     op_norm_normal_dict = {}
     op_norm_reduce_dict = {}
     for operation in model_params:
-        if operation["label"] == "unprunable": # weights from ops like stem, cell preprocessing and classifier.
+        if operation["label"] == "unprunable":  # weights from ops like stem, cell preprocessing and classifier.
             continue
 
         params = operation["params"]
@@ -266,11 +267,12 @@ def compute_op_norm_across_cells(model_params):
             params_size += param.numel()
 
         if operation["label"] == "normal":
-            op_norm_normal_dict[operation["op_name"]] = (torch.sqrt(params_norm_square), params_size) # take the square root to get the L2 norm
+            op_norm_normal_dict[operation["op_name"]] = (torch.sqrt(params_norm_square), params_size)  # take the square root to get the L2 norm
         elif operation["label"] == "reduce":
             op_norm_reduce_dict[operation["op_name"]] = (torch.sqrt(params_norm_square), params_size)
 
     return op_norm_normal_dict, op_norm_reduce_dict
+
 
 def plot_op_norm_across_cells(model_params, filename, normalization="none", normalization_exponent=0):
     op_norm_normal_dict, op_norm_reduce_dict = compute_op_norm_across_cells(model_params)
@@ -300,7 +302,6 @@ def plot_op_norm_across_cells(model_params, filename, normalization="none", norm
     plt.savefig("{}_normal.png".format(filename))
     plt.close()
 
-
     num_ops = len(op_norm_reduce_dict)
     f2 = plt.figure(num=None, figsize=(num_ops*0.15, 6), dpi=100, facecolor='w', edgecolor='k')
     op_names = []
@@ -327,7 +328,7 @@ def plot_op_norm_across_cells(model_params, filename, normalization="none", norm
     plt.close()
 
 
-def discretize_search_model_by_cell(model_path, network_eval, network_search, threshold, CIFAR_CLASSES = 1000, normalization="none", normalization_exponent=0):
+def discretize_search_model_by_cell(model_path, network_eval, network_search, threshold, CIFAR_CLASSES=1000, normalization="none", normalization_exponent=0):
     """
     remove the ops with a small norm and the discrete cell will be scaled up for evaluation
 
@@ -344,8 +345,8 @@ def discretize_search_model_by_cell(model_path, network_eval, network_search, th
     alpha_normal = []
     alpha_edge = []
     edge_index = 0
-    for op_index, (op_name, (op_norm, op_size)) in enumerate(op_norm_normal.items()): # iterate over the operations (not suboperations)
-        if  edge_index * network_search.num_ops <= op_index < (edge_index + 1) * network_search.num_ops:
+    for op_index, (op_name, (op_norm, op_size)) in enumerate(op_norm_normal.items()):  # iterate over the operations (not suboperations)
+        if edge_index*network_search.num_ops <= op_index < (edge_index+1)*network_search.num_ops:
             if normalization == "none":
                 op_norm_normalized = op_norm
             elif normalization == "mul":
@@ -367,7 +368,7 @@ def discretize_search_model_by_cell(model_path, network_eval, network_search, th
     alpha_edge = []
     edge_index = 0
     for op_index, (op_name, (op_norm, op_size)) in enumerate(op_norm_reduce.items()):
-        if  edge_index * network_search.num_ops <= op_index < (edge_index + 1) * network_search.num_ops:
+        if edge_index*network_search.num_ops <= op_index < (edge_index+1)*network_search.num_ops:
             if normalization == "none":
                 op_norm_normalized = op_norm
             elif normalization == "mul":
@@ -417,7 +418,7 @@ def get_genotype(genotype_supernet, alpha_network):
     return genotype_network
 
 
-def discretize_model_by_operation(model, network_eval, genotype, threshold, folder_path, num_edges = 8):
+def discretize_model_by_operation(model, network_eval, genotype, threshold, folder_path, num_edges=8):
     edge_offset = [0]  # edge_offset = [0, 2, 5, 9]
     for i in range(2, network_eval.steps + 2 - 1):
         edge_offset.append(edge_offset[-1] + i)
