@@ -1,1 +1,0 @@
-{"RUN_ID": "arch_s2_60_lr_0.025_momentum_0.9_wd_0.0003_cells_17_20210519-223824", "save": "scaling-cell-s2/scaling-cell-s2-arch_s2_60_lr_0.025_momentum_0.9_wd_0.0003_cells_17_20210519-223824", "batch_size": 80, "pruning_threshold": 1e-05, "cells": 17, "learning_rate": 0.025, "scale_type": "cell", "swap_stage": false, "drop_path_prob": 0.2, "arch": "s2_60", "seed": 1350}

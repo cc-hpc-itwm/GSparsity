@@ -1,4 +1,0 @@
-PC DARTS:
-model size: 2.98 ± 0.04
-Final acc: 97.13 ± 0.16
- Best acc: 97.23 ± 0.13

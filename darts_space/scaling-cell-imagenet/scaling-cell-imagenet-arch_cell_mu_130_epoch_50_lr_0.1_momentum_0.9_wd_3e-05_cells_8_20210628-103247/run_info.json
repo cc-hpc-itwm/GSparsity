@@ -1,1 +1,0 @@
-{"RUN_ID": "arch_cell_mu_130_epoch_50_lr_0.1_momentum_0.9_wd_3e-05_cells_8_20210628-103247", "save": "scaling-cell-imagenet/scaling-cell-imagenet-arch_cell_mu_130_epoch_50_lr_0.1_momentum_0.9_wd_3e-05_cells_8_20210628-103247", "batch_size": 256, "pruning_threshold": 1e-05, "cells": 8, "learning_rate": 0.1, "scale_type": "cell", "arch": "cell_mu_130_epoch_50", "seed": 326}

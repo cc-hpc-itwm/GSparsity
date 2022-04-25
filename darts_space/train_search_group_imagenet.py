@@ -20,7 +20,7 @@ import utils
 from model_search_imagenet import Network
 import utils_sparsenas_imagenet as utils_sparsenas
 from genotypes import spaces_dict
-from ProxSGD_for_groups import ProxSGD
+from ProxSGD_for_groups_adam import ProxSGD
 
 class network_params():
     def __init__(self, init_channels, cells, steps, operations):
@@ -350,7 +350,7 @@ if __name__ == '__main__':
     parser.add_argument('--momentum', type=float, default=0.1, help='init momentum')
     parser.add_argument('--search_space', choices=["darts", "s1", "s2", "s4"],
                         default="darts", help="spaces from RobustDARTS; default is DARTS search space")
-    parser.add_argument('--weight_decay', type=float, default=45, help='the regularization gain (mu)')
+    parser.add_argument('--weight_decay', type=float, default=43, help='the regularization gain (mu)')
     parser.add_argument('--search_type', choices=[None, "cell"],
                         default="cell", help='cell: search for a single cell structure (normal cell and reduce cell)')
     parser.add_argument('--normalization', choices=["none", "mul", "div"],

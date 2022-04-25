@@ -1,4 +1,0 @@
-GSparsity on search space S2:
-model size: 3.87 ± 0.12
-Final acc: 97.40 ± 0.11
- Best acc: 97.46 ± 0.11

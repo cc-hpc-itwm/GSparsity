@@ -1,2 +1,0 @@
-DARTS evaluation acc (cell found at epoch 100): 96.93 ± 0.12 (without cutout in search)
-DARTS evaluation acc (cell found at epoch 050): 96.98 ± 0.13

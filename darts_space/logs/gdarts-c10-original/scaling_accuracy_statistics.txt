@@ -1,3 +1,0 @@
-G-DARTS:
-model size: 2.74 ± 0.13
-Final acc: 96.56 ± 0.16

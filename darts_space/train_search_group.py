@@ -317,7 +317,7 @@ if __name__ == '__main__':
     parser.add_argument('--momentum', type=float, default=0.8, help='init momentum')
     parser.add_argument('--search_space', choices=["darts", "s1", "s2", "s4"],
                         default="darts", help="spaces from RobustDARTS; default is DARTS search space")
-    parser.add_argument('--mu', type=float, default=130, help='the regularization gain (mu)')
+    parser.add_argument('--mu', type=float, default=60, help='the regularization gain (mu)')
     parser.add_argument('--search_type', choices=[None, "cell"],
                         default="cell", help='cell: search for a single cell structure (normal cell and reduce cell)')
     parser.add_argument('--normalization', choices=["none", "mul", "div"],
