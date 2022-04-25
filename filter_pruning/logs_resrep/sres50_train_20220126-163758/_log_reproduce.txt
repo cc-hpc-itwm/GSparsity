@@ -1,9 +1,0 @@
-2022-02-08 16:25:55 This file contains the log of testing the performance of the model trained by RESREP.
-2022-02-08 16:25:55 args = Namespace(arch='resnet50', batch_size=256, data='/home/SSD/Dataset_ImageNet', dist_backend='nccl', dist_url='tcp://192.168.152.45:23456', distributed=False, gpu=None, multiprocessing_distributed=False, path_to_save='./sres50_train_20220126-163758', pretrained=True, print_freq=100, rank=0, resume='./sres50_train_20220126-163758', seed=None, workers=4, world_size=1)
-2022-02-08 16:25:55 creating pruned model (with random initial weights)
-2022-02-08 16:25:55 pruned model: computational complexity: 1.86 GMac, number of parameters: 16.44 M
-2022-02-08 16:25:55 => loading resrep hdf5 model
-2022-02-08 16:25:56 => loaded resrep hdf5 model
-2022-02-08 16:26:14 valid 0000, loss 1.348e+01, top1 0.00, top5 0.00
-2022-02-08 16:27:21 valid 0100, loss 1.414e+01, top1 0.00, top5 0.34
-2022-02-08 16:28:37 validation accuracy of unpruned model: top1 0.10%, top5 0.56%.

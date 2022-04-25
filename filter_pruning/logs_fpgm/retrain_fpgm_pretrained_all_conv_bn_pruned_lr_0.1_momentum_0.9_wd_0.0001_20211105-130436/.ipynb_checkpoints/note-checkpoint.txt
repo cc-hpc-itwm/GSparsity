@@ -1,1 +1,0 @@
-The complexity and accuracy of the "compressed" model where zero filters of conv1-3 in each block are removed, and the bn that follow the zero filters are also removed in the model.
