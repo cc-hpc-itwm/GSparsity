@@ -1,9 +1,10 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from operations import *
 from torch.autograd import Variable
-from genotypes import Genotype
+
+from GSparsity.darts_space.operations import *
+from GSparsity.darts_space.genotypes import Genotype
 
 
 class MixedOp(nn.Module):

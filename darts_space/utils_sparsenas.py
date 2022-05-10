@@ -4,12 +4,12 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 from graphviz import Digraph
-from model_search_multipath import Network as SearchNetwork
+from GSparsity.darts_space.model_search_multipath import Network as SearchNetwork
 
 matplotlib.use("Agg")
 
 
-def get_regularization_term(model_params, args):
+def get_regularization_term(model_params, normalization, normalization_exponent):
     reg_loss = 0
     for group in model_params:
         if group["label"] == "unprunable":  # weights from ops like stem, cell preprocessing and classifier.
@@ -182,11 +182,11 @@ def group_model_params_by_cell(model, network, mu=None):
             op_is_scale_normal["_ops.{}._ops.{}".format(edge, op)] = []
             op_is_scale_reduce["_ops.{}._ops.{}".format(edge, op)] = []
 
-    for cell_index, m in enumerate(model.cells):
+    for cell_index, cell in enumerate(model.cells):
         op_index = 0
         edge_index = 0
 
-        for name, param in m.named_parameters():
+        for name, param in cell.named_parameters():
             # An example of "name" is _ops.8._ops.4.op.2.weight, where 8 represents the edge, 4 is the op index, and 2 is the subop of op 4 (op 4 consists of several subops).
             if "_ops" in name:
                 if "_ops.0._ops.0" in name:  # beginning of a new cell
