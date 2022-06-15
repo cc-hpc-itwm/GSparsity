@@ -148,16 +148,12 @@ def acc_n_loss(train_loss, test_acc, filename, train_acc=None, test_loss=None, t
 
 
 def group_model_params_by_cell(model, network, mu=None):
-    """
+    '''
     This functions put the same operation of different cells into the same vector (the group will be passed to optimizer).
 
     One operation may consist of several suboperations. For example, op 3 of edge 7 consists of (_ops.7._ops.3.op.1.weight, _ops.7._ops.3.op.2.weight, _ops.7._ops.3.op.5.weight, _ops.7._ops.3.op.6.weight). Op 3 of edge 7 from all cells of the same type (normal or reduce) will be grouped as one, "_ops.7._ops.3". During discretization, the operation "_ops.7._ops.3" will be pruned if its norm is smaller than the pruning threshold.
     The operations that are trainable but not prunable should be separated from trainable and prunable operations. "Unprunable" means these are the operations that will be definitely kept in the final network (such as the preprocessing layer, the final classifier layer, and the preprocessing of input nodes in each cell), in contrast to the operations that may be pruned away after searching is completed.
-    """
-
-    assert network.num_ops <= 9, "The number of operations should be smaller than 10 (but got {}).".format(network.num_ops)
-    assert network.num_edges <= 100, "The number of edges should be smaller than 100 (but got {}).".format(network.num_edges)
-
+    '''
     ops_unprunable = []
     ops_unscale = []
     for op in model.stem:
@@ -182,21 +178,18 @@ def group_model_params_by_cell(model, network, mu=None):
             op_is_scale_normal["_ops.{}._ops.{}".format(edge, op)] = []
             op_is_scale_reduce["_ops.{}._ops.{}".format(edge, op)] = []
 
-    for cell_index, m in enumerate(model.cells):
-        op_index = 0
-        edge_index = 0
-
-        for name, param in m.named_parameters():
-            # An example of "name" is _ops.8._ops.4.op.2.weight, where 8 represents the edge, 4 is the op index, and 2 is the subop of op 4 (op 4 consists of several subops).
+    for cell_index, cell in enumerate(model.cells):
+        op_index, op_index_digits = 0, 1
+        edge_index, edge_index_digits = 0, 1
+        for name, param in cell.named_parameters():
+            # An example of "name" is _ops.0._ops.4.op.2.weight, where 0 represents the edge, 4 is the op index, and 2 is the subop of op 4 (op 4 consists of several subops).
+            # _ops.(5) + 0(1) + ._ops.(6) + 4(1) + .op.(4) + 2(1) + .weight
             if "_ops" in name:
                 if "_ops.0._ops.0" in name:  # beginning of a new cell
-                    cur_op_name = name[0:13]  # assuming the number of cells < 10
+                    cur_op_name = name[0:5+1+6+1]  # In a new cell, the edge_index and op_index start at 0
                     pre_op_name = cur_op_name
                 else:
-                    if edge_index <= 9:
-                        cur_op_name = name[0:13]  # example: extract "_ops.3._ops.4" from "_ops.3._ops.4.op.2.weight"
-                    else:
-                        cur_op_name = name[0:14]  # example: extract "_ops.13._ops.4" from "_ops.13._ops.4.op.2.weight"
+                    cur_op_name = name[0:5+edge_index_digits+6+op_index_digits]
 
                 if cur_op_name == pre_op_name:  # still the same op
                     pass
@@ -210,10 +203,9 @@ def group_model_params_by_cell(model, network, mu=None):
                         new_edge = False
                         pre_op_name = cur_op_name
 
-                    if edge_index <= 9:  # get the name of the current (new) op
-                        cur_op_name = name[0:13]
-                    else:
-                        cur_op_name = name[0:14]
+                    op_index_digits = len(str(op_index))
+                    edge_index_digits = len(str(edge_index))
+                    cur_op_name = name[0:5+edge_index_digits+6+op_index_digits]
 
                     if new_edge:
                         pre_op_name = cur_op_name
@@ -481,7 +473,7 @@ def discretize_model_by_operation(model, network_eval, genotype, threshold, fold
     alpha_cell_list = []
     alpha_network = []
     cell_inactive = []
-    for cell_index, m in enumerate(model.cells):
+    for cell_index, cell in enumerate(model.cells):
         assert cell_index <= network_eval.cells - 1, "The number of cells in the loaded model is different from the number of cells expected ({}).".format(network_eval.cells)
 
         alpha_cell = np.zeros((network_eval.num_edges, network_eval.num_ops))
@@ -495,7 +487,7 @@ def discretize_model_by_operation(model, network_eval, genotype, threshold, fold
             node_index = edge_index // 2
             alpha_cell[edge_offset[node_index] + index][op_index] = 1
 
-        for name, param in m.named_parameters():
+        for name, param in cell.named_parameters():
             if "_ops" in name:
                 if "bias" in name:
                     continue
