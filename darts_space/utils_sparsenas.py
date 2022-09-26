@@ -146,6 +146,15 @@ def acc_n_loss(train_loss, test_acc, filename, train_acc=None, test_loss=None, t
         plt.savefig(filename)
         plt.close(fig)
 
+def extract_number_from_string(string):
+    num = string[0]
+    for char in string[1:]:
+        new_number = num + char
+        if new_number.isdigit():
+            num += char
+        else:
+            break
+    return int(num)
 
 def group_model_params_by_cell(model, network, mu=None):
     '''
@@ -171,51 +180,31 @@ def group_model_params_by_cell(model, network, mu=None):
     ops_prunable_reduce = dict()
     op_is_scale_normal = dict()
     op_is_scale_reduce = dict()
-    for edge in range(network.num_edges):
-        for op in range(network.num_ops):
-            ops_prunable_normal["_ops.{}._ops.{}".format(edge, op)] = []
-            ops_prunable_reduce["_ops.{}._ops.{}".format(edge, op)] = []
-            op_is_scale_normal["_ops.{}._ops.{}".format(edge, op)] = []
-            op_is_scale_reduce["_ops.{}._ops.{}".format(edge, op)] = []
 
     for cell_index, cell in enumerate(model.cells):
-        op_index, op_index_digits = 0, 1
-        edge_index, edge_index_digits = 0, 1
         for name, param in cell.named_parameters():
-            # An example of "name" is _ops.0._ops.4.op.2.weight, where 0 represents the edge, 4 is the op index, and 2 is the subop of op 4 (op 4 consists of several subops).
-            # _ops.(5) + 0(1) + ._ops.(6) + 4(1) + .op.(4) + 2(1) + .weight
-            if "_ops" in name:
-                if "_ops.0._ops.0" in name:  # beginning of a new cell
-                    cur_op_name = name[0:5+1+6+1]  # In a new cell, the edge_index and op_index start at 0
-                    pre_op_name = cur_op_name
-                else:
-                    cur_op_name = name[0:5+edge_index_digits+6+op_index_digits]
+            # An example of "name" is _edge.0._op.4.op.2.weight, where 0 represents the edge, 4 is the op index, and 2 is the subop of op 4 (op 4 consists of several subops).
+            if "_edge" in name:
+                edge_index = extract_number_from_string(name[6:])
+                op_index = extract_number_from_string(name[name.find("_op.")+4:])
 
-                if cur_op_name == pre_op_name:  # still the same op
-                    pass
-                else:  # current op is a new op
-                    op_index += 1
-                    if op_index == network.num_ops:  # the current op belongs to a new edge
-                        new_edge = True
-                        op_index = 0
-                        edge_index += 1
-                    else:  # still the same edge
-                        new_edge = False
-                        pre_op_name = cur_op_name
-
-                    op_index_digits = len(str(op_index))
-                    edge_index_digits = len(str(edge_index))
-                    cur_op_name = name[0:5+edge_index_digits+6+op_index_digits]
-
-                    if new_edge:
-                        pre_op_name = cur_op_name
-
+                edge_op_key = (edge_index, op_index)
                 if cell_index in network.reduce_cell_indices:
-                    ops_prunable_reduce[cur_op_name].append(param)
-                    op_is_scale_reduce[cur_op_name].append("scale" in name)  # parameterless operations
+                    if edge_op_key not in ops_prunable_reduce:
+                        ops_prunable_reduce[edge_op_key] = []
+                    if edge_op_key not in op_is_scale_reduce:
+                        op_is_scale_reduce[edge_op_key] = []
+
+                    ops_prunable_reduce[edge_op_key].append(param)
+                    op_is_scale_reduce[edge_op_key].append("scale" in name)  # parameterless operations
                 else:
-                    ops_prunable_normal[cur_op_name].append(param)
-                    op_is_scale_normal[cur_op_name].append("scale" in name)
+                    if edge_op_key not in ops_prunable_normal:
+                        ops_prunable_normal[edge_op_key] = []
+                    if edge_op_key not in op_is_scale_normal:
+                        op_is_scale_normal[edge_op_key] = []
+
+                    ops_prunable_normal[edge_op_key].append(param)
+                    op_is_scale_normal[edge_op_key].append("scale" in name)
             else:
                 ops_unprunable.append(param)
                 ops_unscale.append(False)
@@ -240,7 +229,7 @@ def compute_op_norm_across_cells(model_params):
 
     op_norm_normal_dict = {}
     op_norm_reduce_dict = {}
-    for operation in model_params:
+    for operation in model_params:  # operation is either normal or reduce
         if operation["label"] == "unprunable":  # weights from unprunable ops like stem, cell preprocessing and classifier.
             continue
 
@@ -251,10 +240,11 @@ def compute_op_norm_across_cells(model_params):
             params_norm_square += torch.norm(param)**2
             params_size += param.numel()
 
+        edge_op_key = operation["op_name"]
         if operation["label"] == "normal":
-            op_norm_normal_dict[operation["op_name"]] = (torch.sqrt(params_norm_square), params_size)  # take the square root to get the L2 norm
+            op_norm_normal_dict[edge_op_key] = (torch.sqrt(params_norm_square), params_size)  # take the square root to get the L2 norm
         elif operation["label"] == "reduce":
-            op_norm_reduce_dict[operation["op_name"]] = (torch.sqrt(params_norm_square), params_size)
+            op_norm_reduce_dict[edge_op_key] = (torch.sqrt(params_norm_square), params_size)
 
     return op_norm_normal_dict, op_norm_reduce_dict
 
@@ -331,63 +321,67 @@ def discretize_search_model_by_cell(model_path, network_eval, network_search, th
 
     alpha_normal = []
     alpha_edge = []
-    edge_index = 0
-    for op_index, (op_name, (op_norm, op_size)) in enumerate(op_norm_normal.items()):  # iterate over the operations (not suboperations)
-        if edge_index*network_search.num_ops <= op_index < (edge_index+1)*network_search.num_ops:
-            if normalization == "none":
-                op_norm_normalized = op_norm
-            elif normalization == "mul":
-                op_norm_normalized = op_norm * (op_size**normalization_exponent)
-            elif normalization == "div":
-                op_norm_normalized = op_norm / (op_size**normalization_exponent)
+    pre_edge_index = 0
+    for (edge_index, op_index), (op_norm, op_size) in op_norm_normal.items():  # iterate over the operations (not suboperations)
+        if edge_index != pre_edge_index:
+            alpha_normal.extend(alpha_edge)
+            alpha_edge = []
+            pre_edge_index = edge_index
 
-            if op_norm_normalized <= threshold:
-                alpha_edge.append(0)
-            else:
-                alpha_edge.append(1)
-            if op_index == (edge_index+1)*network_search.num_ops - 1:
-                alpha_normal.append(alpha_edge)
-                alpha_edge = []
-                edge_index += 1
-    alpha_normal = torch.tensor(alpha_normal)
+        if normalization == "none":
+            op_norm_normalized = op_norm
+        elif normalization == "mul":
+            op_norm_normalized = op_norm * (op_size**normalization_exponent)
+        elif normalization == "div":
+            op_norm_normalized = op_norm / (op_size**normalization_exponent)
+
+        if op_norm_normalized <= threshold:
+            alpha_edge.append(0)
+        else:
+            alpha_edge.append(1)
+    alpha_normal.extend(alpha_edge)
 
     alpha_reduce = []
     alpha_edge = []
-    edge_index = 0
-    for op_index, (op_name, (op_norm, op_size)) in enumerate(op_norm_reduce.items()):
-        if edge_index*network_search.num_ops <= op_index < (edge_index+1)*network_search.num_ops:
-            if normalization == "none":
-                op_norm_normalized = op_norm
-            elif normalization == "mul":
-                op_norm_normalized = op_norm * (op_size**normalization_exponent)
-            elif normalization == "div":
-                op_norm_normalized = op_norm / (op_size**normalization_exponent)
+    pre_edge_index = 0
+    for (edge_index, op_index), (op_norm, op_size) in op_norm_reduce.items():
+        if edge_index != pre_edge_index:
+            alpha_reduce.extend(alpha_edge)
+            alpha_edge = []
+            pre_edge_index = edge_index
 
-            if op_norm_normalized <= threshold:
-                alpha_edge.append(0)
-            else:
-                alpha_edge.append(1)
-            if op_index == (edge_index+1)*network_search.num_ops - 1:
-                alpha_reduce.append(alpha_edge)
-                alpha_edge = []
-                edge_index += 1
-    alpha_reduce = torch.tensor(alpha_reduce)
+        if normalization == "none":
+            op_norm_normalized = op_norm
+        elif normalization == "mul":
+            op_norm_normalized = op_norm * (op_size**normalization_exponent)
+        elif normalization == "div":
+            op_norm_normalized = op_norm / (op_size**normalization_exponent)
+
+        if op_norm_normalized <= threshold:
+            alpha_edge.append(0)
+        else:
+            alpha_edge.append(1)
+        if op_index == (edge_index+1)*network_search.num_ops - 1:
+            alpha_reduce.extend(alpha_edge)
+            alpha_edge = []
+            edge_index += 1
+    alpha_reduce.extend(alpha_edge)
 
     alpha_network = []
     num_reduce_cell = len(network_eval.reduce_cell_indices)
     cur_reduce_cell = 0
     for cell_index in range(network_eval.cells):  # cells up to the last reduce cell (included)
         if cell_index < network_eval.reduce_cell_indices[cur_reduce_cell]:
-            alpha_network.append((False, np.vstack(alpha_normal)))
+            alpha_network.append((False, alpha_normal))
         elif cell_index == network_eval.reduce_cell_indices[cur_reduce_cell]:
-            alpha_network.append((True,  np.vstack(alpha_reduce)))
+            alpha_network.append((True,  alpha_reduce))
             cur_reduce_cell += 1
             if cur_reduce_cell == num_reduce_cell:
                 break
 
     # cells after the last reduce cell
     for cell_index in range(network_eval.reduce_cell_indices[-1]+1, network_eval.cells):
-        alpha_network.append((False, np.vstack(alpha_normal)))
+        alpha_network.append((False, alpha_normal))
 
     genotype_network = get_genotype(model.genotype(), alpha_network)
 
@@ -396,13 +390,15 @@ def discretize_search_model_by_cell(model_path, network_eval, network_search, th
 
 def get_genotype(genotype_supernet, alpha_network):
     genotype_network = []
-    for i, (reduce_cell, alpha_cell) in enumerate(alpha_network):
-        alpha_cell = alpha_cell.flatten()
-        indices = np.where(alpha_cell == 1)[0]
+    for reduce_cell, alpha_cell in alpha_network:
+        indices = []
+        for idx, val in enumerate(alpha_cell):
+            if val:
+                indices.append(idx)
         if reduce_cell:
-            genotype_network.append([genotype_supernet.reduce[x] for x in indices.astype(int)])
+            genotype_network.append([genotype_supernet.reduce[x] for x in indices])
         else:
-            genotype_network.append([genotype_supernet.normal[x] for x in indices.astype(int)])
+            genotype_network.append([genotype_supernet.normal[x] for x in indices])
     return genotype_network
 
 
@@ -423,17 +419,20 @@ def visualize_cell(alpha, steps, primitives, filename):
         g.node(str(i), fillcolor='lightblue')
 
     edge_offset = 0
+    op_offset = 0
     active_nodes = []
     color_index = 0
     for step_index in range(2, steps + 2):
         for edge_index in range(edge_offset, edge_offset + step_index):
             primitives_edge = primitives[edge_index]
-            if sum(alpha[edge_index]) == 0:
+            alpha_edge = alpha[op_offset:op_offset+len(primitives_edge)]
+            op_offset += len(primitives_edge)
+            if sum(alpha_edge) == 0:
                 continue
 
             if step_index-2 not in active_nodes:
                 active_nodes.append(step_index-2)
-            for op_index, active_op in enumerate(alpha[edge_index]):
+            for op_index, active_op in enumerate(alpha_edge):
                 if active_op:
                     op = primitives_edge[op_index]
                     j = edge_index - edge_offset
@@ -448,7 +447,7 @@ def visualize_cell(alpha, steps, primitives, filename):
                     color = colors[color_index]
                     g.edge(u, v, label=op, color=color, fillcolor=color, fontcolor=color)
                     color_index = (color_index+1) % num_colors
-    edge_offset += step_index
+        edge_offset += step_index
 
     # output node
     g.node("c_{k}", fillcolor='palegoldenrod')

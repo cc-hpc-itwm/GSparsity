@@ -53,23 +53,23 @@ class NoiseOp(nn.Module):
 class AvgPoolBN(nn.Module):
   def __init__(self, C_out, stride, affine=True):
     super(AvgPoolBN, self).__init__()
-    self.op = nn.Sequential(nn.AvgPool2d(3, stride=stride, padding=1, count_include_pad=False),
+    self._subop = nn.Sequential(nn.AvgPool2d(3, stride=stride, padding=1, count_include_pad=False),
                             nn.BatchNorm2d(C_out, affine=affine)
                            )
 
   def forward(self, x):
-    return self.op(x)
+    return self._subop(x)
 
 
 class MaxPoolBN(nn.Module):
   def __init__(self, C_out, stride, affine=True):
     super(MaxPoolBN, self).__init__()
-    self.op = nn.Sequential(nn.MaxPool2d(3, stride=stride, padding=1),
+    self._subop = nn.Sequential(nn.MaxPool2d(3, stride=stride, padding=1),
                             nn.BatchNorm2d(C_out, affine=affine)
                            )
 
   def forward(self, x):
-    return self.op(x)
+    return self._subop(x)
 
 class Identity(nn.Module):
 
@@ -84,29 +84,29 @@ class IdentityBN(nn.Module):
   def __init__(self, C, affine=True):
     super(IdentityBN, self).__init__()
     print("affine in IdentityBN: {}".format(affine))
-    self.op = nn.Sequential(nn.BatchNorm2d(C, affine=affine))
+    self._subop = nn.Sequential(nn.BatchNorm2d(C, affine=affine))
 
   def forward(self, x):
-    return self.op(x)
+    return self._subop(x)
 
 class ReLUConvBN(nn.Module):
 
   def __init__(self, C_in, C_out, kernel_size, stride, padding, affine=True):
     super(ReLUConvBN, self).__init__()
-    self.op = nn.Sequential(
+    self._subop = nn.Sequential(
       nn.ReLU(inplace=False),
       nn.Conv2d(C_in, C_out, kernel_size, stride=stride, padding=padding, bias=False),
       nn.BatchNorm2d(C_out, affine=affine)
     )
 
   def forward(self, x):
-    return self.op(x)
+    return self._subop(x)
 
 class DilConv(nn.Module):
     
   def __init__(self, C_in, C_out, kernel_size, stride, padding, dilation, affine=True):
     super(DilConv, self).__init__()
-    self.op = nn.Sequential(
+    self._subop = nn.Sequential(
       nn.ReLU(inplace=False),
       nn.Conv2d(C_in, C_in, kernel_size=kernel_size, stride=stride, padding=padding, dilation=dilation, groups=C_in, bias=False),
       nn.Conv2d(C_in, C_out, kernel_size=1, padding=0, bias=False),
@@ -114,14 +114,14 @@ class DilConv(nn.Module):
       )
 
   def forward(self, x):
-    return self.op(x)
+    return self._subop(x)
 
 
 class SepConv(nn.Module):
     
   def __init__(self, C_in, C_out, kernel_size, stride, padding, affine=True):
     super(SepConv, self).__init__()
-    self.op = nn.Sequential(
+    self._subop = nn.Sequential(
       nn.ReLU(inplace=False),
       nn.Conv2d(C_in, C_in, kernel_size=kernel_size, stride=stride, padding=padding, groups=C_in, bias=False),
       nn.Conv2d(C_in, C_in, kernel_size=1, padding=0, bias=False),
@@ -133,7 +133,7 @@ class SepConv(nn.Module):
       )
 
   def forward(self, x):
-    return self.op(x)
+    return self._subop(x)
 
 
 class Zero(nn.Module):

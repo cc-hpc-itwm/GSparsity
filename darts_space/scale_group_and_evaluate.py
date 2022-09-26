@@ -99,7 +99,7 @@ def main(args):
                                                                                           network_eval,
                                                                                           network_search,
                                                                                           threshold=args.pruning_threshold) #alpha for each cell
-        
+
     assert len(alpha_network) == args.cells, "Each cell should have its individual alpha."
     logger.info("Model to discretize is in: {}\n".format(model_to_discretize))
     logger.info("alpha_network:\n {}".format(alpha_network))

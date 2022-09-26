@@ -6,7 +6,7 @@ pretrained_conv12_layer_adaptive_mu_0_03 = 'conv12_lr_0.001_momentum_0.9_wd_0.03
 
 pretrained_conv12_layer_adaptive_mu_0_04 = 'conv12_lr_0.001_momentum_0.9_wd_0.04_normalization_div_pretrained_True_20211108-230238'
 
-pretrained_conv12_layer_adaptive_mu_0_05 = 'conv12_lr_0.001_momentum_0.9_wd_0.05_normalization_div_pretrained_True_20211102-092334'
+pretrained_conv12_layer_adaptive_mu_0_05 = 'logs_gsparsity_search/conv12_lr_0.001_momentum_0.9_wd_0.05_normalization_div_pretrained_True_20211102-092334'
 
 pretrained_conv12_layer_adaptive_mu_0_06 = 'conv12_lr_0.001_momentum_0.9_wd_0.06_normalization_div_pretrained_True_20211102-101906'
 

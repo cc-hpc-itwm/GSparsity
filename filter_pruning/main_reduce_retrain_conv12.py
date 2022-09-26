@@ -16,24 +16,20 @@ import json
 
 import numpy as np
 import torch
-import torch.nn as nn
 import torch.nn.parallel
-import torch.backends.cudnn as cudnn
-import torch.distributed as dist
 import torch.optim
-import torch.multiprocessing as mp
 import torch.utils.data
 import torch.utils.data.distributed
-import torchvision.transforms as transforms
-import torchvision.datasets as datasets
+from torch import nn
+from torch.backends import cudnn
+from torch import distributed as dist
+from torch import multiprocessing as mp
+from torchvision import transforms
+from torchvision import datasets
 from ptflops import get_model_complexity_info
 
-import list_of_models as list_of_models
+import list_of_models
 import models_with_reduce_conv12
-
-model_names = sorted(name for name in models_with_reduce_conv12.__dict__
-    if name.islower() and not name.startswith("__")
-    and callable(models_with_reduce_conv12.__dict__[name]))
 
 parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
 parser.add_argument('--data', metavar='DataDir', default='/home/SSD/Dataset_ImageNet',
@@ -41,10 +37,8 @@ parser.add_argument('--data', metavar='DataDir', default='/home/SSD/Dataset_Imag
 parser.add_argument('--baseline_model',
                     help='the baseline model to prune and retrain')
 parser.add_argument('-a', '--arch', metavar='ARCH', default='resnet50',
-                    choices=model_names,
-                    help='model architecture: ' +
-                        ' | '.join(model_names) +
-                        ' (default: resnet18)')
+                    choices=['resnet50'],
+                    help='This code is currently implemented for resnet50')
 parser.add_argument('-j', '--workers', default=4, type=int, metavar='N',
                     help='number of data loading workers (default: 4)')
 parser.add_argument('--epochs', default=90, type=int, metavar='N',
@@ -74,7 +68,7 @@ parser.add_argument('--world-size', default=1, type=int,
                     help='number of nodes for distributed training')
 parser.add_argument('--rank', default=0, type=int,
                     help='node rank for distributed training')
-parser.add_argument('--dist-url', default='tcp://{}:23456'.format(os.environ['CARME_MASTER_IP']), type=str,
+parser.add_argument('--dist-url', default=f"tcp://{os.environ['CARME_MASTER_IP']}:23456", type=str,
                     help='url used to set up distributed training')
 parser.add_argument('--dist-backend', default='nccl', type=str,
                     help='distributed backend')
@@ -91,38 +85,32 @@ parser.add_argument('--path_to_save', type=str, default="retrain", help='path to
 parser.add_argument('--run_id', type=str, default=None, help='the identifier of this specific run')
 
 
-best_acc1 = 0
-
-
 def main():
     args = parser.parse_args()
 
     if args.resume:
         resume_training = args.resume
         new_dist_url = args.dist_url
-        f = open("{}/run_info.json".format(args.resume))
-        run_info = json.load(f)
+        new_data_dir = args.data
+        with open(f"{args.resume}/run_info.json") as file_run_info:
+            run_info = json.load(file_run_info)
         vars(args).update(run_info['args'])
         args.resume = resume_training
         args.dist_url = new_dist_url
+        args.data = new_data_dir
     else:
         if args.run_id is None:
-            args.run_id = "{}_{}_{}".format(args.arch,
-                                            args.baseline_model,
-                                            time.strftime("%Y%m%d-%H%M%S"))
+            args.run_id = f"{args.arch}_{args.baseline_model}_{time.strftime('%Y%m%d-%H%M%S')}"
         else:
-            args.run_id = "{}_{}_{}_{}".format(args.arch,
-                                               args.baseline_model,
-                                               args.run_id,
-                                               time.strftime("%Y%m%d-%H%M%S"))
-        args.path_to_save = "{}_{}".format(args.path_to_save, args.run_id)
+            args.run_id = f"{args.arch}_{args.baseline_model}_{args.run_id}_{time.strftime('%Y%m%d-%H%M%S')}"
+        args.path_to_save = f"{args.path_to_save}_{args.run_id}"
         create_exp_dir(args.path_to_save, scripts_to_save=glob.glob('*.py'))
-        
+
         run_info = {}
-        run_info['args'] = vars(args)        
-        with open('{}/run_info.json'.format(args.path_to_save), 'w') as f:
-            json.dump(run_info, f)
-    
+        run_info['args'] = vars(args)
+        with open(f'{args.path_to_save}/run_info.json', 'w') as file_run_info:
+            json.dump(run_info, file_run_info)
+
     if args.seed is not None:
         random.seed(args.seed)
         torch.manual_seed(args.seed)
@@ -156,16 +144,15 @@ def main():
 
 
 def main_worker(gpu, ngpus_per_node, args):
-    
-    global best_acc1
+    best_acc1 = 0
     args.gpu = gpu
 
-    logger = set_logger(logger_name="{}/_log.txt".format(args.path_to_save))    
-    logger.info('CARME Slurm ID: {}'.format(os.environ['SLURM_JOBID']))
+    logger = set_logger(logger_name=f"{args.path_to_save}/_log.txt")
+    logger.info('CARME Slurm ID: %s', os.environ['SLURM_JOBID'])
     logger.info("args = %s", args)
-    
+
     if args.gpu is not None:
-        print("Use GPU: {} for training".format(args.gpu))
+        print(f"Use GPU: {args.gpu} for training")
 
     if args.distributed:
         if args.dist_url == "env://" and args.rank == -1:
@@ -177,28 +164,28 @@ def main_worker(gpu, ngpus_per_node, args):
         dist.init_process_group(backend=args.dist_backend, init_method=args.dist_url,
                                 world_size=args.world_size, rank=args.rank)
 
-    path_to_mask = "{}/mask_{}.npy".format(eval("list_of_models.%s" % args.baseline_model), args.pruning_threshold)
+    path_to_mask = f"{eval(f'list_of_models.{args.baseline_model}')}/mask_{args.pruning_threshold}.npy"
     if os.path.isfile(path_to_mask):
         mask = np.load(path_to_mask, allow_pickle=True)
 
         # create compressed (small and dense) model
-        print("=> creating (compressed) model '{}'".format(args.arch))
+        print(f"=> creating (compressed) model '{args.arch}'")
         model = models_with_reduce_conv12.__dict__[args.arch](mask)
     else:
-        raise ValueError("The mask cannot be found at the specified path: {}".format(path_to_mask))
+        raise ValueError(f"The mask cannot be found at the specified path: {path_to_mask}")
 
     if args.resume:
         pass
     else:
-        path_to_small_model = "{}/small_model_conv12_{}.pth.tar".format(eval("list_of_models.%s" % args.baseline_model), args.pruning_threshold)
+        path_to_small_model = f"{eval(f'list_of_models.{args.baseline_model}')}/small_model_conv12_{args.pruning_threshold}.pth.tar"
         if os.path.isfile(path_to_small_model):
-            logger.info("=> loading compressed model from SEARCH: '{}'".format(path_to_small_model))
+            logger.info("=> loading compressed model from SEARCH: '%s'", path_to_small_model)
             checkpoint = torch.load(path_to_small_model)
             model.load_state_dict(checkpoint['small_model'])
-            logger.info("=> loaded compressed model from SEARCH: '{}'".format(path_to_small_model))
+            logger.info("=> loaded compressed model from SEARCH: '%s'", path_to_small_model)
         else:
-            raise ValueError("=> no compressed model from SEARCH found at '{}'".format(path_to_small_model))
-            
+            raise ValueError(f"=> no compressed model from SEARCH found at '{path_to_small_model}'")
+
     if not torch.cuda.is_available():
         print('using CPU, this will be slow')
     elif args.distributed:
@@ -233,8 +220,9 @@ def main_worker(gpu, ngpus_per_node, args):
 
     macs, params = get_model_complexity_info(model, (3, 224, 224), as_strings=True,
                                            print_per_layer_stat=False, verbose=False)
-    logger.info('{:<30}  {:<8}'.format('Computational complexity: ', macs))
-    logger.info('{:<30}  {:<8}'.format('Number of parameters: ', params))
+    logger.info('Computational complexity: %s', macs)
+    logger.info('Number of parameters:     %s', params)
+
     # define loss function (criterion) and optimizer
     criterion = nn.CrossEntropyLoss().cuda(args.gpu)
 
@@ -242,17 +230,17 @@ def main_worker(gpu, ngpus_per_node, args):
                                 args.lr,
                                 momentum=args.momentum,
                                 weight_decay=args.weight_decay)
-    
+
     # optionally resume from a checkpoint
     if args.resume:
-        path_to_checkpoint = "{}/checkpoint.pth.tar".format(args.path_to_save)
+        path_to_checkpoint = f"{args.path_to_save}/checkpoint.pth.tar"
         if os.path.isfile(path_to_checkpoint):
-            logger.info("=> loading checkpoint '{}'".format(args.path_to_save))
+            logger.info("=> loading checkpoint '%s'", args.path_to_save)
             if args.gpu is None:
                 checkpoint = torch.load(path_to_checkpoint)
             else:
                 # Map model to be loaded to specified single gpu.
-                loc = 'cuda:{}'.format(args.gpu)
+                loc = f'cuda:{args.gpu}'
                 checkpoint = torch.load(path_to_checkpoint, map_location=loc)
             args.start_epoch = checkpoint['epoch']
             best_acc1 = checkpoint['best_acc1']
@@ -261,11 +249,10 @@ def main_worker(gpu, ngpus_per_node, args):
                 best_acc1 = best_acc1.to(args.gpu)
             model.load_state_dict(checkpoint['state_dict'])
             optimizer.load_state_dict(checkpoint['optimizer'])
-            logger.info("=> loaded checkpoint '{}' (epoch {})"
-                  .format(args.path_to_save, checkpoint['epoch']))
+            logger.info("=> loaded checkpoint '%s' (epoch %d)", args.path_to_save, checkpoint['epoch'])
         else:
-            logger.info("=> no checkpoint found at '{}'".format(args.path_to_save))
-            
+            logger.info("=> no checkpoint found at '%s", args.path_to_save)
+
     cudnn.benchmark = True
 
     # Data loading code
@@ -313,19 +300,17 @@ def main_worker(gpu, ngpus_per_node, args):
     if args.evaluate:
         return
 
-    print("start epoch is {}".format(args.start_epoch))
+    print(f"start epoch is {args.start_epoch}")
     for epoch in range(args.start_epoch, args.epochs):
-        
         if args.distributed:
             train_sampler.set_epoch(epoch)
         adjust_learning_rate(optimizer, epoch, args)
 
         # train for one epoch
         t0 = time.time()
-        train(train_loader, model, criterion, optimizer, epoch, logger, args)
-        
+        train(train_loader, model, criterion, optimizer, logger, args)
         t1 = time.time()
-        
+
         # evaluate on validation set
         acc1, acc5 = validate(val_loader, model, criterion, logger, args)
         t2 = time.time()
@@ -343,12 +328,12 @@ def main_worker(gpu, ngpus_per_node, args):
                              'optimizer': optimizer.state_dict()},
                             is_best,
                             args.path_to_save)
-        
+
         logger.info('(JOBID %s) epoch %d: train time %.2f, inference time %.2fs, valid_top1 %.2f (best_top1 %.2f), valid_top5 %.2f',
                     os.environ['SLURM_JOBID'], epoch, t1-t0, t2-t1, acc1, best_acc1, acc5)
-        
 
-def train(train_loader, model, criterion, optimizer, epoch, logger, args):
+
+def train(train_loader, model, criterion, optimizer, logger, args):
     losses = AverageMeter('Loss', ':.4e')
     top1 = AverageMeter('Acc@1', ':6.2f')
     top5 = AverageMeter('Acc@5', ':6.2f')
@@ -413,8 +398,8 @@ def validate(val_loader, model, criterion, logger, args):
 
 
 def save_checkpoint(state, is_best, path_to_save):
-    path_to_checkpoint = "{}/checkpoint.pth.tar".format(path_to_save)
-    path_to_best_model = "{}/model_best.pth.tar".format(path_to_save)
+    path_to_checkpoint = f"{path_to_save}/checkpoint.pth.tar"
+    path_to_best_model = f"{path_to_save}/model_best.pth.tar"
     torch.save(state, path_to_checkpoint)
     if is_best:
         shutil.copyfile(path_to_checkpoint, path_to_best_model)
@@ -488,8 +473,8 @@ def set_logger(logger_name, level=logging.INFO):
 
 def create_exp_dir(path, scripts_to_save=None):
     if not os.path.exists(path):
-      os.makedirs(path)
-    print('Experiment dir : {}'.format(path))
+        os.makedirs(path)
+    print(f'Experiment dir : {path}')
 
     if scripts_to_save is not None:
         os.makedirs(os.path.join(path, 'scripts'))

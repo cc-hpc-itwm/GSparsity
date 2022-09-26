@@ -100,11 +100,13 @@ def main():
     if args.resume:
         resume_training = args.resume
         new_dist_url = args.dist_url
+        new_data_dir = args.data
         f = open("{}/run_info.json".format(args.resume))
         run_info = json.load(f)
         vars(args).update(run_info['args'])
         args.resume = resume_training
         args.dist_url = new_dist_url
+        args.data = new_data_dir
     else:
         if args.run_id is None:
             args.run_id = "{}_lr_{}_momentum_{}_wd_{}_{}".format(args.baseline_model,
@@ -169,7 +171,7 @@ def main_worker(gpu, ngpus_per_node, args):
     logger.info("args = %s", args)
     
     if args.gpu is not None:
-        print("Use GPU: {} for training".format(args.gpu))
+        print(f"Use GPU: {args.gpu} for training")
 
     if args.distributed:
         if args.dist_url == "env://" and args.rank == -1:
@@ -186,7 +188,7 @@ def main_worker(gpu, ngpus_per_node, args):
         mask = np.load(path_to_mask, allow_pickle=True)
 
         # create compressed (small and dense) model
-        print("=> creating (compressed) model '{}'".format(args.arch))
+        print(f"=> creating (compressed) model '{args.arch}'")
         model = models_with_reduce_all_conv.__dict__[args.arch](mask)
     else:
         raise ValueError("The mask cannot be found at the specified path: {}".format(path_to_mask))
@@ -265,8 +267,7 @@ def main_worker(gpu, ngpus_per_node, args):
                 best_acc1 = best_acc1.to(args.gpu)
             model.load_state_dict(checkpoint['state_dict'])
             optimizer.load_state_dict(checkpoint['optimizer'])
-            logger.info("=> loaded checkpoint '{}' (epoch {})"
-                  .format(args.path_to_save, checkpoint['epoch']))
+            logger.info("=> loaded checkpoint '%s' (epoch %d)", args.path_to_save, checkpoint['epoch'])
         else:
             logger.info("=> no checkpoint found at '{}'".format(args.path_to_save))
             
@@ -317,7 +318,7 @@ def main_worker(gpu, ngpus_per_node, args):
     if args.evaluate:
         return
 
-    print("start epoch is {}".format(args.start_epoch))
+    print(f"start epoch is {args.start_epoch}")
     for epoch in range(args.start_epoch, args.epochs):
         
         if args.distributed:
@@ -494,7 +495,7 @@ def set_logger(logger_name, level=logging.INFO):
 def create_exp_dir(path, scripts_to_save=None):
     if not os.path.exists(path):
         os.makedirs(path)
-    print('Experiment dir : {}'.format(path))
+    print(f'Experiment dir : {path}')
 
     if scripts_to_save is not None:
         os.makedirs(os.path.join(path, 'scripts'))

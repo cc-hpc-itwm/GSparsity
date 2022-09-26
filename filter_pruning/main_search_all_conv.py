@@ -173,7 +173,7 @@ def main_worker(gpu, ngpus_per_node, args):
     logger.info("args = %s", args)
     
     if args.gpu is not None:
-        print("Use GPU: {} for training".format(args.gpu))
+        print(f"Use GPU: {args.gpu} for training")
 
     if args.distributed:
         if args.dist_url == "env://" and args.rank == -1:
@@ -186,13 +186,13 @@ def main_worker(gpu, ngpus_per_node, args):
                                 world_size=args.world_size, rank=args.rank)
     # create model
     if args.pretrained:
-        print("=> using pre-trained model '{}'".format(args.arch))
+        print(f"=> using pre-trained model '{args.arch}'")
         model = models.__dict__[args.arch](pretrained=True)
         if not args.multiprocessing_distributed or (args.multiprocessing_distributed
                                                     and args.rank % ngpus_per_node == 0):
             torch.save({'pretrained': model.state_dict()}, "{}/pretrained.pth.tar".format(args.path_to_save))
     else:
-        print("=> creating model '{}'".format(args.arch))
+        print(f"=> creating model '{args.arch}'")
         model = models.__dict__[args.arch]()
 
     if not torch.cuda.is_available():
@@ -307,7 +307,7 @@ def main_worker(gpu, ngpus_per_node, args):
                     time1-time0)
         return
 
-    print("start epoch is {}".format(args.start_epoch))
+    print(f"start epoch is {args.start_epoch}")
     for epoch in range(args.start_epoch, args.epochs):
         time0 = time.time()
         
@@ -494,7 +494,7 @@ def set_logger(logger_name, level=logging.INFO):
 def create_exp_dir(path, scripts_to_save=None):
     if not os.path.exists(path):
         os.makedirs(path)
-    print('Experiment dir : {}'.format(path))
+    print(f'Experiment dir : {path}')
 
     if scripts_to_save is not None:
         os.makedirs(os.path.join(path, 'scripts'))

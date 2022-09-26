@@ -16,34 +16,28 @@ import json
 
 import numpy as np
 import torch
-import torch.nn as nn
 import torch.nn.parallel
-import torch.backends.cudnn as cudnn
-import torch.distributed as dist
 import torch.optim
-import torch.multiprocessing as mp
 import torch.utils.data
 import torch.utils.data.distributed
-import torchvision.transforms as transforms
-import torchvision.datasets as datasets
-import torchvision.models as models
+from torch import nn
+from torch import distributed as dist
+from torch import multiprocessing as mp
+from torch.backends import cudnn
+from torchvision import transforms
+from torchvision import datasets
+from torchvision import models
 from ptflops import get_model_complexity_info
 
 from ProxSGD_for_filters import ProxSGD
 import models_with_reduce_conv12
 
-model_names = sorted(name for name in models.__dict__
-    if name.islower() and not name.startswith("__")
-    and callable(models.__dict__[name]))
-
 parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
 parser.add_argument('--data', metavar='DataDir', default='/home/SSD/Dataset_ImageNet',
                     help='path to dataset')
 parser.add_argument('-a', '--arch', metavar='ARCH', default='resnet50',
-                    choices=model_names,
-                    help='model architecture: ' +
-                        ' | '.join(model_names) +
-                        ' (default: resnet18)')
+                    choices=['resnet50'],
+                    help='This code is currently implemented for resnet50')
 parser.add_argument('-j', '--workers', default=4, type=int, metavar='N',
                     help='number of data loading workers (default: 4)')
 parser.add_argument('--epochs', default=90, type=int, metavar='N',
@@ -75,7 +69,7 @@ parser.add_argument('--world-size', default=1, type=int,
                     help='number of nodes for distributed training')
 parser.add_argument('--rank', default=0, type=int,
                     help='node rank for distributed training')
-parser.add_argument('--dist-url', default='tcp://{}:23456'.format(os.environ['CARME_MASTER_IP']),
+parser.add_argument('--dist-url', default=f"tcp://{os.environ['CARME_MASTER_IP']}:23456",
 		    type=str, help='url used to set up distributed training')
 parser.add_argument('--dist-backend', default='nccl', type=str,
                     help='distributed backend')
@@ -95,43 +89,35 @@ parser.add_argument('--adaptive_lr', action='store_true', default=True, help='us
 parser.add_argument('--normalization', default="div", choices=[None, "mul", "div"],
                     help='normalize the regularization (mu) by operation dimension: none, mul or div')
 
-best_acc1 = 0
-
 
 def main():
     args = parser.parse_args()
-
     if args.resume:
         resume_training = args.resume
         new_dist_url = args.dist_url
-        f = open("{}/run_info.json".format(args.resume))
-        run_info = json.load(f)
+        new_data_dir = args.data
+        with open(f"{args.resume}/run_info.json") as file_run_info:
+            run_info = json.load(file_run_info)
         vars(args).update(run_info['args'])
         args.resume = resume_training
         args.dist_url = new_dist_url
+        args.data = new_data_dir
     else:
         if args.run_id is None:
-            args.run_id = "lr_{}_momentum_{}_wd_{}_normalization_{}_pretrained_{}_{}".format(args.lr,
-                                                                                             args.momentum,
-                                                                                             args.weight_decay,
-                                                                                             args.normalization,
-                                                                                             args.pretrained,
-                                                                                             time.strftime("%Y%m%d-%H%M%S"))
+            args.run_id = (f"lr_{args.lr}_momentum_{args.momentum}_wd_{args.weight_decay}_"
+                           f"normalization_{args.normalization}_pretrained_{args.pretrained}_"
+                           f"{time.strftime('%Y%m%d-%H%M%S')}")
         else:
-            args.run_id = "{}_lr_{}_momentum_{}_wd_{}_normalization_{}_pretrained_{}_{}".format(args.run_id,
-                                                                                                args.lr,
-                                                                                                args.momentum,
-                                                                                                args.weight_decay,
-                                                                                                args.normalization,
-                                                                                                args.pretrained,
-                                                                                                time.strftime("%Y%m%d-%H%M%S"))
-        args.path_to_save = "{}_{}".format(args.path_to_save, args.run_id)
+            args.run_id = (f"{args.run_id}_lr_{args.lr}_momentum_{args.momentum}_wd_{args.weight_decay}_"
+                           f"normalization_{args.normalization}_pretrained_{args.pretrained}_"
+                           f"{time.strftime('%Y%m%d-%H%M%S')}")
+        args.path_to_save = f"{args.path_to_save}_{args.run_id}"
         create_exp_dir(args.path_to_save, scripts_to_save=glob.glob('*.py'))
 
         run_info = {}
         run_info['args'] = vars(args)
-        with open('{}/run_info.json'.format(args.path_to_save), 'w') as f:
-            json.dump(run_info, f)
+        with open(f'{args.path_to_save}/run_info.json', 'w') as file_run_info:
+            json.dump(run_info, file_run_info)
 
     if args.seed is not None:
         random.seed(args.seed)
@@ -166,16 +152,15 @@ def main():
 
 
 def main_worker(gpu, ngpus_per_node, args):
-
-    global best_acc1
+    best_acc1 = 0
     args.gpu = gpu
 
-    logger = set_logger(logger_name="{}/_log.txt".format(args.path_to_save))    
-    logger.info('CARME Slurm ID: {}'.format(os.environ['SLURM_JOBID']))
+    logger = set_logger(logger_name=f"{args.path_to_save}/_log.txt")
+    logger.info("CARME Slurm ID: %s", os.environ['SLURM_JOBID'])
     logger.info("args = %s", args)
-    
+
     if args.gpu is not None:
-        print("Use GPU: {} for training".format(args.gpu))
+        print(f"Use GPU: {args.gpu} for training")
 
     if args.distributed:
         if args.dist_url == "env://" and args.rank == -1:
@@ -188,10 +173,10 @@ def main_worker(gpu, ngpus_per_node, args):
                                 world_size=args.world_size, rank=args.rank)
     # create model
     if args.pretrained:
-        print("=> using pre-trained model '{}'".format(args.arch))
+        print(f"=> using pre-trained model '{args.arch}'")
         model = models.__dict__[args.arch](pretrained=True)
     else:
-        print("=> creating model '{}'".format(args.arch))
+        print(f"=> creating model '{args.arch}'")
         model = models.__dict__[args.arch]()
 
     if not torch.cuda.is_available():
@@ -226,26 +211,28 @@ def main_worker(gpu, ngpus_per_node, args):
             print("torch.nn.DataParallel(model).cuda()")
             model = torch.nn.DataParallel(model).cuda()
 
-    
     # define loss function (criterion) and optimizer
     criterion = nn.CrossEntropyLoss().cuda(args.gpu)
 
     num_prunable_params, num_total_params = compute_pruning_upper_bound(model)
-    logger.info("prunable/total params (ratio): {:.2f}M/{:.2f}M ({:.2f}%)".format(num_prunable_params/1e6, num_total_params/1e6, num_prunable_params/num_total_params*100))
+    logger.info("prunable/total params (ratio): %.2fM/%.2fM (%.2f%%)",
+                num_prunable_params/1e6,
+                num_total_params/1e6,
+                num_prunable_params/num_total_params*100)
 
     model_params = group_model_parameters(model, args.weight_decay)
     optimizer = ProxSGD(model_params, lr=args.lr, momentum=args.momentum, adaptive_lr=args.adaptive_lr, normalization=args.normalization)
-    
+
     # optionally resume from a checkpoint
     if args.resume:
-        path_to_checkpoint = "{}/checkpoint.pth.tar".format(args.path_to_save)
+        path_to_checkpoint = f"{args.path_to_save}/checkpoint.pth.tar"
         if os.path.isfile(path_to_checkpoint):
-            logger.info("=> loading checkpoint '{}'".format(args.path_to_save))
+            logger.info("=> loading checkpoint '%s'", args.path_to_save)
             if args.gpu is None:
                 checkpoint = torch.load(path_to_checkpoint)
             else:
                 # Map model to be loaded to specified single gpu.
-                loc = 'cuda:{}'.format(args.gpu)
+                loc = f'cuda:{args.gpu}'
                 checkpoint = torch.load(path_to_checkpoint, map_location=loc)
             args.start_epoch = checkpoint['epoch']
             best_acc1 = checkpoint['best_acc1']
@@ -254,10 +241,10 @@ def main_worker(gpu, ngpus_per_node, args):
                 best_acc1 = best_acc1.to(args.gpu)
             model.load_state_dict(checkpoint['state_dict'])
             optimizer.load_state_dict(checkpoint['optimizer'])
-            logger.info("=> loaded checkpoint '{}' (epoch {})"
-                  .format(args.path_to_save, checkpoint['epoch']))
+            logger.info("=> loaded checkpoint '%s' (epoch %d)", args.path_to_save, checkpoint['epoch'])
         else:
-            logger.info("=> no checkpoint found at '{}'".format(args.path_to_save))
+            logger.info("=> no checkpoint found at '%s'", args.path_to_save)
+            raise ValueError(f"=> no checkpoint found at '{args.path_to_save}'")
 
     cudnn.benchmark = True
 
@@ -296,19 +283,19 @@ def main_worker(gpu, ngpus_per_node, args):
         num_workers=args.workers, pin_memory=True)
 
     if args.evaluate:
-        time0 = time.time()
+        time_begin = time.time()
         acc1, acc5 = validate(val_loader, model, criterion, logger, args)
-        time1 = time.time()
+        time_end = time.time()
         logger.info('(JOBID %s) pretrained: valid_top1 %.2f, valid_top5 %.2f, inference time %.2f',
                     os.environ['SLURM_JOBID'],
                     acc1,
                     acc5,
-                    time1-time0)
+                    time_end-time_begin)
         return
 
     for epoch in range(args.start_epoch, args.epochs):
-        time0 = time.time()
-        
+        time_begin = time.time()
+
         if args.distributed:
             train_sampler.set_epoch(epoch)
         adjust_learning_rate(optimizer, epoch, args)
@@ -332,25 +319,22 @@ def main_worker(gpu, ngpus_per_node, args):
                              'optimizer': optimizer.state_dict()},
                             is_best,
                             args.path_to_save)
-        
-        time1 = time.time()
-        
+
+        time_end = time.time()
+
         logger.info('(JOBID %s) epoch %d: time %.2fs, valid_top1 %.2f (best_top1 %.2f), valid_top5 %.2f',
-                    os.environ['SLURM_JOBID'],
-                    epoch,
-                    time1-time0,
-                    acc1,
-                    best_acc1,
-                    acc5)
-        
+                    os.environ['SLURM_JOBID'], epoch, time_end-time_begin, acc1, best_acc1, acc5)
+
         print_nonzeros_filters(model, logger, args.pruning_threshold, arch=args.arch)
         model_compressed = compute_save_mask(model, args.path_to_save, logger, args.pruning_threshold, arch=args.arch)
         if not args.multiprocessing_distributed or (args.multiprocessing_distributed
                 and args.rank % ngpus_per_node == 0):
-            torch.save({'small_model': model_compressed.state_dict()}, "{}/small_model_conv12_{}.pth.tar".format(args.path_to_save, args.pruning_threshold))
+            torch.save({'small_model': model_compressed.state_dict()},
+                       f"{args.path_to_save}/small_model_conv12_{args.pruning_threshold}.pth.tar")
 
 
 def train(train_loader, model, criterion, optimizer, logger, args):
+    '''one epoch of training'''
     losses = AverageMeter('Loss', ':.4e')
     top1 = AverageMeter('Acc@1', ':6.2f')
     top5 = AverageMeter('Acc@5', ':6.2f')
@@ -384,6 +368,7 @@ def train(train_loader, model, criterion, optimizer, logger, args):
 
 
 def validate(val_loader, model, criterion, logger, args):
+    '''validation at the end of an epoch'''
     losses = AverageMeter('Loss', ':.4e')
     top1 = AverageMeter('Acc@1', ':6.2f')
     top5 = AverageMeter('Acc@5', ':6.2f')
@@ -407,7 +392,7 @@ def validate(val_loader, model, criterion, logger, args):
             losses.update(loss.item(), images.size(0))
             top1.update(acc1[0], images.size(0))
             top5.update(acc5[0], images.size(0))
-            
+
             if i % args.print_freq == 0:
                 logger.info('valid %04d, loss %.3e, top1 %.2f, top5 %.2f', i, losses.avg, top1.avg, top5.avg)
 
@@ -415,8 +400,9 @@ def validate(val_loader, model, criterion, logger, args):
 
 
 def save_checkpoint(state, is_best, path_to_save):
-    path_to_checkpoint = "{}/checkpoint.pth.tar".format(path_to_save)
-    path_to_best_model = "{}/model_best.pth.tar".format(path_to_save)
+    '''at the end of each epoch: save checkpoint and best model'''
+    path_to_checkpoint = f"{path_to_save}/checkpoint.pth.tar"
+    path_to_best_model = f"{path_to_save}/model_best.pth.tar"
     torch.save(state, path_to_checkpoint)
     if is_best:
         shutil.copyfile(path_to_checkpoint, path_to_best_model)
@@ -472,7 +458,6 @@ def accuracy(output, target, topk=(1,)):
 
 def set_logger(logger_name, level=logging.INFO):
     """Method to return a custom logger with the given name and level"""
-
     logger = logging.getLogger(logger_name)
     logger.setLevel(level)
     log_format = logging.Formatter("%(asctime)s %(message)s", '%Y-%m-%d %H:%M:%S')
@@ -491,7 +476,7 @@ def set_logger(logger_name, level=logging.INFO):
 def create_exp_dir(path, scripts_to_save=None):
     if not os.path.exists(path):
         os.makedirs(path)
-    print('Experiment dir : {}'.format(path))
+    print(f'Experiment dir : {path}')
 
     if scripts_to_save is not None:
         os.makedirs(os.path.join(path, 'scripts'))
@@ -502,7 +487,6 @@ def create_exp_dir(path, scripts_to_save=None):
 
 def print_nonzeros_filters(model, logger, pruning_threshold, arch="resnet50"):
     """compute and print the number of zero filters in each layer"""
-
     if arch not in ['resnet50']:
         raise NotImplementedError('Currently only ResNet-50 is supported.')
 
@@ -519,29 +503,45 @@ def print_nonzeros_filters(model, logger, pruning_threshold, arch="resnet50"):
             num_total_filters_tmp = param.shape[0]
             num_zero_filters += num_zero_filters_tmp
             num_total_filters += num_total_filters_tmp
-            
+
             if "conv1" in name or "conv2" in name:
                 num_zero_filters_per_layer[layer - 1] += num_zero_filters_tmp
                 num_total_filters_per_layer[layer - 1] += num_total_filters_tmp
-            
+
             num_zero_params += param.numel() * num_zero_filters_tmp / num_total_filters_tmp
         elif "layer" in name and "bn" in name:
             num_zero_params += param.numel() * num_zero_filters_tmp / num_total_filters_tmp
-    
+
     for layer in range(0, 4):
-        logger.info("pruning threshold: {}, layer {}: zero/total filters (conv1/2) {}/{} ({}%)".format(pruning_threshold, layer, num_zero_filters_per_layer[layer], num_total_filters_per_layer[layer], num_zero_filters_per_layer[layer]/num_total_filters_per_layer[layer]*100))
-        
-    logger.info("pruning threshold: {},   total: zero/total filters (conv1/2) {}/{} ({:.2f}%)".format(pruning_threshold, np.sum(num_zero_filters_per_layer), np.sum(num_total_filters_per_layer), np.sum(num_zero_filters_per_layer)/np.sum(num_total_filters_per_layer)*100))
-    logger.info("pruning threshold: {}, zero/total filters (ratio): {}/{} ({:.2f}%)".format(pruning_threshold, num_zero_filters, num_total_filters, num_zero_filters/num_total_filters*100))
-    logger.info("pruning threshold: {},  zero/total params (ratio): {}/{}M ({:.2f}%)".format(pruning_threshold, num_zero_params/1e6, num_total_params/1e6, num_zero_params/num_total_params*100))
-    
+        logger.info("pruning threshold: %f, layer %d: zero/total filters (conv1/2) %d/%d (%f%%)",
+                    pruning_threshold,
+                    layer,
+                    num_zero_filters_per_layer[layer],
+                    num_total_filters_per_layer[layer],
+                    num_zero_filters_per_layer[layer]/num_total_filters_per_layer[layer]*100)
+
+    logger.info("pruning threshold: %f,   total: zero/total filters (conv1/2) %d/%d (%.2f%%)",
+                pruning_threshold,
+                np.sum(num_zero_filters_per_layer),
+                np.sum(num_total_filters_per_layer),
+                np.sum(num_zero_filters_per_layer)/np.sum(num_total_filters_per_layer)*100)
+    logger.info("pruning threshold: %f, zero/total filters (ratio): %d/%d (%.2f}%%)",
+                pruning_threshold,
+                num_zero_filters,
+                num_total_filters,
+                num_zero_filters/num_total_filters*100)
+    logger.info("pruning threshold: %f,  zero/total params (ratio): %f/%fM (%.2f}%%)",
+                pruning_threshold,
+                num_zero_params/1e6,
+                num_total_params/1e6,
+                num_zero_params/num_total_params*100)
+
 
 def compute_pruning_upper_bound(model):
     """compute and return the number of prunable parameters and total parameters"""
-
     num_prunable_params = 0
     num_total_params = 0
-    
+
     for name, param in model.named_parameters():
         num_total_params += param.numel()
         if "layer" in name:
@@ -555,7 +555,7 @@ def compute_save_mask(model, file_path, logger, pruning_threshold, arch='resnet5
     """
     Given a model, this function computes and saves the mask of zero filters.
 
-    variable: 
+    variable:
         model
         file_path, the path to save mask
         logger, to save the complexity of compressed model
@@ -565,32 +565,32 @@ def compute_save_mask(model, file_path, logger, pruning_threshold, arch='resnet5
     return:
         compressed model, with the parameters of nonzero filters transferred from model to the compressed model.
     """
-
-    if arch not in ['resnet50']:
+    if arch in ['resnet50']:
+        # compute and save the mask (if a filter is/isn't zero, the mask is 0/1)
+        mask = [[[[], [], []], [[], [], []], [[], [], []]],
+                [[[], [], []], [[], [], []], [[], [], []], [[], [], []]],
+                [[[], [], []], [[], [], []], [[], [], []], [[], [], []], [[], [], []], [[], [], []]],
+                [[[], [], []], [[], [], []], [[], [], []]]]
+    else:
         raise NotImplementedError('Currently only ResNet-50 is supported.')
 
-    # compute and save the mask (if a filter is/isn't zero, the mask is 0/1)
-    mask = [[[[], [], []], [[], [], []], [[], [], []]],
-            [[[], [], []], [[], [], []], [[], [], []], [[], [], []]],
-            [[[], [], []], [[], [], []], [[], [], []], [[], [], []], [[], [], []], [[], [], []]],
-            [[[], [], []], [[], [], []], [[], [], []]]]
     for name, param in model.named_parameters():
-        if "layer" in name:
+        if "layer" in name and "conv" in name:
             layer_index = int(name[12])
             block_index = int(name[14])
-            if "conv" in name:
-                conv_index = int(name[20])
-                filter_norms = torch.norm(param.view(param.shape[0], -1), p=2, dim=1)
-                # the mask is 1(0) if the filter norm is larger(smaller) than pruning_threshold
-                mask[layer_index-1][block_index][conv_index-1] = (filter_norms.gt(pruning_threshold)).cpu().detach().numpy()
+            conv_index = int(name[20])
 
-    np.save("{}/mask_{}".format(file_path, pruning_threshold), mask)
+            # the mask is 1(0) if the filter norm is larger(smaller) than pruning_threshold
+            filter_norms = torch.norm(param.view(param.shape[0], -1), p=2, dim=1)
+            mask[layer_index-1][block_index][conv_index-1] = (filter_norms.gt(pruning_threshold)).cpu().detach().numpy()
+    np.save(f"{file_path}/mask_{pruning_threshold}", mask)
 
     # create the compressed model using the mask
     model_compressed = models_with_reduce_conv12.__dict__[arch](mask)
     macs, params = get_model_complexity_info(model_compressed, (3, 224, 224), as_strings=True,
                                              print_per_layer_stat=False, verbose=False)
-    logger.info("pruning threshold: {}, computational complexity: {}, number of parameters: {}".format(pruning_threshold, macs, params))
+    logger.info("pruning threshold: %f, computational complexity: %s, number of parameters: %s",
+                pruning_threshold, macs, params)
 
     # transfer the weights of nonzero filters from the original model to the compressed model
     model_compressed = transfer_model_parameters(model, model_compressed, mask, arch=arch)
@@ -600,7 +600,6 @@ def compute_save_mask(model, file_path, logger, pruning_threshold, arch='resnet5
 
 def transfer_model_parameters(big_model, small_model, mask, arch='resnet50'):
     """transfer the weights of nonzero filters (together with the following bn) from big_model to small_model"""
-
     if arch in ["resnet50"]:
         # detect the indices of nonzero filters
         indices = [[[[], [], []], [[], [], []], [[], [], []]],
@@ -615,11 +614,11 @@ def transfer_model_parameters(big_model, small_model, mask, arch='resnet50'):
                             indices[layer_index][block_index][conv_index].append(filter_index)
     else:
         raise NotImplementedError("Currently only ResNet-50 is supported.")
-        
+
     # transfer the weights of nonzero filters (together with the following bn) to the compressed model
     big_state_dict = big_model.state_dict()
     small_state_dict = small_model.state_dict()
-    for key, _ in small_state_dict.items():
+    for key in small_state_dict.keys():
         key_module = "module." + key
         if "layer" in key:  # An example of key is layer1.0.downsample.0.weight
             layer_index = int(key[5]) - 1
@@ -631,9 +630,9 @@ def transfer_model_parameters(big_model, small_model, mask, arch='resnet50'):
                     if "conv" in key:
                         conv_index = int(key[13]) - 1
                     compressed_parameters = big_state_dict[key_module]
-                    if conv_index == 0 or conv_index == 1:
+                    if conv_index == 0 or conv_index == 1: # this includes both conv and bn
                         compressed_parameters = torch.index_select(compressed_parameters, 0, torch.tensor(indices[layer_index][block_index][conv_index]).cuda())
-                    if "conv2" in key or "conv3" in key:  # if conv_index == 2 or conv_index == 3:
+                    if "conv2" in key or "conv3" in key:  # this includes only conv2 and conv3 (not bn)
                         compressed_parameters = torch.index_select(compressed_parameters, 1, torch.tensor(indices[layer_index][block_index][conv_index-1]).cuda())
                     small_state_dict[key] = compressed_parameters
             else:
@@ -641,7 +640,7 @@ def transfer_model_parameters(big_model, small_model, mask, arch='resnet50'):
         else:
             small_state_dict[key] = big_state_dict[key_module]
     small_model.load_state_dict(small_state_dict)
-    
+
     return small_model
 
 
@@ -651,10 +650,9 @@ def group_model_parameters(model, mu):
     variable: model, regularization (mu)
     return: network parameters that will be transferred to the optimizer
     """
-
     if mu is not None and mu < 0:
-        raise ValueError("Invalid weight decay value: {}".format(mu))
-    
+        raise ValueError(f"Invalid weight decay value: {mu}")
+
     model_params = []
     for op_name, op_param in model.named_parameters():
         if "conv1" in op_name or "conv2" in op_name:
